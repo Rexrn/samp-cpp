@@ -30,3 +30,9 @@
 *.exe
 *.out
 *.app
+*.db
+*.opendb
+*.db
+*.opendb
+/AdvancedGDK/.vs/AdvancedGDK/v15/Browse.VC.db
+*.ipch
