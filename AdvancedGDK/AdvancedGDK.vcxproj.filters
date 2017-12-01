@@ -13,6 +13,39 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="dependencies">
+      <UniqueIdentifier>{3d33edb0-c425-424a-b964-5931eb88cd7f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="dependencies\sampgdk">
+      <UniqueIdentifier>{8f6c77ac-0267-426b-a7a6-764f50b412f5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="dependencies\sampgdk\amx">
+      <UniqueIdentifier>{9b572df3-b6fb-4d2c-b5c7-d8e2f687fa6a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Player">
+      <UniqueIdentifier>{64e7bb01-e645-4411-ab6b-6d0eb406f944}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Server">
+      <UniqueIdentifier>{ff870dec-4209-48ee-9a41-440d9538f869}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Misc">
+      <UniqueIdentifier>{1790287d-dced-4400-b7e2-2f5d4c4471af}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Player">
+      <UniqueIdentifier>{d1f062ab-f995-4c81-84ed-5b7fb2f16e49}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Misc">
+      <UniqueIdentifier>{69944ba9-65f6-4a31-9f17-733fb46e59f3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Server">
+      <UniqueIdentifier>{fd1c745e-839a-42b7-9113-96e6db636b4d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Misc\Math">
+      <UniqueIdentifier>{d87b7d06-92a9-4f41-92c6-47f9b0dc4d54}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Misc\Math">
+      <UniqueIdentifier>{c514dada-14e3-45d9-92e8-854e6fff2929}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -21,9 +54,102 @@
     <ClInclude Include="targetver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="dependencies\sampgdk\plugin.h">
+      <Filter>dependencies\sampgdk</Filter>
+    </ClInclude>
+    <ClInclude Include="dependencies\sampgdk\plugincommon.h">
+      <Filter>dependencies\sampgdk</Filter>
+    </ClInclude>
+    <ClInclude Include="dependencies\sampgdk\sampgdk.h">
+      <Filter>dependencies\sampgdk</Filter>
+    </ClInclude>
+    <ClInclude Include="dependencies\sampgdk\amx\amx.h">
+      <Filter>dependencies\sampgdk\amx</Filter>
+    </ClInclude>
+    <ClInclude Include="dependencies\sampgdk\amx\getch.h">
+      <Filter>dependencies\sampgdk\amx</Filter>
+    </ClInclude>
+    <ClInclude Include="dependencies\sampgdk\amx\sclinux.h">
+      <Filter>dependencies\sampgdk\amx</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Player\Player.hpp">
+      <Filter>Header Files\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Server\Server.hpp">
+      <Filter>Header Files\Server</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Misc\Clock.hpp">
+      <Filter>Header Files\Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Misc\Color.hpp">
+      <Filter>Header Files\Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Misc\Exceptions.hpp">
+      <Filter>Header Files\Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Misc\Math.hpp">
+      <Filter>Header Files\Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Misc\Pointers.hpp">
+      <Filter>Header Files\Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Misc\String.hpp">
+      <Filter>Header Files\Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Misc\Task.hpp">
+      <Filter>Header Files\Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Misc\Math\Vector2.inl">
+      <Filter>Header Files\Misc\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Misc\Math\Vector3.inl">
+      <Filter>Header Files\Misc\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Misc\Random.hpp">
+      <Filter>Header Files\Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Server\GameMode.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Player\PlayerPool.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="dependencies\sampgdk\amxplugin.cpp">
+      <Filter>dependencies\sampgdk</Filter>
+    </ClCompile>
+    <ClCompile Include="dependencies\sampgdk\sampgdk.c">
+      <Filter>dependencies\sampgdk</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Player\Player.cpp">
+      <Filter>Source Files\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Server\Server.cpp">
+      <Filter>Source Files\Server</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Misc\Clock.cpp">
+      <Filter>Source Files\Misc</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Misc\Color.cpp">
+      <Filter>Source Files\Misc</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Misc\String.cpp">
+      <Filter>Source Files\Misc</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Misc\Task.cpp">
+      <Filter>Source Files\Misc</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Misc\Random.cpp">
+      <Filter>Source Files\Misc</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Server\GameMode.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Player\PlayerPool.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

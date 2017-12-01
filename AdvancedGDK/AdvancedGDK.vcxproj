@@ -90,6 +90,8 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(ProjectDir)dependencies;$(ProjectDir)include</AdditionalIncludeDirectories>
+      <AdditionalOptions>/std:c++latest %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -120,6 +122,8 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(ProjectDir)dependencies;$(ProjectDir)include</AdditionalIncludeDirectories>
+      <AdditionalOptions>/std:c++latest %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -147,10 +151,41 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="dependencies\sampgdk\amx\amx.h" />
+    <ClInclude Include="dependencies\sampgdk\amx\getch.h" />
+    <ClInclude Include="dependencies\sampgdk\amx\sclinux.h" />
+    <ClInclude Include="dependencies\sampgdk\plugin.h" />
+    <ClInclude Include="dependencies\sampgdk\plugincommon.h" />
+    <ClInclude Include="dependencies\sampgdk\sampgdk.h" />
+    <ClInclude Include="include\Server\GameMode.hpp" />
+    <ClInclude Include="include\Misc\Clock.hpp" />
+    <ClInclude Include="include\Misc\Color.hpp" />
+    <ClInclude Include="include\Misc\Exceptions.hpp" />
+    <ClInclude Include="include\Misc\Math.hpp" />
+    <ClInclude Include="include\Misc\Pointers.hpp" />
+    <ClInclude Include="include\Misc\Random.hpp" />
+    <ClInclude Include="include\Misc\String.hpp" />
+    <ClInclude Include="include\Misc\Task.hpp" />
+    <ClInclude Include="include\Misc\Math\Vector2.inl" />
+    <ClInclude Include="include\Misc\Math\Vector3.inl" />
+    <ClInclude Include="include\Player\Player.hpp" />
+    <ClInclude Include="include\Server\Server.hpp" />
+    <ClInclude Include="include\Player\PlayerPool.hpp" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="dependencies\sampgdk\amxplugin.cpp" />
+    <ClCompile Include="dependencies\sampgdk\sampgdk.c" />
+    <ClCompile Include="src\Player\PlayerPool.cpp" />
+    <ClCompile Include="src\Server\GameMode.cpp" />
+    <ClCompile Include="src\Misc\Clock.cpp" />
+    <ClCompile Include="src\Misc\Color.cpp" />
+    <ClCompile Include="src\Misc\Random.cpp" />
+    <ClCompile Include="src\Misc\String.cpp" />
+    <ClCompile Include="src\Misc\Task.cpp" />
+    <ClCompile Include="src\Player\Player.cpp" />
+    <ClCompile Include="src\Server\Server.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
