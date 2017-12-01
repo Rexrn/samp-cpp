@@ -1,6 +1,5 @@
 #pragma once
 
-#include "AdvancedGDKMain.hpp"
 #include <chrono>
 #include <type_traits>
 
