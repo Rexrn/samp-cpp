@@ -68,8 +68,8 @@ namespace agdk
 			template <typename _Ty1, typename _Ratio1>
 			constexpr BaseLength(const BaseLength<_Ty, _Ratio1> &rhs_)
 				: value(rhs_.value
-						* std::ratio_divide<_Ty1, ValueType>::num
-						/ std::ratio_divide<_Ty1, ValueType>::den)
+						* std::ratio_divide<_Ratio1, RatioType>::num
+						/ std::ratio_divide<_Ratio1, RatioType>::den)
 			{
 			}
 
@@ -81,8 +81,8 @@ namespace agdk
 			constexpr BaseLength<ValueType, RatioType>& operator=(const BaseLength<_Ty1, _Ratio1> &rhs_)
 			{
 				value = rhs_.value
-					* std::ratio_divide<_Ty1, ValueType>::num
-					/ std::ratio_divide<_Ty1, ValueType>::den;
+					* std::ratio_divide<_Ratio1, RatioType>::num
+					/ std::ratio_divide<_Ratio1, RatioType>::den;
 			}
 
 			/// <summary>
