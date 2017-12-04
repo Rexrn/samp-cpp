@@ -1,5 +1,9 @@
 #include <Player/Player.hpp>
 
+// AGDK includes
+#include <Server/Server.hpp>
+#include <Misc/String.hpp>
+
 namespace agdk
 {
 	///////////////////////////////////////////////////////////////////////////
@@ -11,9 +15,33 @@ namespace agdk
 	}
 
 	///////////////////////////////////////////////////////////////////////////
-	bool Player::setName(const std::string_view name_)
+	bool Player::setName(const std::string_view name_, bool(*isNameValidProc_)(const std::string_view))
 	{
-		// TODO: implement this.
+		// If passed null pointer use the default method.
+		if (isNameValidProc_ == nullptr)
+			isNameValidProc_ = &Server::Default::isPlayerNameValid;
+
+		if (isNameValidProc_(name_))
+		{
+			// Store requested name (we are forced to copy the string, since SAMPGDK requires null terminated C-string).
+			std::string newName{ name_ };
+			if (StringHelper::equals(name_, this->getName()))
+			{
+				// Store temporarily modified name.
+				std::string tempName{ name_ };
+
+				// We need to change name to some `name_`+"_" string, because it is invalid in SAMP
+				// to change name from f.e. "FooBar" to "foobar".
+				if (tempName.length() < 21)
+					tempName += std::string(21 - tempName.length(), '_');
+
+				sampgdk::SetPlayerName(this->getIndex(), tempName.c_str());
+				sampgdk::SetPlayerName(this->getIndex(), newName.c_str());
+			}
+			else
+				sampgdk::SetPlayerName(this->getIndex(), newName.c_str());
+			return true;
+		}
 		return false;
 	}
 

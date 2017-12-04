@@ -57,7 +57,7 @@ namespace agdk
 		/// <returns>
 		///   <c>true</c> if succeeded; otherwise, <c>false</c>.
 		/// </returns>
-		bool setName(const std::string_view name_);
+		bool setName(const std::string_view name_, bool(*isNameValidProc_)(const std::string_view) = nullptr);
 
 		// Player world transform.
 

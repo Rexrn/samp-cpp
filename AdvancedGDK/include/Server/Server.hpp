@@ -143,5 +143,5 @@ namespace agdk
 	};
 }
 
-extern std::unique_ptr<agdk::Server>		g_server;		// Global pointer to Server
-extern std::unique_ptr<agdk::IGameMode>		g_gameMode;		// Global pointer to Game Mode
+extern std::unique_ptr<agdk::Server>		g_server;		/// Global pointer to Server
+extern std::unique_ptr<agdk::IGameMode>		g_gameMode;		/// Global pointer to Game Mode
