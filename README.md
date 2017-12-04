@@ -31,7 +31,7 @@ void healPlayerCommand(agdk::CommandInput input);
 
 int main()
 {
-    // ... server setup ...
+	// ... server setup ...
 	// Add command to game mode:
 	g_gameMode->commands += agdk::Command({"heal", "100hp", "life"}, healPlayerCommand);
 }
@@ -43,3 +43,13 @@ void healPlayerCommand(agdk::CommandInput input)
 	input.target->setHealth(100);
 }
 ```
+Command adding is the interesting part:
+```cpp
+g_gameMode->commands += agdk::Command({"heal", "100hp", "life"}, healPlayerCommand);
+```
+The first argument of `Command` constructor is a vector that contains possible words that player needs to type to invoke the command.
+This code heals player whenever he send one of following commands:
+* `/heal`
+* `/100hp`
+* `/life`
+Thats simple, isn't it?
