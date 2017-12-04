@@ -1,3 +1,10 @@
+/**
+ * Header: Random.hpp
+ * Author: Pawe³ Syska aka RazzorFlame.
+ * Description:
+ * Implements easy to use random engine using Mersenne's Twister.
+**/
+
 #pragma once
 
 #include <random>

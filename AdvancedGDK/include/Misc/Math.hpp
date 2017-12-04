@@ -1,3 +1,10 @@
+/**
+ * Header: Math.hpp
+ * Author: Pawe³ Syska aka RazzorFlame.
+ * Description:
+ * Defines constants and includes other parts of Math module.
+**/
+
 #pragma once
 
 #include <cmath>

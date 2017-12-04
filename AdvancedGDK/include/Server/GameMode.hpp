@@ -1,5 +1,11 @@
-#pragma once
+/**
+ * Header: GameMode.hpp
+ * Author: Pawe³ Syska aka RazzorFlame.
+ * Description:
+ * Implements basic game mode interface.
+**/
 
+#pragma once
 
 namespace agdk
 {	

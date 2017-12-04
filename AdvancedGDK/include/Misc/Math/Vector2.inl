@@ -1,7 +1,18 @@
+/**
+ * Header: Vector2.inl
+ * Author: Pawe³ Syska aka RazzorFlame.
+ * Description:
+ * Implements base class for 2D vector manipulation.
+ * Note:
+ * Requires important maintenance.
+**/
+
 namespace agdk
 {
 	namespace impl
 	{
+		// TODO: requires code improvement and documentation standarization (using XML style).
+
 		template <typename T>
 		class BaseVector2
 		{

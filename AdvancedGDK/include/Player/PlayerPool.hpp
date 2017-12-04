@@ -1,3 +1,10 @@
+/**
+ * Header: PlayerPool.hpp
+ * Author: Pawe³ Syska aka RazzorFlame.
+ * Description:
+ * Implements class manipulating players and agent used to process certain server events.
+**/
+
 #pragma once
 
 // AGDK includes

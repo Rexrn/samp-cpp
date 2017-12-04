@@ -1,3 +1,10 @@
+/**
+ * Header: Server.hpp
+ * Author: Pawe³ Syska aka RazzorFlame.
+ * Description:
+ * Implements Server behaviour and wraps SAMPGDK callbacks into a class.
+**/
+
 #pragma once
 
 // SAMPGDK Include

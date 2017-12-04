@@ -1,3 +1,10 @@
+/**
+ * Header: Player.hpp
+ * Author: Pawe³ Syska aka RazzorFlame.
+ * Description:
+ * Implements basic Player class.
+**/
+
 #pragma once
 
 // SAMPGDK include

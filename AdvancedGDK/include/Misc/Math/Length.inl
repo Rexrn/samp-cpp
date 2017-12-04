@@ -1,3 +1,10 @@
+/**
+ * Header: Length.inl
+ * Author: Pawe³ Syska aka RazzorFlame.
+ * Description:
+ * Implements length unit classes.
+**/
+
 #include <ratio>
 #include <limits>
 

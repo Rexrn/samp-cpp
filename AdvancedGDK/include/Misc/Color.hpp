@@ -1,3 +1,10 @@
+/**
+ * Header: Color.hpp
+ * Author: Pawe³ Syska aka RazzorFlame.
+ * Description:
+ * Implements Color class and provides over 600 named colors (within agdk::colors) namespace.
+**/
+
 #pragma once
 
 #include <cinttypes>

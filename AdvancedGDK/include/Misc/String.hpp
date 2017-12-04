@@ -1,3 +1,10 @@
+/**
+ * Header: String.hpp
+ * Author: Pawe³ Syska aka RazzorFlame.
+ * Description:
+ * Implements helper class for String manipulation.
+**/
+
 #pragma once
 
 #include <string>
@@ -12,7 +19,7 @@ namespace agdk
 	/// If character in std::istream is what expected skip this character else set fail flag.
 	/// </summary>
 	template <char C>
-	std::istream& expect(std::istream& in)
+	std::istream& expect(std::istream& in)		// TODO: move this function to other file.
 	{
 		if ((in >> std::ws).peek() == C) {
 			in.ignore();
@@ -23,6 +30,28 @@ namespace agdk
 		return in;
 	}
 	
+	/// <summary>
+	/// Creates string from passed parameters.
+	/// </summary>
+	/// <returns>String created from passed parameters.</returns>
+	/// <remarks>
+	/// <para>This function is equivalent to:
+	///		<code>
+	///		std::stringstream stream;
+	///		stream << param_1 << param_2 << param_3 << ... << param_n;
+	///		std::string result = stream.str();
+	///		</code>
+	/// </para>
+	/// </remarks>
+	template <typename TFirst, typename... TRest>
+	inline std::string make_string(TFirst &&first_, TRest&&... rest_)
+	{
+		std::stringstream stream;
+		stream << std::forward<TFirst>(first_);
+		(stream << ... << std::forward<TRest>(rest_));
+		return stream.str();
+	}
+
 	/// <summary>
 	/// Helper static class for manipulating strings.
 	/// </summary>
@@ -239,26 +268,4 @@ namespace agdk
 			static std::pair<std::string, std::string> splitPath(const std::string &fullPath);
 		*/
 	};
-
-	/// <summary>
-	/// Creates string from passed parameters.
-	/// </summary>
-	/// <returns>String created from passed parameters.</returns>
-	/// <remarks>
-	/// <para>This function is equivalent to:
-	///		<code>
-	///		std::stringstream stream;
-	///		stream << param_1 << param_2 << param_3 << ... << param_n;
-	///		std::string result = stream.str();
-	///		</code>
-	/// </para>
-	/// </remarks>
-	template <typename TFirst, typename... TRest>
-	inline std::string make_string(TFirst &&first_, TRest&&... rest_)
-	{
-		std::stringstream stream;
-		stream << std::forward<TFirst>(first_);
-		(stream << ... << std::forward<TRest>(rest_));
-		return stream.str();
-	}
 }
