@@ -8,6 +8,22 @@
 namespace agdk
 {
 	////////////////////////////////////////////////////////////////////////////////////////////////////
+	bool StringHelper::equals(const std::string_view lhs, const std::string_view rhs, const bool caseSensitive_)
+	{
+		if (lhs.length() != rhs.length())
+			return false;
+
+		for (std::size_t i{ 0 }; i < lhs.length(); i++)
+		{
+			if (caseSensitive_ && lhs[i] != rhs[i])
+				return false;
+			else if (!caseSensitive_ && std::tolower(static_cast<unsigned char>(lhs[i])) != std::tolower(static_cast<unsigned char>(rhs[i])))
+				return false;
+		}
+		return true;
+	}
+
+	////////////////////////////////////////////////////////////////////////////////////////////////////
 	std::string StringHelper::trimLeft(std::string string_)
 	{
 		// Note: string_ is passed by value on purpose, copying it is mandatory even when passing by const ref.
@@ -86,7 +102,7 @@ namespace agdk
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////
-	std::size_t StringHelper::count(const std::string &subject_, const std::string &sequence_)
+	std::size_t StringHelper::count(const std::string_view subject_, const std::string &sequence_)
 	{
 		std::size_t occurrences{ 0 };
 		std::size_t start{ 0 };
@@ -98,8 +114,19 @@ namespace agdk
 		return occurrences;
 	}
 
+	////////////////////////////////////////////////////////////////////////////////////////////////////
+	bool StringHelper::toBoolean(const std::string_view string_, const bool valueIfNotValid)
+	{
+		return (StringHelper::storesBoolean(string_) 
+				?
+					(StringHelper::equals(string_, "true", false)
+						|| StringHelper::equals(string_, "1") ? true : false)
+				:
+			valueIfNotValid);
+	}
 
-	bool StringHelper::storesInteger(const std::string &string_, bool unsigned_)
+	////////////////////////////////////////////////////////////////////////////////////////////////////
+	bool StringHelper::storesInteger(const std::string_view string_, const bool unsigned_)
 	{
 		for (std::size_t i{ 0u }; i < string_.size(); i++)
 		{
@@ -118,7 +145,7 @@ namespace agdk
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////
-	bool StringHelper::storesFloat(const std::string &string_, const std::string::value_type separator_)
+	bool StringHelper::storesFloat(const std::string_view string_, const std::string::value_type separator_)
 	{
 		bool alreadyFoundSeparator{ false };
 		for (std::size_t i{ 0u }; i < string_.size(); i++)
@@ -145,26 +172,30 @@ namespace agdk
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////
-	bool StringHelper::storesBoolean(const std::string &string_)
+	bool StringHelper::storesBoolean(const std::string_view string_)
 	{
-		auto lower = StringHelper::toLower(string_);
-		return (lower == "true" || lower == "false" || lower == "1" || lower == "0");
+		return (StringHelper::equals(string_, "true", false)
+				|| StringHelper::equals(string_, "false", false)
+				|| StringHelper::equals(string_, "1", true)
+				|| StringHelper::equals(string_, "0", true));
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////
-	bool StringHelper::storesNumber(const std::string &A, const std::string::value_type separator_)
+	bool StringHelper::storesNumber(const std::string_view string_, const std::string::value_type separator_)
 	{
-		return StringHelper::storesFloat(A, separator_);
+		return StringHelper::storesFloat(string_, separator_);
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////
-	std::size_t StringHelper::maxSequenceLength(const std::string &string_, const std::string &sequence_)
+	std::size_t StringHelper::maxSequenceLength(const std::string_view string_, const std::string_view sequence_, const bool caseSensitive)
 	{
 		std::size_t maxScore = 0;
 		std::size_t score = 0;
 		for (std::size_t i{ 0 }; i < sequence_.length(); i++)
 		{
-			if (string_[score] == sequence_[i])
+			if ((string_[score] == sequence_[i])
+				|| (!caseSensitive && std::tolower(string_[score]) == std::tolower(sequence_[i]))
+				)
 				score++;
 			else
 				score = 0;
@@ -178,15 +209,15 @@ namespace agdk
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////
-	std::vector<std::string> StringHelper::explode(const std::string& string_, const std::string::value_type delimiter_)
+	std::vector<std::string> StringHelper::explode(const std::string_view string_, const std::string::value_type delimiter_)
 	{
 		std::vector<std::string> tokens;
 		std::size_t start = 0, end = 0;
 		while ((end = string_.find(delimiter_, start)) != std::string::npos) {
-			tokens.push_back(string_.substr(start, end - start));
+			tokens.push_back(std::string{ string_.substr(start, end - start) });
 			start = end + 1;
 		}
-		tokens.push_back(string_.substr(start));
+		tokens.push_back(std::string{ string_.substr(start) });
 		return tokens;
 	}
 

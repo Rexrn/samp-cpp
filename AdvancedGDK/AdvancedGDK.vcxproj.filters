@@ -114,6 +114,9 @@
     <ClInclude Include="include\Player\PlayerPool.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\SampGDK.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -152,5 +155,10 @@
     <ClCompile Include="src\Player\PlayerPool.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="include\Misc\Math\Length.inl">
+      <Filter>Header Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

@@ -124,12 +124,12 @@ namespace agdk
 	namespace chrono		= std::chrono;
 	using seconds_f			= chrono::duration<float>;
 	using seconds_d			= chrono::duration<double>;
-	using milliseconds_f	= chrono::duration<float, std::milli>;
-	using milliseconds_d	= chrono::duration<double, std::milli>;
-	using microseconds_f	= chrono::duration<float, std::micro>;
-	using microseconds_d	= chrono::duration<double, std::micro>;
-	using nanoseconds_f		= chrono::duration<float, std::nano>;
-	using nanoseconds_d		= chrono::duration<double, std::nano>;
+	using milliseconds_f	= chrono::duration<float,	std::milli>;
+	using milliseconds_d	= chrono::duration<double,	std::milli>;
+	using microseconds_f	= chrono::duration<float,	std::micro>;
+	using microseconds_d	= chrono::duration<double,	std::micro>;
+	using nanoseconds_f		= chrono::duration<float,	std::nano>;
+	using nanoseconds_d		= chrono::duration<double,	std::nano>;
 #endif
 
 	/// <summary>

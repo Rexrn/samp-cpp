@@ -83,3 +83,4 @@ namespace agdk
 
 #include "Math/Vector2.inl"
 #include "Math/Vector3.inl"
+#include "Math/Length.inl"

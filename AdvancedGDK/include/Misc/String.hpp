@@ -4,6 +4,7 @@
 #include <istream>
 #include <vector>
 #include <sstream>
+#include <string_view>
 
 namespace agdk
 {
@@ -33,6 +34,15 @@ namespace agdk
 		StringHelper() = delete;
 	public:
 		
+		/// <summary>
+		/// Compares two strings.
+		/// </summary>
+		/// <param name="lhs">The left hand side string.</param>
+		/// <param name="rhs">The right hand side string.</param>
+		/// <param name="caseSensitive_">Case sensitive.</param>
+		/// <returns>True if lhs string is equal to rhs string.</returns>
+		static bool equals(const std::string_view lhs, const std::string_view rhs, const bool caseSensitive_ = true);
+
 		/// <summary>
 		/// Trims std::string whitespaces from the front side.
 		/// </summary>
@@ -92,7 +102,14 @@ namespace agdk
 		/// <param name="subject_">The subject.</param>
 		/// <param name="sequence_">The sequence.</param>
 		/// <returns>Number of occurences.</returns>
-		static std::size_t	count(const std::string &subject_, const std::string &sequence_);
+		static std::size_t	count(const std::string_view subject_, const std::string &sequence_);
+		
+		/// <summary>
+		/// Converts string to boolean.
+		/// </summary>
+		/// <param name="string_">The string.</param>
+		/// <returns>String converted to boolean.</returns>
+		static bool			toBoolean(const std::string_view string_, const bool valueIfNotValid = false);
 
 		/// <summary>
 		/// Checks if string stores integer inside.
@@ -102,7 +119,7 @@ namespace agdk
 		/// <returns>
 		/// <c>true</c> if string stores integer, otherwise <c>false</c>.
 		/// </returns>
-		static bool			storesInteger(const std::string &string_, bool unsigned_ = false);
+		static bool			storesInteger(const std::string_view string_, const bool unsigned_ = false);
 
 		/// <summary>
 		/// Checks if string stores floating point inside.
@@ -113,14 +130,14 @@ namespace agdk
 		/// <remarks>
 		/// <para>This function does exactly the same as <see cref="storesNumber"/>.</para>
 		/// </remarks>
-		static bool			storesFloat(const std::string &string_, const std::string::value_type separator_ = '.');
+		static bool			storesFloat(const std::string_view string_, const std::string::value_type separator_ = '.');
 
 		/// <summary>
 		/// Checks if string stores boolean inside.
 		/// </summary>
 		/// <param name="string_">The string.</param>
 		/// <returns><c>true</c> if string stores boolean, otherwise <c>false</c>.</returns>
-		static bool			storesBoolean(const std::string &string_);
+		static bool			storesBoolean(const std::string_view string_);
 		
 		/// <summary>
 		/// Checks if string stores number inside.
@@ -128,7 +145,7 @@ namespace agdk
 		/// <param name="string_">The string.</param>
 		/// <param name="separator_">The floating point separator.</param>
 		/// <returns><c>true</c> if string stores number, otherwise <c>false</c>.</returns>
-		static bool			storesNumber(const std::string &string_, const std::string::value_type separator_ = '.');
+		static bool			storesNumber(const std::string_view string_, const std::string::value_type separator_ = '.');
 
 		template <typename T>
 		using remove_cvref_t = std::remove_reference_t<std::remove_cv_t<T>>;
@@ -141,7 +158,7 @@ namespace agdk
 		/// <param name="valueIfNotValid_">The value if cast is not valid.</param>
 		/// <returns>String converted to specified type (as template).</returns>
 		template <typename T>
-		static remove_cvref_t<T> to(const std::string &string_, remove_cvref_t<T> valueIfNotValid_ = T{})
+		static remove_cvref_t<T> to(const std::string_view string_, remove_cvref_t<T> valueIfNotValid_ = T{})
 		{
 			using RawT = remove_cvref_t<T>;	// remove references and constness/volatility
 			if constexpr(std::is_same_v<RawT,	bool>)
@@ -198,9 +215,12 @@ namespace agdk
 		/// Checks length of maximum sequence length from `sequence_` in `string_`.
 		/// </summary>
 		/// <param name="string_">The string.</param>
-		/// <param name="sequence">The sequence.</param>
-		/// <returns>Maximum sequence length found in `string_`</returns>
-		static std::size_t	maxSequenceLength(const std::string &string_, const std::string &sequence_);
+		/// <param name="sequence_">The sequence.</param>
+		/// <param name="caseSensitive">Case sensitive.</param>
+		/// <returns>
+		/// Maximum sequence length found in `string_`.
+		/// </returns>
+		static std::size_t	maxSequenceLength(const std::string_view string_, const std::string_view sequence_, const bool caseSensitive = true);
 		
 		/// <summary>
 		/// Explodes std::string into array of std::string using a separator.
@@ -208,7 +228,7 @@ namespace agdk
 		/// <param name="string_">The string.</param>
 		/// <param name="delimiter_">The delimiter.</param>
 		/// <returns>Dynamic array (std::vector) containing parts of splitted string.</returns>
-		static std::vector<std::string> explode(const std::string &string_, const std::string::value_type delimiter_);
+		static std::vector<std::string> explode(const std::string_view string_, const std::string::value_type delimiter_);
 		
 		/* This code is deprecated, C++17 includes <filesystem> library.
 			/// <summary>

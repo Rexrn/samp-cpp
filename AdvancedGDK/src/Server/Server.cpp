@@ -3,9 +3,11 @@
 
 namespace agdk
 {
+
 	Server::Server()
 	{
 	}
+
 
 	Server::~Server()
 	{
