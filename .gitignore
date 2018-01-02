@@ -38,3 +38,6 @@
 *.ipch
 *.lastbuildstate
 *.tlog
+/AdvancedGDK/.vs/AdvancedGDK/v15
+/AdvancedGDK/Debug
+/UnitTestMath/Debug
