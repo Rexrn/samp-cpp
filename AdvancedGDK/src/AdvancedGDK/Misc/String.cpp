@@ -1,8 +1,11 @@
-#include "stdafx.h"				// Precompiled header.
-#include <Misc/String.hpp>
+#include "stdafx.h"				// PCH
 
+// Custom headers:
+#include <AdvancedGDK/Misc/String.hpp>
+
+// Standard headers:
 #include <algorithm>
-#include <cctype>				// std::isspace, etc.
+#include <cctype>
 #include <functional>
 
 namespace agdk

@@ -1,12 +1,11 @@
-#include "stdafx.h"
-#include <Player/PlayerPool.hpp>
+#include "stdafx.h" // PCH
 
-#include <SampGDK.hpp>
+// Custom headers:
+#include <AdvancedGDK/Player/PlayerPool.hpp>
+#include <AdvancedGDK/SampGDK.hpp>
+#include <AdvancedGDK/Misc/String.hpp>
 
-// AGDK headers
-#include <Misc/String.hpp>
-
-// STD headers
+// Standard headers:
 #include <algorithm>
 
 namespace agdk

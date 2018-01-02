@@ -1,10 +1,10 @@
-#include "stdafx.h"				// PCH.
+#include "stdafx.h" // PCH.
 
 // Custom includes:
-#include <Misc/Random.hpp>		// The `Random` header.
+#include <AdvancedGDK/Misc/Random.hpp>	// The `Random` header.
 
 // Standard includes:
-#include <chrono>				// for std::chrono::system_clock
+#include <chrono>	// for std::chrono::system_clock
 
 namespace agdk
 {

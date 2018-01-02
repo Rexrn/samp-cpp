@@ -7,13 +7,13 @@
 
 #pragma once
 
-// SAMPGDK Include
-#include <SampGDK.hpp>
+// SAMPGDK include:
+#include <AdvancedGDK/SampGDK.hpp>
 
-// AGDK includes
-#include "Misc/Clock.hpp"
+// Custom includes:
+#include <AdvancedGDK/Misc/Clock.hpp>
 
-// STD includes
+// Standard includes:
 #include <memory>
 #include <string_view>
 

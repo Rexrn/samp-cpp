@@ -7,13 +7,13 @@
 
 #pragma once
 
-// SAMPGDK include
-#include <SampGDK.hpp>
+// SAMPGDK include:
+#include <AdvancedGDK/SampGDK.hpp>
 
-// AGDK includes
-#include "Misc/Math.hpp"
+// Custom includes:
+#include <AdvancedGDK/Misc/Math.hpp>
 
-// STD includes
+// Standard includes:
 #include <memory>		// for std::shared_ptr
 #include <cstddef>		// for std::size_t
 #include <string_view>

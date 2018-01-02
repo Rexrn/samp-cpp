@@ -1,5 +1,7 @@
-#include "stdafx.h"
-#include <Misc/Clock.hpp>
+#include "stdafx.h" // PCH
+
+// Custom headers:
+#include <AdvancedGDK/Misc/Clock.hpp>
 
 namespace agdk
 {

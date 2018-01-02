@@ -7,11 +7,11 @@
 
 #pragma once
 
-// AGDK includes
-#include "../Player/Player.hpp"
-#include "Misc/Math.hpp"			// agdk::Vector3, length classes
+// Custom includes:
+#include <AdvancedGDK/Player/Player.hpp>
+#include <AdvancedGDK/Misc/Math.hpp>
 
-// STD includes
+// Standard includes:
 #include <vector>
 #include <memory>
 #include <string_view>

@@ -72,53 +72,53 @@
     <ClInclude Include="dependencies\sampgdk\amx\sclinux.h">
       <Filter>dependencies\sampgdk\amx</Filter>
     </ClInclude>
-    <ClInclude Include="include\Player\Player.hpp">
+    <ClInclude Include="include\AdvancedGDK\Player\Player.hpp">
       <Filter>Header Files\Player</Filter>
     </ClInclude>
-    <ClInclude Include="include\Server\Server.hpp">
+    <ClInclude Include="include\AdvancedGDK\Player\PlayerPool.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\AdvancedGDK\Server\GameMode.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\AdvancedGDK\Server\Server.hpp">
       <Filter>Header Files\Server</Filter>
     </ClInclude>
-    <ClInclude Include="include\Misc\Clock.hpp">
+    <ClInclude Include="include\AdvancedGDK\AdvancedGDK.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\AdvancedGDK\SampGDK.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\AdvancedGDK\Misc\Clock.hpp">
       <Filter>Header Files\Misc</Filter>
     </ClInclude>
-    <ClInclude Include="include\Misc\Color.hpp">
+    <ClInclude Include="include\AdvancedGDK\Misc\Color.hpp">
       <Filter>Header Files\Misc</Filter>
     </ClInclude>
-    <ClInclude Include="include\Misc\Exceptions.hpp">
+    <ClInclude Include="include\AdvancedGDK\Misc\Pointers.hpp">
       <Filter>Header Files\Misc</Filter>
     </ClInclude>
-    <ClInclude Include="include\Misc\Math.hpp">
+    <ClInclude Include="include\AdvancedGDK\Misc\Random.hpp">
       <Filter>Header Files\Misc</Filter>
     </ClInclude>
-    <ClInclude Include="include\Misc\Pointers.hpp">
+    <ClInclude Include="include\AdvancedGDK\Misc\String.hpp">
       <Filter>Header Files\Misc</Filter>
     </ClInclude>
-    <ClInclude Include="include\Misc\String.hpp">
+    <ClInclude Include="include\AdvancedGDK\Misc\Task.hpp">
       <Filter>Header Files\Misc</Filter>
     </ClInclude>
-    <ClInclude Include="include\Misc\Task.hpp">
+    <ClInclude Include="include\AdvancedGDK\Misc\Exceptions.hpp">
       <Filter>Header Files\Misc</Filter>
     </ClInclude>
-    <ClInclude Include="include\Misc\Math\Vector2.inl">
+    <ClInclude Include="include\AdvancedGDK\Misc\Math\Vector2.inl">
       <Filter>Header Files\Misc\Math</Filter>
     </ClInclude>
-    <ClInclude Include="include\Misc\Math\Vector3.inl">
+    <ClInclude Include="include\AdvancedGDK\Misc\Math\Vector3.inl">
       <Filter>Header Files\Misc\Math</Filter>
     </ClInclude>
-    <ClInclude Include="include\Misc\Random.hpp">
+    <ClInclude Include="include\AdvancedGDK\Misc\Math.hpp">
       <Filter>Header Files\Misc</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Server\GameMode.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Player\PlayerPool.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\SampGDK.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\AdvancedGDK.hpp">
-      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -131,36 +131,36 @@
     <ClCompile Include="dependencies\sampgdk\sampgdk.c">
       <Filter>dependencies\sampgdk</Filter>
     </ClCompile>
-    <ClCompile Include="src\Player\Player.cpp">
+    <ClCompile Include="src\AdvancedGDK\Misc\Clock.cpp">
+      <Filter>Source Files\Misc</Filter>
+    </ClCompile>
+    <ClCompile Include="src\AdvancedGDK\Misc\Color.cpp">
+      <Filter>Source Files\Misc</Filter>
+    </ClCompile>
+    <ClCompile Include="src\AdvancedGDK\Misc\Random.cpp">
+      <Filter>Source Files\Misc</Filter>
+    </ClCompile>
+    <ClCompile Include="src\AdvancedGDK\Misc\String.cpp">
+      <Filter>Source Files\Misc</Filter>
+    </ClCompile>
+    <ClCompile Include="src\AdvancedGDK\Misc\Task.cpp">
+      <Filter>Source Files\Misc</Filter>
+    </ClCompile>
+    <ClCompile Include="src\AdvancedGDK\Player\Player.cpp">
       <Filter>Source Files\Player</Filter>
     </ClCompile>
-    <ClCompile Include="src\Server\Server.cpp">
+    <ClCompile Include="src\AdvancedGDK\Player\PlayerPool.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\AdvancedGDK\Server\GameMode.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\AdvancedGDK\Server\Server.cpp">
       <Filter>Source Files\Server</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Misc\Clock.cpp">
-      <Filter>Source Files\Misc</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Misc\Color.cpp">
-      <Filter>Source Files\Misc</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Misc\String.cpp">
-      <Filter>Source Files\Misc</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Misc\Task.cpp">
-      <Filter>Source Files\Misc</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Misc\Random.cpp">
-      <Filter>Source Files\Misc</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Server\GameMode.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Player\PlayerPool.cpp">
-      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="include\Misc\Math\Length.inl">
+    <None Include="include\AdvancedGDK\Misc\Math\Length.inl">
       <Filter>Header Files</Filter>
     </None>
   </ItemGroup>

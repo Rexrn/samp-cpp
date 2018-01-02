@@ -1,11 +1,10 @@
-#include "stdafx.h"
+#include "stdafx.h" // PCH
 
-#include <Server/Server.hpp>
-#include <Server/GameMode.hpp>
-
-#include <Player/PlayerPool.hpp>
-
-#include <Misc/String.hpp>
+// Custom includes:
+#include <AdvancedGDK/Server/Server.hpp>
+#include <AdvancedGDK/Server/GameMode.hpp>
+#include <AdvancedGDK/Player/PlayerPool.hpp>
+#include <AdvancedGDK/Misc/String.hpp>
 
 
 std::unique_ptr<agdk::Server>		g_server;		/// Initialize g_server instance.

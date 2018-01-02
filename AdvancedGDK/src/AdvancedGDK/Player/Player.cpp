@@ -1,9 +1,9 @@
-#include "stdafx.h"		// PCH
+#include "stdafx.h" // PCH
 
-// AGDK includes:
-#include <Player/Player.hpp>
-#include <Server/Server.hpp>
-#include <Misc/String.hpp>
+// Custom includes:
+#include <AdvancedGDK/Player/Player.hpp>
+#include <AdvancedGDK/Server/Server.hpp>
+#include <AdvancedGDK/Misc/String.hpp>
 
 namespace agdk
 {

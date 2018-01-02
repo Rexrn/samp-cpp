@@ -1,5 +1,7 @@
-#include "stdafx.h"
-#include <Server/GameMode.hpp>
+#include "stdafx.h" // PCH
+
+// Custom includes:
+#include <AdvancedGDK/Server/GameMode.hpp>
 
 namespace agdk
 {

@@ -1,9 +1,11 @@
-#include "stdafx.h"					// Precompiled header.
-#include <Misc/Color.hpp>			// Color header
+#include "stdafx.h" // PCH
 
-#include <Misc/Random.hpp>		// used in Color::random
-#include <Misc/String.hpp>			// for string manipulation
+// Custom headers:
+#include <AdvancedGDK/Misc/Color.hpp>		// Color header
+#include <AdvancedGDK/Misc/Random.hpp>		// used in Color::random
+#include <AdvancedGDK/Misc/String.hpp>		// for string manipulation
 
+// Standard headers:
 #include <sstream>
 
 namespace agdk
