@@ -1,6 +1,7 @@
-#include <Player/Player.hpp>
+#include "stdafx.h"		// PCH
 
-// AGDK includes
+// AGDK includes:
+#include <Player/Player.hpp>
 #include <Server/Server.hpp>
 #include <Misc/String.hpp>
 
