@@ -13,422 +13,487 @@ namespace agdk
 	{
 		// TODO: requires code improvement and documentation standarization (using XML style).
 
-		template <typename T>
+		template <typename _Ty>
 		class BaseVector2
 		{
 		public:
+			using ValueType = std::remove_cv_t< std::remove_reference_t<_Ty> >;
+
+			// Allow every arithmetic type but bool.
+			static_assert(std::is_arithmetic_v<ValueType> && !std::is_same_v<ValueType, bool>, "ValueType of a vector must be scalar type.");
+
 			// This is basic component of a Vector2
-			T x, y;
+			ValueType x, y;
 
-			////// Function: Vector2 (default constructor)
-			//// Parameters: <none>
-			//// Brief: This is a Vector2's default constructor
-			///////////////////////////////////////////////////////////////
-			BaseVector2();
-
-			////// Function: Vector2 (constructor)
-			//// Parameters:
-			//// 	1) xValue: 	Float32 		- x component of a vector
-			//// 	2) yValue: 	Float32 		- y component of a vector
-			//// Brief: Initializes vector from components
-			///////////////////////////////////////////////////////////////
-			BaseVector2(const T &xValue, const T &yValue);
-
-			////// Function: Vector2 (copy constructor)
-			//// Parameters:
-			////	1) other	Vector2&		- other instance to copy from
-			//// Brief: This is a Vector2's copy constructor
-			///////////////////////////////////////////////////////////////
-			template <typename U>
-			BaseVector2(const BaseVector2<U> &v);
-
-			////// Function: Vector2 (destructor)
-			//// Parameters: <none>
-			//// Brief: This is a Vector2's destructor [= default]
-			///////////////////////////////////////////////////////////////
-			~BaseVector2() = default;
-
-			////// Function: Set
-			//// Parameters:
-			//// 	1) xValue: 	Float32 		- x component of a vector
-			//// 	2) yValue: 	Float32 		- y component of a vector
-			//// Return: 			void 		- does not return anything
-			//// Brief: Sets vector components
-			///////////////////////////////////////////////////////////////
-			void set(const T &xValue, const T &yValue);
-
-			////// Function: Length
-			//// Parameters: <none>
-			//// Return: 			Float32 	- length of vector
-			//// Brief: returns vector length = sqrt(x*x + y*y)
-			///////////////////////////////////////////////////////////////
-			float length() const;
-
-			////// Function: LengthSquared
-			//// Parameters: <none>
-			//// Return: 			Float32 	- squared length of vector
-			//// Brief: return vector length squared = (x*x + y*y)
-			///////////////////////////////////////////////////////////////
-			float lengthSquared() const;
-
-			////// Function: Distance
-			//// Parameters:
-			////	1) other	Vector2&		- other vector (to compute distance)
-			//// Return: 			Float32 	- distance to vector
-			//// Brief: return distance to other vector
-			//// Distance = (A-B).Length()
-			///////////////////////////////////////////////////////////////
-			template <typename U>
-			float distance(const BaseVector2<U> & v) const;
-
-			////// Function: DistanceSquared
-			//// Parameters:
-			////	1) other	Vector2&		- other vector (to compute distance)
-			//// Return: 			Float32 	- squared distance to vector
-			//// Brief: return squared distance to other vector
-			//// Distance = (A-B).LengthSquared()
-			///////////////////////////////////////////////////////////////
-			template <typename U>
-			float distanceSquared(const BaseVector2<U> & v) const;
-
-			////// Function: Dot (product)
-			//// Parameters:
-			////	1) other	Vector2&		- other vector (to compute dot product)
-			//// Return: 			Float32 	- dot product of vectors
-			//// Brief: return dot product of two vectors (self and 'other')
-			//// Dot product = (x * other.x) + (y * other.y)
-			///////////////////////////////////////////////////////////////
-			template <typename U>
-			float dot(const BaseVector2<U> & v) const;
-
-			////// Function: Cross (product)
-			//// Parameters:
-			////	1) other	Vector2&		- other vector (to compute cross product)
-			//// Return: 			Float32 	- cross product of vectors
-			//// Brief: return cross product of two vectors (self and 'other')
-			//// Cross product = (x * other.y) + (y * other.x)
-			///////////////////////////////////////////////////////////////
-			template <typename U>
-			float cross(const BaseVector2<U> & v) const;
-
-			////// Function: Reflect (vector) [const]
-			//// Parameters:
-			////	1) normal	Vector2		- wall normal to be reflected from
-			//// Return: 		Vector2 	- reflected copy vector
-			//// Brief: return reflected copy of self
-			//// Reflected vector is used in for instance ball bouncing
-			//// Reflected vector = self - (2 * (Normal * Dot(Normal, self)))
-			///////////////////////////////////////////////////////////////
-			template <typename U>
-			BaseVector2<T> reflect(const BaseVector2<U> &Normal) const;
-
-			////// Function: ReflectSelf
-			//// Parameters:
-			////	1) normal	Vector2		- wall normal to be reflected from
-			//// Return: 		Vector2& 	- self as reflected vector
-			//// Brief: return self as reflected vector from normal
-			//// THIS METHOD MODIFIES SELF VECTOR
-			//// Reflected vector is used in for instance ball bouncing
-			//// Reflected vector = self - (2 * (Normal * Dot(Normal, self)))
-			///////////////////////////////////////////////////////////////
-			template <typename U>
-			BaseVector2<T> & reflectSelf(const BaseVector2<U> &Normal);
-
-			////// Function: Normal (vector) [const]
-			//// Parameters: <none>
-			//// Return: 		Vector2 	- normal from self
-			//// Brief: return calculated normal using self vector
-			//// Normal = Vector2(-y, x)
-			///////////////////////////////////////////////////////////////
-			BaseVector2<T> normal() const;
-
-			////// Function: NormalizeSelf
-			//// Parameters: <none>
-			//// Return: 		Vector2& 	- self as normalized vector
-			//// Brief: return self as normalized vector
-			//// THIS METHOD MODIFIES SELF VECTOR
-			//// Normalization = self / self.Length()
-			///////////////////////////////////////////////////////////////
-			BaseVector2<T> & normalizeSelf();
-
-			////// Function: Normalize
-			//// Parameters: <none>
-			//// Return: 		Vector2 	- normalized copy of self
-			//// Brief: return normalized copy of self
-			//// Normalization = self / self.Length()
-			///////////////////////////////////////////////////////////////
-			BaseVector2<T> normalize() const;
-
-			template <typename U>
-			bool equals(const BaseVector2<U> &Other, const double EqualityTolerance = Math::Equality::LowTolerance) const
+			/// <summary>
+			/// Initializes a new instance of the <see cref="BaseVector2"/> class.
+			/// </summary>
+			BaseVector2()
+				: x{ 0 }, y{ 0 }
 			{
-				return (std::fabs(static_cast<double>(x) - static_cast<double>(Other.x)) <= EqualityTolerance
-					&& std::fabs(static_cast<double>(y) - static_cast<double>(Other.y)) <= EqualityTolerance);
 			}
 
-			template <typename V, typename U>
-			static BaseVector2<V> min(const BaseVector2<V> &MinVec, const BaseVector2<U> &MaxVec)
+			/// <summary>
+			/// Initializes a new instance of the <see cref="BaseVector2"/> class.
+			/// </summary>
+			/// <param name="x_">The x value.</param>
+			/// <param name="y_">The y value.</param>
+			BaseVector2(const ValueType &x_, const ValueType &y_)
+				: x{ x_ }, y{ y_ }
 			{
-				return BaseVector2<V>(Math::min(MinVec.x, MaxVec.x), Math::min(MinVec.y, MaxVec.y));
-			}
-			template <typename V, typename U>
-			static BaseVector2<V> max(const BaseVector2<V> &MinVec, const BaseVector2<U> &MaxVec)
-			{
-				return BaseVector2<V>(Math::max(MinVec.x, MaxVec.x), Math::max(MinVec.y, MaxVec.y));
-			}
-
-			template <typename V, typename U>
-			static void minMax(BaseVector2<V> &MinVec, BaseVector2<U> &MaxVec)
-			{
-				MinVec = BaseVector2<V>::min(MinVec, MaxVec);
-				MaxVec = BaseVector2<U>::max(MinVec, MaxVec);
 			}
 
-			template <typename U>
-			BaseVector2<U> as() { return BaseVector2<U>(*this); }
-
-			//////////// OPERATORS /////////////
-
-
-			////// Operator: Assign
-			//// Brief: Assign value of other vector to self
-			///////////////////////////////////////////////////////////////
-			template <typename U>
-			BaseVector2<T> & operator = (const BaseVector2<U> &Right) { x = T(Right.x); y = T(Right.y); return *this; }
-
-			////// Operator: Negate
-			//// Brief: Returns negated copy vector
-			///////////////////////////////////////////////////////////////
-			BaseVector2<T> operator - () const { return BaseVector2<T>(-x, -y); }
-
-			////// Operator: Equality test
-			//// Brief: Checks if self and other vector are the same
-			///////////////////////////////////////////////////////////////
-			template <typename U>
-			bool operator == (const BaseVector2<U> &Right) const { return equals(Right); }
-
-			////// Operator: Inequality test
-			//// Brief: Checks if self and other vector are NOT the same
-			///////////////////////////////////////////////////////////////
-			template <typename U>
-			bool operator != (const BaseVector2<U> &Right) const { return !equals(Right); }
-
-
-			////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-			////// Operator: Addition
-			//// Brief: Creates a copy of (self + other)
-			///////////////////////////////////////////////////////////////
-			template <typename U>
-			BaseVector2<T> operator + (const BaseVector2<U> &Right) const { return BaseVector2<T>(x + T(Right.x), y + T(Right.y)); }
-
-			////// Operator: Subtraction
-			//// Brief: Creates a copy of (self - other)
-			///////////////////////////////////////////////////////////////
-			template <typename U>
-			BaseVector2<T> operator - (const BaseVector2<U> &Right) const { return BaseVector2<T>(x - T(Right.x), y - T(Right.y)); }
-
-			////// Operator: Multiplication
-			//// Brief: Creates a copy of (self * other)
-			///////////////////////////////////////////////////////////////
-			template <typename U>
-			BaseVector2<T> operator * (const BaseVector2<U> &Right) const { return BaseVector2<T>(x * T(Right.x), y * T(Right.y)); }
-
-			////// Operator: Division
-			//// Brief: Creates a copy of (self / other)
-			//// BE CAREFUL! IF 'other.x' OR 'other.y' EQUALS 0
-			//// IT WILL CAUSE EXCEPTION
-			///////////////////////////////////////////////////////////////
-			template <typename U>
-			BaseVector2<T> operator / (const BaseVector2<U> &Right) const { return BaseVector2<T>(x / T(Right.x), y / T(Right.y)); }
-
-
-			////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-			////// Operator: Addition (to self)
-			//// Brief: Adds a vector to self
-			///////////////////////////////////////////////////////////////
-			template <typename U>
-			BaseVector2<T> & operator += (const BaseVector2<U> &Right) { x += T(Right.x); y += T(Right.y); return *this; }
-
-			////// Operator: Subtraction (from self)
-			//// Brief: Subtracts a vector from self
-			///////////////////////////////////////////////////////////////
-			template <typename U>
-			BaseVector2<T> & operator -= (const BaseVector2<U> &Right) { x -= T(Right.x); y -= T(Right.y); return *this; }
-
-			////// Operator: Multiplication (self by other)
-			//// Brief: Multiplies self by other
-			///////////////////////////////////////////////////////////////
-			template <typename U>
-			BaseVector2<T> & operator *= (const BaseVector2<U> &Right) { x *= T(Right.x); y *= T(Right.y); return *this; }
-
-			////// Operator: Division (self by other)
-			//// Brief: Divides self by other vector
-			//// BE CAREFUL! IF 'other.x' OR 'other.y' EQUALS 0
-			//// IT WILL CAUSE EXCEPTION
-			///////////////////////////////////////////////////////////////
-			template <typename U>
-			BaseVector2<T> & operator /= (const BaseVector2<U> &Right) { x /= T(Right.x); y /= T(Right.y); return *this; }
-
-
-			////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-			////// Operator: Addition (scalar to self) (return copy)
-			//// Brief: Adds a scalar to both components (x, y)
-			///////////////////////////////////////////////////////////////
-			BaseVector2<T> operator + (const float Right) const { return BaseVector2<T>(x + T(Right), y + T(Right)); }
-
-			////// Operator: Subtraction (scalar from self) (return copy)
-			//// Brief: Suybtracts a scalar from both components (x, y)
-			///////////////////////////////////////////////////////////////
-			BaseVector2<T> operator - (const float Right) const { return BaseVector2<T>(x - T(Right), y - T(Right)); }
-
-			////// Operator: Multiplication (self by scalar) (return copy)
-			//// Brief: Multiplies both components (x, y) by scalar
-			///////////////////////////////////////////////////////////////
-			BaseVector2<T> operator * (const float Right) const { return BaseVector2<T>(x * T(Right), y * T(Right)); }
-
-			////// Operator: Division (self by scalar) (return copy)
-			//// Brief: Divides both components (x, y) by scalar
-			//// BE CAREFUL! IF scalar EQUALS 0 [ZERO]
-			//// IT WILL CAUSE EXCEPTION
-			///////////////////////////////////////////////////////////////
-			BaseVector2<T> operator / (const float Right) const { return BaseVector2<T>(x / T(Right), y / T(Right)); }
-
-
-			////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-			////// Operator: Addition (scalar to self) (return copy)
-			//// Brief: Adds a scalar to both components (x, y)
-			///////////////////////////////////////////////////////////////
-			BaseVector2<T> & operator += (const float Right) { x += T(Right); y += T(Right); return *this; }
-
-			////// Operator: Subtraction (scalar from self)
-			//// Brief: Suybtracts a scalar from both components (x, y)
-			///////////////////////////////////////////////////////////////
-			BaseVector2<T> & operator -= (const float Right) { x -= T(Right); y -= T(Right); return *this; }
-
-			////// Operator: Multiplication (self by scalar)
-			//// Brief: Multiplies both components (x, y) by scalar
-			///////////////////////////////////////////////////////////////
-			BaseVector2<T> & operator *= (const float Right) { x *= T(Right); y *= T(Right); return *this; }
-
-			////// Operator: Division (self by scalar)
-			//// Brief: Divides self by scalar
-			//// BE CAREFUL! IF scalar EQUALS 0 [ZERO]
-			//// IT WILL CAUSE EXCEPTION
-			BaseVector2<T> & operator /= (const float Right) { x /= T(Right); y /= T(Right); return *this; }
-		};
-
-		////////////////////////////////////////////////////////////////////////////////////////////////////////
-		///////////////////////////////////////////// Implementation ///////////////////////////////////////////
-		////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-		////////////////////////////////////////////////////////////////////////////////////////////////////
-		template <typename T>
-		BaseVector2<T>::BaseVector2() : x(0), y(0) { }
-
-		////////////////////////////////////////////////////////////////////////////////////////////////////
-		template <typename T>
-		BaseVector2<T>::BaseVector2(const T &xValue, const T &yValue) : x(xValue), y(yValue) { }
-
-		////////////////////////////////////////////////////////////////////////////////////////////////////
-		template <typename T>
-		template <typename U>
-		BaseVector2<T>::BaseVector2(const BaseVector2<U> & v) : x(static_cast<T>(v.x)), y(static_cast<T>(v.y)) { }
-
-		////////////////////////////////////////////////////////////////////////////////////////////////////
-		template <typename T>
-		void BaseVector2<T>::set(const T &xValue, const T &yValue) { x = xValue; y = yValue; }
-
-		////////////////////////////////////////////////////////////////////////////////////////////////////
-		template <typename T>
-		float BaseVector2<T>::length() const { return sqrt(static_cast<float>(x * x + y * y)); }
-
-		////////////////////////////////////////////////////////////////////////////////////////////////////
-		template <typename T>
-		float BaseVector2<T>::lengthSquared() const { return x * x + y * y; }
-
-		////////////////////////////////////////////////////////////////////////////////////////////////////
-		template <typename T>
-		template <typename U>
-		float BaseVector2<T>::distance(const BaseVector2<U> & v) const { return sqrt(static_cast<float>((x - T(v.x)) * (x - T(v.x))) + ((y - T(v.y)) * (y - T(v.y)))); }
-
-		////////////////////////////////////////////////////////////////////////////////////////////////////
-		template <typename T>
-		template <typename U>
-		float BaseVector2<T>::distanceSquared(const BaseVector2<U> & v) const { return static_cast<float>((x - T(v.x)) * (x - T(v.x))) + ((y - T(v.y)) * (y - T(v.y))); }
-
-		////////////////////////////////////////////////////////////////////////////////////////////////////
-		template <typename T>
-		template <typename U>
-		float BaseVector2<T>::dot(const BaseVector2<U> & v) const { return x * T(v.x) + y * T(v.y); }
-
-		////////////////////////////////////////////////////////////////////////////////////////////////////
-		template <typename T>
-		template <typename U>
-		float BaseVector2<T>::cross(const BaseVector2<U> & v) const { return x * T(v.y) + y * T(v.x); }
-
-		////////////////////////////////////////////////////////////////////////////////////////////////////
-		template <typename T>
-		template <typename U>
-		BaseVector2<T> BaseVector2<T>::reflect(const BaseVector2<U> &Normal) const
-		{
-			auto normal = Normal.normalize();
-			return BaseVector2<T>(*this) - ((normal.template As<T>() * (normal.template As<T>.dot(*this))) * 2.f);
-		}
-
-		////////////////////////////////////////////////////////////////////////////////////////////////////
-		template <typename T>
-		template <typename U>
-		BaseVector2<T>& BaseVector2<T>::reflectSelf(const BaseVector2<U> &Normal)
-		{
-			*this = (reflect(Normal));
-			return *this;
-		}
-
-		////////////////////////////////////////////////////////////////////////////////////////////////////
-		template <typename T>
-		BaseVector2<T> BaseVector2<T>::normal() const { return BaseVector2<T>(-y, x); }
-
-		////////////////////////////////////////////////////////////////////////////////////////////////////
-		template <typename T>
-		BaseVector2<T> & BaseVector2<T>::normalizeSelf()
-		{
-			float length = length();
-			if (length != 0)
+			/// <summary>
+			/// Initializes a new instance of the <see cref="BaseVector2"/> class.
+			/// </summary>
+			/// <param name="rhs_">The other vector.</param>
+			template <typename _Ty2>
+			BaseVector2(const BaseVector2<_Ty2> &rhs_)
+				: x{ static_cast<ValueType>(rhs_.x) }, y{ static_cast<ValueType>(rhs_.y) }
 			{
-				x /= length; y /= length;
+			}
+			
+			/// <summary>
+			/// Sets values of the vector.
+			/// </summary>
+			/// <param name="x_">The x value.</param>
+			/// <param name="y_">The y value.</param>
+			void set(const ValueType x_, const ValueType y_)
+			{
+				x = static_cast<ValueType>(x_);
+				y = static_cast<ValueType>(y_);
+			}
+			
+			/// <summary>
+			/// Returns length of the vector.
+			/// </summary>
+			/// <returns>Length of the vector.</returns>
+			template <typename _LenTy,
+				typename = std::enable_if_t< std::is_floating_point_v<_LenTy> > >
+			_LenTy length() const
+			{
+				return std::sqrt(x * x + y * y);
+			}
+
+			/// <summary>
+			/// Returns squared length of the vector.
+			/// </summary>
+			/// <returns>Squared length of the vector.</returns>
+			template <typename _LenTy,
+				typename = std::enable_if_t< std::is_floating_point_v<_LenTy> > >
+			_LenTy lengthSquared() const
+			{
+				return static_cast<_LenTy>(x * x + y * y);
+			}
+
+			/// <summary>
+			/// Computes distance between two instances.
+			/// </summary>
+			/// <param name="other_">The other vector.</param>
+			/// <returns>Distance between two instances.</returns>
+			template <typename _DistTy, typename _Ty2>			
+			_DistTy distance(const BaseVector2<_Ty2> & other_) const
+			{
+				return (*this - other_).length();
+			}
+
+			/// <summary>
+			/// Computes squared distance between two instances.
+			/// </summary>
+			/// <param name="other_">The other vector.</param>
+			/// <returns>Squared distance between two instances.</returns>
+			template <typename _DistTy, typename _Ty2>
+			_DistTy distanceSquared(const BaseVector2<_Ty2> & other_) const
+			{
+				return (*this - other_).lengthSquared();
+			}
+
+			/// <summary>
+			/// Computes dot product of two vectors (this and other).
+			/// </summary>
+			/// <param name="other_">The other vector.</param>
+			/// <returns>Dot product of two vectors.</returns>
+			template <typename _DotTy, typename _Ty2>			
+			_DotTy dot(const BaseVector2<_Ty2> & other_) const
+			{
+				return static_cast<_DotTy>(x * ValueType(v.x) + y * ValueType(v.y));
+			}
+
+			/// <summary>
+			/// Computes cross product of two vectors (this and rhs).
+			/// </summary>
+			/// <param name="other_">The other vector.</param>
+			/// <returns>Cross product of two vectors.</returns>
+			template <typename _CrossTy, typename _Ty2>
+			_CrossTy cross(const BaseVector2<_Ty2> & other_) const
+			{
+				return static_cast<_CrossTy>(x * ValueType(v.y) + y * ValueType(v.x));
+			}
+
+			/// <summary>
+			/// Computes reflection vector of specified normal.
+			/// </summary>
+			/// <param name="normal_">The surface normal.</param>
+			/// <returns>Reflection vector of specified normal</returns>
+			template <typename _Ty2>
+			BaseVector2<_Ty> reflect(const BaseVector2<_Ty2> &normal_) const
+			{
+				auto normal = normal_.normalize().convert<_Ty>();
+				return (*this) - (normal * normal.dot(*this) * 2.f);
+			}
+			
+			/// <summary>
+			/// Computes reflection vector of specified normal and assigns it to self.
+			/// </summary>
+			/// <param name="normal_">The normal.</param>
+			/// <returns>Reference to self after computing reflection of specified normal.</returns>
+			template <typename _Ty2>		
+			BaseVector2<_Ty> & reflectSelf(const BaseVector2<_Ty2> &normal_)
+			{
+				auto normal = normal_.normalize().convert<_Ty>();
+				*this = (*this) - (normal * normal.dot(*this) * 2.f);
+				return *this;
+			}
+			
+			/// <summary>
+			/// Computes normalized vector.
+			/// </summary>
+			/// <returns>Normalized vector</returns>
+			BaseVector2<_Ty> normalize() const
+			{
+				auto len = this->length<ValueType>();
+				if (len != 0)
+				{
+					return { x / len, y / len };
+				}
+				return *this;
+			}
+			
+			/// <summary>
+			/// Normalizes self and returns reference.
+			/// </summary>
+			/// <returns>Reference to normalized self.</returns>
+			BaseVector2<_Ty> & normalizeSelf()
+			{
+				auto len = this->length<ValueType>();
+				if (len != 0)
+				{
+					x /= len; y /= len;
+				}
 				return *this;
 			}
 
-			set(0, 0);
-			return *this;
+			/// <summary>
+			/// Checks if two vectors are equal.
+			/// </summary>
+			/// <param name="other_">The other vector.</param>
+			/// <param name="EqualityTolerance">The equality tolerance.</param>
+			/// <returns>
+			///  <c>true</c> if vectors are equal; otherwise, <c>false</c>.
+			/// </returns>
+			template <typename _Ty2, typename _EqTy,
+						typename = std::enable_if_t< std::is_floating_point_v<_EqTy> > >
+			bool equals(const BaseVector2<_Ty2> &other_, const _EqTy equalityTolerance_ = Math::Tolerance::Low<_EqTy>) const
+			{
+				return (std::abs(static_cast<_EqTy>(x) - static_cast<_EqTy>(other_.x)) <= equalityTolerance_
+					&& std::abs(static_cast<_EqTy>(y) - static_cast<_EqTy>(other_.y)) <= equalityTolerance_);
+			}
+
+			/// <summary>
+			/// Computes minimal vector of the two specified.
+			/// </summary>
+			/// <param name="lhs">The lhs vector.</param>
+			/// <param name="rhs">The rhs vector.</param>
+			/// <returns>Minimal vector of the two specified.</returns>
+			template <typename _Ty2>
+			static BaseVector2<_Ty> min(const BaseVector2<_Ty> &lhs_, const BaseVector2<_Ty2> &rhs_)
+			{
+				return BaseVector2<_Ty>(Math::min(lhs_.x, rhs_.x), Math::min(lhs_.y, rhs_.y));
+			}
+
+			/// <summary>
+			/// Computes maximal vector of the two specified.
+			/// </summary>
+			/// <param name="lhs">The lhs vector.</param>
+			/// <param name="rhs">The rhs vector.</param>
+			/// <returns>Maximal vector of the two specified.</returns>
+			template <typename _Ty2>
+			static BaseVector2<_Ty> max(const BaseVector2<_Ty> &lhs_, const BaseVector2<_Ty2> &rhs_)
+			{
+				return BaseVector2<_Ty>(Math::max(lhs_.x, rhs_.x), Math::max(lhs_.y, rhs_.y));
+			}
+
+			/// <summary>
+			/// Computes minimal and maximal vector of the two specified.
+			/// </summary>
+			/// <param name="minVec_">The minimum vec.</param>
+			/// <param name="maxVec_">The maximum vec.</param>
+			/// <remarks>
+			/// <para>Uses arguments as output, changes its values.</para>
+			/// </remarks>
+			template <typename _Ty2>
+			static void minMax(BaseVector2<_Ty> &minVec_, BaseVector2<_Ty2> &maxVec_)
+			{
+				auto tempMin = minVec_;
+				minVec_ = BaseVector2<_Ty>::min(minVec_, maxVec_);
+				maxVec_ = BaseVector2<_Ty2>::max(tempMin, maxVec_);
+			}
+
+			
+			/// <summary>
+			/// Converts vector to other type.
+			/// </summary>
+			/// <returns>Vector of other value type.</returns>
+			template <typename _Ty2>
+			BaseVector2<_Ty2> convert() { return BaseVector2<_Ty2>{*this}; }
+
+			//////////// OPERATORS /////////////
+			
+			/// <summary>
+			/// Assigns vector to self.
+			/// </summary>
+			/// <param name="rhs_">The rhs vector.</param>
+			/// <returns></returns>
+			template <typename _Ty2>
+			BaseVector2<_Ty> & operator = (const BaseVector2<_Ty2> &rhs_) { x = ValueType(rhs_.x); y = ValueType(rhs_.y); return *this; }
+			
+			/// <summary>
+			/// Negates vector.
+			/// </summary>
+			/// <returns>Negated vector.</returns>
+			BaseVector2<_Ty> operator - () const { return BaseVector2<_Ty>(-x, -y); }
+
+			
+			/// <summary>
+			/// Checks if lhs vector is equal to rhs vector (with low tolerance).
+			/// </summary>
+			/// <param name="rhs_">The other vector.</param>
+			/// <returns>
+			///  <c>true</c> if vectors are equal; otherwise, <c>false</c>.
+			/// </returns>
+			template <typename _Ty2>
+			bool operator == (const BaseVector2<_Ty2> &rhs_) const { return equals(rhs_); }
+
+			/// <summary>
+			/// Checks if lhs vector is not equal to rhs vector (with low tolerance).
+			/// </summary>
+			/// <param name="rhs_">The other vector.</param>
+			/// <returns>
+			///  <c>true</c> if vectors are not equal; otherwise, <c>false</c>.
+			/// </returns>
+			template <typename _Ty2>
+			bool operator != (const BaseVector2<_Ty2> &rhs_) const { return !equals(rhs_); }
+
+			////////////////////////////////////////////////////////////////////////////////////////////////////
+
+			/// <summary>
+			/// Adds two vectors together.
+			/// </summary>
+			/// <param name="lhs_">The lhs vector.</param>
+			/// <param name="rhs_">The rhs vector.</param>
+			/// <returns>Reference to self, after operation.</returns>
+			template <typename _Ty2>
+			BaseVector2<_Ty> & operator += (const BaseVector2<_Ty2> &rhs_)
+			{
+				x += ValueType(rhs_.x);	y += ValueType(rhs_.y);
+				return *this;
+			}
+
+			/// <summary>
+			/// Subtracts rhs vector from lhs one.
+			/// </summary>
+			/// <param name="lhs_">The lhs vector.</param>
+			/// <param name="rhs_">The rhs vector.</param>
+			/// <returns>Reference to self, after operation.</returns>
+			template <typename _Ty2>
+			BaseVector2<_Ty> & operator -= (const BaseVector2<_Ty2> &rhs_)
+			{
+				x -= ValueType(rhs_.x);	y -= ValueType(rhs_.y);
+				return *this;
+			}
+
+			/// <summary>
+			/// Multiplies two vectors.
+			/// </summary>
+			/// <param name="lhs_">The lhs vector.</param>
+			/// <param name="rhs_">The rhs vector.</param>
+			/// <returns>Reference to self, after operation.</returns>
+			template <typename _Ty2>
+			BaseVector2<_Ty> & operator *= (const BaseVector2<_Ty2> &rhs_)
+			{
+				x *= ValueType(rhs_.x);	y *= ValueType(rhs_.y);
+				return *this;
+			}
+
+			/// <summary>
+			/// Adds two vectors together.
+			/// </summary>
+			/// <param name="lhs_">The lhs vector.</param>
+			/// <param name="rhs_">The rhs vector.</param>
+			/// <returns>Reference to self, after operation.</returns>
+			template <typename _Ty2>
+			BaseVector2<_Ty> & operator /= (const BaseVector2<_Ty2> &rhs_)
+			{
+				x /= ValueType(rhs_.x);	y /= ValueType(rhs_.y);
+				return *this;
+			}
+
+			////////////////////////////////////////////////////////////////////////////////////////////////////
+
+			/// <summary>
+			/// Adds scalar to a vector.
+			/// </summary>
+			/// <param name="rhs_">The scalar.</param>
+			/// <returns>Vector plus a scalar.</returns>
+			BaseVector2<_Ty> & operator += (const ValueType rhs_)
+			{
+				x += rhs_; y += rhs_;
+				return *this;
+			}
+
+			/// <summary>
+			/// Substracts scalar from a vector.
+			/// </summary>
+			/// <param name="rhs_">The scalar.</param>
+			/// <returns>Vector minus a scalar.</returns>
+			BaseVector2<_Ty> & operator -= (const ValueType rhs_)
+			{
+				x -= rhs_; y -= rhs_;
+				return *this;
+			}
+
+			/// <summary>
+			/// Multiplies vector by a scalar.
+			/// </summary>
+			/// <param name="rhs_">The scalar.</param>
+			/// <returns>Vector times a scalar.</returns>
+			BaseVector2<_Ty> & operator *= (const ValueType rhs_)
+			{
+				x *= rhs_; y *= rhs_;
+				return *this;
+			}
+
+			/// <summary>
+			/// Divides vector by a scalar.
+			/// </summary>
+			/// <param name="rhs_">The scalar.</param>
+			/// <returns>Vector divided by a scalar.</returns>
+			BaseVector2<_Ty> & operator /= (const ValueType rhs_)
+			{
+				x /= rhs_; y /= rhs_;
+				return *this;
+			}
+		};
+		
+		////////////////////////////////////////////////////////////////////////////////////////////////////
+		/// <summary>
+		/// Adds two vectors together.
+		/// </summary>
+		/// <param name="lhs_">The lhs vector.</param>
+		/// <param name="rhs_">The rhs vector.</param>
+		/// <returns>Sum of two vectors.</returns>
+		template <typename _Ty1, typename _Ty2>
+		BaseVector2<_Ty1> operator + (const BaseVector2<_Ty1> &lhs_, const BaseVector2<_Ty2> &rhs_)
+		{
+			return BaseVector2<_Ty1>(lhs_.x + BaseVector2<_Ty1>::ValueType(rhs_.x), lhs_.y + BaseVector2<_Ty1>::ValueType(rhs_.y));
 		}
 
 		////////////////////////////////////////////////////////////////////////////////////////////////////
-		template <typename T>
-		BaseVector2<T> BaseVector2<T>::normalize() const
+		/// <summary>
+		/// Subtracts rhs vector from lhs one.
+		/// </summary>
+		/// <param name="lhs_">The lhs vector.</param>
+		/// <param name="rhs_">The rhs vector.</param>
+		/// <returns>Difference of two vectors.</returns>
+		template <typename _Ty1, typename _Ty2>
+		BaseVector2<_Ty1> operator - (const BaseVector2<_Ty1> &lhs_, const BaseVector2<_Ty2> &rhs_)
 		{
-			BaseVector2<T> ret = *this;
-			float length = length();
-			if (length != 0)
-			{
-				ret.x /= length; ret.y /= length;
-				return ret;
-			}
-
-			ret.set(0, 0);
-			return ret;
+			return BaseVector2<_Ty1>(lhs_.x - BaseVector2<_Ty1>::ValueType(rhs_.x), lhs_.y - BaseVector2<_Ty1>::ValueType(rhs_.y));
 		}
 
-		///////////////////////////////////////// End of Implementation ////////////////////////////////////////
-		////////////////////////////////////////////////////////////////////////////////////////////////////////
+		////////////////////////////////////////////////////////////////////////////////////////////////////
+		/// <summary>
+		/// Multiplies two vectors.
+		/// </summary>
+		/// <param name="lhs_">The lhs vector.</param>
+		/// <param name="rhs_">The rhs vector.</param>
+		/// <returns>Product of two vectors.</returns>
+		template <typename _Ty1, typename _Ty2>
+		BaseVector2<_Ty1> operator * (const BaseVector2<_Ty1> &lhs_, const BaseVector2<_Ty2> &rhs_)
+		{
+			return BaseVector2<_Ty1>(lhs_.x * BaseVector2<_Ty1>::ValueType(rhs_.x), lhs_.y * BaseVector2<_Ty1>::ValueType(rhs_.y));
+		}
 
+		////////////////////////////////////////////////////////////////////////////////////////////////////
+		/// <summary>
+		/// Adds two vectors together.
+		/// </summary>
+		/// <param name="lhs_">The lhs vector.</param>
+		/// <param name="rhs_">The rhs vector.</param>
+		/// <returns>Sum of two vectors.</returns>
+		template <typename _Ty1, typename _Ty2>
+		BaseVector2<_Ty1> operator / (const BaseVector2<_Ty1> &lhs_, const BaseVector2<_Ty2> &rhs_)
+		{
+			return BaseVector2<_Ty1>(lhs_.x / BaseVector2<_Ty1>::ValueType(rhs_.x), lhs_.y / BaseVector2<_Ty1>::ValueType(rhs_.y));
+		}
+
+
+		////////////////////////////////////////////////////////////////////////////////////////////////////
+		////////////////////////////////////////////////////////////////////////////////////////////////////
+		////////////////////////////////////////////////////////////////////////////////////////////////////
+
+		////////////////////////////////////////////////////////////////////////////////////////////////////
+		/// <summary>
+		/// Adds scalar to a vector.
+		/// </summary>
+		/// <param name="lhs_">The lhs vector.</param>
+		/// <param name="rhs_">The scalar.</param>
+		/// <returns>Vector plus a scalar.</returns>
+		template <typename _Ty>
+		BaseVector2<_Ty> operator + (const BaseVector2<_Ty> &lhs_, typename const BaseVector2<_Ty>::ValueType rhs_)
+		{
+			return BaseVector2<_Ty>(lhs_.x + rhs_, lhs_.y + rhs_);
+		}
+
+		////////////////////////////////////////////////////////////////////////////////////////////////////
+		/// <summary>
+		/// Substracts scalar from a vector.
+		/// </summary>
+		/// <param name="lhs_">The lhs vector.</param>
+		/// <param name="rhs_">The scalar.</param>
+		/// <returns>Vector minus a scalar.</returns>
+		template <typename _Ty>
+		BaseVector2<_Ty> operator - (const BaseVector2<_Ty> &lhs_, typename const BaseVector2<_Ty>::ValueType rhs_)
+		{
+			return BaseVector2<_Ty>(lhs_.x - rhs_, lhs_.y - rhs_);
+		}
+
+		////////////////////////////////////////////////////////////////////////////////////////////////////
+		/// <summary>
+		/// Multiplies vector by a scalar.
+		/// </summary>
+		/// <param name="lhs_">The lhs vector.</param>
+		/// <param name="rhs_">The scalar.</param>
+		/// <returns>Vector times a scalar.</returns>
+		template <typename _Ty>
+		BaseVector2<_Ty> operator * (const BaseVector2<_Ty> &lhs_, typename const BaseVector2<_Ty>::ValueType rhs_)
+		{
+			return BaseVector2<_Ty>(lhs_.x * rhs_, lhs_.y * rhs_);
+		}
+
+		////////////////////////////////////////////////////////////////////////////////////////////////////
+		/// <summary>
+		/// Divides vector by a scalar.
+		/// </summary>
+		/// <param name="lhs_">The lhs vector.</param>
+		/// <param name="rhs_">The scalar.</param>
+		/// <returns>Vector divided by a scalar.</returns>
+		template <typename _Ty>
+		BaseVector2<_Ty> operator / (const BaseVector2<_Ty> &lhs_, typename const BaseVector2<_Ty>::ValueType rhs_)
+		{
+			return BaseVector2<_Ty>(lhs_.x / rhs_, lhs_.y / rhs_);
+		}
+
+		
 	}
 }
