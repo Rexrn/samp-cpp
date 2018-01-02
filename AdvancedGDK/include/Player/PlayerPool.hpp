@@ -105,11 +105,11 @@ namespace agdk
 		/// <param name="func_">The function.</param>
 		/// <returns>Player found with specified function. May be null pointer.</returns>
 		template <typename _Func>
-		Player* find(_Func func_) const
+		Player* find(_Func func_)
 		{
 			auto it = std::find_if(m_connectedPlayers.begin(), m_connectedPlayers.end(), func_);
 			if (it != m_connectedPlayers.end())
-				return it->get();
+				return *it;
 			return nullptr;
 		}
 
@@ -119,7 +119,7 @@ namespace agdk
 		/// <param name="location_">The location.</param>
 		/// <param name="radius">The radius.</param>
 		/// <returns>Vector of players in radius from specified location.</returns>
-		RawPoolType findEveryoneInRadius(const Vector3 location_, const Meters radius) const;
+		RawPoolType findEveryoneInRadius(const Vector3 location_, const Meters radius);
 		
 		/// <summary>
 		/// Finds the nearest player within the radius from specified location.
@@ -127,7 +127,7 @@ namespace agdk
 		/// <param name="location_">The location.</param>
 		/// <param name="radius_">The radius.</param>
 		/// <returns>Nearest player within the radius from specified location. May be null pointer.</returns>
-		Player* findNearest(const Vector3 location_, const Meters radius) const;
+		Player* findNearest(const Vector3 location_, const Meters radius);
 
 		/// <summary>
 		/// Finds the nearest player within the radius from specified player.
@@ -135,7 +135,7 @@ namespace agdk
 		/// <param name="player_">The location.</param>
 		/// <param name="radius_">The radius.</param>
 		/// <returns>Nearest player within the radius from specified location. May be null pointer.</returns>
-		Player* findNearest(const Player *const player_, const Meters radius_) const;
+		Player* findNearest(const Player *const player_, const Meters radius_);
 
 		/// <summary>
 		/// Finds the player by name.
@@ -143,7 +143,7 @@ namespace agdk
 		/// <param name="name_">Name of the player.</param>
 		/// <param name="caseSensitive_">Case sensitive.</param>
 		/// <returns>Player found by name. May be null pointer.</returns>
-		Player* findByName(const std::string_view name_, const bool caseSensitive_ = true) const;
+		Player* findByName(const std::string_view name_, const bool caseSensitive_ = true);
 	
 		/// <summary>
 		/// Finds player by name or index stored in string.
@@ -151,7 +151,7 @@ namespace agdk
 		/// <param name="nameOrIndex">Name or index stored in string.</param>
 		/// <param name="caseSensitive_">Case sensitive.</param>
 		/// <returns>Player found by name or index. May be null pointer.</returns>
-		Player* findByNameOrIndex(const std::string_view nameOrIndex_, const bool caseSensitive_ = true) const;
+		Player* findByNameOrIndex(const std::string_view nameOrIndex_, const bool caseSensitive_ = true);
 
 		/// <summary>
 		/// Finds player by name or index stored in string (picks best match).
@@ -169,7 +169,7 @@ namespace agdk
 		///	high ranks and is generally dangerous. Can be freely used in f.e. command: /goto [player name / id]
 		/// </para>
 		/// </remarks>
-		Player* findBestMatch(const std::string_view nameOrIndex_, const std::size_t minimalScore_ = 2) const;
+		Player* findBestMatch(const std::string_view nameOrIndex_, const std::size_t minimalScore_ = 2);
 
 		/// <summary>
 		/// Gets the player pool (of raw pointers).

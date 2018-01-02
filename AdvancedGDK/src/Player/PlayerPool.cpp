@@ -58,7 +58,7 @@ namespace agdk
 	}
 
 	//////////////////////////////////////////////////////////////////////////////
-	PlayerPool::RawPoolType PlayerPool::findEveryoneInRadius(const Vector3 location_, const Meters radius) const
+	PlayerPool::RawPoolType PlayerPool::findEveryoneInRadius(const Vector3 location_, const Meters radius)
 	{
 		// Check if there is any player on the server.
 		if (m_connectedPlayers.empty())
@@ -81,7 +81,7 @@ namespace agdk
 	}
 
 	//////////////////////////////////////////////////////////////////////////////
-	Player * PlayerPool::findNearest(const Vector3 location_, const Meters radius_) const
+	Player * PlayerPool::findNearest(const Vector3 location_, const Meters radius_)
 	{
 		// Check if there is any player on the server.
 		if (m_connectedPlayers.empty())
@@ -98,7 +98,7 @@ namespace agdk
 	}
 
 	//////////////////////////////////////////////////////////////////////////////
-	Player * PlayerPool::findNearest(const Player * const player_, const Meters radius_) const
+	Player * PlayerPool::findNearest(const Player * const player_, const Meters radius_)
 	{
 		// Check if there are at least two players at the server.
 		if (m_connectedPlayers.size() < 2)
@@ -124,7 +124,7 @@ namespace agdk
 	}
 
 	//////////////////////////////////////////////////////////////////////////////
-	Player * PlayerPool::findByName(const std::string_view name_, const bool caseSensitive_) const
+	Player * PlayerPool::findByName(const std::string_view name_, const bool caseSensitive_)
 	{
 		return this->find(
 			[&name_, &caseSensitive_](Player *const player)
@@ -134,14 +134,18 @@ namespace agdk
 	}
 
 	//////////////////////////////////////////////////////////////////////////////
-	Player * PlayerPool::findByNameOrIndex(const std::string_view nameOrIndex_, const bool caseSensitive_) const
+	Player * PlayerPool::findByNameOrIndex(const std::string_view nameOrIndex_, const bool caseSensitive_)
 	{
 		Player *result = nullptr;
 
 		// At first we want to examine player index.
 		if (StringHelper::storesInteger(nameOrIndex_))
 		{
+#ifdef _AGDK_FS_STRINGHELPER_TO_CXX17FROMCHARS
 			std::size_t index = StringHelper::to<std::size_t>(nameOrIndex_);
+#else
+			std::size_t index = StringHelper::to<std::size_t>(std::string{ nameOrIndex_ });
+#endif
 			result = this->get(index);
 		}
 		if (!result) // Then try to find by name.
@@ -150,7 +154,7 @@ namespace agdk
 	}
 
 	//////////////////////////////////////////////////////////////////////////////
-	Player * PlayerPool::findBestMatch(const std::string_view nameOrIndex_, const std::size_t minimalScore_) const
+	Player * PlayerPool::findBestMatch(const std::string_view nameOrIndex_, const std::size_t minimalScore_)
 	{
 		// Try to find by complete name or index.
 		Player* result = this->findByNameOrIndex(nameOrIndex_, false);
