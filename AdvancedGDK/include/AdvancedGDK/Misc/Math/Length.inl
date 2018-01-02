@@ -73,7 +73,7 @@ namespace agdk
 			/// </summary>
 			/// <param name="rhs_">Other length object.</param>
 			template <typename _Ty1, typename _Ratio1>
-			constexpr BaseLength(const BaseLength<_Ty, _Ratio1> &rhs_)
+			constexpr BaseLength(const BaseLength<_Ty1, _Ratio1> &rhs_)
 				: value(rhs_.value
 						* std::ratio_divide<_Ratio1, RatioType>::num
 						/ std::ratio_divide<_Ratio1, RatioType>::den)
