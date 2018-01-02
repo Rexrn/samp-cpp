@@ -7,6 +7,7 @@
 
 #pragma once
 
+// Standard includes:
 #include <string>
 #include <istream>
 #include <vector>
@@ -176,69 +177,136 @@ namespace agdk
 		/// <returns><c>true</c> if string stores number, otherwise <c>false</c>.</returns>
 		static bool			storesNumber(const std::string_view string_, const std::string::value_type separator_ = '.');
 
-		template <typename T>
-		using remove_cvref_t = std::remove_reference_t<std::remove_cv_t<T>>;
+		template <typename _Ty>
+		using remove_cvref_t = std::remove_reference_t< std::remove_cv_t<_Ty> >;
 
-		
+#ifdef _AGDK_FS_STRINGHELPER_TO_CXX17FROMCHARS
 		/// <summary>
 		/// Returns string converted to specified type (as template).
 		/// </summary>
 		/// <param name="string_">The string.</param>
 		/// <param name="valueIfNotValid_">The value if cast is not valid.</param>
 		/// <returns>String converted to specified type (as template).</returns>
-		template <typename T>
-		static remove_cvref_t<T> to(const std::string_view string_, remove_cvref_t<T> valueIfNotValid_ = T{})
+		template <typename _Ty>
+		static remove_cvref_t<_Ty> to(const std::string_view string_, remove_cvref_t<_Ty> valueIfNotValid_ = _Ty{})
 		{
-			using RawT = remove_cvref_t<T>;	// remove references and constness/volatility
+			using RawT = remove_cvref_t<_Ty>;	// remove references and constness/volatility
 			if constexpr(std::is_same_v<RawT,	bool>)
 			{
 				return static_cast<RawT>(StringHelper::storesBoolean(string_) ? StringHelper::toBoolean(string_) : valueIfNotValid_);
 			}
-			else if(std::is_same_v<RawT,		std::int16_t>)
+			else if constexpr (std::is_same_v<RawT,		std::int16_t>)
 			{
-				return static_cast<RawT>(StringHelper::storesInteger(string_) ? std::stoi(string_) : valueIfNotValid_);
+				std::int16_t resultValue;
+				return static_cast<RawT>(StringHelper::storesInteger(string_) ? std::from_chars(string_.data(), string_.data() + string_.size(), resultValue) : valueIfNotValid_);
 			}
-			else if (std::is_same_v<RawT,		std::int32_t>)
+			else if constexpr (std::is_same_v<RawT,		std::int32_t>)
 			{
-				return static_cast<RawT>(StringHelper::storesInteger(string_) ? std::stol(string_) : valueIfNotValid_);
+				std::int32_t resultValue;
+				return static_cast<RawT>(StringHelper::storesInteger(string_) ? std::from_chars(string_.data(), string_.data() + string_.size(), resultValue) : valueIfNotValid_);
 			}
-			else if (std::is_same_v<RawT,		std::int64_t>)
+			else if constexpr (std::is_same_v<RawT,		std::int64_t>)
 			{
+				std::int64_t resultValue;
 				return (StringHelper::storesInteger(string_) ? std::stoll(string_) : valueIfNotValid_);
 			}
-			else if(std::is_same_v<RawT,		std::uint16_t>)
+			else if constexpr (std::is_same_v<RawT,		std::uint16_t>)
 			{
-				return static_cast<RawT>(StringHelper::storesInteger(string_) ? std::stoul(string_) : valueIfNotValid_);
+				std::uint16_t resultValue;
+				return (StringHelper::storesInteger(string_) ? std::from_chars(string_.data(), string_.data() + string_.size(), resultValue) : valueIfNotValid_);
 			}
-			else if (std::is_same_v<RawT,		std::uint32_t>)
+			else if constexpr (std::is_same_v<RawT,		std::uint32_t>)
 			{
-				return static_cast<RawT>(StringHelper::storesInteger(string_) ? std::stoul(string_) : valueIfNotValid_);
+				std::uint32_t resultValue;
+				return (StringHelper::storesInteger(string_) ? std::from_chars(string_.data(), string_.data() + string_.size(), resultValue) : valueIfNotValid_);
 			}
-			else if (std::is_same_v<RawT,		std::uint64_t>)
+			else if constexpr (std::is_same_v<RawT,		std::uint64_t>)
 			{
-				return (StringHelper::storesInteger(string_) ? std::stoull(string_) : valueIfNotValid_);
+				std::uint64_t resultValue;
+				return (StringHelper::storesInteger(string_) ? std::from_chars(string_.data(), string_.data() + string_.size(), resultValue) : valueIfNotValid_);
 			}
-			else if (std::is_same_v<RawT,		char>
-					|| std::is_same_v<RawT,		unsigned char>
-					|| std::is_same_v<RawT,		signed char>)
+			else if constexpr (std::is_same_v<RawT,		char>
+							|| std::is_same_v<RawT,		unsigned char>
+							|| std::is_same_v<RawT,		signed char>)
 			{
 				return static_cast<RawT>(!string_.empty() ? string_[0] : valueIfNotValid_);
 			}
-			else if (std::is_same_v<RawT,		float>)
+			else if constexpr(std::is_same_v<RawT,		float>)
 			{
 				return (StringHelper::storesFloat(string_) ? std::stof(string_) : valueIfNotValid_);
 			}
-			else if (std::is_same_v<RawT,		double>)
+			else if constexpr (std::is_same_v<RawT,		double>)
 			{
 				return (StringHelper::storesFloat(string_) ? std::stod(string_) : valueIfNotValid_);
 			}
-			else if (std::is_same_v<RawT,		long double>)
+			else if constexpr (std::is_same_v<RawT,		long double>)
 			{
 				return (StringHelper::storesFloat(string_) ? std::stold(string_) : valueIfNotValid_);
 			}
 			else
 				return valueIfNotValid_;
 		}
+#else
+		/// <summary>
+		/// Returns string converted to specified type (as template).
+		/// </summary>
+		/// <param name="string_">The string.</param>
+		/// <param name="valueIfNotValid_">The value if cast is not valid.</param>
+		/// <returns>String converted to specified type (as template).</returns>
+		template <typename _Ty>
+		static remove_cvref_t<_Ty> to(const std::string & string_, remove_cvref_t<_Ty> valueIfNotValid_ = _Ty{})
+		{
+			using RawT = remove_cvref_t<_Ty>;	// remove references and constness/volatility
+			if constexpr(std::is_same_v<RawT, bool>)
+			{
+				return static_cast<RawT>(StringHelper::storesBoolean(string_) ? StringHelper::toBoolean(string_) : valueIfNotValid_);
+			}
+			else if constexpr (std::is_same_v<RawT, std::int16_t>)
+			{
+				return static_cast<RawT>(StringHelper::storesInteger(string_) ? std::stoi(string_) : valueIfNotValid_);
+			}
+			else if constexpr (std::is_same_v<RawT, std::int32_t>)
+			{
+				return static_cast<RawT>(StringHelper::storesInteger(string_) ? std::stol(string_) : valueIfNotValid_);
+			}
+			else if constexpr (std::is_same_v<RawT, std::int64_t>)
+			{
+				return (StringHelper::storesInteger(string_) ? std::stoll(string_) : valueIfNotValid_);
+			}
+			else if constexpr (std::is_same_v<RawT, std::uint16_t>)
+			{
+				return static_cast<RawT>(StringHelper::storesInteger(string_) ? std::stoul(string_) : valueIfNotValid_);
+			}
+			else if constexpr (std::is_same_v<RawT, std::uint32_t>)
+			{
+				return static_cast<RawT>(StringHelper::storesInteger(string_) ? std::stoul(string_) : valueIfNotValid_);
+			}
+			else if constexpr (std::is_same_v<RawT, std::uint64_t>)
+			{
+				return (StringHelper::storesInteger(string_) ? std::stoull(string_) : valueIfNotValid_);
+			}
+			else if constexpr (std::is_same_v<RawT, char>
+							|| std::is_same_v<RawT, unsigned char>
+							|| std::is_same_v<RawT, signed char>)
+			{
+				return static_cast<RawT>(!string_.empty() ? string_[0] : valueIfNotValid_);
+			}
+			else if constexpr(std::is_same_v<RawT, float>)
+			{
+				return (StringHelper::storesFloat(string_) ? std::stof(string_) : valueIfNotValid_);
+			}
+			else if constexpr (std::is_same_v<RawT, double>)
+			{
+				return (StringHelper::storesFloat(string_) ? std::stod(string_) : valueIfNotValid_);
+			}
+			else if constexpr (std::is_same_v<RawT, long double>)
+			{
+				return (StringHelper::storesFloat(string_) ? std::stold(string_) : valueIfNotValid_);
+			}
+			else
+				return valueIfNotValid_;
+		}
+#endif
 		
 		/// <summary>
 		/// Checks length of maximum sequence length from `sequence_` in `string_`.
