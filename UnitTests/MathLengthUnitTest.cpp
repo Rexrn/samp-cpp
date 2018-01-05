@@ -23,7 +23,7 @@ namespace UnitTests
 			// Compute how many metres 5ly is:
 			agdk::Meters metresValue = fiveLightYears;
 
-
+			Assert::AreEqual( metresValue.value, 5 * 9460730472580800.0 );
 		}
 
 	};

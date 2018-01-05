@@ -15,23 +15,26 @@ namespace agdk
 {
 	namespace Math
 	{
+		
 		template <typename T>
 		constexpr T Pi = static_cast<T>(3.14159265358979323846L);
 		template <>
 		constexpr const char* Pi<const char*> = "Pi";
+		
 
+		template <typename T>
 		struct Tolerance final
 		{
 			Tolerance() = delete;
 
-			template <typename T> static const T Low		= T(0.000001L);
-			template <typename T> static const T Medium		= T(0.00001L);
-			template <typename T> static const T High		= T(0.0001L);
-			template <typename T> static const T VeryHigh	= T(0.001L);
+			static constexpr T Low			= T(0.000001L);
+			static constexpr T Medium		= T(0.00001L);
+			static constexpr T High			= T(0.0001L);
+			static constexpr T VeryHigh		= T(0.001L);
 		};
 
 		template <typename T>
-		inline bool nearlyEqual(const T lhs, const T rhs, const T equalityTolerance = Tolerance::Medium<T>)
+		inline bool nearlyEqual(const T lhs, const T rhs, const T equalityTolerance = Tolerance<T>::Medium)
 		{
 			return std::abs(lhs - rhs) <= equalityTolerance;
 		}

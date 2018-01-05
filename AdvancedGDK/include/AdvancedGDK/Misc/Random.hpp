@@ -25,7 +25,7 @@ namespace agdk
 		/// </summary>
 		/// <param name="from_">Minimal value.</param>
 		/// <param name="to_">Maximal value.</param>
-		/// <returns>Random unsigned 64-bit integer in specified range.</returns>
+		/// <returns>Random number in specified range.</returns>
 		/// <remarks>
 		/// <para>
 		/// Supported types:
@@ -41,27 +41,42 @@ namespace agdk
 		template <typename T>
 		static T next(T from_, T to_)
 		{
-			using RawT = std::remove_cv_t<std::remove_reference_t<T>>;
-			if constexpr(	std::is_same_v<RawT, short>		|| std::is_same_v<RawT, unsigned short>
-						||	std::is_same_v<RawT, int>		|| std::is_same_v<RawT, unsigned int>
-						||	std::is_same_v<RawT, long>		|| std::is_same_v<RawT, unsigned long>
-						||	std::is_same_v<RawT, long long>	|| std::is_same_v<RawT, unsigned long long>)
+			// Acquire raw type (without const/volatile).
+			using RawT = std::remove_cv_t<T>;
+            
+			// Check at compile time if the type is an integer.
+            constexpr bool cxprIsIntegerType = 	std::is_same_v<RawType, short>		|| std::is_same_v<RawType, unsigned short>
+											||	std::is_same_v<RawType, int>		|| std::is_same_v<RawType, unsigned int>
+											||	std::is_same_v<RawType, long>		|| std::is_same_v<RawType, unsigned long>
+											||	std::is_same_v<RawType, long long>	|| std::is_same_v<RawType, unsigned long long>;
+
+            // Check at compile time if the type is a floating point number.
+            constexpr bool cxprIsFloatType = std::is_same_v<RawType, float> || std::is_same_v<RawT, double> || std::is_same_v< RawT, long double>;
+            
+			// Check if the type require 64 bit engine or not.
+			constexpr bool cxprCanUse32BitEngine = sizeof(RawT) <= 4;
+
+			// Assert compilation, when type is not supported.
+            static_assert(cxprIsIntegerType || cxprIsFloatType, "Random does not support this type.");
+            
+			// Calculate min and max value:
+			auto[minValue, maxValue] = std::minmax(static_cast<RawT>(from_), static_cast<RawT>(to_));
+
+
+			// For every integer type:
+			if constexpr(cxprIsIntegerType)
 			{
-				return std::uniform_int_distribution<RawT>(
-					std::min(static_cast<RawT>(from_), static_cast<RawT>(to_)),
-					std::max(static_cast<RawT>(from_), static_cast<RawT>(to_))
-				)(Random::getEngine()); // <--- It runs distribution on engine and result is returned.
+				if constexpr(cxprCanUse32BitEngine)
+					return std::uniform_int_distribution<RawType>(minValue, maxValue)(Random::getEngine());
+				else
+					return std::uniform_int_distribution<RawType>(minValue, maxValue)(Random::getEngine64());
 			}
-			else if (std::is_same_v<RawT, float> || std::is_same_v<RawT, double> || std::is_same_v< RawT, long double>)
+			else // For every real (floating point) type:
 			{
-				return std::uniform_real_distribution<RawT>(
-						std::min(static_cast<RawT>(from_), static_cast<RawT>(to_)),
-						std::max(static_cast<RawT>(from_), static_cast<RawT>(to_))
-				)(Random::getEngine()); // <--- It runs distribution on engine and result is returned.
-			}
-			else // Type is not supported.
-			{
-				static_assert(false, "Random does not support this type.");
+				if constexpr(cxprCanUse32BitEngine)
+					return std::uniform_real_distribution<RawType>(minValue, maxValue)(Random::getEngine());
+				else
+					return std::uniform_real_distribution<RawType>(minValue, maxValue)(Random::getEngine64());
 			}
 		}
 	private:		
@@ -75,5 +90,11 @@ namespace agdk
 		/// </summary>
 		/// <returns>Mersenne twister random engine.</returns>
 		static std::mt19937&	getEngine();
+
+		/// <summary>
+		/// Returns mersenne twister random engine (64 bit).
+		/// </summary>
+		/// <returns>Mersenne twister random engine (64 bit).</returns>
+		static std::mt19937_64&	getEngine64();
 	};
 }
