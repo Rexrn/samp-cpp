@@ -1,428 +1,780 @@
 /**
 * Header: Vector3.inl
-* Author: Pawe³ Syska aka RazzorFlame.
+* Author: Pawel Syska aka RazzorFlame.
 * Description:
 * Implements base class for 3D vector manipulation.
-* Note:
-* Requires important maintenance.
 **/
+
+// NOTE / WARNING:
+// This can't be included separately, because it is included by "Math.hpp" header.
+// Error will occur when separated, uses agdk::Math::Tolerance class.
+
+// Standard includes:
+#include <cmath>
+#include <cinttypes>
+#include <type_traits>
+#include <string>
+#include <sstream>
+#include <iomanip>
+
+// Custom includes:
+#include "VectorStringBuilder.hpp"
+
+namespace agdk::impl
+{
+template <typename _Ty>
+class BaseVector3;
+}
+
+/// <summary>
+/// Adds two vectors together.
+/// </summary>
+/// <param name="lhs_">The lhs vector.</param>
+/// <param name="rhs_">The rhs vector.</param>
+/// <returns>Sum of two vectors.</returns>
+template <typename _Ty>
+constexpr agdk::impl::BaseVector3<_Ty> operator + (agdk::impl::BaseVector3<_Ty> const & lhs_, agdk::impl::BaseVector3<_Ty> const & rhs_);
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/// <summary>
+/// Subtracts rhs vector from lhs one.
+/// </summary>
+/// <param name="lhs_">The lhs vector.</param>
+/// <param name="rhs_">The rhs vector.</param>
+/// <returns>Difference of two vectors.</returns>
+template <typename _Ty>
+constexpr agdk::impl::BaseVector3<_Ty> operator - (agdk::impl::BaseVector3<_Ty> const & lhs_, agdk::impl::BaseVector3<_Ty> const & rhs_);
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/// <summary>
+/// Multiplies two vectors.
+/// </summary>
+/// <param name="lhs_">The lhs vector.</param>
+/// <param name="rhs_">The rhs vector.</param>
+/// <returns>Product of two vectors.</returns>
+template <typename _Ty>
+constexpr agdk::impl::BaseVector3<_Ty> operator * (agdk::impl::BaseVector3<_Ty> const & lhs_, agdk::impl::BaseVector3<_Ty> const & rhs_);
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/// <summary>
+/// Divides lhs vector by rhs vector.
+/// </summary>
+/// <param name="lhs_">The lhs vector.</param>
+/// <param name="rhs_">The rhs vector.</param>
+/// <returns>Quotient of two vectors.</returns>
+template <typename _Ty>
+constexpr agdk::impl::BaseVector3<_Ty> operator / (agdk::impl::BaseVector3<_Ty> const & lhs_, agdk::impl::BaseVector3<_Ty> const & rhs_);
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+// Operators (lhs vector <op> rhs scalar).
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/// <summary>
+/// Adds scalar to a vector.
+/// </summary>
+/// <param name="lhs_">The lhs vector.</param>
+/// <param name="rhs_">The scalar.</param>
+/// <returns>Vector plus a scalar.</returns>
+template <typename _Ty>
+constexpr agdk::impl::BaseVector3<_Ty> operator + (agdk::impl::BaseVector3<_Ty> const & lhs_, _Ty const rhs_);
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/// <summary>
+/// Substracts scalar from a vector.
+/// </summary>
+/// <param name="lhs_">The lhs vector.</param>
+/// <param name="rhs_">The scalar.</param>
+/// <returns>Vector minus a scalar.</returns>
+template <typename _Ty>
+constexpr agdk::impl::BaseVector3<_Ty> operator - (agdk::impl::BaseVector3<_Ty> const & lhs_, _Ty const rhs_);
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/// <summary>
+/// Multiplies vector by a scalar.
+/// </summary>
+/// <param name="lhs_">The lhs vector.</param>
+/// <param name="rhs_">The scalar.</param>
+/// <returns>Vector times a scalar.</returns>
+template <typename _Ty>
+constexpr agdk::impl::BaseVector3<_Ty> operator * (agdk::impl::BaseVector3<_Ty> const & lhs_, _Ty const rhs_);
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/// <summary>
+/// Divides vector by a scalar.
+/// </summary>
+/// <param name="lhs_">The lhs vector.</param>
+/// <param name="rhs_">The scalar.</param>
+/// <returns>Vector divided by a scalar.</returns>
+template <typename _Ty>
+constexpr agdk::impl::BaseVector3<_Ty> operator / (agdk::impl::BaseVector3<_Ty> const & lhs_, _Ty const rhs_);
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+// Operators (lhs scalar <op> rhs vector).
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/// <summary>
+/// Adds scalar to a vector.
+/// </summary>
+/// <param name="lhs_">The scalar.</param>
+/// <param name="rhs_">The rhs vector.</param>
+/// <returns>Vector plus a scalar.</returns>
+template <typename _Ty>
+constexpr agdk::impl::BaseVector3<_Ty> operator + (_Ty const lhs_, agdk::impl::BaseVector3<_Ty> const & rhs_);
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/// <summary>
+/// Multiplies vector by a scalar.
+/// </summary>
+/// <param name="lhs_">The scalar.</param>
+/// <param name="rhs_">The rhs vector.</param>
+/// <returns>Vector times a scalar.</returns>
+template <typename _Ty>
+constexpr agdk::impl::BaseVector3<_Ty> operator * (_Ty const lhs_, agdk::impl::BaseVector3<_Ty> const & rhs_);
+
 
 namespace agdk
 {
-	namespace impl
+namespace impl
+{
+// TODO: requires code improvement and documentation standarization (using XML style).
+
+/// <summary>
+/// Implements templated three dimensional vector arithmetic class.
+/// </summary>
+template <typename _Ty>
+class BaseVector3
+{
+	// Performs a type check:
+	// Is only set to true when T is not cv-qualified and is non-boolean arithmetic type.
+	template <typename T>
+	constexpr static bool is_noncvref_mathscalar_v =
+		std::is_same_v<T, std::remove_cv_t< std::remove_reference_t<T> > > &&
+		std::is_arithmetic_v<T> &&
+		!std::is_same_v<T, bool>;
+
+public:
+	using ValueType = _Ty;
+
+	// Allow every non-cv qualified arithmetic type but bool.
+	static_assert(
+		is_noncvref_mathscalar_v<ValueType>,
+		"ValueType of a vector must be a non-cv qualified scalar type."
+	);
+
+		// This is basic component of a Vector3.
+	ValueType x, y, z;
+
+	/// <summary>
+	/// Initializes a new instance of the <see cref="BaseVector3"/> class.
+	/// </summary>
+	constexpr BaseVector3()
+		: x{ 0 }, y{ 0 }, z{ 0 }
 	{
-		// TODO: requires code improvement and documentation standarization (using XML style).
-
-		template <typename T>
-		class BaseVector3
-		{
-		public:
-			T x, y, z;
-
-			////// Function: Vector3 (default constructor)
-			//// Parameters: <none>
-			//// Brief: This is a Vector3's default constructor
-			///////////////////////////////////////////////////////////////
-			BaseVector3();
-
-			////// Function: Vector3 (constructor)
-			//// Parameters:
-			//// 	1) xValue: 	Float32 		- x component of a vector
-			//// 	2) yValue: 	Float32 		- y component of a vector
-			//// 	2) zValue: 	Float32 		- z component of a vector
-			//// Brief: Initializes vector from components
-			///////////////////////////////////////////////////////////////
-			BaseVector3(const T &xValue, const T &yValue, const T &zValue);
-
-			////// Function: Vector3 (copy constructor)
-			//// Parameters:
-			////	1) other	Vector3&		- other instance to copy from
-			//// Brief: This is a Vector3's copy constructor
-			///////////////////////////////////////////////////////////////
-			template <typename U>
-			explicit BaseVector3(const BaseVector3<U> &v);
-
-			////// Function: Vector3 (destructor)
-			//// Parameters: <none>
-			//// Brief: This is a Vector3's destructor [= default]
-			///////////////////////////////////////////////////////////////
-			~BaseVector3() = default;
-
-			////// Function: Set
-			//// Parameters:
-			//// 	1) xValue: 	Float32 		- x component of a vector
-			//// 	2) yValue: 	Float32 		- y component of a vector
-			//// 	3) yValue: 	Float32 		- z component of a vector
-			//// Return: 			void 		- does not return anything
-			//// Brief: Sets vector components
-			///////////////////////////////////////////////////////////////
-			void set(const T &xValue, const T &yValue, const T &zValue);
-
-			////// Function: Length
-			//// Parameters: <none>
-			//// Return: 			Float32 	- length of vector
-			//// Brief: returns vector length = sqrt(x*x + y*y + z*z)
-			///////////////////////////////////////////////////////////////
-			float length() const;
-
-			////// Function: LengthSquared
-			//// Parameters: <none>
-			//// Return: 			Float32 	- squared length of vector
-			//// Brief: return vector length squared = (x*x + y*y + z*z)
-			///////////////////////////////////////////////////////////////
-			float lengthSquared() const;
-
-			////// Function: Distance
-			//// Parameters:
-			////	1) other	Vector3&		- other vector (to compute distance)
-			//// Return: 		Float32 	- distance to vector
-			//// Brief: return distance to other vector
-			//// Distance = (A-B).Length()
-			///////////////////////////////////////////////////////////////
-			template <typename U>
-			float distance(const BaseVector3<U> &v) const;
-
-			////// Function: DistanceSquared
-			//// Parameters:
-			////	1) other	Vector3&		- other vector (to compute distance)
-			//// Return: 			Float32 	- squared distance to vector
-			//// Brief: return squared distance to other vector
-			//// Distance = (A-B).LengthSquared()
-			///////////////////////////////////////////////////////////////
-			template <typename U>
-			float distanceSquared(const BaseVector3<U> &v) const;
-
-			////// Function: Dot (product)
-			//// Parameters:
-			////	1) other	Vector3&		- other vector (to compute dot product)
-			//// Return: 			Float32 	- dot product of vectors
-			//// Brief: return dot product of two vectors (self and 'other')
-			//// Dot product = (x * other.x) + (y * other.y) + (z * other.z)
-			///////////////////////////////////////////////////////////////
-			template <typename U>
-			float dot(const BaseVector3<U> &v) const;
-
-			////// Function: Cross (product)
-			//// Parameters:
-			////	1) other	Vector3&		- other vector (to compute cross product)
-			//// Return: 		Vector3 		- cross product of vectors
-			//// Brief: return cross product of two vectors (self and 'other')
-			//// Cross product:
-			//// Vector3U(left.y * right.z - left.z * right.y,
-			////	left.z * right.x - left.x * right.z,
-			////	left.x * right.y - left.y * right.x);
-			//// Cross (Right, Forward) = Up
-			///////////////////////////////////////////////////////////////
-			template <typename U>
-			BaseVector3<T> cross(const BaseVector3<U> &v) const;
-
-			////// Function: Reflect (vector) [const]
-			//// Parameters:
-			////	1) normal	Vector3		- wall normal to be reflected from
-			//// Return: 		Vector3 	- reflected copy vector
-			//// Brief: return reflected copy of self
-			//// Reflected vector is used in for instance ball bouncing
-			//// Reflected vector = self - (2 * (Normal * Dot(Normal, self)))
-			///////////////////////////////////////////////////////////////
-			template <typename U>
-			BaseVector3<T> reflect(const BaseVector3<U> &Normal) const;
-
-			////// Function: ReflectSelf
-			//// Parameters:
-			////	1) normal	Vector3		- wall normal to be reflected from
-			//// Return: 		Vector3& 	- self as reflected vector
-			//// Brief: return self as reflected vector from normal
-			//// THIS METHOD MODIFIES SELF VECTOR
-			//// Reflected vector is used in for instance ball bouncing
-			//// Reflected vector = self - (2 * (Normal * Dot(Normal, self)))
-			///////////////////////////////////////////////////////////////
-			template <typename U>
-			BaseVector3<T> & reflectSelf(const BaseVector3<U> &Normal);
-
-			////// Function: NormalizeSelf
-			//// Parameters: <none>
-			//// Return: 		Vector3& 	- self as normalized vector
-			//// Brief: return self as normalized vector
-			//// THIS METHOD MODIFIES SELF VECTOR
-			//// Normalization = self / self.Length()
-			///////////////////////////////////////////////////////////////
-			BaseVector3<T> & normalizeSelf();
-
-			////// Function: Normalize
-			//// Parameters: <none>
-			//// Return: 		Vector3 	- normalized copy of self
-			//// Brief: return normalized copy of self
-			//// Normalization = self / self.Length()
-			///////////////////////////////////////////////////////////////
-			BaseVector3<T> normalize() const;
-
-			template <typename U>
-			bool equals(const BaseVector3<U> &Other, const double EqualityTolerance = Math::Equality::LowTolerance) const
-			{
-				return (std::fabs(static_cast<float>(x) - static_cast<float>(Other.x)) <= EqualityTolerance
-					&&	std::fabs(static_cast<float>(y) - static_cast<float>(Other.y)) <= EqualityTolerance
-					&&	std::fabs(static_cast<float>(z) - static_cast<float>(Other.z)) <= EqualityTolerance);
-			}
-
-			template <typename V, typename U>
-			static BaseVector3<V> min(const BaseVector3<V> &MinVec, const BaseVector3<U> &MaxVec)
-			{
-				return BaseVector3<V>(Math::min(MinVec.x, MaxVec.x), Math::min(MinVec.y, MaxVec.y), Math::min(MinVec.z, MaxVec.z));
-			}
-			template <typename V, typename U>
-			static BaseVector3<V> max(const BaseVector3<V> &MinVec, const BaseVector3<U> &MaxVec)
-			{
-				return BaseVector3<V>(Math::max(MinVec.x, MaxVec.x), Math::max(MinVec.y, MaxVec.y), Math::max(MinVec.z, MaxVec.z));
-			}
-
-			template <typename V, typename U>
-			static void minMax(BaseVector3<V> &MinVec, BaseVector3<U> &MaxVec)
-			{
-				MinVec = BaseVector3<V>::min(MinVec, MaxVec);
-				MaxVec = BaseVector3<U>::max(MinVec, MaxVec);
-			}
-
-			template <typename U>
-			BaseVector3<U> as() { return BaseVector3<U>(*this); }
-
-			//////////// OPERATORS /////////////
-
-
-
-			////// Operator: Assign
-			//// Brief: Assign value of other vector to self
-			///////////////////////////////////////////////////////////////
-			template <typename U>
-			BaseVector3<T> & operator = (const BaseVector3<U> &Right) { x = T(Right.x); y = T(Right.y); z = T(Right.z); return *this; }
-
-			////// Operator: Negate
-			//// Brief: Returns negated copy vector
-			///////////////////////////////////////////////////////////////
-			BaseVector3<T> operator - () const { return BaseVector3<T>(-x, -y, -z); }
-
-			////// Operator: Equality test
-			//// Brief: Checks if self and other vector are the same
-			///////////////////////////////////////////////////////////////
-			template <typename U>
-			bool operator == (const BaseVector3<U> &Right) const { return equals(Right); }
-
-			////// Operator: Inequality test
-			//// Brief: Checks if self and other vector are NOT the same
-			///////////////////////////////////////////////////////////////
-			template <typename U>
-			bool operator != (const BaseVector3<U> &Right) const { return !equals(Right); }
-
-
-			////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-			////// Operator: Addition
-			//// Brief: Creates a copy of (self + other)
-			///////////////////////////////////////////////////////////////
-			template <typename U>
-			BaseVector3<T> operator + (const BaseVector3<U> &Right) const { return BaseVector3<T>(x + T(Right.x), y + T(Right.y), z + T(Right.z)); }
-
-			////// Operator: Subtraction
-			//// Brief: Creates a copy of (self - other)
-			///////////////////////////////////////////////////////////////
-			template <typename U>
-			BaseVector3<T> operator - (const BaseVector3<U> &Right) const { return BaseVector3<T>(x - T(Right.x), y - T(Right.y), z - T(Right.z)); }
-
-			////// Operator: Multiplication
-			//// Brief: Creates a copy of (self * other)
-			///////////////////////////////////////////////////////////////
-			template <typename U>
-			BaseVector3<T> operator * (const BaseVector3<U> &Right) const { return BaseVector3<T>(x * T(Right.x), y * T(Right.y), z * T(Right.z)); }
-
-			////// Operator: Division
-			//// Brief: Creates a copy of (self / other)
-			//// BE CAREFUL! IF 'other.x' OR 'other.y' OR 'other.z' EQUALS 0
-			//// IT WILL CAUSE EXCEPTION
-			///////////////////////////////////////////////////////////////
-			template <typename U>
-			BaseVector3<T> operator / (const BaseVector3<U> &Right) const { return BaseVector3<T>(x / T(Right.x), y / T(Right.y), z / T(Right.z)); }
-
-
-			////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-			////// Operator: Addition (to self)
-			//// Brief: Adds a vector to self
-			///////////////////////////////////////////////////////////////
-			template <typename U>
-			BaseVector3<T> & operator += (const BaseVector3<U> &Right) { x += T(Right.x); y += T(Right.y); z += T(Right.z); return *this; }
-
-			////// Operator: Subtraction (from self)
-			//// Brief: Subtracts a vector from self
-			///////////////////////////////////////////////////////////////
-			template <typename U>
-			BaseVector3<T> & operator -= (const BaseVector3<U> &Right) { x -= T(Right.x); y -= T(Right.y); z -= T(Right.z); return *this; }
-
-			////// Operator: Multiplication (self by other)
-			//// Brief: Multiplies self by other
-			///////////////////////////////////////////////////////////////
-			template <typename U>
-			BaseVector3<T> & operator *= (const BaseVector3<U> &Right) { x *= T(Right.x); y *= T(Right.y); z *= T(Right.z); return *this; }
-
-			////// Operator: Division (self by other)
-			//// Brief: Divides self by other vector
-			//// BE CAREFUL! IF 'other.x' OR 'other.y' OR 'other.z' EQUALS 0
-			//// IT WILL CAUSE EXCEPTION
-			///////////////////////////////////////////////////////////////
-			template <typename U>
-			BaseVector3<T> & operator /= (const BaseVector3<U> &Right) { x /= T(Right.x); y /= T(Right.y); z /= T(Right.z); return *this; }
-
-
-			////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-			////// Operator: Addition (scalar to self) (return copy)
-			//// Brief: Adds a scalar to all components (x, y, z)
-			///////////////////////////////////////////////////////////////
-			BaseVector3<T> operator + (const float Right) const { return BaseVector3<T>(x + T(Right), y + T(Right), z + T(Right)); }
-
-			////// Operator: Subtraction (scalar from self) (return copy)
-			//// Brief: Suybtracts a scalar from all components (x, y, z)
-			///////////////////////////////////////////////////////////////
-			BaseVector3<T> operator - (const float Right) const { return BaseVector3<T>(x - T(Right), y - T(Right), z - T(Right)); }
-
-			////// Operator: Multiplication (self by scalar) (return copy)
-			//// Brief: Multiplies both components (x, y, z) by scalar
-			///////////////////////////////////////////////////////////////
-			BaseVector3<T> operator * (const float Right) const { return BaseVector3<T>(x * T(Right), y * T(Right), z * T(Right)); }
-
-			////// Operator: Division (self by scalar) (return copy)
-			//// Brief: Divides all components (x, y, z) by scalar
-			//// BE CAREFUL! IF scalar EQUALS 0 [ZERO]
-			//// IT WILL CAUSE EXCEPTION
-			///////////////////////////////////////////////////////////////
-			BaseVector3<T> operator / (const float Right) const { return BaseVector3<T>(x / T(Right), y / T(Right), z / T(Right)); }
-
-
-			////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-			////// Operator: Addition (scalar to self) (return copy)
-			//// Brief: Adds a scalar to all components (x, y, z)
-			///////////////////////////////////////////////////////////////
-			BaseVector3<T> & operator += (const float Right) { x += T(Right); y += T(Right); z += T(Right); return *this; }
-
-			////// Operator: Subtraction (scalar from self)
-			//// Brief: Subtracts a scalar from all components (x, y, z)
-			///////////////////////////////////////////////////////////////
-			BaseVector3<T> & operator -= (const float Right) { x -= T(Right); y -= T(Right); z -= T(Right); return *this; }
-
-			////// Operator: Multiplication (self by scalar)
-			//// Brief: Multiplies all components (x, y, z) by scalar
-			///////////////////////////////////////////////////////////////
-			BaseVector3<T> & operator *= (const float Right) { x *= T(Right); y *= T(Right); z *= T(Right); return *this; }
-
-			////// Operator: Division (self by scalar)
-			//// Brief: Divides self by scalar
-			//// BE CAREFUL! IF scalar EQUALS 0 [ZERO]
-			//// IT WILL CAUSE EXCEPTION
-			BaseVector3<T> & operator /= (const float Right) { x /= T(Right); y /= T(Right); z /= T(Right); return *this; }
-
-		};
-
-		////////////////////////////////////////////////////////////////////////////////////////////////////
-		template <typename T>
-		BaseVector3<T>::BaseVector3() : x(0), y(0), z(0) { }
-
-		////////////////////////////////////////////////////////////////////////////////////////////////////
-		template <typename T>
-		BaseVector3<T>::BaseVector3(const T &xValue, const T &yValue, const T &zValue) : x(xValue), y(yValue), z(zValue) { }
-
-		////////////////////////////////////////////////////////////////////////////////////////////////////
-		template <typename T>
-		template <typename U>
-		BaseVector3<T>::BaseVector3(const BaseVector3<U> & v) : x(T(v.x)), y(T(v.y)), z(T(v.z)) { }
-
-		////////////////////////////////////////////////////////////////////////////////////////////////////
-		template <typename T>
-		void BaseVector3<T>::set(const T &xValue, const T &yValue, const T &zValue) { x = xValue; y = yValue; z = zValue; }
-
-		////////////////////////////////////////////////////////////////////////////////////////////////////
-		template <typename T>
-		float BaseVector3<T>::length() const { return sqrt(static_cast<float>(x*x + y*y + z*z)); }
-
-		////////////////////////////////////////////////////////////////////////////////////////////////////
-		template <typename T>
-		float BaseVector3<T>::lengthSquared() const { return static_cast<float>(x*x + y*y + z*z); }
-
-		////////////////////////////////////////////////////////////////////////////////////////////////////
-		template <typename T>
-		template <typename U>
-		float BaseVector3<T>::distance(const BaseVector3<U> &v) const { return (v - (*this)).length(); }
-
-		////////////////////////////////////////////////////////////////////////////////////////////////////
-		template <typename T>
-		template <typename U>
-		float BaseVector3<T>::distanceSquared(const BaseVector3<U> &v) const { return (v - (*this)).lengthSquared(); }
-
-		////////////////////////////////////////////////////////////////////////////////////////////////////
-		template <typename T>
-		template <typename U>
-		float BaseVector3<T>::dot(const BaseVector3<U> &v) const { return x * T(v.x) + y * T(v.y) + z * T(v.z); }
-
-		////////////////////////////////////////////////////////////////////////////////////////////////////
-		template <typename T>
-		template <typename U>
-		BaseVector3<T> BaseVector3<T>::cross(const BaseVector3<U> & v) const
-		{
-			return BaseVector3<T>(y * T(v.z) - z * T(v.y),
-				z * T(v.x) - x * T(v.z),
-				x * T(v.y) - y * T(v.x));
-		}
-
-		////////////////////////////////////////////////////////////////////////////////////////////////////
-		template <typename T>
-		template <typename U>
-		BaseVector3<T> BaseVector3<T>::reflect(const BaseVector3<U> &Normal) const
-		{
-			auto normal = Normal.normalize();
-			return BaseVector3<T>(this) - ((normal.template As<T>() * (normal.template As<T>.dot(*this))) * 2.f);
-		}
-
-		////////////////////////////////////////////////////////////////////////////////////////////////////
-		template <typename T>
-		template <typename U>
-		BaseVector3<T>& BaseVector3<T>::reflectSelf(const BaseVector3<U> &Normal)
-		{
-			*this = (reflect(Normal));
-			return *this;
-		}
-
-		////////////////////////////////////////////////////////////////////////////////////////////////////
-		template <typename T>
-		BaseVector3<T> & BaseVector3<T>::normalizeSelf()
-		{
-			float length_ = length();
-			if (length_ != 0)
-			{
-				x /= length_; y /= length_; z /= length_;
-				return *this;
-			}
-
-			set(0, 0, 0);
-			return *this;
-		}
-
-		////////////////////////////////////////////////////////////////////////////////////////////////////
-		template <typename T>
-		BaseVector3<T> BaseVector3<T>::normalize() const
-		{
-			BaseVector3<T> ret = *this;
-			float length_ = length();
-			if (length_ != 0)
-			{
-				ret.x /= length_; ret.y /= length_; ret.z /= length_;
-				return ret;
-			}
-
-			ret.set(0, 0, 0);
-			return ret;
-		}
-
 	}
+
+	/// <summary>
+	/// Initializes a new instance of the <see cref="BaseVector3"/> class.
+	/// </summary>
+	/// <param name="x_">The x value.</param>
+	/// <param name="y_">The y value.</param>
+	/// <param name="z_">The z value.</param>
+	constexpr BaseVector3(ValueType const x_, ValueType const y_, ValueType const z_)
+		: x{ x_ }, y{ y_ }, z{ z_ }
+	{
+	}
+
+	/// <summary>
+	/// Initializes a new instance of the <see cref="BaseVector3"/> class.
+	/// </summary>
+	/// <param name="rhs_">The other vector.</param>
+	constexpr BaseVector3(BaseVector3<ValueType> const &rhs_)
+		: x{ rhs_.x },
+		y{ rhs_.y },
+		z{ rhs_.z }
+	{
+	}
+
+	/// <summary>
+	/// Sets values of the vector.
+	/// </summary>
+	/// <param name="x_">The x value.</param>
+	/// <param name="y_">The y value.</param>
+	/// <param name="z_">The z value.</param>
+	constexpr void set(ValueType const x_, ValueType const y_, ValueType const z_)
+	{
+		x = static_cast<ValueType>(x_);
+		y = static_cast<ValueType>(y_);
+		z = static_cast<ValueType>(z_);
+	}
+
+	/// <summary>
+	/// Returns length of the vector.
+	/// </summary>
+	/// <returns>Length of the vector.</returns>
+	template <typename _LenTy = ValueType,
+		typename = std::enable_if_t< is_noncvref_mathscalar_v<_LenTy> > >
+		constexpr _LenTy length() const
+	{
+		if constexpr(std::is_same_v<_LenTy, ValueType>)
+			return std::sqrt(x * x + y * y + z * z);
+		else
+		{
+			auto conv = this->template convert<_LenTy>();
+			return std::sqrt(conv.x * conv.x + conv.y * conv.y + conv.z * conv.z);
+		}
+	}
+
+	/// <summary>
+	/// Returns squared length of the vector.
+	/// </summary>
+	/// <returns>Squared length of the vector.</returns>
+	template <typename _LenTy = ValueType,
+		typename = std::enable_if_t< is_noncvref_mathscalar_v<_LenTy> > >
+		constexpr _LenTy lengthSquared() const
+	{
+		if constexpr(std::is_same_v<_LenTy, ValueType>)
+			return x * x + y * y + z * z;
+		else
+		{
+			auto conv = this->template convert<_LenTy>();
+			return static_cast<_LenTy>(conv.x * conv.x + conv.y * conv.y + conv.z * conv.z);
+		}
+	}
+
+	/// <summary>
+	/// Computes distance between two instances.
+	/// </summary>
+	/// <param name="other_">The other vector.</param>
+	/// <returns>Distance between two instances.</returns>
+	template <typename _DistTy = ValueType,
+		typename = std::enable_if_t< is_noncvref_mathscalar_v<_DistTy> > >
+	constexpr _DistTy distance(BaseVector3<ValueType> const & other_) const
+	{
+		return (*this - other_).template length<_DistTy>();
+	}
+
+	/// <summary>
+	/// Computes squared distance between two instances.
+	/// </summary>
+	/// <param name="other_">The other vector.</param>
+	/// <returns>Squared distance between two instances.</returns>
+	template <typename _DistTy = ValueType,
+		typename = std::enable_if_t< is_noncvref_mathscalar_v<_DistTy> > >
+		constexpr _DistTy distanceSquared(BaseVector3<ValueType> const & other_) const
+	{
+		return (*this - other_).template lengthSquared<_DistTy>();
+	}
+
+	/// <summary>
+	/// Computes dot product of two vectors (this and other).
+	/// </summary>
+	/// <param name="other_">The other vector.</param>
+	/// <returns>Dot product of two vectors.</returns>
+	template <typename _DotTy = ValueType,
+		typename = std::enable_if_t< is_noncvref_mathscalar_v<_DotTy> > >
+		constexpr _DotTy dot(BaseVector3<ValueType> const & other_) const
+	{
+		if constexpr(std::is_same_v<_DotTy, ValueType>)
+			return x * other_.x + y * other_.y + z * other_.z;
+		else
+		{
+			auto convThis = this->template convert<_DotTy>();
+			auto convOther = other_->template convert<_DotTy>();
+
+			return static_cast<_DotTy>(
+				convThis.x * convOther.x +
+				convThis.y * convOther.y +
+				convThis.z * convOther.z
+				);
+		}
+	}
+
+	/// <summary>
+	/// Computes cross product of two vectors (this and other_).
+	/// </summary>
+	/// <param name="other_">The other vector.</param>
+	/// <returns>Cross product of two vectors.</returns>
+	constexpr BaseVector3<ValueType> cross(BaseVector3<ValueType> const & other_) const
+	{
+		return BaseVector3<ValueType>{
+			y * other_.z - z * other_.y,
+				z * other_.x - x * other_.z,
+				x * other_.y - y * other_.x
+		};
+	}
+
+	/// <summary>
+	/// Computes reflection vector of specified normal.
+	/// </summary>
+	/// <param name="normal_">The surface normal.</param>
+	/// <returns>Reflection vector of specified normal</returns>
+	constexpr BaseVector3<ValueType> reflect(BaseVector3<ValueType> const & normal_) const
+	{
+		auto normal = normal_.normalize();
+		return (*this) - (normal * normal.dot(*this) * ValueType { 2 });
+	}
+
+	/// <summary>
+	/// Computes reflection vector of specified normal and assigns it to self.
+	/// </summary>
+	/// <param name="normal_">The normal.</param>
+	/// <returns>Reference to self after computing reflection of specified normal.</returns>
+	constexpr BaseVector3<ValueType>& reflectSelf(BaseVector3<ValueType> const & normal_)
+	{
+		auto normal = normal_.normalize();
+		*this -= normal * normal.dot(*this) * ValueType { 2 };
+		return *this;
+	}
+
+	/// <summary>
+	/// Computes normalized vector.
+	/// </summary>
+	/// <returns>Normalized vector</returns>
+	constexpr BaseVector3<ValueType> normalize() const
+	{
+		auto len = this->length<ValueType>();
+		if (len != 0)
+		{
+			return  BaseVector3<ValueType>{ x / len, y / len, z / len };
+		}
+		return *this;
+	}
+
+	/// <summary>
+	/// Normalizes self and returns reference.
+	/// </summary>
+	/// <returns>Reference to normalized self.</returns>
+	constexpr BaseVector3<ValueType>& normalizeSelf()
+	{
+		auto len = this->length<ValueType>();
+		if (len != 0)
+		{
+			x /= len; y /= len; z /= len;
+		}
+		return *this;
+	}
+
+	/* yet non-constexpr */
+	/// <summary>
+	/// Converts vector to string.
+	/// </summary>
+	/// <param name="setup_">The string building setup.</param>
+	/// <returns>Vector converted to std::string.</returns>
+	std::string toString(VectorStringBuilder const & setup_ = VectorStringBuilder{}) const
+	{
+		std::stringstream stream;
+		switch (setup_.wrap)
+		{
+		case VectorStringBuilder::Wrap::Round: { stream << "( "; break; }
+		case VectorStringBuilder::Wrap::Square: { stream << "[ "; break; }
+		case VectorStringBuilder::Wrap::Curly: { stream << "{ "; break; }
+		default: break;
+		}
+
+		if (setup_.mantissaFixed)
+			stream << std::fixed;
+
+		stream.precision(setup_.precision);
+
+		switch (setup_.compVisibility)
+		{
+		case VectorStringBuilder::CompVisibility::WithColon: {
+			stream << "x: " << x << setup_.separator << ' '
+				<< "y: " << y << setup_.separator << ' '
+				<< "z: " << z;
+			break;
+		}
+		case VectorStringBuilder::CompVisibility::WithEqual: {
+			stream << "x = " << x << setup_.separator << ' '
+				<< "y = " << y << setup_.separator << ' '
+				<< "z = " << z;
+			break;
+		}
+		default: {
+			stream << x << setup_.separator << ' ' << y << setup_.separator << ' ' << z;
+			break;
+		}
+		}
+
+		switch (setup_.wrap)
+		{
+		case VectorStringBuilder::Wrap::Round: { stream << " )"; break; }
+		case VectorStringBuilder::Wrap::Square: { stream << " ]"; break; }
+		case VectorStringBuilder::Wrap::Curly: { stream << " }"; break; }
+		default: break;
+		}
+		return stream.str();
+	}
+
+	/// <summary>
+	/// Checks if two vectors are equal.
+	/// </summary>
+	/// <param name="other_">The other vector.</param>
+	/// <param name="EqualityTolerance">The equality tolerance.</param>
+	/// <returns>
+	///  <c>true</c> if vectors are equal; otherwise, <c>false</c>.
+	/// </returns>
+	template <typename _Ty2, typename _EqTy,
+		typename = std::enable_if_t< std::is_floating_point_v<_EqTy> > >
+		constexpr bool equals(BaseVector3<_Ty2> const & other_, _EqTy const equalityTolerance_ = Math::Tolerance<_EqTy>::Low) const
+	{
+		return (
+			std::abs(static_cast<_EqTy>(x) - static_cast<_EqTy>(other_.x)) <= equalityTolerance_ &&
+			std::abs(static_cast<_EqTy>(y) - static_cast<_EqTy>(other_.y)) <= equalityTolerance_ &&
+			std::abs(static_cast<_EqTy>(z) - static_cast<_EqTy>(other_.z)) <= equalityTolerance_
+			);
+	}
+
+	/// <summary>
+	/// Computes lower bound vector of the two specified.
+	/// </summary>
+	/// <param name="lhs_">The lhs vector.</param>
+	/// <param name="rhs_">The rhs vector.</param>
+	/// <returns>Vector with components:
+	/// { x = min(lhs_.x, rhs_.x), y = min(lhs_.y, rhs_.y), z = min(lhs_.z, rhs_.z)  }
+	/// </returns>
+	constexpr static BaseVector3<ValueType> lowerBounds(BaseVector3<ValueType> const &lhs_, BaseVector3<ValueType> const & rhs_)
+	{
+		return BaseVector3<ValueType>{
+			std::min(lhs_.x, rhs_.x),
+				std::min(lhs_.y, rhs_.y),
+				std::min(lhs_.z, rhs_.z)
+		};
+	}
+
+	/// <summary>
+	/// Computes upper bound vector of the two specified.
+	/// </summary>
+	/// <param name="lhs_">The lhs vector.</param>
+	/// <param name="rhs_">The rhs vector.</param>
+	/// <returns>Vector with components:
+	/// { x = max(lhs_.x, rhs_.x), y = max(lhs_.y, rhs_.y), z = max(lhs_.z, rhs_.z)  }
+	/// </returns>
+	constexpr static BaseVector3<ValueType> upperBounds(BaseVector3<ValueType> const & lhs_, BaseVector3<ValueType> const & rhs_)
+	{
+		return BaseVector3<ValueType>{
+			std::max(lhs_.x, rhs_.x),
+				std::max(lhs_.y, rhs_.y),
+				std::min(lhs_.z, rhs_.z)
+		};
+	}
+
+	/// <summary>
+	/// Computes lower and upper bounds for two specified vectors.
+	/// </summary>
+	/// <param name="lower_">The lower bound vector.</param>
+	/// <param name="upper_">The upper bound vecor.</param>
+	/// <remarks>
+	/// <para>Uses arguments as output, changes its values.</para>
+	/// </remarks>
+	constexpr static void bounds(BaseVector3<ValueType> & lower_, BaseVector3<ValueType> & upper_)
+	{
+		BaseVector3<ValueType> tempMin = lower_;
+		lower_ = BaseVector3<ValueType>::lowerBounds(lower_, upper_);
+		upper_ = BaseVector3<ValueType>::upperBounds(tempMin, upper_);
+	}
+
+	/// <summary>
+	/// Converts vector to other type.
+	/// </summary>
+	/// <returns>Vector of other value type.</returns>
+	template <typename _Ty2>
+	constexpr BaseVector3<_Ty2> convert() const {
+		return BaseVector3<_Ty2>{
+			static_cast<_Ty2>(x),
+			static_cast<_Ty2>(y),
+			static_cast<_Ty2>(z)
+		};
+	}
+
+	//////////////////////////////////////
+	// Operators:
+	//////////////////////////////////////
+
+	/// <summary>
+	/// Assigns vector to self.
+	/// </summary>
+	/// <param name="rhs_">The rhs vector.</param>
+	/// <returns>Reference to self.</returns>
+	constexpr BaseVector3<ValueType> & operator = (BaseVector3<ValueType> const & rhs_) {
+		x = rhs_.x;
+		y = rhs_.y;
+		z = rhs_.z;
+		return *this;
+	}
+
+	/// <summary>
+	/// Negates vector.
+	/// </summary>
+	/// <returns>Negated vector.</returns>
+	constexpr BaseVector3<ValueType> operator - () const {
+		return BaseVector3<ValueType>{-x, -y, -z};
+	}
+
+	/// <summary>
+	/// Checks if lhs vector is equal to rhs vector (with low tolerance).
+	/// </summary>
+	/// <param name="rhs_">The other vector.</param>
+	/// <returns>
+	///  <c>true</c> if vectors are equal; otherwise, <c>false</c>.
+	/// </returns>
+	template <typename _Ty2>
+	constexpr bool operator == (BaseVector3<_Ty2> const & rhs_) const {
+		return equals(rhs_);
+	}
+
+	/// <summary>
+	/// Checks if lhs vector is not equal to rhs vector (with low tolerance).
+	/// </summary>
+	/// <param name="rhs_">The other vector.</param>
+	/// <returns>
+	///  <c>true</c> if vectors are not equal; otherwise, <c>false</c>.
+	/// </returns>
+	template <typename _Ty2>
+	constexpr bool operator != (BaseVector3<_Ty2> const & rhs_) const {
+		return !equals(rhs_);
+	}
+
+
+	////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	/// <summary>
+	/// Adds two vectors together.
+	/// </summary>
+	/// <param name="lhs_">The lhs vector.</param>
+	/// <param name="rhs_">The rhs vector.</param>
+	/// <returns>Reference to self, after operation.</returns>
+	constexpr BaseVector3<ValueType>& operator += (BaseVector3<ValueType> const & rhs_)
+	{
+		x += rhs_.x;
+		y += rhs_.y;
+		z += rhs_.z;
+		return *this;
+	}
+
+	/// <summary>
+	/// Subtracts rhs vector from lhs one.
+	/// </summary>
+	/// <param name="lhs_">The lhs vector.</param>
+	/// <param name="rhs_">The rhs vector.</param>
+	/// <returns>Reference to self after operation.</returns>
+	template <typename _Ty2>
+	constexpr BaseVector3<ValueType>& operator -= (BaseVector3<ValueType> const & rhs_) {
+		x -= rhs_.x;
+		y -= rhs_.y;
+		z -= rhs_.z;
+		return *this;
+	}
+
+	/// <summary>
+	/// Multiplies two vectors.
+	/// </summary>
+	/// <param name="lhs_">The lhs vector.</param>
+	/// <param name="rhs_">The rhs vector.</param>
+	/// <returns>Reference to self, after operation.</returns>
+	template <typename _Ty2>
+	constexpr BaseVector3<ValueType>& operator *= (BaseVector3<ValueType> const & rhs_) {
+		x *= rhs_.x;
+		y *= rhs_.y;
+		z *= rhs_.z;
+		return *this;
+	}
+
+	/// <summary>
+	/// Adds two vectors together.
+	/// </summary>
+	/// <param name="lhs_">The lhs vector.</param>
+	/// <param name="rhs_">The rhs vector.</param>
+	/// <returns>Reference to self, after operation.</returns>
+	constexpr BaseVector3<ValueType>& operator /= (BaseVector3<ValueType> const & rhs_) {
+		x /= rhs_.x;
+		y /= rhs_.y;
+		z /= rhs_.z;
+		return *this;
+	}
+
+	////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	/// <summary>
+	/// Adds scalar to a vector.
+	/// </summary>
+	/// <param name="rhs_">The scalar.</param>
+	/// <returns>Vector plus a scalar.</returns>
+	constexpr BaseVector3<ValueType>& operator += (ValueType const rhs_) {
+		x += rhs_;
+		y += rhs_;
+		z += rhs_;
+		return *this;
+	}
+
+	/// <summary>
+	/// Substracts scalar from a vector.
+	/// </summary>
+	/// <param name="rhs_">The scalar.</param>
+	/// <returns>Vector minus a scalar.</returns>
+	constexpr BaseVector3<ValueType>& operator -= (ValueType const rhs_) {
+		x -= rhs_;
+		y -= rhs_;
+		z -= rhs_;
+		return *this;
+	}
+
+	/// <summary>
+	/// Multiplies vector by a scalar.
+	/// </summary>
+	/// <param name="rhs_">The scalar.</param>
+	/// <returns>Vector times a scalar.</returns>
+	constexpr BaseVector3<ValueType>& operator *= (ValueType const rhs_) {
+		x *= rhs_;
+		y *= rhs_;
+		z *= rhs_;
+		return *this;
+	}
+
+	/// <summary>
+	/// Divides vector by a scalar.
+	/// </summary>
+	/// <param name="rhs_">The scalar.</param>
+	/// <returns>Vector divided by a scalar.</returns>
+	constexpr BaseVector3<ValueType>& operator /= (ValueType const rhs_) {
+		x /= rhs_;
+		y /= rhs_;
+		z /= rhs_;
+		return *this;
+	}
+
+};
+} // namespace impl
+
+} // namespace agdk
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+template <typename _Ty>
+constexpr agdk::impl::BaseVector3<_Ty> operator + (agdk::impl::BaseVector3<_Ty> const & lhs_, agdk::impl::BaseVector3<_Ty> const & rhs_)
+{
+	return {
+		lhs_.x + rhs_.x,
+		lhs_.y + rhs_.y,
+		lhs_.z + rhs_.z
+	};
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+template <typename _Ty>
+constexpr agdk::impl::BaseVector3<_Ty> operator - (agdk::impl::BaseVector3<_Ty> const & lhs_, agdk::impl::BaseVector3<_Ty> const & rhs_)
+{
+	return {
+		lhs_.x - rhs_.x,
+		lhs_.y - rhs_.y,
+		lhs_.z - rhs_.z
+	};
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+template <typename _Ty>
+constexpr agdk::impl::BaseVector3<_Ty> operator * (agdk::impl::BaseVector3<_Ty> const & lhs_, agdk::impl::BaseVector3<_Ty> const & rhs_)
+{
+	return {
+		lhs_.x * rhs_.x,
+		lhs_.y * rhs_.y,
+		lhs_.z * rhs_.z
+	};
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+template <typename _Ty>
+constexpr agdk::impl::BaseVector3<_Ty> operator / (agdk::impl::BaseVector3<_Ty> const & lhs_, agdk::impl::BaseVector3<_Ty> const & rhs_)
+{
+	return {
+		lhs_.x / rhs_.x,
+		lhs_.y / rhs_.y,
+		lhs_.z / rhs_.z
+	};
+}
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+// Operators (lhs vector <op> rhs scalar).
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+template <typename _Ty>
+constexpr agdk::impl::BaseVector3<_Ty> operator + (agdk::impl::BaseVector3<_Ty> const & lhs_, _Ty const rhs_)
+{
+	return {
+		lhs_.x + rhs_,
+		lhs_.y + rhs_,
+		lhs_.z + rhs_
+	};
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+template <typename _Ty>
+constexpr agdk::impl::BaseVector3<_Ty> operator - (agdk::impl::BaseVector3<_Ty> const & lhs_, _Ty const rhs_)
+{
+	return {
+		lhs_.x - rhs_,
+		lhs_.y - rhs_,
+		lhs_.z - rhs_
+	};
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+template <typename _Ty>
+constexpr agdk::impl::BaseVector3<_Ty> operator * (agdk::impl::BaseVector3<_Ty> const & lhs_, _Ty const rhs_)
+{
+	return {
+		lhs_.x * rhs_,
+		lhs_.y * rhs_,
+		lhs_.z * rhs_
+	};
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+template <typename _Ty>
+constexpr agdk::impl::BaseVector3<_Ty> operator / (agdk::impl::BaseVector3<_Ty> const & lhs_, _Ty const rhs_)
+{
+	return {
+		lhs_.x / rhs_,
+		lhs_.y / rhs_,
+		lhs_.z / rhs_
+	};
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+// Operators (lhs scalar <op> rhs vector).
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+template <typename _Ty>
+constexpr agdk::impl::BaseVector3<_Ty> operator + (_Ty const lhs_, agdk::impl::BaseVector3<_Ty> const & rhs_)
+{
+	return {
+		rhs_.x + lhs_,
+		rhs_.y + lhs_,
+		rhs_.z + lhs_
+	};
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+template <typename _Ty>
+constexpr agdk::impl::BaseVector3<_Ty> operator * (_Ty const lhs_, agdk::impl::BaseVector3<_Ty> const & rhs_)
+{
+	return {
+		rhs_.x * lhs_,
+		rhs_.y * lhs_,
+		rhs_.z * lhs_
+	};
 }

@@ -163,5 +163,8 @@
     <None Include="include\AdvancedGDK\Misc\Math\Length.inl">
       <Filter>Header Files</Filter>
     </None>
+    <None Include="include\AdvancedGDK\Misc\Math\VectorStringBuilder.hpp">
+      <Filter>Header Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

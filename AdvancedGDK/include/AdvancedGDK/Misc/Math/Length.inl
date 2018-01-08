@@ -125,7 +125,7 @@ namespace agdk
 			///   <c>true</c> if nearly equal; otherwise, <c>false</c>.
 			/// </returns>
 			template <typename _Ty1, typename _Ratio1>
-			constexpr bool isNearlyEqual(const BaseLength<_Ty1, _Ratio1> &rhs, ValueType tolerance = Math::Tolerance::Medium<ValueType>) const
+			constexpr bool isNearlyEqual(const BaseLength<_Ty1, _Ratio1> &rhs, ValueType tolerance = Math::Tolerance<ValueType>::Medium) const
 			{
 				using div_ratio = std::ratio_divide<_Ratio1, RatioType>;
 				return Math::nearlyEqual(value, (static_cast<_Ty1>(rhs.value) * div_ratio::num / div_ratio::den), tolerance);

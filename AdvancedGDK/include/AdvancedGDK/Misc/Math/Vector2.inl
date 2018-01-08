@@ -17,63 +17,120 @@
 #include <sstream>
 #include <iomanip>
 
+// Custom includes:
+#include "VectorStringBuilder.hpp"
+
+
+namespace agdk::impl
+{
+template <typename _Ty>
+class BaseVector3;
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/// <summary>
+/// Adds two vectors together.
+/// </summary>
+/// <param name="lhs_">The lhs vector.</param>
+/// <param name="rhs_">The rhs vector.</param>
+/// <returns>Sum of two vectors.</returns>
+template <typename _Ty>
+constexpr agdk::impl::BaseVector2<_Ty> operator + (agdk::impl::BaseVector2<_Ty> const & lhs_, agdk::impl::BaseVector2<_Ty> const & rhs_);
+
+/// <summary>
+/// Subtracts rhs vector from lhs one.
+/// </summary>
+/// <param name="lhs_">The lhs vector.</param>
+/// <param name="rhs_">The rhs vector.</param>
+/// <returns>Difference of two vectors.</returns>
+template <typename _Ty>
+constexpr agdk::impl::BaseVector2<_Ty> operator - (agdk::impl::BaseVector2<_Ty> const & lhs_, agdk::impl::BaseVector2<_Ty> const & rhs_);
+
+/// <summary>
+/// Multiplies two vectors.
+/// </summary>
+/// <param name="lhs_">The lhs vector.</param>
+/// <param name="rhs_">The rhs vector.</param>
+/// <returns>Product of two vectors.</returns>
+template <typename _Ty>
+constexpr agdk::impl::BaseVector2<_Ty> operator * (agdk::impl::BaseVector2<_Ty> const & lhs_, agdk::impl::BaseVector2<_Ty> const & rhs_);
+
+/// <summary>
+/// Divides lhs vector by rhs vector.
+/// </summary>
+/// <param name="lhs_">The lhs vector.</param>
+/// <param name="rhs_">The rhs vector.</param>
+/// <returns>Quotient of two vectors.</returns>
+template <typename _Ty>
+constexpr agdk::impl::BaseVector2<_Ty> operator / (agdk::impl::BaseVector2<_Ty> const & lhs_, agdk::impl::BaseVector2<_Ty> const & rhs_);
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+// Operators (lhs vector <op> rhs scalar).
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/// <summary>
+/// Adds scalar to a vector.
+/// </summary>
+/// <param name="lhs_">The lhs vector.</param>
+/// <param name="rhs_">The scalar.</param>
+/// <returns>Vector plus a scalar.</returns>
+template <typename _Ty>
+constexpr agdk::impl::BaseVector2<_Ty> operator + (agdk::impl::BaseVector2<_Ty> const & lhs_, _Ty const rhs_);
+
+/// <summary>
+/// Substracts scalar from a vector.
+/// </summary>
+/// <param name="lhs_">The lhs vector.</param>
+/// <param name="rhs_">The scalar.</param>
+/// <returns>Vector minus a scalar.</returns>
+template <typename _Ty>
+constexpr agdk::impl::BaseVector2<_Ty> operator - (agdk::impl::BaseVector2<_Ty> const & lhs_, _Ty const rhs_);
+
+/// <summary>
+/// Multiplies vector by a scalar.
+/// </summary>
+/// <param name="lhs_">The lhs vector.</param>
+/// <param name="rhs_">The scalar.</param>
+/// <returns>Vector times a scalar.</returns>
+template <typename _Ty>
+constexpr agdk::impl::BaseVector2<_Ty> operator * (agdk::impl::BaseVector2<_Ty> const & lhs_, _Ty const rhs_);
+
+/// <summary>
+/// Divides vector by a scalar.
+/// </summary>
+/// <param name="lhs_">The lhs vector.</param>
+/// <param name="rhs_">The scalar.</param>
+/// <returns>Vector divided by a scalar.</returns>
+template <typename _Ty>
+constexpr agdk::impl::BaseVector2<_Ty> operator / (agdk::impl::BaseVector2<_Ty> const & lhs_, _Ty const rhs_);
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+// Operators (lhs scalar <op> rhs vector).
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/// <summary>
+/// Adds scalar to a vector.
+/// </summary>
+/// <param name="lhs_">The scalar.</param>
+/// <param name="rhs_">The rhs vector.</param>
+/// <returns>Vector plus a scalar.</returns>
+template <typename _Ty>
+constexpr agdk::impl::BaseVector2<_Ty> operator + (_Ty const lhs_, agdk::impl::BaseVector2<_Ty> const & rhs_);
+
+/// <summary>
+/// Multiplies vector by a scalar.
+/// </summary>
+/// <param name="lhs_">The scalar.</param>
+/// <param name="rhs_">The rhs vector.</param>
+/// <returns>Vector times a scalar.</returns>
+template <typename _Ty>
+constexpr agdk::impl::BaseVector2<_Ty> operator * (_Ty const lhs_, agdk::impl::BaseVector2<_Ty> const & rhs_);
+
+
+
 namespace agdk
 {
-/// <summary>
-/// Contains setup for a string conversion: <see cref="BaseVector2::toString">.
-/// </summary>
-struct Vector2StringBuilder final {
-	enum class Wrap {
-		None,
-		Round,
-		Square,
-		Curly
-	} wrap = Wrap::Round;
-
-	enum class CompVisibility {
-		None,
-		WithColon,
-		WithEqual
-	} compVisibility = CompVisibility::None;
-
-	unsigned char	separator = ',';
-
-	std::uint8_t	precision		= 3;
-	const bool		mantissaFixed	= true;
-	
-	/// <summary>
-	/// Initializes a new instance of the <see cref="Vector2StringBuilder"/> struct.
-	/// </summary>
-	constexpr Vector2StringBuilder() {}
-	
-	/// <summary>
-	/// Initializes a new instance of the <see cref="Vector2StringBuilder"/> struct.
-	/// </summary>
-	/// <param name="wrap_">The wrap setting.</param>
-	/// <param name="comp_">The component setting.</param>
-	/// <param name="separator_">The separator.</param>
-	/// <param name="precision_">The precision.</param>
-	/// <param name="mantissaFixed_">The mantissa fixed.</param>
-	constexpr Vector2StringBuilder(Wrap const wrap_, CompVisibility const comp_, unsigned char const separator_, std::uint8_t const precision_, bool const mantissaFixed_)
-		: wrap{ wrap_ }, compVisibility{ comp_ }, separator{ separator_ }, precision{ precision_ }, mantissaFixed{ mantissaFixed_ }
-	{
-	}
-	
-	/// <summary>
-	/// Returns one of predefined styles.
-	/// </summary>
-	/// <param name="index_">The style index.</param>
-	/// <returns>Predefined style.</returns>
-	static constexpr Vector2StringBuilder Style(std::size_t const index_) {
-		Vector2StringBuilder style[] {
-			{ Wrap::Curly, CompVisibility::WithColon, ',', 3, false },	// example: { x: 10.245, y: 20 }
-			{ Wrap::Curly, CompVisibility::WithEqual, ',', 3, false },	// example: { x = 10.245, y = 20 }
-			{ Wrap::Round, CompVisibility::WithColon, ',', 3, false },	// example: ( x: 10.245, y: 20 )
-			{ Wrap::Round, CompVisibility::WithEqual, ',', 3, false }	// example: ( x = 10.245, y = 20 )
-		};
-		return style[index_];
-	};
-};
 
 namespace impl
 {
@@ -131,17 +188,6 @@ public:
 		y{ rhs_.y }
 	{
 	}
-
-	/// <summary>
-	/// Initializes a new instance of the <see cref="BaseVector2"/> class.
-	/// </summary>
-	/// <param name="rhs_">The other vector.</param>
-	template <typename _Ty2>
-	constexpr explicit BaseVector2(BaseVector2<_Ty2> const &rhs_)
-		: x{ static_cast<ValueType>(rhs_.x) },
-		y{ static_cast<ValueType>(rhs_.y) }
-	{
-	}
 			
 	/// <summary>
 	/// Sets values of the vector.
@@ -193,7 +239,8 @@ public:
 	/// </summary>
 	/// <param name="other_">The other vector.</param>
 	/// <returns>Distance between two instances.</returns>
-	template <typename _DistTy = ValueType>
+	template <typename _DistTy = ValueType,
+		typename = std::enable_if_t< is_noncvref_mathscalar_v<_DistTy> > >
 	constexpr _DistTy distance(BaseVector2<ValueType> const & other_) const
 	{
 		return (*this - other_).template length<_DistTy>();
@@ -204,7 +251,8 @@ public:
 	/// </summary>
 	/// <param name="other_">The other vector.</param>
 	/// <returns>Squared distance between two instances.</returns>
-	template <typename _DistTy = ValueType>
+	template <typename _DistTy = ValueType,
+		typename = std::enable_if_t< is_noncvref_mathscalar_v<_DistTy> > >
 	constexpr _DistTy distanceSquared(BaseVector2<ValueType> const & other_) const
 	{
 		return (*this - other_).template lengthSquared<_DistTy>();
@@ -215,7 +263,8 @@ public:
 	/// </summary>
 	/// <param name="other_">The other vector.</param>
 	/// <returns>Dot product of two vectors.</returns>
-	template <typename _DotTy = ValueType>			
+	template <typename _DotTy = ValueType,
+		typename = std::enable_if_t< is_noncvref_mathscalar_v<_DotTy> > >
 	constexpr _DotTy dot(BaseVector2<ValueType> const & other_) const
 	{
 		if constexpr(std::is_same_v<_DotTy, ValueType>)
@@ -236,7 +285,8 @@ public:
 	/// </summary>
 	/// <param name="other_">The other vector.</param>
 	/// <returns>Cross product of two vectors.</returns>
-	template <typename _CrossTy>
+	template <typename _CrossTy,
+		typename = std::enable_if_t< is_noncvref_mathscalar_v<_CrossTy> > >
 	constexpr _CrossTy cross(BaseVector2<ValueType> const & other_) const
 	{
 		if constexpr(std::is_same_v<_CrossTy, ValueType>)
@@ -267,9 +317,8 @@ public:
 	/// Computes reflection vector of specified normal and assigns it to self.
 	/// </summary>
 	/// <param name="normal_">The normal.</param>
-	/// <returns>Reference to self after computing reflection of specified normal.</returns>
-	template <typename _Ty2>		
-	constexpr BaseVector2<ValueType>& reflectSelf(BaseVector2<_Ty2> const & normal_)
+	/// <returns>Reference to self after computing reflection of specified normal.</returns>	
+	constexpr BaseVector2<ValueType>& reflectSelf(BaseVector2<ValueType> const & normal_)
 	{
 		auto normal = normal_.normalize();
 		*this -= normal * normal.dot(*this) * ValueType{ 2 };
@@ -306,18 +355,18 @@ public:
 
 	/* yet non-constexpr */	
 	/// <summary>
-	/// To the string.
+	/// Converts vector to string.
 	/// </summary>
 	/// <param name="setup_">The string building setup.</param>
-	/// <returns>Vector2 converted to std::string.</returns>
-	std::string toString(auto const & setup_ = Vector2StringBuilder{}) const
+	/// <returns>Vector converted to std::string.</returns>
+	std::string toString(VectorStringBuilder const & setup_ = VectorStringBuilder{}) const
 	{
 		std::stringstream stream;
 		switch (setup_.wrap)
 		{
-		case Vector2StringBuilder::Wrap::Round:		{ stream << "( "; break; }
-		case Vector2StringBuilder::Wrap::Square:	{ stream << "[ "; break; }
-		case Vector2StringBuilder::Wrap::Curly:		{ stream << "{ "; break; }
+		case VectorStringBuilder::Wrap::Round:		{ stream << "( "; break; }
+		case VectorStringBuilder::Wrap::Square:	{ stream << "[ "; break; }
+		case VectorStringBuilder::Wrap::Curly:		{ stream << "{ "; break; }
 		default: break;
 		}
 
@@ -328,12 +377,12 @@ public:
 
 		switch (setup_.compVisibility)
 		{
-		case Vector2StringBuilder::CompVisibility::WithColon: {
+		case VectorStringBuilder::CompVisibility::WithColon: {
 			stream	<< "x: " << x << setup_.separator << ' '
 					<< "y: " << y;
 			break;
 		}
-		case Vector2StringBuilder::CompVisibility::WithEqual: {
+		case VectorStringBuilder::CompVisibility::WithEqual: {
 			stream	<< "x = " << x << setup_.separator << ' '
 					<< "y = " << y;
 			break;
@@ -346,9 +395,9 @@ public:
 
 		switch (setup_.wrap)
 		{
-		case Vector2StringBuilder::Wrap::Round:		{ stream << " )"; break; }
-		case Vector2StringBuilder::Wrap::Square:	{ stream << " ]"; break; }
-		case Vector2StringBuilder::Wrap::Curly:		{ stream << " }"; break; }
+		case VectorStringBuilder::Wrap::Round:		{ stream << " )"; break; }
+		case VectorStringBuilder::Wrap::Square:	{ stream << " ]"; break; }
+		case VectorStringBuilder::Wrap::Curly:		{ stream << " }"; break; }
 		default: break;
 		}
 		return stream.str();
@@ -401,7 +450,7 @@ public:
 	}
 
 	/// <summary>
-	/// 
+	/// Computes lower and upper bounds for two specified vectors.
 	/// </summary>
 	/// <param name="lower_">The lower bound vector.</param>
 	/// <param name="upper_">The upper bound vecor.</param>
@@ -410,9 +459,9 @@ public:
 	/// </remarks>
 	constexpr static void bounds(BaseVector2<ValueType> & lower_, BaseVector2<ValueType> & upper_)
 	{
-		auto tempMin = lower_;
-		lower_ = BaseVector2<ValueType>::min(lower_, upper_);
-		upper_ = BaseVector2<ValueType>::max(tempMin, upper_);
+		BaseVector2<ValueType> tempMin = lower_;
+		lower_ = BaseVector2<ValueType>::lowerBounds(lower_, upper_);
+		upper_ = BaseVector2<ValueType>::upperBounds(tempMin, upper_);
 	}
 			
 	/// <summary>
@@ -421,7 +470,10 @@ public:
 	/// <returns>Vector of other value type.</returns>
 	template <typename _Ty2>
 	constexpr BaseVector2<_Ty2> convert() const {
-		return BaseVector2<_Ty2>{*this};
+		return BaseVector2<_Ty2>{
+			static_cast<_Ty2>(x),
+			static_cast<_Ty2>(y)
+		};
 	}
 
 			
@@ -435,10 +487,9 @@ public:
 	/// </summary>
 	/// <param name="rhs_">The rhs vector.</param>
 	/// <returns>Reference to self.</returns>
-	template <typename _Ty2>
-	constexpr BaseVector2<ValueType> & operator = (BaseVector2<_Ty2> const & rhs_) {
-		x = ValueType{ rhs_.x };
-		y = ValueType{ rhs_.y };
+	constexpr BaseVector2<ValueType> & operator = (BaseVector2<ValueType> const & rhs_) {
+		x = rhs_.x;
+		y = rhs_.y;
 		return *this;
 	}
 			
@@ -447,7 +498,7 @@ public:
 	/// </summary>
 	/// <returns>Negated vector.</returns>
 	constexpr BaseVector2<ValueType> operator - () const {
-		return BaseVector2<ValueType>(-x, -y);
+		return BaseVector2<ValueType>{-x, -y};
 	}
 
 	/// <summary>
@@ -579,13 +630,6 @@ public:
 } // namespace agdk
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-
-/// <summary>
-/// Adds two vectors together.
-/// </summary>
-/// <param name="lhs_">The lhs vector.</param>
-/// <param name="rhs_">The rhs vector.</param>
-/// <returns>Sum of two vectors.</returns>
 template <typename _Ty>
 constexpr agdk::impl::BaseVector2<_Ty> operator + (agdk::impl::BaseVector2<_Ty> const & lhs_, agdk::impl::BaseVector2<_Ty> const & rhs_)
 {
@@ -596,13 +640,6 @@ constexpr agdk::impl::BaseVector2<_Ty> operator + (agdk::impl::BaseVector2<_Ty> 
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-
-/// <summary>
-/// Subtracts rhs vector from lhs one.
-/// </summary>
-/// <param name="lhs_">The lhs vector.</param>
-/// <param name="rhs_">The rhs vector.</param>
-/// <returns>Difference of two vectors.</returns>
 template <typename _Ty>
 constexpr agdk::impl::BaseVector2<_Ty> operator - (agdk::impl::BaseVector2<_Ty> const & lhs_, agdk::impl::BaseVector2<_Ty> const & rhs_)
 {
@@ -613,13 +650,6 @@ constexpr agdk::impl::BaseVector2<_Ty> operator - (agdk::impl::BaseVector2<_Ty> 
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-
-/// <summary>
-/// Multiplies two vectors.
-/// </summary>
-/// <param name="lhs_">The lhs vector.</param>
-/// <param name="rhs_">The rhs vector.</param>
-/// <returns>Product of two vectors.</returns>
 template <typename _Ty>
 constexpr agdk::impl::BaseVector2<_Ty> operator * (agdk::impl::BaseVector2<_Ty> const & lhs_, agdk::impl::BaseVector2<_Ty> const & rhs_)
 {
@@ -630,13 +660,6 @@ constexpr agdk::impl::BaseVector2<_Ty> operator * (agdk::impl::BaseVector2<_Ty> 
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-
-/// <summary>
-/// Divides lhs vector by rhs vector.
-/// </summary>
-/// <param name="lhs_">The lhs vector.</param>
-/// <param name="rhs_">The rhs vector.</param>
-/// <returns>Quotient of two vectors.</returns>
 template <typename _Ty>
 constexpr agdk::impl::BaseVector2<_Ty> operator / (agdk::impl::BaseVector2<_Ty> const & lhs_, agdk::impl::BaseVector2<_Ty> const & rhs_)
 {
@@ -652,13 +675,6 @@ constexpr agdk::impl::BaseVector2<_Ty> operator / (agdk::impl::BaseVector2<_Ty> 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-
-/// <summary>
-/// Adds scalar to a vector.
-/// </summary>
-/// <param name="lhs_">The lhs vector.</param>
-/// <param name="rhs_">The scalar.</param>
-/// <returns>Vector plus a scalar.</returns>
 template <typename _Ty>
 constexpr agdk::impl::BaseVector2<_Ty> operator + (agdk::impl::BaseVector2<_Ty> const & lhs_, _Ty const rhs_)
 {
@@ -669,13 +685,6 @@ constexpr agdk::impl::BaseVector2<_Ty> operator + (agdk::impl::BaseVector2<_Ty> 
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-
-/// <summary>
-/// Substracts scalar from a vector.
-/// </summary>
-/// <param name="lhs_">The lhs vector.</param>
-/// <param name="rhs_">The scalar.</param>
-/// <returns>Vector minus a scalar.</returns>
 template <typename _Ty>
 constexpr agdk::impl::BaseVector2<_Ty> operator - (agdk::impl::BaseVector2<_Ty> const & lhs_, _Ty const rhs_)
 {
@@ -686,13 +695,6 @@ constexpr agdk::impl::BaseVector2<_Ty> operator - (agdk::impl::BaseVector2<_Ty> 
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-
-/// <summary>
-/// Multiplies vector by a scalar.
-/// </summary>
-/// <param name="lhs_">The lhs vector.</param>
-/// <param name="rhs_">The scalar.</param>
-/// <returns>Vector times a scalar.</returns>
 template <typename _Ty>
 constexpr agdk::impl::BaseVector2<_Ty> operator * (agdk::impl::BaseVector2<_Ty> const & lhs_, _Ty const rhs_)
 {
@@ -703,13 +705,6 @@ constexpr agdk::impl::BaseVector2<_Ty> operator * (agdk::impl::BaseVector2<_Ty> 
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-
-/// <summary>
-/// Divides vector by a scalar.
-/// </summary>
-/// <param name="lhs_">The lhs vector.</param>
-/// <param name="rhs_">The scalar.</param>
-/// <returns>Vector divided by a scalar.</returns>
 template <typename _Ty>
 constexpr agdk::impl::BaseVector2<_Ty> operator / (agdk::impl::BaseVector2<_Ty> const & lhs_, _Ty const rhs_)
 {
@@ -724,13 +719,6 @@ constexpr agdk::impl::BaseVector2<_Ty> operator / (agdk::impl::BaseVector2<_Ty> 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-
-/// <summary>
-/// Adds scalar to a vector.
-/// </summary>
-/// <param name="lhs_">The scalar.</param>
-/// <param name="rhs_">The rhs vector.</param>
-/// <returns>Vector plus a scalar.</returns>
 template <typename _Ty>
 constexpr agdk::impl::BaseVector2<_Ty> operator + (_Ty const lhs_, agdk::impl::BaseVector2<_Ty> const & rhs_)
 {
@@ -741,13 +729,6 @@ constexpr agdk::impl::BaseVector2<_Ty> operator + (_Ty const lhs_, agdk::impl::B
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-
-/// <summary>
-/// Multiplies vector by a scalar.
-/// </summary>
-/// <param name="lhs_">The scalar.</param>
-/// <param name="rhs_">The rhs vector.</param>
-/// <returns>Vector times a scalar.</returns>
 template <typename _Ty>
 constexpr agdk::impl::BaseVector2<_Ty> operator * (_Ty const lhs_, agdk::impl::BaseVector2<_Ty> const & rhs_)
 {
