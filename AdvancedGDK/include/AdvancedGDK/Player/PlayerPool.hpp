@@ -60,7 +60,7 @@ namespace agdk
 		/// <remarks>
 		/// <para>Only index is passed because it is faster to randomly access vector element with its index than searching for player pointer.</para>
 		/// </remarks>
-		void eventPlayerDisconnect(const std::size_t playerIndex_);
+		void eventPlayerDisconnect(std::size_t const playerIndex_);
 		
 		/// <summary>
 		/// The player pool reference.
@@ -92,7 +92,7 @@ namespace agdk
 		/// </summary>
 		/// <param name="playerIndex_">Index of the player.</param>
 		/// <returns>Pointer to player with specified index.</returns>
-		Player* get(const std::size_t playerIndex_) const;
+		Player* get(std::size_t const playerIndex_) const;
 		
 		
 		/// <summary>
@@ -113,9 +113,9 @@ namespace agdk
 		/// Finds the everyone in radius from specified location.
 		/// </summary>
 		/// <param name="location_">The location.</param>
-		/// <param name="radius">The radius.</param>
+		/// <param name="radius_">The radius.</param>
 		/// <returns>Vector of players in radius from specified location.</returns>
-		RawPoolType findEveryoneInRadius(const Vector3 location_, const Meters radius);
+		RawPoolType findEveryoneInRadius(Vector3 const location_, Meters const radius_);
 		
 		/// <summary>
 		/// Finds the nearest player within the radius from specified location.
@@ -123,7 +123,7 @@ namespace agdk
 		/// <param name="location_">The location.</param>
 		/// <param name="radius_">The radius.</param>
 		/// <returns>Nearest player within the radius from specified location. May be null pointer.</returns>
-		Player* findNearest(const Vector3 location_, const Meters radius);
+		Player* findNearest(Vector3 const location_, Meters const radius_);
 
 		/// <summary>
 		/// Finds the nearest player within the radius from specified player.
@@ -131,7 +131,7 @@ namespace agdk
 		/// <param name="player_">The location.</param>
 		/// <param name="radius_">The radius.</param>
 		/// <returns>Nearest player within the radius from specified location. May be null pointer.</returns>
-		Player* findNearest(const Player *const player_, const Meters radius_);
+		Player* findNearest(Player const *const player_, Meters const radius_);
 
 		/// <summary>
 		/// Finds the player by name.
@@ -139,7 +139,7 @@ namespace agdk
 		/// <param name="name_">Name of the player.</param>
 		/// <param name="caseSensitive_">Case sensitive.</param>
 		/// <returns>Player found by name. May be null pointer.</returns>
-		Player* findByName(const std::string_view name_, const bool caseSensitive_ = true);
+		Player* findByName(std::string_view const name_, bool const caseSensitive_ = true);
 	
 		/// <summary>
 		/// Finds player by name or index stored in string.
@@ -147,7 +147,7 @@ namespace agdk
 		/// <param name="nameOrIndex">Name or index stored in string.</param>
 		/// <param name="caseSensitive_">Case sensitive.</param>
 		/// <returns>Player found by name or index. May be null pointer.</returns>
-		Player* findByNameOrIndex(const std::string_view nameOrIndex_, const bool caseSensitive_ = true);
+		Player* findByNameOrIndex(std::string_view const nameOrIndex_, bool const caseSensitive_ = true);
 
 		/// <summary>
 		/// Finds player by name or index stored in string (picks best match).
@@ -165,13 +165,15 @@ namespace agdk
 		///	high ranks and is generally dangerous. Can be freely used in f.e. command: /goto [player name / id]
 		/// </para>
 		/// </remarks>
-		Player* findBestMatch(const std::string_view nameOrIndex_, const std::size_t minimalScore_ = 2);
+		Player* findBestMatch(std::string_view const nameOrIndex_, std::size_t const minimalScore_ = 2);
 
 		/// <summary>
 		/// Gets the player pool (of raw pointers).
 		/// </summary>
 		/// <returns>Pool (std::vector) containing every player.</returns>
-		auto getPool() const { return m_connectedPlayers; }
+		auto getPool() const {
+			return m_connectedPlayers;
+		}
 
 		/// PlayerPoolAgent have access to some private members.
 		friend class PlayerPoolAgent;
@@ -182,14 +184,14 @@ namespace agdk
 		/// </summary>
 		/// <param name="agent_">The agent.</param>
 		/// <param name="player_">The player.</param>
-		void agentAddPlayer(PlayerPoolAgent &agent_, std::shared_ptr<Player> &&player_);
+		void agentAddPlayer(std::shared_ptr<Player> &&player_);
 		
 		/// <summary>
 		/// Agent method: removes player from the pool. See also: <see cref="PlayerPoolAgent::eventPlayerDisconnect" />
 		/// </summary>
 		/// <param name="agent_">The agent.</param>
 		/// <param name="playerIndex_">Index of the player.</param>
-		void agentRemovePlayer(PlayerPoolAgent &agent_, const std::size_t playerIndex_);
+		void agentRemovePlayer(std::size_t const playerIndex_);
 
 		// Private members
 		
