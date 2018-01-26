@@ -123,6 +123,12 @@
     <ClInclude Include="include\AdvancedGDK\PrecompiledHeader.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\AdvancedGDK\Gameplay\Weapon.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\AdvancedGDK\Gameplay\Chat.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -160,6 +166,12 @@
     </ClCompile>
     <ClCompile Include="src\AdvancedGDK\Server\Server.cpp">
       <Filter>Source Files\Server</Filter>
+    </ClCompile>
+    <ClCompile Include="src\AdvancedGDK\Gameplay\Weapon.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\AdvancedGDK\Gameplay\Chat.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

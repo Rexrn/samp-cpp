@@ -73,7 +73,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
     <TargetName>advancedgdk-d</TargetName>
-    <OutDir>$(SolutionDir)lib\$(Configuration)\</OutDir>
+    <OutDir>$(ProjectDir)lib\$(Configuration)\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
@@ -81,7 +81,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
     <TargetName>advancedgdk</TargetName>
-    <OutDir>$(SolutionDir)lib\$(Configuration)\</OutDir>
+    <OutDir>$(ProjectDir)lib\$(Configuration)\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -162,6 +162,8 @@
     <ClInclude Include="dependencies\sampgdk\plugincommon.h" />
     <ClInclude Include="dependencies\sampgdk\sampgdk.h" />
     <ClInclude Include="include\AdvancedGDK\AdvancedGDK.hpp" />
+    <ClInclude Include="include\AdvancedGDK\Gameplay\Chat.hpp" />
+    <ClInclude Include="include\AdvancedGDK\Gameplay\Weapon.hpp" />
     <ClInclude Include="include\AdvancedGDK\PrecompiledHeader.hpp" />
     <ClInclude Include="include\AdvancedGDK\SampGDK.hpp" />
     <ClInclude Include="include\AdvancedGDK\Server\GameMode.hpp" />
@@ -190,6 +192,8 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="src\AdvancedGDK\Gameplay\Chat.cpp" />
+    <ClCompile Include="src\AdvancedGDK\Gameplay\Weapon.cpp" />
     <ClCompile Include="src\AdvancedGDK\Player\PlayerPool.cpp" />
     <ClCompile Include="src\AdvancedGDK\Server\GameMode.cpp" />
     <ClCompile Include="src\AdvancedGDK\Misc\Clock.cpp" />
