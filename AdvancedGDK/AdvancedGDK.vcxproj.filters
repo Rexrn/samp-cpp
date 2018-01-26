@@ -129,6 +129,15 @@
     <ClInclude Include="include\AdvancedGDK\Gameplay\Chat.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\AdvancedGDK\Gameplay\Teleport.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\AdvancedGDK\Gameplay\Command.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\AdvancedGDK\Gameplay\CommandManager.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -171,6 +180,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\AdvancedGDK\Gameplay\Chat.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\AdvancedGDK\Gameplay\Command.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\AdvancedGDK\Gameplay\CommandManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

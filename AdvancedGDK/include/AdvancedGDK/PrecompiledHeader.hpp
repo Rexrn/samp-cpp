@@ -12,6 +12,7 @@
 #include <string_view>
 #include <algorithm>
 #include <functional>
+#include <iterator>
 
 #include <cstdlib>
 #include <cstring>

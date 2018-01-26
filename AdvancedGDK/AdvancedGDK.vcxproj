@@ -163,6 +163,9 @@
     <ClInclude Include="dependencies\sampgdk\sampgdk.h" />
     <ClInclude Include="include\AdvancedGDK\AdvancedGDK.hpp" />
     <ClInclude Include="include\AdvancedGDK\Gameplay\Chat.hpp" />
+    <ClInclude Include="include\AdvancedGDK\Gameplay\Command.hpp" />
+    <ClInclude Include="include\AdvancedGDK\Gameplay\CommandManager.hpp" />
+    <ClInclude Include="include\AdvancedGDK\Gameplay\Teleport.hpp" />
     <ClInclude Include="include\AdvancedGDK\Gameplay\Weapon.hpp" />
     <ClInclude Include="include\AdvancedGDK\PrecompiledHeader.hpp" />
     <ClInclude Include="include\AdvancedGDK\SampGDK.hpp" />
@@ -193,6 +196,8 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="src\AdvancedGDK\Gameplay\Chat.cpp" />
+    <ClCompile Include="src\AdvancedGDK\Gameplay\Command.cpp" />
+    <ClCompile Include="src\AdvancedGDK\Gameplay\CommandManager.cpp" />
     <ClCompile Include="src\AdvancedGDK\Gameplay\Weapon.cpp" />
     <ClCompile Include="src\AdvancedGDK\Player\PlayerPool.cpp" />
     <ClCompile Include="src\AdvancedGDK\Server\GameMode.cpp" />
