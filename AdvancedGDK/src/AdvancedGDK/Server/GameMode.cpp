@@ -7,6 +7,7 @@ namespace agdk
 {
 	////////////////////////////////////////////////////////////
 	IGameMode::IGameMode()
+		: playerPoolAgent{players}
 	{
 	}
 

@@ -5,6 +5,9 @@
 // Precompiled header:
 #include "../../../stdafx.h"
 
+// AGDK includes:
+#include <AdvancedGDK/Player/PlayerPool.hpp>
+
 namespace agdk
 {	
 	/// <summary>
@@ -23,6 +26,12 @@ namespace agdk
 		/// </summary>
 		virtual ~IGameMode();
 		
+
+	public:
+		PlayerPool			players;
+
+	private:
+		PlayerPoolAgent		playerPoolAgent;	// Agent used to manage player pool.
 	};
 }
 

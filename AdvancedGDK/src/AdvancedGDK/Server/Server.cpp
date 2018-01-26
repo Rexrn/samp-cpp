@@ -7,15 +7,14 @@
 #include <AdvancedGDK/Misc/String.hpp>
 
 
-std::unique_ptr<agdk::Server>		g_server;		/// Initialize g_server instance.
-std::unique_ptr<agdk::IGameMode>	g_gameMode;		/// Initialize g_gameMode instance.
+std::unique_ptr<agdk::Server>		g_server;		// Initialize g_server instance.
+std::unique_ptr<agdk::IGameMode>	g_gameMode;		// Initialize g_gameMode instance.
 
 namespace agdk
 {
 	/////////////////////////////////////////////////////////////////////////////////////////
 	Server::Server()
 	{
-		//g_gameMode.reset(new DefaultGameMode);
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////////
@@ -44,7 +43,7 @@ namespace agdk
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////////
-	void Server::Update()
+	void Server::sampEventUpdate()
 	{
 		/* TODO: implement vehicles, scenes, checkpoints and tasks.
 		g_gameMode->vehicles.update();
@@ -658,7 +657,7 @@ PLUGIN_EXPORT void PLUGIN_CALL ProcessTick()
 	sampgdk::ProcessTick();
 
 	if (g_server)
-		g_server->Update();
+		g_server->sampEventUpdate();
 }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -670,98 +669,98 @@ PLUGIN_EXPORT bool PLUGIN_CALL OnGameModeInit()
 	// call user defined startup method
 	main();
 
-	return g_server->OnGameModeInit();
+	return g_server->sampEventOnGameModeInit();
 }
 /////////////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////////////////
 PLUGIN_EXPORT bool PLUGIN_CALL OnGameModeExit()
 {
-	return g_server->OnGameModeExit();
+	return g_server->sampEventOnGameModeExit();
 }
 /////////////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////////////////
 PLUGIN_EXPORT bool PLUGIN_CALL OnPlayerConnect(int playerid)
 {
-	return g_server->OnPlayerConnect(playerid);
+	return g_server->sampEventOnPlayerConnect(playerid);
 }
 /////////////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////////////////
 PLUGIN_EXPORT bool PLUGIN_CALL OnPlayerDisconnect(int playerid, int reason)
 {
-	return g_server->OnPlayerDisconnect(playerid, reason);
+	return g_server->sampEventOnPlayerDisconnect(playerid, reason);
 }
 /////////////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////////////////
 PLUGIN_EXPORT bool PLUGIN_CALL OnPlayerSpawn(int playerid)
 {
-	return g_server->OnPlayerSpawn(playerid);
+	return g_server->sampEventOnPlayerSpawn(playerid);
 }
 /////////////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////////////////
 PLUGIN_EXPORT bool PLUGIN_CALL OnPlayerDeath(int playerid, int killerid, int reason)
 {
-	return g_server->OnPlayerDeath(playerid, killerid, reason);
+	return g_server->sampEventOnPlayerDeath(playerid, killerid, reason);
 }
 /////////////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////////////////
 PLUGIN_EXPORT bool PLUGIN_CALL OnVehicleSpawn(int vehicleid)
 {
-	return g_server->OnVehicleSpawn(vehicleid);
+	return g_server->sampEventOnVehicleSpawn(vehicleid);
 }
 /////////////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////////////////
 PLUGIN_EXPORT bool PLUGIN_CALL OnVehicleDeath(int vehicleid, int killerid)
 {
-	return g_server->OnVehicleDeath(vehicleid, killerid);
+	return g_server->sampEventOnVehicleDeath(vehicleid, killerid);
 }
 /////////////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////////////////
 PLUGIN_EXPORT bool PLUGIN_CALL OnPlayerText(int playerid, const char * text)
 {
-	return g_server->OnPlayerText(playerid, text);
+	return g_server->sampEventOnPlayerText(playerid, text);
 }
 /////////////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////////////////
 PLUGIN_EXPORT bool PLUGIN_CALL OnPlayerCommandText(int playerid, const char * cmdtext)
 {
-	return g_server->OnPlayerCommandText(playerid, cmdtext);
+	return g_server->sampEventOnPlayerCommandText(playerid, cmdtext);
 }
 /////////////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////////////////
 PLUGIN_EXPORT bool PLUGIN_CALL OnPlayerRequestClass(int playerid, int classid)
 {
-	return g_server->OnPlayerRequestClass(playerid, classid);
+	return g_server->sampEventOnPlayerRequestClass(playerid, classid);
 }
 /////////////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////////////////
 PLUGIN_EXPORT bool PLUGIN_CALL OnPlayerEnterVehicle(int playerid, int vehicleid, bool ispassenger)
 {
-	return g_server->OnPlayerEnterVehicle(playerid, vehicleid, ispassenger);
+	return g_server->sampEventOnPlayerEnterVehicle(playerid, vehicleid, ispassenger);
 }
 /////////////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////////////////
 PLUGIN_EXPORT bool PLUGIN_CALL OnPlayerExitVehicle(int playerid, int vehicleid)
 {
-	return g_server->OnPlayerExitVehicle(playerid, vehicleid);
+	return g_server->sampEventOnPlayerExitVehicle(playerid, vehicleid);
 }
 /////////////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////////////////
 PLUGIN_EXPORT bool PLUGIN_CALL OnPlayerStateChange(int playerid, int newstate, int oldstate)
 {
-	return g_server->OnPlayerStateChange(playerid, newstate, oldstate);
+	return g_server->sampEventOnPlayerStateChange(playerid, newstate, oldstate);
 }
 /////////////////////////////////////////////////////////////////////////////////////////
 
@@ -796,264 +795,264 @@ PLUGIN_EXPORT bool PLUGIN_CALL OnPlayerLeaveRaceCheckpoint(int playerid)
 /////////////////////////////////////////////////////////////////////////////////////////
 PLUGIN_EXPORT bool PLUGIN_CALL OnRconCommand(const char * cmd)
 {
-	return g_server->OnRconCommand(cmd);
+	return g_server->sampEventOnRconCommand(cmd);
 }
 /////////////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////////////////
 PLUGIN_EXPORT bool PLUGIN_CALL OnPlayerRequestSpawn(int playerid)
 {
-	return g_server->OnPlayerRequestSpawn(playerid);
+	return g_server->sampEventOnPlayerRequestSpawn(playerid);
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 PLUGIN_EXPORT bool PLUGIN_CALL OnObjectMoved(int objectid)
 {
-	return g_server->OnObjectMoved(objectid);
+	return g_server->sampEventOnObjectMoved(objectid);
 }
 /////////////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////////////////
 PLUGIN_EXPORT bool PLUGIN_CALL OnPlayerObjectMoved(int playerid, int objectid)
 {
-	return g_server->OnPlayerObjectMoved(playerid, objectid);
+	return g_server->sampEventOnPlayerObjectMoved(playerid, objectid);
 }
 /////////////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////////////////
 PLUGIN_EXPORT bool PLUGIN_CALL OnPlayerPickUpPickup(int playerid, int pickupid)
 {
-	return g_server->OnPlayerPickUpPickup(playerid, pickupid);
+	return g_server->sampEventOnPlayerPickUpPickup(playerid, pickupid);
 }
 /////////////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////////////////
 PLUGIN_EXPORT bool PLUGIN_CALL OnVehicleMod(int playerid, int vehicleid, int componentid)
 {
-	return g_server->OnVehicleMod(playerid, vehicleid, componentid);
+	return g_server->sampEventOnVehicleMod(playerid, vehicleid, componentid);
 }
 /////////////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////////////////
 PLUGIN_EXPORT bool PLUGIN_CALL OnEnterExitModShop(int playerid, int enterexit, int interiorid)
 {
-	return g_server->OnEnterExitModShop(playerid, enterexit, interiorid);
+	return g_server->sampEventOnEnterExitModShop(playerid, enterexit, interiorid);
 }
 /////////////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////////////////
 PLUGIN_EXPORT bool PLUGIN_CALL OnVehiclePaintjob(int playerid, int vehicleid, int paintjobid)
 {
-	return g_server->OnVehiclePaintjob(playerid, vehicleid, paintjobid);
+	return g_server->sampEventOnVehiclePaintjob(playerid, vehicleid, paintjobid);
 }
 /////////////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////////////////
 PLUGIN_EXPORT bool PLUGIN_CALL OnVehicleRespray(int playerid, int vehicleid, int color1, int color2)
 {
-	return g_server->OnVehicleRespray(playerid, vehicleid, color1, color2);
+	return g_server->sampEventOnVehicleRespray(playerid, vehicleid, color1, color2);
 }
 /////////////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////////////////
 PLUGIN_EXPORT bool PLUGIN_CALL OnVehicleDamageStatusUpdate(int vehicleid, int playerid)
 {
-	return g_server->OnVehicleDamageStatusUpdate(vehicleid, playerid);
+	return g_server->sampEventOnVehicleDamageStatusUpdate(vehicleid, playerid);
 }
 /////////////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////////////////
 PLUGIN_EXPORT bool PLUGIN_CALL OnUnoccupiedVehicleUpdate(int vehicleid, int playerid, int passenger_seat, float new_x, float new_y, float new_z, float vel_x, float vel_y, float vel_z)
 {
-	return g_server->OnUnoccupiedVehicleUpdate(vehicleid, playerid, passenger_seat, new_x, new_y, new_z, vel_x, vel_y, vel_z);
+	return g_server->sampEventOnUnoccupiedVehicleUpdate(vehicleid, playerid, passenger_seat, new_x, new_y, new_z, vel_x, vel_y, vel_z);
 }
 /////////////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////////////////
 PLUGIN_EXPORT bool PLUGIN_CALL OnPlayerSelectedMenuRow(int playerid, int row)
 {
-	return g_server->OnPlayerSelectedMenuRow(playerid, row);
+	return g_server->sampEventOnPlayerSelectedMenuRow(playerid, row);
 }
 /////////////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////////////////
 PLUGIN_EXPORT bool PLUGIN_CALL OnPlayerExitedMenu(int playerid)
 {
-	return g_server->OnPlayerExitedMenu(playerid);
+	return g_server->sampEventOnPlayerExitedMenu(playerid);
 }
 /////////////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////////////////
 PLUGIN_EXPORT bool PLUGIN_CALL OnPlayerInteriorChange(int playerid, int newinteriorid, int oldinteriorid)
 {
-	return g_server->OnPlayerInteriorChange(playerid, newinteriorid, oldinteriorid);
+	return g_server->sampEventOnPlayerInteriorChange(playerid, newinteriorid, oldinteriorid);
 }
 /////////////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////////////////
 PLUGIN_EXPORT bool PLUGIN_CALL OnPlayerKeyStateChange(int playerid, int newkeys, int oldkeys)
 {
-	return g_server->OnPlayerKeyStateChange(playerid, newkeys, oldkeys);
+	return g_server->sampEventOnPlayerKeyStateChange(playerid, newkeys, oldkeys);
 }
 /////////////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////////////////
 PLUGIN_EXPORT bool PLUGIN_CALL OnRconLoginAttempt(const char * ip, const char * password, bool success)
 {
-	return g_server->OnRconLoginAttempt(ip, password, success);
+	return g_server->sampEventOnRconLoginAttempt(ip, password, success);
 }
 /////////////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////////////////
 PLUGIN_EXPORT bool PLUGIN_CALL OnPlayerUpdate(int playerid)
 {
-	return g_server->OnPlayerUpdate(playerid);
+	return g_server->sampEventOnPlayerUpdate(playerid);
 }
 /////////////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////////////////
 PLUGIN_EXPORT bool PLUGIN_CALL OnPlayerStreamIn(int playerid, int forplayerid)
 {
-	return g_server->OnPlayerStreamIn(playerid, forplayerid);
+	return g_server->sampEventOnPlayerStreamIn(playerid, forplayerid);
 }
 /////////////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////////////////
 PLUGIN_EXPORT bool PLUGIN_CALL OnPlayerStreamOut(int playerid, int forplayerid)
 {
-	return g_server->OnPlayerStreamOut(playerid, forplayerid);
+	return g_server->sampEventOnPlayerStreamOut(playerid, forplayerid);
 }
 /////////////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////////////////
 PLUGIN_EXPORT bool PLUGIN_CALL OnVehicleStreamIn(int vehicleid, int forplayerid)
 {
-	return g_server->OnVehicleStreamIn(vehicleid, forplayerid);
+	return g_server->sampEventOnVehicleStreamIn(vehicleid, forplayerid);
 }
 /////////////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////////////////
 PLUGIN_EXPORT bool PLUGIN_CALL OnVehicleStreamOut(int vehicleid, int forplayerid)
 {
-	return g_server->OnVehicleStreamOut(vehicleid, forplayerid);
+	return g_server->sampEventOnVehicleStreamOut(vehicleid, forplayerid);
 }
 /////////////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////////////////
 PLUGIN_EXPORT bool PLUGIN_CALL OnActorStreamIn(int actorid, int forplayerid)
 {
-	return g_server->OnActorStreamIn(actorid, forplayerid);
+	return g_server->sampEventOnActorStreamIn(actorid, forplayerid);
 }
 /////////////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////////////////
 PLUGIN_EXPORT bool PLUGIN_CALL OnActorStreamOut(int actorid, int forplayerid)
 {
-	return g_server->OnActorStreamOut(actorid, forplayerid);
+	return g_server->sampEventOnActorStreamOut(actorid, forplayerid);
 }
 /////////////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////////////////
 PLUGIN_EXPORT bool PLUGIN_CALL OnDialogResponse(int playerid, int dialogid, int response, int listitem, const char * inputtext)
 {
-	return g_server->OnDialogResponse(playerid, dialogid, response, listitem, inputtext);
+	return g_server->sampEventOnDialogResponse(playerid, dialogid, response, listitem, inputtext);
 }
 /////////////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////////////////
 PLUGIN_EXPORT bool PLUGIN_CALL OnPlayerTakeDamage(int playerid, int issuerid, float amount, int weaponid, int bodypart)
 {
-	return g_server->OnPlayerTakeDamage(playerid, issuerid, amount, weaponid, bodypart);
+	return g_server->sampEventOnPlayerTakeDamage(playerid, issuerid, amount, weaponid, bodypart);
 }
 /////////////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////////////////
 PLUGIN_EXPORT bool PLUGIN_CALL OnPlayerGiveDamage(int playerid, int damagedid, float amount, int weaponid, int bodypart)
 {
-	return g_server->OnPlayerGiveDamage(playerid, damagedid, amount, weaponid, bodypart);
+	return g_server->sampEventOnPlayerGiveDamage(playerid, damagedid, amount, weaponid, bodypart);
 }
 /////////////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////////////////
 PLUGIN_EXPORT bool PLUGIN_CALL OnPlayerGiveDamageActor(int playerid, int damaged_actorid, float amount, int weaponid, int bodypart)
 {
-	return g_server->OnPlayerGiveDamageActor(playerid, damaged_actorid, amount, weaponid, bodypart);
+	return g_server->sampEventOnPlayerGiveDamageActor(playerid, damaged_actorid, amount, weaponid, bodypart);
 }
 /////////////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////////////////
 PLUGIN_EXPORT bool PLUGIN_CALL OnPlayerClickMap(int playerid, float fX, float fY, float fZ)
 {
-	return g_server->OnPlayerClickMap(playerid, fX, fY, fZ);
+	return g_server->sampEventOnPlayerClickMap(playerid, fX, fY, fZ);
 }
 /////////////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////////////////
 PLUGIN_EXPORT bool PLUGIN_CALL OnPlayerClickTextDraw(int playerid, int clickedid)
 {
-	return g_server->OnPlayerClickTextDraw(playerid, clickedid);
+	return g_server->sampEventOnPlayerClickTextDraw(playerid, clickedid);
 }
 /////////////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////////////////
 PLUGIN_EXPORT bool PLUGIN_CALL OnPlayerClickPlayerTextDraw(int playerid, int playertextid)
 {
-	return g_server->OnPlayerClickPlayerTextDraw(playerid, playertextid);
+	return g_server->sampEventOnPlayerClickPlayerTextDraw(playerid, playertextid);
 }
 /////////////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////////////////
 PLUGIN_EXPORT bool PLUGIN_CALL OnIncomingConnection(int playerid, const char * ip_address, int port)
 {
-	return g_server->OnIncomingConnection(playerid, ip_address, port);
+	return g_server->sampEventOnIncomingConnection(playerid, ip_address, port);
 }
 /////////////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////////////////
 PLUGIN_EXPORT bool PLUGIN_CALL OnTrailerUpdate(int playerid, int vehicleid)
 {
-	return g_server->OnTrailerUpdate(playerid, vehicleid);
+	return g_server->sampEventOnTrailerUpdate(playerid, vehicleid);
 }
 /////////////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////////////////
 PLUGIN_EXPORT bool PLUGIN_CALL OnVehicleSirenStateChange(int playerid, int vehicleid, int newstate)
 {
-	return g_server->OnVehicleSirenStateChange(playerid, vehicleid, newstate);
+	return g_server->sampEventOnVehicleSirenStateChange(playerid, vehicleid, newstate);
 }
 /////////////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////////////////
 PLUGIN_EXPORT bool PLUGIN_CALL OnPlayerClickPlayer(int playerid, int clickedplayerid, int source)
 {
-	return g_server->OnPlayerClickPlayer(playerid, clickedplayerid, source);
+	return g_server->sampEventOnPlayerClickPlayer(playerid, clickedplayerid, source);
 }
 /////////////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////////////////
 PLUGIN_EXPORT bool PLUGIN_CALL OnPlayerEditObject(int playerid, bool playerobject, int objectid, int response, float fX, float fY, float fZ, float fRotX, float fRotY, float fRotZ)
 {
-	return g_server->OnPlayerEditObject(playerid, playerobject, objectid, response, fX, fY, fZ, fRotX, fRotY, fRotZ);
+	return g_server->sampEventOnPlayerEditObject(playerid, playerobject, objectid, response, fX, fY, fZ, fRotX, fRotY, fRotZ);
 }
 /////////////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////////////////
 PLUGIN_EXPORT bool PLUGIN_CALL OnPlayerEditAttachedObject(int playerid, int response, int index, int modelid, int boneid, float fOffsetX, float fOffsetY, float fOffsetZ, float fRotX, float fRotY, float fRotZ, float fScaleX, float fScaleY, float fScaleZ)
 {
-	return g_server->OnPlayerEditAttachedObject(playerid, response, index, modelid, boneid, fOffsetX, fOffsetY, fOffsetZ, fRotX, fRotY, fRotZ, fScaleX, fScaleY, fScaleZ);
+	return g_server->sampEventOnPlayerEditAttachedObject(playerid, response, index, modelid, boneid, fOffsetX, fOffsetY, fOffsetZ, fRotX, fRotY, fRotZ, fScaleX, fScaleY, fScaleZ);
 }
 /////////////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////////////////
 PLUGIN_EXPORT bool PLUGIN_CALL OnPlayerSelectObject(int playerid, int type, int objectid, int modelid, float fX, float fY, float fZ)
 {
-	return g_server->OnPlayerSelectObject(playerid, type, objectid, modelid, fX, fY, fZ);
+	return g_server->sampEventOnPlayerSelectObject(playerid, type, objectid, modelid, fX, fY, fZ);
 }
 /////////////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////////////////
 PLUGIN_EXPORT bool PLUGIN_CALL OnPlayerWeaponShot(int playerid, int weaponid, int hittype, int hitid, float fX, float fY, float fZ)
 {
-	return g_server->OnPlayerWeaponShot(playerid, weaponid, hittype, hitid, fX, fY, fZ);
+	return g_server->sampEventOnPlayerWeaponShot(playerid, weaponid, hittype, hitid, fX, fY, fZ);
 }
 /////////////////////////////////////////////////////////////////////////////////////////
