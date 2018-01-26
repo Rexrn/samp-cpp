@@ -1,30 +1,31 @@
-/**
-* Header: Vector3.inl
-* Author: Pawel Syska aka RazzorFlame.
-* Description:
-* Implements base class for 3D vector manipulation.
-**/
+// File description:
+// Implements base class for 3D vector manipulation.
 
 // NOTE / WARNING:
 // This can't be included separately, because it is included by "Math.hpp" header.
 // Error will occur when separated, uses agdk::Math::Tolerance class.
+#pragma once
 
-// Standard includes:
-#include <cmath>
-#include <cinttypes>
-#include <type_traits>
-#include <string>
-#include <sstream>
-#include <iomanip>
+// Precompiled header:
+#include "../../../../stdafx.h"
 
 // Custom includes:
 #include "VectorStringBuilder.hpp"
 
 namespace agdk::impl
 {
+
+}
+
+
+
+
+namespace agdk
+{
+namespace impl
+{
 template <typename _Ty>
 class BaseVector3;
-}
 
 /// <summary>
 /// Adds two vectors together.
@@ -33,7 +34,7 @@ class BaseVector3;
 /// <param name="rhs_">The rhs vector.</param>
 /// <returns>Sum of two vectors.</returns>
 template <typename _Ty>
-constexpr agdk::impl::BaseVector3<_Ty> operator + (agdk::impl::BaseVector3<_Ty> const & lhs_, agdk::impl::BaseVector3<_Ty> const & rhs_);
+constexpr BaseVector3<_Ty> operator + (BaseVector3<_Ty> const & lhs_, BaseVector3<_Ty> const & rhs_);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -44,7 +45,7 @@ constexpr agdk::impl::BaseVector3<_Ty> operator + (agdk::impl::BaseVector3<_Ty> 
 /// <param name="rhs_">The rhs vector.</param>
 /// <returns>Difference of two vectors.</returns>
 template <typename _Ty>
-constexpr agdk::impl::BaseVector3<_Ty> operator - (agdk::impl::BaseVector3<_Ty> const & lhs_, agdk::impl::BaseVector3<_Ty> const & rhs_);
+constexpr BaseVector3<_Ty> operator - (BaseVector3<_Ty> const & lhs_, BaseVector3<_Ty> const & rhs_);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -55,7 +56,7 @@ constexpr agdk::impl::BaseVector3<_Ty> operator - (agdk::impl::BaseVector3<_Ty> 
 /// <param name="rhs_">The rhs vector.</param>
 /// <returns>Product of two vectors.</returns>
 template <typename _Ty>
-constexpr agdk::impl::BaseVector3<_Ty> operator * (agdk::impl::BaseVector3<_Ty> const & lhs_, agdk::impl::BaseVector3<_Ty> const & rhs_);
+constexpr BaseVector3<_Ty> operator * (BaseVector3<_Ty> const & lhs_, BaseVector3<_Ty> const & rhs_);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -66,7 +67,7 @@ constexpr agdk::impl::BaseVector3<_Ty> operator * (agdk::impl::BaseVector3<_Ty> 
 /// <param name="rhs_">The rhs vector.</param>
 /// <returns>Quotient of two vectors.</returns>
 template <typename _Ty>
-constexpr agdk::impl::BaseVector3<_Ty> operator / (agdk::impl::BaseVector3<_Ty> const & lhs_, agdk::impl::BaseVector3<_Ty> const & rhs_);
+constexpr BaseVector3<_Ty> operator / (BaseVector3<_Ty> const & lhs_, BaseVector3<_Ty> const & rhs_);
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -82,7 +83,7 @@ constexpr agdk::impl::BaseVector3<_Ty> operator / (agdk::impl::BaseVector3<_Ty> 
 /// <param name="rhs_">The scalar.</param>
 /// <returns>Vector plus a scalar.</returns>
 template <typename _Ty>
-constexpr agdk::impl::BaseVector3<_Ty> operator + (agdk::impl::BaseVector3<_Ty> const & lhs_, _Ty const rhs_);
+constexpr BaseVector3<_Ty> operator + (BaseVector3<_Ty> const & lhs_, _Ty const rhs_);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -93,7 +94,7 @@ constexpr agdk::impl::BaseVector3<_Ty> operator + (agdk::impl::BaseVector3<_Ty> 
 /// <param name="rhs_">The scalar.</param>
 /// <returns>Vector minus a scalar.</returns>
 template <typename _Ty>
-constexpr agdk::impl::BaseVector3<_Ty> operator - (agdk::impl::BaseVector3<_Ty> const & lhs_, _Ty const rhs_);
+constexpr BaseVector3<_Ty> operator - (BaseVector3<_Ty> const & lhs_, _Ty const rhs_);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -104,7 +105,7 @@ constexpr agdk::impl::BaseVector3<_Ty> operator - (agdk::impl::BaseVector3<_Ty> 
 /// <param name="rhs_">The scalar.</param>
 /// <returns>Vector times a scalar.</returns>
 template <typename _Ty>
-constexpr agdk::impl::BaseVector3<_Ty> operator * (agdk::impl::BaseVector3<_Ty> const & lhs_, _Ty const rhs_);
+constexpr BaseVector3<_Ty> operator * (BaseVector3<_Ty> const & lhs_, _Ty const rhs_);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -115,7 +116,7 @@ constexpr agdk::impl::BaseVector3<_Ty> operator * (agdk::impl::BaseVector3<_Ty> 
 /// <param name="rhs_">The scalar.</param>
 /// <returns>Vector divided by a scalar.</returns>
 template <typename _Ty>
-constexpr agdk::impl::BaseVector3<_Ty> operator / (agdk::impl::BaseVector3<_Ty> const & lhs_, _Ty const rhs_);
+constexpr BaseVector3<_Ty> operator / (BaseVector3<_Ty> const & lhs_, _Ty const rhs_);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // Operators (lhs scalar <op> rhs vector).
@@ -130,7 +131,7 @@ constexpr agdk::impl::BaseVector3<_Ty> operator / (agdk::impl::BaseVector3<_Ty> 
 /// <param name="rhs_">The rhs vector.</param>
 /// <returns>Vector plus a scalar.</returns>
 template <typename _Ty>
-constexpr agdk::impl::BaseVector3<_Ty> operator + (_Ty const lhs_, agdk::impl::BaseVector3<_Ty> const & rhs_);
+constexpr BaseVector3<_Ty> operator + (_Ty const lhs_, BaseVector3<_Ty> const & rhs_);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -141,14 +142,7 @@ constexpr agdk::impl::BaseVector3<_Ty> operator + (_Ty const lhs_, agdk::impl::B
 /// <param name="rhs_">The rhs vector.</param>
 /// <returns>Vector times a scalar.</returns>
 template <typename _Ty>
-constexpr agdk::impl::BaseVector3<_Ty> operator * (_Ty const lhs_, agdk::impl::BaseVector3<_Ty> const & rhs_);
-
-
-namespace agdk
-{
-namespace impl
-{
-// TODO: requires code improvement and documentation standarization (using XML style).
+constexpr BaseVector3<_Ty> operator * (_Ty const lhs_, BaseVector3<_Ty> const & rhs_);
 
 /// <summary>
 /// Implements templated three dimensional vector arithmetic class.
@@ -225,7 +219,7 @@ public:
 	/// <returns>Length of the vector.</returns>
 	template <typename _LenTy = ValueType,
 		typename = std::enable_if_t< is_noncvref_mathscalar_v<_LenTy> > >
-		constexpr _LenTy length() const
+	_LenTy length() const
 	{
 		if constexpr(std::is_same_v<_LenTy, ValueType>)
 			return std::sqrt(x * x + y * y + z * z);
@@ -242,7 +236,7 @@ public:
 	/// <returns>Squared length of the vector.</returns>
 	template <typename _LenTy = ValueType,
 		typename = std::enable_if_t< is_noncvref_mathscalar_v<_LenTy> > >
-		constexpr _LenTy lengthSquared() const
+	constexpr _LenTy lengthSquared() const
 	{
 		if constexpr(std::is_same_v<_LenTy, ValueType>)
 			return x * x + y * y + z * z;
@@ -260,7 +254,7 @@ public:
 	/// <returns>Distance between two instances.</returns>
 	template <typename _DistTy = ValueType,
 		typename = std::enable_if_t< is_noncvref_mathscalar_v<_DistTy> > >
-	constexpr _DistTy distance(BaseVector3<ValueType> const & other_) const
+	_DistTy distance(BaseVector3<ValueType> const & other_) const
 	{
 		return (*this - other_).template length<_DistTy>();
 	}
@@ -272,7 +266,7 @@ public:
 	/// <returns>Squared distance between two instances.</returns>
 	template <typename _DistTy = ValueType,
 		typename = std::enable_if_t< is_noncvref_mathscalar_v<_DistTy> > >
-		constexpr _DistTy distanceSquared(BaseVector3<ValueType> const & other_) const
+	constexpr _DistTy distanceSquared(BaseVector3<ValueType> const & other_) const
 	{
 		return (*this - other_).template lengthSquared<_DistTy>();
 	}
@@ -284,7 +278,7 @@ public:
 	/// <returns>Dot product of two vectors.</returns>
 	template <typename _DotTy = ValueType,
 		typename = std::enable_if_t< is_noncvref_mathscalar_v<_DotTy> > >
-		constexpr _DotTy dot(BaseVector3<ValueType> const & other_) const
+	constexpr _DotTy dot(BaseVector3<ValueType> const & other_) const
 	{
 		if constexpr(std::is_same_v<_DotTy, ValueType>)
 			return x * other_.x + y * other_.y + z * other_.z;
@@ -656,13 +650,10 @@ public:
 	}
 
 };
-} // namespace impl
-
-} // namespace agdk
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 template <typename _Ty>
-constexpr agdk::impl::BaseVector3<_Ty> operator + (agdk::impl::BaseVector3<_Ty> const & lhs_, agdk::impl::BaseVector3<_Ty> const & rhs_)
+constexpr BaseVector3<_Ty> operator + (BaseVector3<_Ty> const & lhs_, BaseVector3<_Ty> const & rhs_)
 {
 	return {
 		lhs_.x + rhs_.x,
@@ -673,7 +664,7 @@ constexpr agdk::impl::BaseVector3<_Ty> operator + (agdk::impl::BaseVector3<_Ty> 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 template <typename _Ty>
-constexpr agdk::impl::BaseVector3<_Ty> operator - (agdk::impl::BaseVector3<_Ty> const & lhs_, agdk::impl::BaseVector3<_Ty> const & rhs_)
+constexpr BaseVector3<_Ty> operator - (BaseVector3<_Ty> const & lhs_, BaseVector3<_Ty> const & rhs_)
 {
 	return {
 		lhs_.x - rhs_.x,
@@ -684,7 +675,7 @@ constexpr agdk::impl::BaseVector3<_Ty> operator - (agdk::impl::BaseVector3<_Ty> 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 template <typename _Ty>
-constexpr agdk::impl::BaseVector3<_Ty> operator * (agdk::impl::BaseVector3<_Ty> const & lhs_, agdk::impl::BaseVector3<_Ty> const & rhs_)
+constexpr BaseVector3<_Ty> operator * (BaseVector3<_Ty> const & lhs_, BaseVector3<_Ty> const & rhs_)
 {
 	return {
 		lhs_.x * rhs_.x,
@@ -695,7 +686,7 @@ constexpr agdk::impl::BaseVector3<_Ty> operator * (agdk::impl::BaseVector3<_Ty> 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 template <typename _Ty>
-constexpr agdk::impl::BaseVector3<_Ty> operator / (agdk::impl::BaseVector3<_Ty> const & lhs_, agdk::impl::BaseVector3<_Ty> const & rhs_)
+constexpr BaseVector3<_Ty> operator / (BaseVector3<_Ty> const & lhs_, BaseVector3<_Ty> const & rhs_)
 {
 	return {
 		lhs_.x / rhs_.x,
@@ -711,7 +702,7 @@ constexpr agdk::impl::BaseVector3<_Ty> operator / (agdk::impl::BaseVector3<_Ty> 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 template <typename _Ty>
-constexpr agdk::impl::BaseVector3<_Ty> operator + (agdk::impl::BaseVector3<_Ty> const & lhs_, _Ty const rhs_)
+constexpr BaseVector3<_Ty> operator + (BaseVector3<_Ty> const & lhs_, _Ty const rhs_)
 {
 	return {
 		lhs_.x + rhs_,
@@ -722,7 +713,7 @@ constexpr agdk::impl::BaseVector3<_Ty> operator + (agdk::impl::BaseVector3<_Ty> 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 template <typename _Ty>
-constexpr agdk::impl::BaseVector3<_Ty> operator - (agdk::impl::BaseVector3<_Ty> const & lhs_, _Ty const rhs_)
+constexpr BaseVector3<_Ty> operator - (BaseVector3<_Ty> const & lhs_, _Ty const rhs_)
 {
 	return {
 		lhs_.x - rhs_,
@@ -733,7 +724,7 @@ constexpr agdk::impl::BaseVector3<_Ty> operator - (agdk::impl::BaseVector3<_Ty> 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 template <typename _Ty>
-constexpr agdk::impl::BaseVector3<_Ty> operator * (agdk::impl::BaseVector3<_Ty> const & lhs_, _Ty const rhs_)
+constexpr BaseVector3<_Ty> operator * (BaseVector3<_Ty> const & lhs_, _Ty const rhs_)
 {
 	return {
 		lhs_.x * rhs_,
@@ -744,7 +735,7 @@ constexpr agdk::impl::BaseVector3<_Ty> operator * (agdk::impl::BaseVector3<_Ty> 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 template <typename _Ty>
-constexpr agdk::impl::BaseVector3<_Ty> operator / (agdk::impl::BaseVector3<_Ty> const & lhs_, _Ty const rhs_)
+constexpr BaseVector3<_Ty> operator / (BaseVector3<_Ty> const & lhs_, _Ty const rhs_)
 {
 	return {
 		lhs_.x / rhs_,
@@ -759,7 +750,7 @@ constexpr agdk::impl::BaseVector3<_Ty> operator / (agdk::impl::BaseVector3<_Ty> 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 template <typename _Ty>
-constexpr agdk::impl::BaseVector3<_Ty> operator + (_Ty const lhs_, agdk::impl::BaseVector3<_Ty> const & rhs_)
+constexpr BaseVector3<_Ty> operator + (_Ty const lhs_, BaseVector3<_Ty> const & rhs_)
 {
 	return {
 		rhs_.x + lhs_,
@@ -770,7 +761,7 @@ constexpr agdk::impl::BaseVector3<_Ty> operator + (_Ty const lhs_, agdk::impl::B
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 template <typename _Ty>
-constexpr agdk::impl::BaseVector3<_Ty> operator * (_Ty const lhs_, agdk::impl::BaseVector3<_Ty> const & rhs_)
+constexpr BaseVector3<_Ty> operator * (_Ty const lhs_, BaseVector3<_Ty> const & rhs_)
 {
 	return {
 		rhs_.x * lhs_,
@@ -778,3 +769,26 @@ constexpr agdk::impl::BaseVector3<_Ty> operator * (_Ty const lhs_, agdk::impl::B
 		rhs_.z * lhs_
 	};
 }
+
+} // namespace impl
+
+// 3D Vector class templated with float
+using Vector3f		= impl::BaseVector3<float>;
+// 3D Vector class templated with float
+using Vector3		= impl::BaseVector3<float>;
+// 3D Vector class templated with double
+using Vector3d		= impl::BaseVector3<double>;
+// 3D Vector class templated with std::int16_t
+using Vector3i16	= impl::BaseVector3<std::int16_t>;
+// 3D Vector class templated with std::int32_t
+using Vector3i32	= impl::BaseVector3<std::int32_t>;
+// 3D Vector class templated with std::int64_t
+using Vector3i64	= impl::BaseVector3<std::int64_t>;
+// 3D Vector class templated with std::uint16_t
+using Vector3u16	= impl::BaseVector3<std::uint16_t>;
+// 3D Vector class templated with std::uint32_t
+using Vector3u32	= impl::BaseVector3<std::uint32_t>;
+// 3D Vector class templated with std::uint64_t
+using Vector3u64	= impl::BaseVector3<std::uint64_t>;
+
+} // namespace agdk

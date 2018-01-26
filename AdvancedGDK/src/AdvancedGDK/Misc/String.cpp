@@ -3,10 +3,6 @@
 // Custom headers:
 #include <AdvancedGDK/Misc/String.hpp>
 
-// Standard headers:
-#include <algorithm>
-#include <cctype>
-#include <functional>
 
 namespace agdk
 {

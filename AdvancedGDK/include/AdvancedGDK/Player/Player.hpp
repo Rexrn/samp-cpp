@@ -1,22 +1,10 @@
-/**
- * Header: Player.hpp
- * Author: Pawe³ Syska aka RazzorFlame.
- * Description:
- * Implements basic Player class.
-**/
-
 #pragma once
 
-// SAMPGDK include:
-#include <AdvancedGDK/SampGDK.hpp>
+// The precompiled header
+#include "../../../stdafx.h"
 
 // Custom includes:
 #include <AdvancedGDK/Misc/Math.hpp>
-
-// Standard includes:
-#include <memory>		// for std::shared_ptr
-#include <cstddef>		// for std::size_t
-#include <string_view>
 
 namespace agdk
 {	

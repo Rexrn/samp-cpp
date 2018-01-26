@@ -1,15 +1,9 @@
-/**
- * Header: Math.hpp
- * Author: Pawe³ Syska aka RazzorFlame.
- * Description:
- * Defines constants and includes other parts of Math module.
-**/
-
+// File description:
+// Implements useful mathematic functions and classes such as 2D and 3D vectors and Length class.
 #pragma once
 
-#include <cmath>
-#include <cinttypes>
-#include <type_traits>
+// Precompiled header:
+#include "../../../stdafx.h"
 
 namespace agdk
 {
@@ -51,44 +45,6 @@ namespace agdk
 		template <typename T> class BaseVector2;
 		template <typename T> class BaseVector3;
 	}
-
-	// 2D Vector class templated with float
-	using Vector2f			= impl::BaseVector2<float>;
-	// 2D Vector class templated with float
-	using Vector2			= impl::BaseVector2<float>;
-	// 2D Vector class templated with double
-	using Vector2d			= impl::BaseVector2<double>;
-	// 2D Vector class templated with std::int16_t
-	using Vector2i16		= impl::BaseVector2<std::int16_t>;
-	// 2D Vector class templated with std::int32_t
-	using Vector2i32		= impl::BaseVector2<std::int32_t>;
-	// 2D Vector class templated with std::int64_t
-	using Vector2i64		= impl::BaseVector2<std::int64_t>;
-	// 2D Vector class templated with std::uint16_t
-	using Vector2ui16		= impl::BaseVector2<std::uint16_t>;
-	// 2D Vector class templated with std::uint32_t
-	using Vector2ui32		= impl::BaseVector2<std::uint32_t>;
-	// 2D Vector class templated with std::uint64_t
-	using Vector2ui64		= impl::BaseVector2<std::uint64_t>;
-
-	// 3D Vector class templated with float
-	using Vector3f			= impl::BaseVector3<float>;
-	// 3D Vector class templated with float
-	using Vector3			= impl::BaseVector3<float>;
-	// 3D Vector class templated with double
-	using Vector3d			= impl::BaseVector3<double>;
-	// 3D Vector class templated with std::int16_t
-	using Vector3i16		= impl::BaseVector3<std::int16_t>;
-	// 3D Vector class templated with std::int32_t
-	using Vector3i32		= impl::BaseVector3<std::int32_t>;
-	// 3D Vector class templated with std::int64_t
-	using Vector3i64		= impl::BaseVector3<std::int64_t>;
-	// 3D Vector class templated with std::uint16_t
-	using Vector3ui16		= impl::BaseVector3<std::uint16_t>;
-	// 3D Vector class templated with std::uint32_t
-	using Vector3ui32		= impl::BaseVector3<std::uint32_t>;
-	// 3D Vector class templated with std::uint64_t
-	using Vector3ui64		= impl::BaseVector3<std::uint64_t>;
 }
 
 #include "Math/Vector2.inl"

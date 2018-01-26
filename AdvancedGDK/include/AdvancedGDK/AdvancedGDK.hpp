@@ -1,7 +1,11 @@
+// File description:
+// Includes the whole ADVANCEDGDK library.
+
 #pragma once
 
-#include "SampGDK.hpp"
+#include "../stdafx.h"
 
+#include "SampGDK.hpp"
 // Misc
 #include <AdvancedGDK/Misc/Clock.hpp>
 #include <AdvancedGDK/Misc/Color.hpp>

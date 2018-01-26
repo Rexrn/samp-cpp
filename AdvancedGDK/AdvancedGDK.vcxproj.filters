@@ -120,6 +120,9 @@
     <ClInclude Include="include\AdvancedGDK\Misc\Math.hpp">
       <Filter>Header Files\Misc</Filter>
     </ClInclude>
+    <ClInclude Include="include\AdvancedGDK\PrecompiledHeader.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">

@@ -1,12 +1,9 @@
-/**
- * Header: Length.inl
- * Author: Pawe³ Syska aka RazzorFlame.
- * Description:
- * Implements length unit classes.
-**/
+// File description:
+// Implements basic length class and aliases.
+#pragma once
 
-#include <ratio>
-#include <limits>
+// Precompiled header:
+#include "../../../../stdafx.h"
 
 namespace agdk
 {
@@ -21,12 +18,12 @@ namespace agdk
 		/// <summary>
 		/// Provides implementation of base length unit.
 		/// </summary>
-		template <typename _Ty, class _Ratio = std::ratio<1, 1>>
+		template < typename _Ty, class _Ratio = std::ratio<1, 1> >
 		class BaseLength
 		{
 		public:
-			using RatioType		= std::remove_cv_t<std::remove_reference_t<_Ratio>>;
-			using ValueType		= std::remove_cv_t<std::remove_reference_t<_Ty>>;
+			using RatioType		= _Ratio;
+			using ValueType		= _Ty;
 
 			static_assert(is_ratio_v<RatioType>, "Second template parameter must be a valid std::ratio type.");
 			static_assert(std::is_floating_point_v<ValueType>, "Length can only be represented by floating point values.");

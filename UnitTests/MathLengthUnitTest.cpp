@@ -6,9 +6,6 @@ using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 // AdvancedGDK:
 #include <AdvancedGDK/AdvancedGDK.hpp>
 
-// Standard includes:
-
-
 // Unit test:
 namespace UnitTests
 {		
@@ -19,7 +16,6 @@ namespace UnitTests
 		TEST_METHOD(LightYearsValueTest)
 		{
 			agdk::Lightyears fiveLightYears = 5;
-
 			// Compute how many metres 5ly is:
 			agdk::Meters metresValue = fiveLightYears;
 

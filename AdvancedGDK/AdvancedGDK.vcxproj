@@ -162,6 +162,7 @@
     <ClInclude Include="dependencies\sampgdk\plugincommon.h" />
     <ClInclude Include="dependencies\sampgdk\sampgdk.h" />
     <ClInclude Include="include\AdvancedGDK\AdvancedGDK.hpp" />
+    <ClInclude Include="include\AdvancedGDK\PrecompiledHeader.hpp" />
     <ClInclude Include="include\AdvancedGDK\SampGDK.hpp" />
     <ClInclude Include="include\AdvancedGDK\Server\GameMode.hpp" />
     <ClInclude Include="include\AdvancedGDK\Misc\Clock.hpp" />

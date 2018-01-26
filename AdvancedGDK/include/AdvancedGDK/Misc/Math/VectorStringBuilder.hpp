@@ -1,13 +1,15 @@
+// File description:
+// Provides basic StringBuilder setup for Vector classes.
 #pragma once
 
-#include <cinttypes>
-#include <utility>
+// Precompiled header:
+#include "../../../../stdafx.h"
 
 namespace agdk
 {
 
 /// <summary>
-/// Contains setup for a string conversion: <see cref="BaseVector2::toString">.
+/// Contains setup for a string conversion: <see cref="BaseVector2::toString">, and <see cref="BaseVector3::toString">.
 /// </summary>
 struct VectorStringBuilder final {
 	enum class Wrap {
@@ -54,9 +56,9 @@ struct VectorStringBuilder final {
 	static constexpr VectorStringBuilder Style(std::size_t const index_) {
 		VectorStringBuilder style[]{
 			{ Wrap::Curly, CompVisibility::WithColon, ',', 3, false },	// example: { x: 10.245, y: 20 }
-		{ Wrap::Curly, CompVisibility::WithEqual, ',', 3, false },	// example: { x = 10.245, y = 20 }
-		{ Wrap::Round, CompVisibility::WithColon, ',', 3, false },	// example: ( x: 10.245, y: 20 )
-		{ Wrap::Round, CompVisibility::WithEqual, ',', 3, false }	// example: ( x = 10.245, y = 20 )
+			{ Wrap::Curly, CompVisibility::WithEqual, ',', 3, false },	// example: { x = 10.245, y = 20 }
+			{ Wrap::Round, CompVisibility::WithColon, ',', 3, false },	// example: ( x: 10.245, y: 20 )
+			{ Wrap::Round, CompVisibility::WithEqual, ',', 3, false }	// example: ( x = 10.245, y = 20 )
 		};
 		return style[index_];
 	};

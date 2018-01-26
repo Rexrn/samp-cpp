@@ -1,11 +1,9 @@
-/**
- * Header: GameMode.hpp
- * Author: Pawe³ Syska aka RazzorFlame.
- * Description:
- * Implements basic game mode interface.
-**/
-
+// File description:
+// Implements basic game mode interface.
 #pragma once
+
+// Precompiled header:
+#include "../../../stdafx.h"
 
 namespace agdk
 {	

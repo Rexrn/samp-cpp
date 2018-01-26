@@ -1,15 +1,9 @@
-/**
- * Header: Random.hpp
- * Author: Pawe³ Syska aka RazzorFlame.
- * Description:
- * Implements easy to use random engine using Mersenne's Twister.
-**/
-
+// File description:
+// Implements easy to use random engine using Mersenne's Twister.
 #pragma once
 
-#include <random>
-#include <cinttypes>
-#include <type_traits>
+// Precompiled header:
+#include "../../../stdafx.h"
 
 namespace agdk
 {
@@ -42,7 +36,7 @@ namespace agdk
 		static T next(T from_, T to_)
 		{
 			// Acquire raw type (without const/volatile).
-			using RawT = std::remove_cv_t<T>;
+			using RawType = std::remove_cv_t<T>;
             
 			// Check at compile time if the type is an integer.
             constexpr bool cxprIsIntegerType = 	std::is_same_v<RawType, short>		|| std::is_same_v<RawType, unsigned short>
@@ -51,16 +45,16 @@ namespace agdk
 											||	std::is_same_v<RawType, long long>	|| std::is_same_v<RawType, unsigned long long>;
 
             // Check at compile time if the type is a floating point number.
-            constexpr bool cxprIsFloatType = std::is_same_v<RawType, float> || std::is_same_v<RawT, double> || std::is_same_v< RawT, long double>;
+            constexpr bool cxprIsFloatType = std::is_same_v<RawType, float> || std::is_same_v<RawType, double> || std::is_same_v< RawType, long double>;
             
 			// Check if the type require 64 bit engine or not.
-			constexpr bool cxprCanUse32BitEngine = sizeof(RawT) <= 4;
+			constexpr bool cxprCanUse32BitEngine = sizeof(RawType) <= 4;
 
 			// Assert compilation, when type is not supported.
             static_assert(cxprIsIntegerType || cxprIsFloatType, "Random does not support this type.");
             
 			// Calculate min and max value:
-			auto[minValue, maxValue] = std::minmax(static_cast<RawT>(from_), static_cast<RawT>(to_));
+			auto[minValue, maxValue] = std::minmax(static_cast<RawType>(from_), static_cast<RawType>(to_));
 
 
 			// For every integer type:

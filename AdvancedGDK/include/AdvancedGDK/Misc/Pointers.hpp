@@ -1,13 +1,6 @@
-/**
- * Header: Pointers.hpp
- * Author: Pawe³ Syska aka RazzorFlame.
- * Description:
- * Creates useful pointer aliases.
-**/
-
+// File description:
+// Creates useful pointer aliases.
 #pragma once
-
-#include <memory>
 
 namespace agdk
 {

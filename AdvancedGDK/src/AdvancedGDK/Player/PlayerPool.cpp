@@ -5,8 +5,6 @@
 #include <AdvancedGDK/SampGDK.hpp>
 #include <AdvancedGDK/Misc/String.hpp>
 
-// Standard headers:
-#include <algorithm>
 
 namespace agdk
 {

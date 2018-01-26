@@ -1,9 +1,5 @@
-/**
- * Header: SampGDK.hpp
- * Author: Pawe³ Syska aka RazzorFlame.
- * Description:
- * Includes SAMPGDK header and puts its functions in sampgdk namespace.
-**/
+// File description:
+// Includes SAMPGDK library (the C++-way).
 
 #pragma once
 

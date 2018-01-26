@@ -1,20 +1,16 @@
-/**
- * Header: PlayerPool.hpp
- * Author: Pawe³ Syska aka RazzorFlame.
- * Description:
- * Implements class manipulating players and agent used to process certain server events.
-**/
-
+// File description:
+// Implements class manipulating players and agent used to process certain server events.
 #pragma once
+
+// Precompiled header:
+#include "../../../stdafx.h"
+
 
 // Custom includes:
 #include <AdvancedGDK/Player/Player.hpp>
 #include <AdvancedGDK/Misc/Math.hpp>
 
 // Standard includes:
-#include <vector>
-#include <memory>
-#include <string_view>
 
 namespace agdk
 {		

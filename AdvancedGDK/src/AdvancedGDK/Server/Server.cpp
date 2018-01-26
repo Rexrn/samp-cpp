@@ -1,4 +1,4 @@
-#include "stdafx.h" // PCH
+#include "stdafx.h"
 
 // Custom includes:
 #include <AdvancedGDK/Server/Server.hpp>

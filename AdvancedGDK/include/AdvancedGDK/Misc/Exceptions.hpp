@@ -1,14 +1,9 @@
-/**
- * Header: Exceptions.hpp
- * Author: Pawe³ Syska aka RazzorFlame.
- * Description:
- * TODO: Provides basic exception classes for common runtime errors.
-**/
-
+// File description:
+// TODO: Provides basic exception classes for common runtime errors.
 #pragma once
 
-#include <exception>
-#include <stdexcept>
+// Precompiled header:
+#include "../../../stdafx.h"
 
 namespace agdk
 {

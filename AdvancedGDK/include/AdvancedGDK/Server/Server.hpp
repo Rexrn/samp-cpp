@@ -1,21 +1,14 @@
-/**
- * Header: Server.hpp
- * Author: Pawe³ Syska aka RazzorFlame.
- * Description:
- * Implements Server behaviour and wraps SAMPGDK callbacks into a class.
-**/
+// File description:
+// Implements Server behaviour and wraps SAMPGDK callbacks into a class.
+
 
 #pragma once
 
-// SAMPGDK include:
-#include <AdvancedGDK/SampGDK.hpp>
+// Precompiled header:
+#include "../../../stdafx.h"
 
 // Custom includes:
 #include <AdvancedGDK/Misc/Clock.hpp>
-
-// Standard includes:
-#include <memory>
-#include <string_view>
 
 namespace agdk
 {

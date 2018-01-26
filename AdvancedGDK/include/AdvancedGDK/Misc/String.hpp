@@ -1,18 +1,9 @@
-/**
- * Header: String.hpp
- * Author: Pawe³ Syska aka RazzorFlame.
- * Description:
- * Implements helper class for String manipulation.
-**/
-
+// File description:
+// Implements helper class for String manipulation.
 #pragma once
 
-// Standard includes:
-#include <string>
-#include <istream>
-#include <vector>
-#include <sstream>
-#include <string_view>
+// Precompiled header:
+#include "../../../stdafx.h"
 
 namespace agdk
 {

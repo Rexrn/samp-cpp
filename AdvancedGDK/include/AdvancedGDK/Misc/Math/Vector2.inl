@@ -1,31 +1,24 @@
-/**
- * Header: Vector2.inl
- * Author: Pawel Syska aka RazzorFlame.
- * Description:
- * Implements base class for 2D vector manipulation.
-**/
+// File description:
+// Implements base class for 2D vector manipulation.
 
 // NOTE / WARNING:
 // This can't be included separately, because it is included by "Math.hpp" header.
 // Error will occur when separated, uses agdk::Math::Tolerance class.
+#pragma once
 
-// Standard includes:
-#include <cmath>
-#include <cinttypes>
-#include <type_traits>
-#include <string>
-#include <sstream>
-#include <iomanip>
+// Precompiled header:
+#include "../../../../stdafx.h"
 
 // Custom includes:
 #include "VectorStringBuilder.hpp"
 
+namespace agdk
+{
 
-namespace agdk::impl
+namespace impl
 {
 template <typename _Ty>
 class BaseVector3;
-}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -36,7 +29,7 @@ class BaseVector3;
 /// <param name="rhs_">The rhs vector.</param>
 /// <returns>Sum of two vectors.</returns>
 template <typename _Ty>
-constexpr agdk::impl::BaseVector2<_Ty> operator + (agdk::impl::BaseVector2<_Ty> const & lhs_, agdk::impl::BaseVector2<_Ty> const & rhs_);
+constexpr BaseVector2<_Ty> operator + (BaseVector2<_Ty> const & lhs_, BaseVector2<_Ty> const & rhs_);
 
 /// <summary>
 /// Subtracts rhs vector from lhs one.
@@ -45,7 +38,7 @@ constexpr agdk::impl::BaseVector2<_Ty> operator + (agdk::impl::BaseVector2<_Ty> 
 /// <param name="rhs_">The rhs vector.</param>
 /// <returns>Difference of two vectors.</returns>
 template <typename _Ty>
-constexpr agdk::impl::BaseVector2<_Ty> operator - (agdk::impl::BaseVector2<_Ty> const & lhs_, agdk::impl::BaseVector2<_Ty> const & rhs_);
+constexpr BaseVector2<_Ty> operator - (BaseVector2<_Ty> const & lhs_, BaseVector2<_Ty> const & rhs_);
 
 /// <summary>
 /// Multiplies two vectors.
@@ -54,7 +47,7 @@ constexpr agdk::impl::BaseVector2<_Ty> operator - (agdk::impl::BaseVector2<_Ty> 
 /// <param name="rhs_">The rhs vector.</param>
 /// <returns>Product of two vectors.</returns>
 template <typename _Ty>
-constexpr agdk::impl::BaseVector2<_Ty> operator * (agdk::impl::BaseVector2<_Ty> const & lhs_, agdk::impl::BaseVector2<_Ty> const & rhs_);
+constexpr BaseVector2<_Ty> operator * (BaseVector2<_Ty> const & lhs_, BaseVector2<_Ty> const & rhs_);
 
 /// <summary>
 /// Divides lhs vector by rhs vector.
@@ -63,7 +56,7 @@ constexpr agdk::impl::BaseVector2<_Ty> operator * (agdk::impl::BaseVector2<_Ty> 
 /// <param name="rhs_">The rhs vector.</param>
 /// <returns>Quotient of two vectors.</returns>
 template <typename _Ty>
-constexpr agdk::impl::BaseVector2<_Ty> operator / (agdk::impl::BaseVector2<_Ty> const & lhs_, agdk::impl::BaseVector2<_Ty> const & rhs_);
+constexpr BaseVector2<_Ty> operator / (BaseVector2<_Ty> const & lhs_, BaseVector2<_Ty> const & rhs_);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // Operators (lhs vector <op> rhs scalar).
@@ -76,7 +69,7 @@ constexpr agdk::impl::BaseVector2<_Ty> operator / (agdk::impl::BaseVector2<_Ty> 
 /// <param name="rhs_">The scalar.</param>
 /// <returns>Vector plus a scalar.</returns>
 template <typename _Ty>
-constexpr agdk::impl::BaseVector2<_Ty> operator + (agdk::impl::BaseVector2<_Ty> const & lhs_, _Ty const rhs_);
+constexpr BaseVector2<_Ty> operator + (BaseVector2<_Ty> const & lhs_, _Ty const rhs_);
 
 /// <summary>
 /// Substracts scalar from a vector.
@@ -85,7 +78,7 @@ constexpr agdk::impl::BaseVector2<_Ty> operator + (agdk::impl::BaseVector2<_Ty> 
 /// <param name="rhs_">The scalar.</param>
 /// <returns>Vector minus a scalar.</returns>
 template <typename _Ty>
-constexpr agdk::impl::BaseVector2<_Ty> operator - (agdk::impl::BaseVector2<_Ty> const & lhs_, _Ty const rhs_);
+constexpr BaseVector2<_Ty> operator - (BaseVector2<_Ty> const & lhs_, _Ty const rhs_);
 
 /// <summary>
 /// Multiplies vector by a scalar.
@@ -94,7 +87,7 @@ constexpr agdk::impl::BaseVector2<_Ty> operator - (agdk::impl::BaseVector2<_Ty> 
 /// <param name="rhs_">The scalar.</param>
 /// <returns>Vector times a scalar.</returns>
 template <typename _Ty>
-constexpr agdk::impl::BaseVector2<_Ty> operator * (agdk::impl::BaseVector2<_Ty> const & lhs_, _Ty const rhs_);
+constexpr BaseVector2<_Ty> operator * (BaseVector2<_Ty> const & lhs_, _Ty const rhs_);
 
 /// <summary>
 /// Divides vector by a scalar.
@@ -103,7 +96,7 @@ constexpr agdk::impl::BaseVector2<_Ty> operator * (agdk::impl::BaseVector2<_Ty> 
 /// <param name="rhs_">The scalar.</param>
 /// <returns>Vector divided by a scalar.</returns>
 template <typename _Ty>
-constexpr agdk::impl::BaseVector2<_Ty> operator / (agdk::impl::BaseVector2<_Ty> const & lhs_, _Ty const rhs_);
+constexpr BaseVector2<_Ty> operator / (BaseVector2<_Ty> const & lhs_, _Ty const rhs_);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // Operators (lhs scalar <op> rhs vector).
@@ -116,7 +109,7 @@ constexpr agdk::impl::BaseVector2<_Ty> operator / (agdk::impl::BaseVector2<_Ty> 
 /// <param name="rhs_">The rhs vector.</param>
 /// <returns>Vector plus a scalar.</returns>
 template <typename _Ty>
-constexpr agdk::impl::BaseVector2<_Ty> operator + (_Ty const lhs_, agdk::impl::BaseVector2<_Ty> const & rhs_);
+constexpr BaseVector2<_Ty> operator + (_Ty const lhs_, BaseVector2<_Ty> const & rhs_);
 
 /// <summary>
 /// Multiplies vector by a scalar.
@@ -125,15 +118,10 @@ constexpr agdk::impl::BaseVector2<_Ty> operator + (_Ty const lhs_, agdk::impl::B
 /// <param name="rhs_">The rhs vector.</param>
 /// <returns>Vector times a scalar.</returns>
 template <typename _Ty>
-constexpr agdk::impl::BaseVector2<_Ty> operator * (_Ty const lhs_, agdk::impl::BaseVector2<_Ty> const & rhs_);
+constexpr BaseVector2<_Ty> operator * (_Ty const lhs_, BaseVector2<_Ty> const & rhs_);
 
 
 
-namespace agdk
-{
-
-namespace impl
-{
 
 /// <summary>
 /// Implements templated two dimensional vector arithmetic class.
@@ -206,7 +194,7 @@ public:
 	/// <returns>Length of the vector.</returns>
 	template <typename _LenTy = ValueType,
 		typename = std::enable_if_t< is_noncvref_mathscalar_v<_LenTy> > >
-	constexpr _LenTy length() const
+	_LenTy length() const
 	{
 		if constexpr(std::is_same_v<_LenTy, ValueType>)
 			return std::sqrt(x * x + y * y);
@@ -241,7 +229,7 @@ public:
 	/// <returns>Distance between two instances.</returns>
 	template <typename _DistTy = ValueType,
 		typename = std::enable_if_t< is_noncvref_mathscalar_v<_DistTy> > >
-	constexpr _DistTy distance(BaseVector2<ValueType> const & other_) const
+	_DistTy distance(BaseVector2<ValueType> const & other_) const
 	{
 		return (*this - other_).template length<_DistTy>();
 	}
@@ -625,13 +613,9 @@ public:
 	}
 };
 
-} // namespace impl
-
-} // namespace agdk
-
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 template <typename _Ty>
-constexpr agdk::impl::BaseVector2<_Ty> operator + (agdk::impl::BaseVector2<_Ty> const & lhs_, agdk::impl::BaseVector2<_Ty> const & rhs_)
+constexpr BaseVector2<_Ty> operator + (BaseVector2<_Ty> const & lhs_, BaseVector2<_Ty> const & rhs_)
 {
 	return {
 		lhs_.x + rhs_.x,
@@ -641,7 +625,7 @@ constexpr agdk::impl::BaseVector2<_Ty> operator + (agdk::impl::BaseVector2<_Ty> 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 template <typename _Ty>
-constexpr agdk::impl::BaseVector2<_Ty> operator - (agdk::impl::BaseVector2<_Ty> const & lhs_, agdk::impl::BaseVector2<_Ty> const & rhs_)
+constexpr BaseVector2<_Ty> operator - (BaseVector2<_Ty> const & lhs_, BaseVector2<_Ty> const & rhs_)
 {
 	return {
 		lhs_.x - rhs_.x,
@@ -651,7 +635,7 @@ constexpr agdk::impl::BaseVector2<_Ty> operator - (agdk::impl::BaseVector2<_Ty> 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 template <typename _Ty>
-constexpr agdk::impl::BaseVector2<_Ty> operator * (agdk::impl::BaseVector2<_Ty> const & lhs_, agdk::impl::BaseVector2<_Ty> const & rhs_)
+constexpr BaseVector2<_Ty> operator * (BaseVector2<_Ty> const & lhs_, BaseVector2<_Ty> const & rhs_)
 {
 	return {
 		lhs_.x * rhs_.x,
@@ -661,7 +645,7 @@ constexpr agdk::impl::BaseVector2<_Ty> operator * (agdk::impl::BaseVector2<_Ty> 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 template <typename _Ty>
-constexpr agdk::impl::BaseVector2<_Ty> operator / (agdk::impl::BaseVector2<_Ty> const & lhs_, agdk::impl::BaseVector2<_Ty> const & rhs_)
+constexpr BaseVector2<_Ty> operator / (BaseVector2<_Ty> const & lhs_, BaseVector2<_Ty> const & rhs_)
 {
 	return {
 		lhs_.x / rhs_.x,
@@ -676,7 +660,7 @@ constexpr agdk::impl::BaseVector2<_Ty> operator / (agdk::impl::BaseVector2<_Ty> 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 template <typename _Ty>
-constexpr agdk::impl::BaseVector2<_Ty> operator + (agdk::impl::BaseVector2<_Ty> const & lhs_, _Ty const rhs_)
+constexpr BaseVector2<_Ty> operator + (BaseVector2<_Ty> const & lhs_, _Ty const rhs_)
 {
 	return {
 		lhs_.x + rhs_,
@@ -686,7 +670,7 @@ constexpr agdk::impl::BaseVector2<_Ty> operator + (agdk::impl::BaseVector2<_Ty> 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 template <typename _Ty>
-constexpr agdk::impl::BaseVector2<_Ty> operator - (agdk::impl::BaseVector2<_Ty> const & lhs_, _Ty const rhs_)
+constexpr BaseVector2<_Ty> operator - (BaseVector2<_Ty> const & lhs_, _Ty const rhs_)
 {
 	return {
 		lhs_.x - rhs_,
@@ -696,7 +680,7 @@ constexpr agdk::impl::BaseVector2<_Ty> operator - (agdk::impl::BaseVector2<_Ty> 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 template <typename _Ty>
-constexpr agdk::impl::BaseVector2<_Ty> operator * (agdk::impl::BaseVector2<_Ty> const & lhs_, _Ty const rhs_)
+constexpr BaseVector2<_Ty> operator * (BaseVector2<_Ty> const & lhs_, _Ty const rhs_)
 {
 	return {
 		lhs_.x * rhs_,
@@ -706,7 +690,7 @@ constexpr agdk::impl::BaseVector2<_Ty> operator * (agdk::impl::BaseVector2<_Ty> 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 template <typename _Ty>
-constexpr agdk::impl::BaseVector2<_Ty> operator / (agdk::impl::BaseVector2<_Ty> const & lhs_, _Ty const rhs_)
+constexpr BaseVector2<_Ty> operator / (BaseVector2<_Ty> const & lhs_, _Ty const rhs_)
 {
 	return {
 		lhs_.x / rhs_,
@@ -720,7 +704,7 @@ constexpr agdk::impl::BaseVector2<_Ty> operator / (agdk::impl::BaseVector2<_Ty> 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 template <typename _Ty>
-constexpr agdk::impl::BaseVector2<_Ty> operator + (_Ty const lhs_, agdk::impl::BaseVector2<_Ty> const & rhs_)
+constexpr BaseVector2<_Ty> operator + (_Ty const lhs_, BaseVector2<_Ty> const & rhs_)
 {
 	return {
 		rhs_.x + lhs_,
@@ -730,10 +714,33 @@ constexpr agdk::impl::BaseVector2<_Ty> operator + (_Ty const lhs_, agdk::impl::B
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 template <typename _Ty>
-constexpr agdk::impl::BaseVector2<_Ty> operator * (_Ty const lhs_, agdk::impl::BaseVector2<_Ty> const & rhs_)
+constexpr BaseVector2<_Ty> operator * (_Ty const lhs_, BaseVector2<_Ty> const & rhs_)
 {
 	return {
 		rhs_.x * lhs_,
 		rhs_.y * lhs_
 	};
 }
+
+} // namespace impl
+
+// 2D Vector class templated with float
+using Vector2f		= impl::BaseVector2<float>;
+// 2D Vector class templated with float
+using Vector2		= impl::BaseVector2<float>;
+// 2D Vector class templated with double
+using Vector2d		= impl::BaseVector2<double>;
+// 2D Vector class templated with std::int16_t
+using Vector2i16	= impl::BaseVector2<std::int16_t>;
+// 2D Vector class templated with std::int32_t
+using Vector2i32	= impl::BaseVector2<std::int32_t>;
+// 2D Vector class templated with std::int64_t
+using Vector2i64	= impl::BaseVector2<std::int64_t>;
+// 2D Vector class templated with std::uint16_t
+using Vector2u16	= impl::BaseVector2<std::uint16_t>;
+// 2D Vector class templated with std::uint32_t
+using Vector2u32	= impl::BaseVector2<std::uint32_t>;
+// 2D Vector class templated with std::uint64_t
+using Vector2u64	= impl::BaseVector2<std::uint64_t>;
+
+} // namespace agdk

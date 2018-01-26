@@ -5,8 +5,6 @@
 #include <AdvancedGDK/Misc/Random.hpp>		// used in Color::random
 #include <AdvancedGDK/Misc/String.hpp>		// for string manipulation
 
-// Standard headers:
-#include <sstream>
 
 namespace agdk
 {
@@ -64,18 +62,6 @@ namespace agdk
 	Color Color::fromString(const std::string &color_)
 	{
 		return Color{ color_ };
-	}
-
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	std::uint32_t Color::toUint32() const
-	{
-		return (std::uint32_t(r) << 24) + (std::uint32_t(g) << 16) + (std::uint32_t(b) << 8) + std::uint32_t(a);
-	}
-
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	std::int32_t Color::toInt32() const
-	{
-		return static_cast<std::int32_t>(this->toUint32());
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////

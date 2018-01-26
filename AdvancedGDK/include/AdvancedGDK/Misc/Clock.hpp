@@ -1,14 +1,9 @@
-/**
- * Header: Clock.hpp
- * Author: Pawe³ Syska aka RazzorFlame.
- * Description:
- * Implements time measuring class and adds useful aliases to agdk namespace.
-**/
-
+// File description:
+// Implements time measuring class and adds useful aliases to agdk namespace.
 #pragma once
 
-#include <chrono>
-#include <type_traits>
+// Precompiled header:
+#include "../../../stdafx.h"
 
 namespace agdk
 {
@@ -60,5 +55,4 @@ namespace agdk
 	protected:
 		chrono::nanoseconds m_startTime; /// Holds starting time to count from.
 	};
-
 }

@@ -3,9 +3,6 @@
 // Custom includes:
 #include <AdvancedGDK/Misc/Random.hpp>	// The `Random` header.
 
-// Standard includes:
-#include <chrono>	// for std::chrono::system_clock
-
 namespace agdk
 {
 	constexpr bool cxprNoRandomDevice = false;
