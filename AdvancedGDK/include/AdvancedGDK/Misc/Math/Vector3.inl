@@ -12,13 +12,6 @@
 // Custom includes:
 #include "VectorStringBuilder.hpp"
 
-namespace agdk::impl
-{
-
-}
-
-
-
 
 namespace agdk
 {
@@ -360,7 +353,7 @@ public:
 		return *this;
 	}
 
-	/* yet non-constexpr */
+	// yet non-constexpr
 	/// <summary>
 	/// Converts vector to string.
 	/// </summary>

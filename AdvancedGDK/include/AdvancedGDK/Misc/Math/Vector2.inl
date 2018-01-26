@@ -341,7 +341,7 @@ public:
 		return *this;
 	}
 
-	/* yet non-constexpr */	
+	// yet non-constexpr
 	/// <summary>
 	/// Converts vector to string.
 	/// </summary>
