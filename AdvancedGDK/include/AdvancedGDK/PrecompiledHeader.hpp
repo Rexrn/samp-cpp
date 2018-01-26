@@ -15,6 +15,7 @@
 
 #include <cstdlib>
 #include <cstring>
+#include <cassert>
 
 // Math, calculations
 #include <random>
