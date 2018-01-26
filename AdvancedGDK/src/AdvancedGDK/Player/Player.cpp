@@ -8,7 +8,7 @@
 namespace agdk
 {
 	///////////////////////////////////////////////////////////////////////////
-	Player::Player(const std::size_t index_)
+	Player::Player(std::size_t const index_)
 		:	m_index{ index_ }, m_spawned{ false },
 			m_score{ 0 }, m_cash{ 0 },
 			m_health{ 100 }, m_armour{ 0 }
@@ -16,7 +16,7 @@ namespace agdk
 	}
 
 	///////////////////////////////////////////////////////////////////////////
-	bool Player::setName(const std::string_view name_, bool(*isNameValidProc_)(const std::string_view))
+	bool Player::setName(std::string_view const name_, bool(*isNameValidProc_)(const std::string_view))
 	{
 		// If passed null pointer use the default method.
 		if (isNameValidProc_ == nullptr)
@@ -47,7 +47,7 @@ namespace agdk
 	}
 
 	///////////////////////////////////////////////////////////////////////////
-	void Player::setLocation(const Vector3 location_)
+	void Player::setLocation(Vector3 const location_)
 	{
 		m_lastLocation = location_;
 		if (this->isSpawned())
@@ -55,14 +55,14 @@ namespace agdk
 	}
 
 	///////////////////////////////////////////////////////////////////////////
-	void Player::setFacingAngle(const float angle_)
+	void Player::setFacingAngle(float const angle_)
 	{
 		if (this->isSpawned())
 			sampgdk::SetPlayerFacingAngle(this->getIndex(), angle_);
 	}
 
 	///////////////////////////////////////////////////////////////////////////
-	void Player::setHealth(const float health_)
+	void Player::setHealth(float const health_)
 	{
 		m_health = health_ + cxprHealthBase;
 		if (this->isSpawned())
@@ -70,7 +70,7 @@ namespace agdk
 	}
 
 	///////////////////////////////////////////////////////////////////////////
-	void Player::setArmour(const float armour_)
+	void Player::setArmour(float const armour_)
 	{
 		m_armour = armour_;
 		if (this->isSpawned())

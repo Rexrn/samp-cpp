@@ -20,13 +20,12 @@ namespace agdk
 
 		// Some constants
 		static constexpr float cxprHealthBase = 256 * 100.f;
-
-
+		
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Player"/> class.
 		/// </summary>
 		/// <param name="index">Index of the player.</param>
-		explicit Player(const std::size_t index_);
+		explicit Player(std::size_t const index_);
 		
 		/// <summary>
 		/// Default constructor (deleted, use explicit index constructor instead).
@@ -36,7 +35,7 @@ namespace agdk
 		/// <summary>
 		/// Copy onstructor (deleted, use explicit index constructor instead).
 		/// </summary>
-		Player(const Player &)	= delete;
+		Player(Player & const)	= delete;
 
 		/// <summary>
 		/// Move constructor (deleted, use explicit index constructor instead).
@@ -52,7 +51,7 @@ namespace agdk
 		/// <returns>
 		///   <c>true</c> if succeeded; otherwise, <c>false</c>.
 		/// </returns>
-		bool setName(const std::string_view name_, bool(*isNameValidProc_)(const std::string_view) = nullptr);
+		bool setName(std::string_view const name_, bool(*isNameValidProc_)(const std::string_view) = nullptr);
 
 		// Player world transform.
 
@@ -60,13 +59,13 @@ namespace agdk
 		/// Sets the player's location.
 		/// </summary>
 		/// <param name="location_">The location.</param>
-		void setLocation(const Vector3 location_);
+		void setLocation(Vector3 const location_);
 		
 		/// <summary>
 		/// Sets player's facing angle.
 		/// </summary>
 		/// <param name="angle_">The angle.</param>
-		void setFacingAngle(const float angle_);
+		void setFacingAngle(float const angle_);
 		
 		// Player condition.
 
@@ -74,20 +73,21 @@ namespace agdk
 		/// Sets player's health.
 		/// </summary>
 		/// <param name="health_">The health.</param>
-		void setHealth(const float health_);
+		void setHealth(float const health_);
 
 		/// <summary>
 		/// Sets player's armour.
 		/// </summary>
 		/// <param name="armour_">The armour.</param>
-		void setArmour(const float armour_);
+		void setArmour(float const armour_);
 		
 		/// <summary>
 		/// Damages the player.
 		/// </summary>
 		/// <param name="damage_">The damage count.</param>
-		void damage(const float damage_);
-		// TODO: uncomment this, implement damage. void addDamage(const float damage_, const EDamageType type_ = NonPhysical);
+		/// <param name="physical_">Indicates whether damage should be applied directly to health.</param>
+		void damage(const float damage_, bool const physical_ = false);
+
 
 		// Player data.
 
@@ -137,7 +137,7 @@ namespace agdk
 				if (sampgdk::GetPlayerFacingAngle(this->getIndex(), &angle))
 					return angle;
 			}
-			return 0.0;
+			return 0.f;
 		}
 
 		// Player statistics.
@@ -175,6 +175,24 @@ namespace agdk
 		float getArmour() const {
 			return m_armour;
 		}
+		
+		/// <summary>
+		/// Returns player's (client) color.
+		/// </summary>
+		/// <returns>Player's color</returns>
+		Color getColor() const {
+			return Color{ sampgdk::GetPlayerColor(this->getIndex()) };
+		}
+
+		// Player personal settings:
+		
+		/// <summary>
+		/// Returns player language.
+		/// </summary>
+		/// <returns>Player's language</returns>
+		std::uint16_t getLanguage() const noexcept {
+			return m_language;
+		}
 
 		// Player status.
 
@@ -207,6 +225,7 @@ namespace agdk
 		bool isClientDead() const {
 			return this->getClientHealth() <= 0;
 		}
+
 	protected:
 				
 		/// <summary>
@@ -258,5 +277,8 @@ namespace agdk
 		// Player condition.
 		float				m_health;			/// Player's in-game health.
 		float				m_armour;			/// Player's in-game armour.
+
+		// Player personal settings:
+		std::uint16_t		m_language;			/// Player's language.
 	};
 }
