@@ -165,6 +165,7 @@
     <ClInclude Include="include\AdvancedGDK\Gameplay\Chat.hpp" />
     <ClInclude Include="include\AdvancedGDK\Gameplay\Command.hpp" />
     <ClInclude Include="include\AdvancedGDK\Gameplay\CommandManager.hpp" />
+    <ClInclude Include="include\AdvancedGDK\Gameplay\EventDispatcher.hpp" />
     <ClInclude Include="include\AdvancedGDK\Gameplay\Teleport.hpp" />
     <ClInclude Include="include\AdvancedGDK\Gameplay\Weapon.hpp" />
     <ClInclude Include="include\AdvancedGDK\PrecompiledHeader.hpp" />
