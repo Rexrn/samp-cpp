@@ -6,6 +6,10 @@
 #include "../stdafx.h"
 
 #include "SampGDK.hpp"
+
+// Core
+#include <AdvancedGDK/Core/EventDispatcher.hpp>
+
 // Misc
 #include <AdvancedGDK/Misc/Clock.hpp>
 #include <AdvancedGDK/Misc/Color.hpp>

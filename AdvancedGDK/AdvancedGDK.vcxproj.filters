@@ -138,7 +138,7 @@
     <ClInclude Include="include\AdvancedGDK\Gameplay\CommandManager.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\AdvancedGDK\Gameplay\EventDispatcher.hpp">
+    <ClInclude Include="include\AdvancedGDK\Core\EventDispatcher.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
