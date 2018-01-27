@@ -10,63 +10,9 @@
 #include <AdvancedGDK/Player/Player.hpp>
 #include <AdvancedGDK/Misc/Math.hpp>
 
-// Standard includes:
 
 namespace agdk
 {		
-	class PlayerPool;
-
-	/// <summary>
-	/// Agent used to manipulate player pool by <see cref="IGameMode"/>
-	/// </summary>
-	class PlayerPoolAgent final
-	{
-	public:		
-		/// <summary>
-		/// Copy constructor. It is deleted.
-		/// </summary>
-		PlayerPoolAgent(const PlayerPoolAgent &) = delete;
-		
-		/// IGameMode only can create PlayerPoolAgent.
-		friend class IGameMode;
-
-	private:		
-		/// <summary>
-		/// Prevents a default instance of the <see cref="PlayerPoolAgent"/> class from being created.
-		/// </summary>
-		PlayerPoolAgent() = delete;
-
-		/// <summary>
-		/// Constructor. Only IGameMode is allowed to create instance of this class.
-		/// </summary>
-		/// <param name="playerPool_">The player pool.</param>
-		PlayerPoolAgent(PlayerPool &playerPool_);
-		
-		/// <summary>
-		/// Adds player to player pool.
-		/// </summary>
-		/// <param name="player_">The player.</param>
-		/// <remarks>
-		/// <para>Player was already created before this event was fired.
-		/// This is because IGameMode is responsive for providing player instances.
-		/// </para>
-		/// </remarks>
-		void eventPlayerConnect(std::shared_ptr<Player> &&player_);
-		
-		/// <summary>
-		/// Removes player from player pool.
-		/// </summary>
-		/// <param name="playerIndex_">Index of the player.</param>
-		/// <remarks>
-		/// <para>Only index is passed because it is faster to randomly access vector element with its index than searching for player pointer.</para>
-		/// </remarks>
-		void eventPlayerDisconnect(std::size_t const playerIndex_);
-		
-		/// <summary>
-		/// The player pool reference.
-		/// </summary>
-		PlayerPool &m_playerPool;
-	};
 
 	/// <summary>
 	/// Stores every player in game.
@@ -180,18 +126,22 @@ namespace agdk
 	private:
 
 		/// <summary>
-		/// Agent method: adds player to the pool. See also: <see cref="PlayerPoolAgent::eventPlayerConnect" />
+		/// Called when player connects.
 		/// </summary>
-		/// <param name="agent_">The agent.</param>
 		/// <param name="player_">The player.</param>
-		void agentAddPlayer(std::shared_ptr<Player> &&player_);
+		/// <remarks>
+		/// <para>This is an exclusive function, called before any other and with different arguments.</para>
+		/// </remarks>
+		void whenPlayerConnectsEx(std::shared_ptr<Player> &&player_);
 		
 		/// <summary>
-		/// Agent method: removes player from the pool. See also: <see cref="PlayerPoolAgent::eventPlayerDisconnect" />
+		/// Called when player disconnects.
 		/// </summary>
-		/// <param name="agent_">The agent.</param>
 		/// <param name="playerIndex_">Index of the player.</param>
-		void agentRemovePlayer(std::size_t const playerIndex_);
+		/// <remarks>
+		/// <para>This is an exclusive function, called after any other and with different arguments.</para>
+		/// </remarks>
+		void whenPlayerDisconnectsEx(std::size_t const playerIndex_);
 
 		// Private members
 		
