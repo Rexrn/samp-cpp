@@ -5,14 +5,20 @@
 #pragma once
 
 // Precompiled header:
-#include "../../../stdafx.h"
+#include ADVANCEDGDK_PCH
 
 // Custom includes:
-#include <AdvancedGDK/Misc/Clock.hpp>
+#include <AdvancedGDK/Core/Events.hpp>
+#include <AdvancedGDK/Core/Clock.hpp>
+#include <AdvancedGDK/Server/Player/Player.hpp>
+#include <AdvancedGDK/Server/Player/PlayerPool.hpp>
+#include <AdvancedGDK/Server/Player/Weapon.hpp>
+#include <AdvancedGDK/World/Vehicle/Vehicle.hpp>
+
 
 namespace agdk
 {
-	/* Forward declarations */
+	// Forward declarations
 	class IGameMode;
 
 	
@@ -53,76 +59,100 @@ namespace agdk
 		/// </summary>
 		/// <param name="desc">The description.</param>
 		void setDescription(const std::string_view desc_);
+		
+	private:
+		struct SampEvents {
+			void onUpdate();
+			bool onGameModeInit();
+			bool onGameModeExit();
+			bool onPlayerConnect(int playerid);
+			bool onPlayerDisconnect(int playerid, int reason);
+			bool onPlayerSpawn(int playerid);
+			bool onPlayerDeath(int playerid, int killerid, int reason);
+			bool onVehicleSpawn(int vehicleid);
+			bool onVehicleDeath(int vehicleid, int killerid);
+			bool onPlayerText(int playerid, const char * text);
+			bool onPlayerCommandText(int playerid, const char * cmdtext);
+			bool onPlayerRequestClass(int playerid, int classid);
+			bool onPlayerEnterVehicle(int playerid, int vehicleid, bool ispassenger);
+			bool onPlayerExitVehicle(int playerid, int vehicleid);
+			bool onPlayerStateChange(int playerid, int newstate, int oldstate);
+			bool onPlayerEnterCheckpoint(int playerid);
+			bool onPlayerLeaveCheckpoint(int playerid);
+			bool onPlayerEnterRaceCheckpoint(int playerid);
+			bool onPlayerLeaveRaceCheckpoint(int playerid);
+			bool onRconCommand(const char * cmd);
+			bool onPlayerRequestSpawn(int playerid);
+			bool onObjectMoved(int objectid);
+			bool onPlayerObjectMoved(int playerid, int objectid);
+			bool onPlayerPickUpPickup(int playerid, int pickupid);
+			bool onVehicleMod(int playerid, int vehicleid, int componentid);
+			bool onEnterExitModShop(int playerid, int enterexit, int interiorid);
+			bool onVehiclePaintjob(int playerid, int vehicleid, int paintjobid);
+			bool onVehicleRespray(int playerid, int vehicleid, int color1, int color2);
+			bool onVehicleDamageStatusUpdate(int vehicleid, int playerid);
+			bool onUnoccupiedVehicleUpdate(int vehicleid, int playerid, int passenger_seat, float new_x, float new_y, float new_z, float vel_x, float vel_y, float vel_z);
+			bool onPlayerSelectedMenuRow(int playerid, int row);
+			bool onPlayerExitedMenu(int playerid);
+			bool onPlayerInteriorChange(int playerid, int newinteriorid, int oldinteriorid);
+			bool onPlayerKeyStateChange(int playerid, int newkeys, int oldkeys);
+			bool onRconLoginAttempt(const char * ip, const char * password, bool success);
+			bool onPlayerUpdate(int playerid);
+			bool onPlayerStreamIn(int playerid, int forplayerid);
+			bool onPlayerStreamOut(int playerid, int forplayerid);
+			bool onVehicleStreamIn(int vehicleid, int forplayerid);
+			bool onVehicleStreamOut(int vehicleid, int forplayerid);
+			bool onActorStreamIn(int actorid, int forplayerid);
+			bool onActorStreamOut(int actorid, int forplayerid);
+			bool onDialogResponse(int playerid, int dialogid, int response, int listitem, const char * inputtext);
+			bool onPlayerTakeDamage(int playerid, int issuerid, float amount, int weaponid, int bodypart);
+			bool onPlayerGiveDamage(int playerid, int damagedid, float amount, int weaponid, int bodypart);
+			bool onPlayerGiveDamageActor(int playerid, int damaged_actorid, float amount, int weaponid, int bodypart);
+			bool onPlayerClickMap(int playerid, float fX, float fY, float fZ);
+			bool onPlayerClickTextDraw(int playerid, int clickedid);
+			bool onPlayerClickPlayerTextDraw(int playerid, int playertextid);
+			bool onIncomingConnection(int playerid, const char * ip_address, int port);
+			bool onTrailerUpdate(int playerid, int vehicleid);
+			bool onVehicleSirenStateChange(int playerid, int vehicleid, int newstate);
+			bool onPlayerClickPlayer(int playerid, int clickedplayerid, int source);
+			bool onPlayerEditObject(int playerid, bool playerobject, int objectid, int response, float fX, float fY, float fZ, float fRotX, float fRotY, float fRotZ);
+			bool onPlayerEditAttachedObject(int playerid, int response, int index, int modelid, int boneid, float fOffsetX, float fOffsetY, float fOffsetZ, float fRotX, float fRotY, float fRotZ, float fScaleX, float fScaleY, float fScaleZ);
+			bool onPlayerSelectObject(int playerid, int type, int objectid, int modelid, float fX, float fY, float fZ);
+			bool onPlayerWeaponShot(int playerid, int weaponid, int hittype, int hitid, float fX, float fY, float fZ);
 
-		//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-		////////////////////////////////////////////////////// SAMPGDK core methods //////////////////////////////////////////////////////
-		//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-		void sampEventUpdate();
+			bool _impl_OnPlayerEnterRaceCheckpoint(int playerid);
+			bool _impl_OnPlayerLeaveRaceCheckpoint(int playerid);
+		};
 
-		bool sampEventOnGameModeInit();
-		bool sampEventOnGameModeExit();
-		bool sampEventOnPlayerConnect(int playerid);
-		bool sampEventOnPlayerDisconnect(int playerid, int reason);
-		bool sampEventOnPlayerSpawn(int playerid);
-		bool sampEventOnPlayerDeath(int playerid, int killerid, int reason);
-		bool sampEventOnVehicleSpawn(int vehicleid);
-		bool sampEventOnVehicleDeath(int vehicleid, int killerid);
-		bool sampEventOnPlayerText(int playerid, const char * text);
-		bool sampEventOnPlayerCommandText(int playerid, const char * cmdtext);
-		bool sampEventOnPlayerRequestClass(int playerid, int classid);
-		bool sampEventOnPlayerEnterVehicle(int playerid, int vehicleid, bool ispassenger);
-		bool sampEventOnPlayerExitVehicle(int playerid, int vehicleid);
-		bool sampEventOnPlayerStateChange(int playerid, int newstate, int oldstate);
-		bool sampEventOnPlayerEnterCheckpoint(int playerid);
-		bool sampEventOnPlayerLeaveCheckpoint(int playerid);
-		bool sampEventOnPlayerEnterRaceCheckpoint(int playerid);
-		bool sampEventOnPlayerLeaveRaceCheckpoint(int playerid);
-		bool sampEventOnRconCommand(const char * cmd);
-		bool sampEventOnPlayerRequestSpawn(int playerid);
-		bool sampEventOnObjectMoved(int objectid);
-		bool sampEventOnPlayerObjectMoved(int playerid, int objectid);
-		bool sampEventOnPlayerPickUpPickup(int playerid, int pickupid);
-		bool sampEventOnVehicleMod(int playerid, int vehicleid, int componentid);
-		bool sampEventOnEnterExitModShop(int playerid, int enterexit, int interiorid);
-		bool sampEventOnVehiclePaintjob(int playerid, int vehicleid, int paintjobid);
-		bool sampEventOnVehicleRespray(int playerid, int vehicleid, int color1, int color2);
-		bool sampEventOnVehicleDamageStatusUpdate(int vehicleid, int playerid);
-		bool sampEventOnUnoccupiedVehicleUpdate(int vehicleid, int playerid, int passenger_seat, float new_x, float new_y, float new_z, float vel_x, float vel_y, float vel_z);
-		bool sampEventOnPlayerSelectedMenuRow(int playerid, int row);
-		bool sampEventOnPlayerExitedMenu(int playerid);
-		bool sampEventOnPlayerInteriorChange(int playerid, int newinteriorid, int oldinteriorid);
-		bool sampEventOnPlayerKeyStateChange(int playerid, int newkeys, int oldkeys);
-		bool sampEventOnRconLoginAttempt(const char * ip, const char * password, bool success);
-		bool sampEventOnPlayerUpdate(int playerid);
-		bool sampEventOnPlayerStreamIn(int playerid, int forplayerid);
-		bool sampEventOnPlayerStreamOut(int playerid, int forplayerid);
-		bool sampEventOnVehicleStreamIn(int vehicleid, int forplayerid);
-		bool sampEventOnVehicleStreamOut(int vehicleid, int forplayerid);
-		bool sampEventOnActorStreamIn(int actorid, int forplayerid);
-		bool sampEventOnActorStreamOut(int actorid, int forplayerid);
-		bool sampEventOnDialogResponse(int playerid, int dialogid, int response, int listitem, const char * inputtext);
-		bool sampEventOnPlayerTakeDamage(int playerid, int issuerid, float amount, int weaponid, int bodypart);
-		bool sampEventOnPlayerGiveDamage(int playerid, int damagedid, float amount, int weaponid, int bodypart);
-		bool sampEventOnPlayerGiveDamageActor(int playerid, int damaged_actorid, float amount, int weaponid, int bodypart);
-		bool sampEventOnPlayerClickMap(int playerid, float fX, float fY, float fZ);
-		bool sampEventOnPlayerClickTextDraw(int playerid, int clickedid);
-		bool sampEventOnPlayerClickPlayerTextDraw(int playerid, int playertextid);
-		bool sampEventOnIncomingConnection(int playerid, const char * ip_address, int port);
-		bool sampEventOnTrailerUpdate(int playerid, int vehicleid);
-		bool sampEventOnVehicleSirenStateChange(int playerid, int vehicleid, int newstate);
-		bool sampEventOnPlayerClickPlayer(int playerid, int clickedplayerid, int source);
-		bool sampEventOnPlayerEditObject(int playerid, bool playerobject, int objectid, int response, float fX, float fY, float fZ, float fRotX, float fRotY, float fRotZ);
-		bool sampEventOnPlayerEditAttachedObject(int playerid, int response, int index, int modelid, int boneid, float fOffsetX, float fOffsetY, float fOffsetZ, float fRotX, float fRotY, float fRotZ, float fScaleX, float fScaleY, float fScaleZ);
-		bool sampEventOnPlayerSelectObject(int playerid, int type, int objectid, int modelid, float fX, float fY, float fZ);
-		bool sampEventOnPlayerWeaponShot(int playerid, int weaponid, int hittype, int hitid, float fX, float fY, float fZ);
+		struct Events {
+			EventDispatcher<Clock::TimePoint const>							serverUpdates;
+			EventDispatcher<>												gameModeInits;
+			EventDispatcher<>												gameModeExits;
+			EventDispatcher<Player &>										playerConnects;
+			EventDispatcher<Player &>										playerDisconnects;
+			EventDispatcher<Player &>										playerSpawns;
+			EventDispatcher<Player &, Player *, Weapon::Type>				playerDies;
+			EventDispatcher<Vehicle &>										vehicleSpawns;
+			EventDispatcher<Vehicle &, Player *>							vehicleDies;
+			EventDispatcher<Player &, std::string const&>					playerSendsText;
+			EventDispatcher<Player &, std::string const&>					playerSendsCommandText;
 
-		bool _impl_OnPlayerEnterRaceCheckpoint(int playerid);
-		bool _impl_OnPlayerLeaveRaceCheckpoint(int playerid);
-
+			/*void onUpdate();
+			bool onGameModeInit();
+			bool onGameModeExit();
+			bool onPlayerConnect(int playerid);
+			bool onPlayerDisconnect(int playerid, int reason);
+			bool onPlayerSpawn(int playerid);
+			bool onPlayerDeath(int playerid, int killerid, int reason);
+			bool onVehicleSpawn(int vehicleid);
+			bool onVehicleDeath(int vehicleid, int killerid);
+			bool onPlayerText(int playerid, const char * text);
+			bool onPlayerCommandText(int playerid, const char * cmdtext);
+			*/
+		};
+		
+	public:
 		/////////////////////////////////////////////////////////////////////////////
-
-		/*	Contains default parameters/methods.
-		*/
 		class Default
 		{
 		public:			
@@ -138,8 +168,11 @@ namespace agdk
 			/// </remarks>
 			static bool	isPlayerNameValid(const std::string_view name_);
 		};
+
+		SampEvents							sampEvents;
+		Events								events;
 	private:
-		Clock::duration						m_lastUpdate; /// Stores last server update call (used to determine deltaTime).
+		Clock::TimePoint					m_lastUpdate; /// Stores last server update call (used to determine deltaTime).
 	};
 }
 

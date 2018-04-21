@@ -1,18 +1,32 @@
-#include "stdafx.h" // PCH
+#include "AdvancedGDKPCH.hpp" // PCH
 
 // Custom includes:
 #include <AdvancedGDK/Server/GameMode.hpp>
 
 namespace agdk
 {
-	////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	IGameMode::IGameMode()
-		: playerPoolAgent{players}
 	{
 	}
 
-	////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	IGameMode::~IGameMode()
 	{
+	}
+
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	std::shared_ptr<Player> IGameMode::newPlayerInstance(std::size_t const playerIndex_) const
+	{
+		return std::make_shared<Player>(playerIndex_);
+	}
+
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	void IGameMode::addPlayerClass(std::size_t modelIndex_, math::Vector3f const location_, float const facingAngle_, std::array<Weapon, 3> weapons_)
+	{
+		sampgdk_AddPlayerClass(modelIndex_, location_.x, location_.y, location_.z, facingAngle_,
+			static_cast<std::int32_t>(weapons_[0].getType()), weapons_[0].getAmmo(),
+			static_cast<std::int32_t>(weapons_[1].getType()), weapons_[1].getAmmo(),
+			static_cast<std::int32_t>(weapons_[2].getType()), weapons_[2].getAmmo());
 	}
 }

@@ -45,3 +45,13 @@
 /.vs/AdvancedGDK/v15/Preview
 /ExampleGM/Debug
 /ExampleGM/lib/Debug
+/.vs
+/ExampleGM/intermediate/Debug
+/ExampleGM/x64/Debug
+/Prototypes/Actions/intermediate
+/Prototypes/Actions/output/Win32/Debug
+/Prototypes/Math/intermediate
+/Prototypes/Math/output/Win32/Debug
+/Prototypes/Text/intermediate
+/UnitTests/intermediate
+/UnitTests/output

@@ -46,14 +46,11 @@
     <Filter Include="Source Files\Misc\Math">
       <UniqueIdentifier>{c514dada-14e3-45d9-92e8-854e6fff2929}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Core">
+      <UniqueIdentifier>{5cc7a757-41a5-49c5-8cd4-be1817acbb16}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="stdafx.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="targetver.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="dependencies\sampgdk\plugin.h">
       <Filter>dependencies\sampgdk</Filter>
     </ClInclude>
@@ -72,106 +69,184 @@
     <ClInclude Include="dependencies\sampgdk\amx\sclinux.h">
       <Filter>dependencies\sampgdk\amx</Filter>
     </ClInclude>
-    <ClInclude Include="include\AdvancedGDK\Player\Player.hpp">
-      <Filter>Header Files\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="include\AdvancedGDK\Player\PlayerPool.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\AdvancedGDK\Server\GameMode.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\AdvancedGDK\Server\Server.hpp">
       <Filter>Header Files\Server</Filter>
     </ClInclude>
-    <ClInclude Include="include\AdvancedGDK\AdvancedGDK.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\AdvancedGDK\SampGDK.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\AdvancedGDK\Misc\Clock.hpp">
+    <ClInclude Include="include\AdvancedGDK\Core\Color.hpp">
       <Filter>Header Files\Misc</Filter>
     </ClInclude>
-    <ClInclude Include="include\AdvancedGDK\Misc\Color.hpp">
+    <ClInclude Include="include\AdvancedGDK\Core\Exceptions.hpp">
       <Filter>Header Files\Misc</Filter>
     </ClInclude>
-    <ClInclude Include="include\AdvancedGDK\Misc\Pointers.hpp">
+    <ClInclude Include="include\AdvancedGDK\Core\Pointers.hpp">
       <Filter>Header Files\Misc</Filter>
     </ClInclude>
-    <ClInclude Include="include\AdvancedGDK\Misc\Random.hpp">
-      <Filter>Header Files\Misc</Filter>
-    </ClInclude>
-    <ClInclude Include="include\AdvancedGDK\Misc\String.hpp">
-      <Filter>Header Files\Misc</Filter>
-    </ClInclude>
-    <ClInclude Include="include\AdvancedGDK\Misc\Task.hpp">
-      <Filter>Header Files\Misc</Filter>
-    </ClInclude>
-    <ClInclude Include="include\AdvancedGDK\Misc\Exceptions.hpp">
-      <Filter>Header Files\Misc</Filter>
-    </ClInclude>
-    <ClInclude Include="include\AdvancedGDK\Misc\Math\Vector2.inl">
-      <Filter>Header Files\Misc\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="include\AdvancedGDK\Misc\Math\Vector3.inl">
-      <Filter>Header Files\Misc\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="include\AdvancedGDK\Misc\Math.hpp">
-      <Filter>Header Files\Misc</Filter>
-    </ClInclude>
-    <ClInclude Include="include\AdvancedGDK\PrecompiledHeader.hpp">
+    <ClInclude Include="include\AdvancedGDK\Server\Chat.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\AdvancedGDK\Gameplay\Weapon.hpp">
+    <ClInclude Include="include\AdvancedGDK\Core\Clock.hpp">
+      <Filter>Header Files\Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="AdvancedGDKPCH.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\AdvancedGDK\Gameplay\Chat.hpp">
+    <ClInclude Include="include\AdvancedGDK\Compilation\PrecompiledHeader.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\AdvancedGDK\Gameplay\Teleport.hpp">
+    <ClInclude Include="include\AdvancedGDK\Everything.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\AdvancedGDK\Gameplay\Command.hpp">
+    <ClInclude Include="include\AdvancedGDK\Server\Player\Player.hpp">
+      <Filter>Header Files\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="include\AdvancedGDK\Server\Player\PlayerPool.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\AdvancedGDK\Gameplay\CommandManager.hpp">
+    <ClInclude Include="include\AdvancedGDK\Server\Player\Weapon.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\AdvancedGDK\Core\EventDispatcher.hpp">
+    <ClInclude Include="include\AdvancedGDK\World\MapObject.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\AdvancedGDK\Server\Player\Teleport.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\AdvancedGDK\World\Scene.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\AdvancedGDK\World\Vehicle\Vehicle.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\AdvancedGDK\World\Vehicle\VehiclePool.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\AdvancedGDK\World\MapObject\GlobalObject.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\AdvancedGDK\World\MapObject\PersonalObject.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\AdvancedGDK\World\MapObject\UniversalObject.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\AdvancedGDK\Server\Command\Command.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\AdvancedGDK\Server\Command\CommandManager.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\AdvancedGDK\Core\Container\DivisibleGrid2.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\AdvancedGDK\Core\Container\DivisibleGrid3.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\AdvancedGDK\Core\TypeTraits.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\AdvancedGDK\Core\Text\ASCII.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\AdvancedGDK\Core\Text\Essentials.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\AdvancedGDK\Core\Text\StreamAlgorithm.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\AdvancedGDK\Core\Text\TokenIterator.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\AdvancedGDK\Core\Text\StreamLoader.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\AdvancedGDK\Core\Math\Helper.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\AdvancedGDK\Core\Math\Length.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\AdvancedGDK\Core\Math\Random.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\AdvancedGDK\Core\Math\Vector2.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\AdvancedGDK\Core\Math\Vector3.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\AdvancedGDK\Core\Math\VectorStringBuilder.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\AdvancedGDK\Core\Actions.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\AdvancedGDK\Core\BasicInterfaces\Updatable.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\AdvancedGDK\Core\BasicInterfaces\NonCopyable.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\AdvancedGDK\Core\Events.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\AdvancedGDK\Compilation\SampGDK.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\AdvancedGDK\Core\MathInc.hpp">
+      <Filter>Header Files\Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="include\AdvancedGDK\Core\TextInc.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\AdvancedGDK\Core\Math\Shapes\Box.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\AdvancedGDK\Core\Math\Shapes\Ball.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\AdvancedGDK\Core\Math\ShapesInc.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\AdvancedGDK\Core\Math\Shapes\Algorithm.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\AdvancedGDK\Core\BasicInterfacesInc.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\AdvancedGDK\World\Actor.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\AdvancedGDK\World\Streaming\ChunkActor.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\AdvancedGDK\World\Streaming\Streamer.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\AdvancedGDK\World\Streaming\Chunk.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\AdvancedGDK\World\MapObject\PerPlayerObject.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\AdvancedGDK\World\Streaming\VehicleChunkActor.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\AdvancedGDK\World\Streaming\GlobalObjectChunkActor.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\AdvancedGDK\World\Streaming\GloballyVisibleActor.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="stdafx.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="dependencies\sampgdk\amxplugin.cpp">
       <Filter>dependencies\sampgdk</Filter>
     </ClCompile>
     <ClCompile Include="dependencies\sampgdk\sampgdk.c">
       <Filter>dependencies\sampgdk</Filter>
-    </ClCompile>
-    <ClCompile Include="src\AdvancedGDK\Misc\Clock.cpp">
-      <Filter>Source Files\Misc</Filter>
-    </ClCompile>
-    <ClCompile Include="src\AdvancedGDK\Misc\Color.cpp">
-      <Filter>Source Files\Misc</Filter>
-    </ClCompile>
-    <ClCompile Include="src\AdvancedGDK\Misc\Random.cpp">
-      <Filter>Source Files\Misc</Filter>
-    </ClCompile>
-    <ClCompile Include="src\AdvancedGDK\Misc\String.cpp">
-      <Filter>Source Files\Misc</Filter>
-    </ClCompile>
-    <ClCompile Include="src\AdvancedGDK\Misc\Task.cpp">
-      <Filter>Source Files\Misc</Filter>
-    </ClCompile>
-    <ClCompile Include="src\AdvancedGDK\Player\Player.cpp">
-      <Filter>Source Files\Player</Filter>
-    </ClCompile>
-    <ClCompile Include="src\AdvancedGDK\Player\PlayerPool.cpp">
-      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\AdvancedGDK\Server\GameMode.cpp">
       <Filter>Source Files</Filter>
@@ -179,24 +254,88 @@
     <ClCompile Include="src\AdvancedGDK\Server\Server.cpp">
       <Filter>Source Files\Server</Filter>
     </ClCompile>
-    <ClCompile Include="src\AdvancedGDK\Gameplay\Weapon.cpp">
+    <ClCompile Include="src\AdvancedGDK\Core\Clock.cpp">
+      <Filter>Source Files\Misc</Filter>
+    </ClCompile>
+    <ClCompile Include="src\AdvancedGDK\Core\Color.cpp">
+      <Filter>Source Files\Misc</Filter>
+    </ClCompile>
+    <ClCompile Include="src\AdvancedGDK\Server\Chat.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\AdvancedGDK\Gameplay\Chat.cpp">
+    <ClCompile Include="AdvancedGDKPCH.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\AdvancedGDK\Gameplay\Command.cpp">
+    <ClCompile Include="src\AdvancedGDK\Server\Player\Player.cpp">
+      <Filter>Source Files\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="src\AdvancedGDK\Server\Player\PlayerPool.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\AdvancedGDK\Gameplay\CommandManager.cpp">
+    <ClCompile Include="src\AdvancedGDK\Server\Player\Weapon.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\AdvancedGDK\World\MapObject.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\AdvancedGDK\World\Scene.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\AdvancedGDK\World\MapObject\GlobalObject.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\AdvancedGDK\World\MapObject\UniversalObject.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\AdvancedGDK\World\MapObject\PersonalObject.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\AdvancedGDK\World\Vehicle\Vehicle.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\AdvancedGDK\World\Vehicle\VehiclePool.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\AdvancedGDK\Server\Command\Command.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\AdvancedGDK\Server\Command\CommandManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\AdvancedGDK\Core\Text\ASCII.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\AdvancedGDK\Core\Math\Random.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\AdvancedGDK\Core\Actions.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\AdvancedGDK\World\Streaming\Chunk.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\AdvancedGDK\World\MapObject\PerPlayerObject.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="include\AdvancedGDK\Misc\Math\Length.inl">
+    <None Include="include\AdvancedGDK\Core\Text\ASCII.inl">
       <Filter>Header Files</Filter>
     </None>
-    <None Include="include\AdvancedGDK\Misc\Math\VectorStringBuilder.hpp">
+    <None Include="include\AdvancedGDK\Core\Text\StreamAlgorithm.inl">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="include\AdvancedGDK\Core\Text\TokenIterator.inl">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="include\AdvancedGDK\Core\Math\Helper.inl">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="include\AdvancedGDK\Core\Math\Random.inl">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="include\AdvancedGDK\Core\ContainerInc.hpp" />
+    <None Include="include\AdvancedGDK\Core\Math\Shapes\Algorithm.inl">
       <Filter>Header Files</Filter>
     </None>
   </ItemGroup>
