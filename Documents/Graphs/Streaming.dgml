@@ -1,0 +1,94 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<DirectedGraph Layout="Sugiyama" xmlns="http://schemas.microsoft.com/vs/2009/dgml">
+  <Nodes>
+    <Node Id="Actors" Category="List" Bounds="-332.667832786479,57.8894103430537,90.6511330288992,42.0044663622325" Label="Actors" />
+    <Node Id="Chunk" Category="CodeSchema_Class" Bounds="-352.667832786479,17.8893103430537,130.651133028899,102.004666362233" Group="Expanded" Label="Chunk" />
+    <Node Id="ChunkActor" Category="CodeSchema_Class" Bounds="-192.01669975758,62.8940734863281,103.316666666667,26" Label="ChunkActor" UseManualLocation="True" />
+    <Node Id="Direct" Category="Moduled" Bounds="-372.667832786479,-22.1107896569464,303.967799695566,162.004866362233" Group="Expanded" Label="Streamer" UseManualLocation="True" />
+    <Node Id="GlobalObject" Category="CodeSchema_Class" Bounds="351.130861816406,102.114364624023,110.13,26" Label="GlobalObject" UseManualLocation="True" />
+    <Node Id="MapObject" Category="CodeSchema_Class" Bounds="447.799813232422,24.1427497863769,99.8299999999999,26" Label="MapObject" UseManualLocation="True" />
+    <Node Id="Object" Category="CodeSchema_Class" Bounds="395.547582600911,-74.4203033447266,69.5533333333333,26" Label="Actor" UseManualLocation="True" />
+    <Node Id="PerPlayerObject" Category="CodeSchema_Class" Bounds="516.436638183594,99.2384643554688,124.61,26" Label="PerPlayerObject" UseManualLocation="True" />
+    <Node Id="PersonalObject" Category="CodeSchema_Class" Bounds="423.162244059245,186.315338134766,120.546666666667,26" Label="PersonalObject" UseManualLocation="True" />
+    <Node Id="StaticVehicle" Category="CodeSchema_Class" Bounds="202.299979654948,153.405868530273,107.066666666667,26" Label="StaticVehicle" UseManualLocation="True" />
+    <Node Id="StructureOfTheProgram" Category="Moduled" Bounds="182.299979654948,-114.420403344727,535.545590616862,346.735841479492" Group="Expanded" Label="World" UseManualLocation="True" />
+    <Node Id="UniversalObject" Category="CodeSchema_Class" Bounds="573.708888346354,186.315322875977,124.136666666667,26" Label="UniversalObject" UseManualLocation="True" />
+    <Node Id="Vehicle" Category="CodeSchema_Class" Bounds="258.299964599609,30.4109191894531,78.39,26" Label="Vehicle" UseManualLocation="True" />
+  </Nodes>
+  <Links>
+    <Link Source="Actors" Target="ChunkActor" Bounds="-242.016703383012,77.1310932019385,41.0018807693607,0.836186829007843" />
+    <Link Source="Chunk" Target="Actors" Category="Contains" />
+    <Link Source="ChunkActor" Target="Object" Category="ddd" Bounds="-89.6587322344519,-50.9406619280085,476.45602603834,114.636300549506" />
+    <Link Source="Direct" Target="Chunk" Category="Contains" />
+    <Link Source="Direct" Target="ChunkActor" Category="Contains" />
+    <Link Source="GlobalObject" Target="MapObject" Category="DerivesFrom" Bounds="421.454573219082,55.9794261912661,54.1507470096644,46.1349384327573" />
+    <Link Source="MapObject" Target="Object" Category="DerivesFrom" Bounds="444.292554435153,-40.9902287545368,44.5337026800737,65.1329785409138" />
+    <Link Source="PerPlayerObject" Target="MapObject" Category="DerivesFrom" Bounds="518.342528863557,56.2605301780135,46.3723605180653,42.9779341774553" />
+    <Link Source="PersonalObject" Target="PerPlayerObject" Category="DerivesFrom" Bounds="497.664127479253,131.309104216649,60.2045995162933,55.0062339181167" />
+    <Link Source="StaticVehicle" Target="Vehicle" Category="DerivesFrom" Bounds="260.236757795161,64.9351767358027,29.9673698725705,88.4706917944707" />
+    <Link Source="StructureOfTheProgram" Target="GlobalObject" Category="Contains" />
+    <Link Source="StructureOfTheProgram" Target="MapObject" Category="Contains" />
+    <Link Source="StructureOfTheProgram" Target="Object" Category="Contains" />
+    <Link Source="StructureOfTheProgram" Target="PerPlayerObject" Category="Contains" />
+    <Link Source="StructureOfTheProgram" Target="PersonalObject" Category="Contains" />
+    <Link Source="StructureOfTheProgram" Target="StaticVehicle" Category="Contains" />
+    <Link Source="StructureOfTheProgram" Target="UniversalObject" Category="Contains" />
+    <Link Source="StructureOfTheProgram" Target="Vehicle" Category="Contains" />
+    <Link Source="UniversalObject" Target="PerPlayerObject" Category="DerivesFrom" Bounds="592.188016849468,132.76719994352,35.0741688258532,53.5481229324567" />
+    <Link Source="Vehicle" Target="Object" Category="DerivesFrom" Bounds="313.966972260501,-42.8446189169046,92.8204449915868,73.2555381063577" />
+  </Links>
+  <Categories>
+    <Category Id="CodeSchema_Class" Label="Class" BasedOn="CodeSchema_Type" CanBeDataDriven="True" DefaultAction="Node:Both:CodeSchema_Member" Icon="CodeSchema_Class" NavigationActionLabel="Classes" />
+    <Category Id="CodeSchema_Type" Label="Type" CanBeDataDriven="True" DefaultAction="Node:Both:CodeSchema_Member" Icon="CodeSchema_Class" NavigationActionLabel="Types" />
+    <Category Id="Contains" Label="Contains" Description="Whether the source of the link contains the target object" CanBeDataDriven="False" CanLinkedNodesBeDataDriven="True" IncomingActionLabel="Contained By" IsContainment="True" OutgoingActionLabel="Contains" />
+    <Category Id="DerivesFrom" Label="DerivesFrom" IsTag="True" />
+    <Category Id="List" Label="List" IsTag="True" />
+    <Category Id="Moduled" Label="Module" IsTag="True" />
+    <Category Id="ddd" Label="Encapsulation" IsTag="True" />
+  </Categories>
+  <Properties>
+    <Property Id="Bounds" DataType="System.Windows.Rect" />
+    <Property Id="CanBeDataDriven" Label="CanBeDataDriven" Description="CanBeDataDriven" DataType="System.Boolean" />
+    <Property Id="CanLinkedNodesBeDataDriven" Label="CanLinkedNodesBeDataDriven" Description="CanLinkedNodesBeDataDriven" DataType="System.Boolean" />
+    <Property Id="DefaultAction" Label="DefaultAction" Description="DefaultAction" DataType="System.String" />
+    <Property Id="Expression" DataType="System.String" />
+    <Property Id="Group" Label="Group" Description="Display the node as a group" DataType="Microsoft.VisualStudio.GraphModel.GraphGroupStyle" />
+    <Property Id="GroupLabel" DataType="System.String" />
+    <Property Id="Icon" Label="Icon" Description="Icon" DataType="System.String" />
+    <Property Id="IncomingActionLabel" Label="IncomingActionLabel" Description="IncomingActionLabel" DataType="System.String" />
+    <Property Id="IsContainment" DataType="System.Boolean" />
+    <Property Id="IsEnabled" DataType="System.Boolean" />
+    <Property Id="IsTag" DataType="System.Boolean" />
+    <Property Id="Label" Label="Label" Description="Displayable label of an Annotatable object" DataType="System.String" />
+    <Property Id="Layout" DataType="System.String" />
+    <Property Id="NavigationActionLabel" Label="NavigationActionLabel" Description="NavigationActionLabel" DataType="System.String" />
+    <Property Id="OutgoingActionLabel" Label="OutgoingActionLabel" Description="OutgoingActionLabel" DataType="System.String" />
+    <Property Id="TargetType" DataType="System.Type" />
+    <Property Id="UseManualLocation" DataType="System.Boolean" />
+    <Property Id="Value" DataType="System.String" />
+    <Property Id="ValueLabel" DataType="System.String" />
+  </Properties>
+  <Styles>
+    <Style TargetType="Node" GroupLabel="List" ValueLabel="True">
+      <Condition Expression="HasCategory('List')" />
+      <Setter Property="Icon" Value="pack://application:,,,/Microsoft.VisualStudio.Progression.GraphControl;component/Icons/Database.png" />
+    </Style>
+    <Style TargetType="Node" GroupLabel="Module" ValueLabel="True">
+      <Condition Expression="HasCategory('Moduled')" />
+      <Setter Property="Icon" Value="pack://application:,,,/Microsoft.VisualStudio.Progression.GraphControl;component/Icons/Module.png" />
+      <Setter Property="Background" Value="#64662CD1" />
+    </Style>
+    <Style TargetType="Node" GroupLabel="Class" ValueLabel="True">
+      <Condition Expression="HasCategory('CodeSchema_Class')" />
+    </Style>
+    <Style TargetType="Link" GroupLabel="DerivesFrom" ValueLabel="True">
+      <Condition Expression="HasCategory('DerivesFrom')" />
+      <Setter Property="Stroke" Value="#FFC23BFF" />
+    </Style>
+    <Style TargetType="Link" GroupLabel="Encapsulation" ValueLabel="True">
+      <Condition Expression="HasCategory('ddd')" />
+      <Setter Property="Stroke" Value="#FF1EF1B9" />
+      <Setter Property="Background" Value="#FF52DABC" />
+    </Style>
+  </Styles>
+</DirectedGraph>
