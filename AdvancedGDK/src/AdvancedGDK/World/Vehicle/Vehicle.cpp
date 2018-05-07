@@ -21,7 +21,8 @@ Vehicle::Vehicle()
 	m_angle{ 0 },
 	m_firstColor{ math::random::generate<std::int32_t>(0, 255) },
 	m_secondColor{ math::random::generate(0, 255) },
-	m_passengers{ nullptr }
+	m_passengers{ nullptr },
+	m_placementTracker{ nullptr }
 {
 	// Keep vehicle in memory for at least 1 minute after creation
 	m_latestUsage = Clock::now() + chrono::seconds(60);
@@ -32,6 +33,25 @@ Vehicle::~Vehicle()
 {
 	if (this->isSpawned())
 		this->despawn();
+}
+
+/////////////////////////////////////////////////////////////////////////////////
+void Vehicle::setPlacementTracker(IActorPlacementTracker* tracker_)
+{
+	m_placementTracker = tracker_;
+}
+
+/////////////////////////////////////////////////////////////////////////////////
+IActorPlacementTracker* Vehicle::getPlacementTracker() const
+{
+	return m_placementTracker;
+}
+
+/////////////////////////////////////////////////////////////////////////////////
+void Vehicle::sendPlacementUpdate()
+{
+	if (m_placementTracker)
+		m_placementTracker->whenPlacementUpdateReceived( this->getPlacement() );
 }
 
 /////////////////////////////////////////////////////////////////////////////////
@@ -364,6 +384,7 @@ void Vehicle::despawn()
 	}
 	m_handle = -1;
 }
+
 
 /////////////////////////////////////////////////////////////////////////////////
 StaticVehicle::StaticVehicle()

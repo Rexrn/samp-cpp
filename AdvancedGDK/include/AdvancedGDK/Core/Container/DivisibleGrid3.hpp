@@ -10,16 +10,16 @@ namespace agdk
 /// <summary>
 /// Interface for every grid node.
 /// </summary>
-template <typename t_ratioType>
+template <typename TRatioType>
 class IDivisibleGrid3Node
 {	
 	/// <summary>
 	/// Store extents as constexpr static constant to save memory.
 	/// </summary>
 	static constexpr math::Vector3f cxHalfExtent{
-		static_cast<float>(t_ratioType::num) / t_ratioType::den,
-		static_cast<float>(t_ratioType::num) / t_ratioType::den,
-		static_cast<float>(t_ratioType::num) / t_ratioType::den,
+		static_cast<float>(TRatioType::num) / TRatioType::den,
+		static_cast<float>(TRatioType::num) / TRatioType::den,
+		static_cast<float>(TRatioType::num) / TRatioType::den,
 	};
 public:
 
@@ -80,9 +80,9 @@ protected:
 /// <summary>
 /// Stores every non-zero level node grid inside.
 /// </summary>
-template <typename t_elementType, typename t_ratioType, std::uint32_t t_numDivisions, std::uint32_t t_levelsLeft>
+template <typename TElementType, typename TRatioType, std::uint32_t _numDivisions, std::uint32_t _levelsLeft>
 class DivisibleGrid3Node
-	: public IDivisibleGrid3Node<t_ratioType>
+	: public IDivisibleGrid3Node<TRatioType>
 {
 	/// <summary>
 	/// Calculates the ratio numerator power.
@@ -100,22 +100,22 @@ class DivisibleGrid3Node
 		return result;
 	}
 
-	static constexpr std::uint32_t cxLevel = t_levelsLeft;
+	static constexpr std::uint32_t cxLevel = _levelsLeft;
 public:
 	// Parent class:
-	using Super = IDivisibleGrid3Node<t_ratioType>;
+	using Super = IDivisibleGrid3Node<TRatioType>;
 
 	// Some helper typedefs:
 
 	// The type of ratio that zero-level node uses.
-	using ZeroLevelRatio	= std::ratio_divide< t_ratioType, std::ratio< calculateRatioNumeratorPower(t_numDivisions, cxLevel) > >;
+	using ZeroLevelRatio	= std::ratio_divide< TRatioType, std::ratio< calculateRatioNumeratorPower(_numDivisions, cxLevel) > >;
 	// The type of ratio that is used in one level lower nodes.
-	using LowerLevelRatio	= std::ratio_divide< t_ratioType, std::ratio< t_numDivisions > >;
+	using LowerLevelRatio	= std::ratio_divide< TRatioType, std::ratio< _numDivisions > >;
 	
 	// The type of node with zero level.
-	using ZeroLevelType		= DivisibleGrid3Node<t_elementType, ZeroLevelRatio, t_numDivisions, 0>;
+	using ZeroLevelType		= DivisibleGrid3Node<TElementType, ZeroLevelRatio, _numDivisions, 0>;
 	// The type of node with one level lower.
-	using LowerLevelType	= DivisibleGrid3Node<t_elementType, LowerLevelRatio, t_numDivisions, t_levelsLeft - 1>;
+	using LowerLevelType	= DivisibleGrid3Node<TElementType, LowerLevelRatio, _numDivisions, _levelsLeft - 1>;
 
 	// Pointer to contained nodes.
 	using NodePointer		= std::unique_ptr< LowerLevelType >;
@@ -136,7 +136,7 @@ public:
 	/// Returns reference to element stored inside node containing specified location. If the node does not exist it creates it.
 	/// </summary>
 	/// <returns>Reference to stored element.</returns>
-	t_elementType& require(math::Vector3f const & location_)
+	TElementType& require(math::Vector3f const & location_)
 	{
 		constexpr auto halfExtent		= Super::getHalfExtent();
 		constexpr auto childHalfExtent	= LowerLevelType::getHalfExtent();
@@ -153,7 +153,7 @@ public:
 			m_childCount++;
 			
 			auto baseLocation = this->getCenter() - halfExtent;
-			auto nodeBaseLocation = baseLocation + (arrayIndices.convert<float>() * childHalfExtent * 2.f);
+			auto nodeBaseLocation = baseLocation + (arrayIndices.template convert<float>() * childHalfExtent * 2.f);
 
 			node = std::make_unique<LowerLevelType>(nodeBaseLocation + childHalfExtent);
 
@@ -200,7 +200,7 @@ public:
 	/// Returns pointer to element stored inside node containing specified location.
 	/// </summary>
 	/// <returns>Pointer to stored element.</returns>
-	t_elementType* get(math::Vector3f const & location_)
+	TElementType* get(math::Vector3f const & location_)
 	{
 		auto arrayIndices = this->computeArrayIndices(location_);
 
@@ -215,7 +215,7 @@ public:
 	/// Returns pointer to constant element stored inside node containing specified location.
 	/// </summary>
 	/// <returns>Pointer to constant stored element.</returns>
-	t_elementType const* get(math::Vector3f const & location_) const
+	TElementType const* get(math::Vector3f const & location_) const
 	{
 		auto arrayIndices = this->computeArrayIndices(location_);
 
@@ -253,7 +253,7 @@ public:
 	{
 		auto arrayIndices = this->computeArrayIndices(location_);
 
-		if (auto & node = m_content[arrayIndices.x][arrayIndices.y][arrayIndices.z])
+		if (auto const & node = m_content[arrayIndices.x][arrayIndices.y][arrayIndices.z])
 		{
 			if constexpr(cxLevel == 1)
 				return node.get();
@@ -316,6 +316,7 @@ public:
 	constexpr static std::uint32_t getLevel() {
 		return cxLevel;
 	}
+
 private:
 	
 	/// <summary>
@@ -352,22 +353,22 @@ private:
 	// Number of currently stored children inside arrays.
 	std::size_t m_childCount;
 	// Array of nodes.
-	std::array< std::array< std::array<NodePointer, t_numDivisions>, t_numDivisions>, t_numDivisions> m_content;
+	std::array< std::array< std::array<NodePointer, _numDivisions>, _numDivisions>, _numDivisions> m_content;
 };
 
 
 /// <summary>
 /// Stores every zero-level node.
 /// </summary>
-template <typename t_elementType, typename t_ratioType, std::uint32_t t_numDivisions>
-class DivisibleGrid3Node<t_elementType, t_ratioType, t_numDivisions, 0>
-	: public IDivisibleGrid3Node<t_ratioType>
+template <typename TElementType, typename TRatioType, std::uint32_t _numDivisions>
+class DivisibleGrid3Node<TElementType, TRatioType, _numDivisions, 0>
+	: public IDivisibleGrid3Node<TRatioType>
 {
 
 	// Level of the node.
 	static constexpr std::uint32_t cxLevel = 0;
 public:
-	using Super = IDivisibleGrid3Node<t_ratioType>;
+	using Super = IDivisibleGrid3Node<TRatioType>;
 
 	/// <summary>
 	/// Initializes a new instance of the <see cref="DivisibleGrid3Node"/> class.
@@ -382,7 +383,7 @@ public:
 	/// Returns reference to stored element.
 	/// </summary>
 	/// <returns>Reference to stored thing.</returns>
-	t_elementType& require(math::Vector3f const & location_) {
+	TElementType& require(math::Vector3f const & location_) {
 		return m_element;
 	}
 
@@ -390,7 +391,7 @@ public:
 	/// Returns pointer to stored thing.
 	/// </summary>
 	/// <returns>Pointer to stored thing.</returns>
-	t_elementType* get(math::Vector3f const & location_) {
+	TElementType* get(math::Vector3f const & location_) {
 		return &m_element;
 	}
 
@@ -398,7 +399,7 @@ public:
 	/// Returns pointer to const stored thing.
 	/// </summary>
 	/// <returns>Pointer to const stored thing.</returns>
-	t_elementType const* get(math::Vector3f const & location_) const {
+	TElementType const* get(math::Vector3f const & location_) const {
 		return &m_element;
 	}
 	
@@ -412,7 +413,7 @@ public:
 private:
 	// The stored element.
 	// Needs to satisfy concept: DefaultConstructible.
-	t_elementType m_element;
+	TElementType m_element;
 };
 
 }

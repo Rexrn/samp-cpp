@@ -69,7 +69,7 @@ protected:
 /// </summary>
 /// <seealso cref="IActor" />
 class IWIActor
-	: public IActor
+	: public virtual IActor
 {
 public:
 	

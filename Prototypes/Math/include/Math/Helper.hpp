@@ -3,7 +3,7 @@
 #include MATH_PCH
 
 // Note: \/ this is already implemented inside /Core/TypeTraits.hpp
-namespace agdk::typetraits
+namespace agdk::type_traits
 {
 template <typename TType>
 struct removeCVRef {

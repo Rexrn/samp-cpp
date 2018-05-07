@@ -1,51 +1,71 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <DirectedGraph Layout="Sugiyama" ZoomLevel="-1" xmlns="http://schemas.microsoft.com/vs/2009/dgml">
   <Nodes>
-    <Node Id="ActorHierarchy" Category="Group" Bounds="418.005398811345,-600.910807157563,605.786572672527,376.13838359375" Group="Expanded" Label="Actor Hierarchy" UseManualLocation="True" />
-    <Node Id="Actors" Category="List" Bounds="-1096.64484468163,-515.031470575201,90.6511330288995,42.0044663622324" Label="Actors" UseManualLocation="True" />
-    <Node Id="Chunk" Category="CodeSchema_Class" Bounds="-1122.64484468163,-624.036507611331,478.448560899212,349.027968847293" Group="Expanded" Label="Chunk" />
-    <Node Id="ChunkActor" Category="CodeSchema_Class" Bounds="-379.777759510773,-433.771606445311,103.316666666667,26" Label="ChunkActor" UseManualLocation="True" />
-    <Node Id="Direct" Category="Moduled" Bounds="-1142.64484468163,-664.036607611331,1012.59042678209,435.673526001224" Group="Expanded" Label="Streamer" UseManualLocation="True" />
-    <Node Id="Events" Category="Group" Bounds="80.0476377843269,-475.728301054048,184.270028686524,171.913523364258" Group="Expanded" Label="Events" LayoutSettings="List" UseManualLocation="True" />
-    <Node Id="GlobalObject" Category="CodeSchema_Class" Bounds="606.688423306788,-376.732728641939,110.13,26" Label="GlobalObject" UseManualLocation="True" />
-    <Node Id="GlobalObjects(GlobalStreamables)" Category="List" Bounds="-1094.68272472721,-429.022337850735,162.864466362233,42.0044663622325" Label="GlobalObjects&#xD;&#xA;(GlobalStreamables)" />
-    <Node Id="GloballyStreamable" Category="CodeSchema_Class" Bounds="-293.294417899547,-276.193512420654,143.24,25.96" UseManualLocation="True" />
-    <Node Id="MapObject" Category="CodeSchema_Class" Bounds="700.392816590831,-450.121310947784,99.8299999999999,26" Label="MapObject" UseManualLocation="True" />
-    <Node Id="Methods" Category="Group" Bounds="-835.36628378242,-579.932828271483,171.17,165.815256762694" Group="Expanded" LayoutSettings="List" UseManualLocation="True" />
-    <Node Id="Object" Category="CodeSchema_Class" Bounds="578.287425585434,-560.910707157564,69.5533333333333,26" Label="Actor" UseManualLocation="True" />
-    <Node Id="PerPlayerObject" Category="CodeSchema_Class" Bounds="782.023649136866,-378.202333134126,124.61,26" Label="PerPlayerObject" UseManualLocation="True" />
-    <Node Id="PerPlayerStreamable" Category="CodeSchema_Class" Bounds="-499.062319447297,-274.323181610106,149.006666666667,25.96" UseManualLocation="True" />
-    <Node Id="PersonalObject" Category="CodeSchema_Class" Bounds="715.267779182439,-270.772523563814,120.546666666667,26" Label="PersonalObject" UseManualLocation="True" />
-    <Node Id="PersonalObjects(PerPlayerStreamables)" Category="List" Bounds="-1094.74602794986,-386.017771488502,177.344466362233,42.0044663622325" Label="PersonalObjects&#xD;&#xA;(PerPlayerStreamables)" />
-    <Node Id="Players" Category="List" Bounds="-1096.01878714583,-558.036307611331,94.087799695566,42.0044663622325" UseManualLocation="True" />
-    <Node Id="RegisterGlobalObject" Category="Manages" Bounds="-828.268315439321,-500.012507983398,145.163333333333,25.96" Label="registerGlobalObject" UseManualLocation="True">
+    <Node Id="ActorHierarchy" Category="Group" Bounds="-678.673860460235,-1257.93069355106,458.133333333333,254.0005" Group="Expanded" Label="Actor Hierarchy" />
+    <Node Id="Actors" Category="List" Bounds="336.725388154519,-997.09156708269,90.6511330288995,42.0044663622325" Label="Actors" />
+    <Node Id="Chunk" Category="CodeSchema_Class" Bounds="310.725388154519,-1262.89206708269,330.832266057799,509.823031811163" Group="Expanded" Label="Chunk" />
+    <Node Id="ChunkActor" Category="CodeSchema_Class" Bounds="146.60996505809,-725.318863861458,103.316666666667,26" Label="ChunkActor" UseManualLocation="True" />
+    <Node Id="Direct" Category="Moduled" Bounds="-62.4784594726563,-1302.89216523437,724.036080023564,623.573417578125" Group="Expanded" Label="Streamer" />
+    <Node Id="DisplacementThreshold" Category="Constant" Bounds="538.645873370201,1084.95298913819,165.18556651445,26.0022331811163" UseManualLocation="True" />
+    <Node Id="Events" Category="Group" Bounds="-658.673860460235,-933.929993551055,184.27,169.8002" Group="Expanded" Label="Events" LayoutSettings="List" />
+    <Node Id="FinalState" Category="Final" Bounds="-579.726823144689,-106.2202543562,267.116666666667,101.9202" Group="Expanded" Label="Finish" UseManualLocation="True">
+      <Category Ref="Algorithm Finish" />
+    </Node>
+    <Node Id="Finish(GlobalEntitiesScoreIsCalculated)" Category="Algorithm Finish" Bounds="43.3437603714339,154.801763415865,246.513333333333,85.9602" Group="Expanded" Label="Finish" UseManualLocation="True" />
+    <Node Id="FinishComment" Category="Comment" Bounds="-559.726823144689,-66.2201543562006,227.116666666667,41.92" Label="Every object and vehicle that should be visible is spawned." />
+    <Node Id="GlobalEntities'ScoreIsCalcua" Category="Comment" Bounds="63.3437603714338,194.801863415865,206.513333333333,25.96" Label="Global entities' score are calculated" />
+    <Node Id="GlobalObject" Category="CodeSchema_Class" Bounds="-658.673860460235,-1161.93029355106,110.13,26" Label="GlobalObject" />
+    <Node Id="GlobalObjects(GlobalStreamables)" Category="List" Bounds="336.725388154519,-953.087100720458,162.864466362233,42.0044663622325" Label="GlobalObjects&#xD;&#xA;(GlobalStreamables)" />
+    <Node Id="GloballyStreamable" Category="CodeSchema_Class" Bounds="-42.4784788165817,-1020.96053754076,143.24,25.96" />
+    <Node Id="MapObject" Category="CodeSchema_Class" Bounds="-505.523860460235,-1105.93029355106,99.8299999999999,26" Label="MapObject" />
+    <Node Id="Methods" Category="Group" Bounds="390.556521183418,-1222.89196708269,171.17,169.800200000001" Group="Expanded" LayoutSettings="List" />
+    <Node Id="Object" Category="CodeSchema_Class" Bounds="-370.385527126901,-1049.93029355106,69.5533333333333,26" Label="Actor" />
+    <Node Id="PerPlayerObject" Category="CodeSchema_Class" Bounds="-517.913860460235,-1161.93049355106,124.61,26" Label="PerPlayerObject" />
+    <Node Id="PerPlayerStreamable" Category="CodeSchema_Class" Bounds="131.638187850085,-1020.96053754076,149.006666666667,25.96" />
+    <Node Id="PersonalObject" Category="CodeSchema_Class" Bounds="-515.882193793568,-1217.93059355106,120.546666666667,26" Label="PersonalObject" />
+    <Node Id="PersonalObjects(PerPlayerStreamables)" Category="List" Bounds="336.725388154519,-909.082634358225,177.344466362233,42.0044663622325" Label="PersonalObjects&#xD;&#xA;(PerPlayerStreamables)" />
+    <Node Id="PlayerPositionChanged" Category="CodeSchema_Event" Bounds="1192.56614724298,939.532366581289,212.07,25.96" Label="Streamer::playerChangedLocation" UseManualLocation="True" />
+    <Node Id="Players" Category="List" Bounds="336.725388154519,-865.078167995992,94.087799695566,42.0044663622325" />
+    <Node Id="RegisterGlobalObject" Category="Manages" Bounds="396.556521183418,-1168.93186708269,145.163333333333,25.96" Label="registerGlobalObject">
       <Category Ref="CodeSchema_Method" />
     </Node>
-    <Node Id="RegisterPersonalObje" Category="Manages" Bounds="-827.42626425117,-473.052402954101,155.58,25.96" Label="registerPersonalObject" UseManualLocation="True">
+    <Node Id="RegisterPersonalObje" Category="Manages" Bounds="396.556521183418,-1140.97186708269,155.58,25.96" Label="registerPersonalObject">
       <Category Ref="CodeSchema_Method" />
     </Node>
-    <Node Id="RegisterUniversalObject" Category="Manages" Bounds="-829.36628378242,-446.077671508789,159.17,25.96" Label="registerUniversalObject" UseManualLocation="True">
+    <Node Id="RegisterUniversalObject" Category="Manages" Bounds="396.556521183418,-1113.01186708269,159.17,25.96" Label="registerUniversalObject">
       <Category Ref="CodeSchema_Method" />
     </Node>
-    <Node Id="RegisterVehicle" Category="Manages" Bounds="-826.477783212759,-526.972607983398,113.423333333333,25.96" Label="registerVehicle" UseManualLocation="True">
+    <Node Id="RegisterVehicle" Category="Manages" Bounds="396.556521183418,-1085.05186708269,113.423333333333,25.96" Label="registerVehicle">
       <Category Ref="CodeSchema_Method" />
     </Node>
-    <Node Id="StaticVehicle" Category="CodeSchema_Class" Bounds="438.005398811345,-376.851228397798,107.066666666667,26" Label="StaticVehicle" UseManualLocation="True" />
-    <Node Id="Storage" Category="Group" Bounds="-1102.64484468163,-584.036407611331,191.243283094001,289.027768847293" Group="Expanded" LayoutSettings="List" UseManualLocation="True" />
-    <Node Id="StructureOfTheProgram" Category="Moduled" Bounds="40.047637784327,-640.910907157563,1003.74435833305,436.13857943303" Group="Expanded" Label="World" UseManualLocation="True" />
-    <Node Id="UniversalObject" Category="CodeSchema_Class" Bounds="879.655304817204,-275.284425419282,124.136666666667,26" Label="UniversalObject" UseManualLocation="True" />
-    <Node Id="UniversalObjects(PerPlayerStreamables)" Category="List" Bounds="-1094.74602794986,-343.01320512627,177.344466362233,42.0044663622325" Label="UniversalObjects&#xD;&#xA;(PerPlayerStreamables)" />
-    <Node Id="Vehicle" Category="CodeSchema_Class" Bounds="453.400079135696,-450.286156136367,78.3899999999999,26" Label="Vehicle" UseManualLocation="True" />
-    <Node Id="Vehicles" Category="List" Bounds="-1095.75357718489,-472.026904212968,99.4877996955656,42.0044663622325" UseManualLocation="True" />
-    <Node Id="WhenGlobalObjectJoin" Category="CodeSchema_Event" Bounds="92.1252509028168,-395.042410038423,158.263333333333,25.96" Label="whenGlobalObjectJoins" UseManualLocation="True" />
-    <Node Id="WhenPerPlayerObjectJoin" Category="CodeSchema_Event" Bounds="86.047637784327,-335.77487768979,172.27,25.96" Label="whenUniversalObjectJoins" UseManualLocation="True" />
-    <Node Id="WhenPersonalObjectJoin" Category="CodeSchema_Event" Bounds="89.6376664708504,-365.415060184907,168.68,25.96" Label="whenPersonalObjectJoins" UseManualLocation="True" />
-    <Node Id="WhenPlayerJoin" Category="CodeSchema_Event" Bounds="92.1252130610199,-449.728201054048,121.123333333333,25.96" Label="whenPlayerJoins" UseManualLocation="True" />
-    <Node Id="WhenPlayerJoins" Category="CodeSchema_Method" Bounds="-826.474743661978,-553.932728271483,108.023333333333,25.96" Label="registerPlayer" UseManualLocation="True">
+    <Node Id="Start" Bounds="316.657165864963,-70.7616562012131,50,25.96" UseManualLocation="True" />
+    <Node Id="StaticVehicle" Category="CodeSchema_Class" Bounds="-363.142193793568,-1161.93049355106,107.066666666667,26" Label="StaticVehicle" />
+    <Node Id="Storage" Category="Group" Bounds="330.725388154519,-1023.09166708269,290.832266057799,250.022531811162" Group="Expanded" LayoutSettings="List" />
+    <Node Id="Streamer::" Category="CodeSchema_Event" Bounds="1219.32436925895,1090.91575231445,261.43,25.96" Label="Streamer::universalObjectChangedLocation" UseManualLocation="True" />
+    <Node Id="Streamer::globalEntityPositionChanged" Category="CodeSchema_Event" Bounds="1165.7108987401,653.870685820704,242.523333333333,25.96" Label="Streamer::globalEntityChangedLocation" UseManualLocation="True" />
+    <Node Id="Streamer::incrementScoreAtLocation" Category="CodeSchema_Method" Bounds="562.798512776693,792.406185961914,228.083333333333,25.96" UseManualLocation="True" />
+    <Node Id="Streamer::personalObjectChangedLocation" Category="CodeSchema_Event" Bounds="1217.64918206162,1163.36487369673,260.07,25.96" UseManualLocation="True" />
+    <Node Id="Streamer::recalculateGlobalEntityScore" Category="CodeSchema_Method" Bounds="561.237410339745,543.645565828444,238.633333333333,25.96" UseManualLocation="True" />
+    <Node Id="Streamer::removeScoreAtLocation" Category="CodeSchema_Method" Bounds="573.437687988281,848.366285961914,231.73,25.96" Label="Streamer::decrementScoreAtLocation" UseManualLocation="True" />
+    <Node Id="Streamer::spawnGlobalEntities" Category="CodeSchema_Method" Bounds="-218.499528028922,-69.6369100880709,194.726666666667,25.96" UseManualLocation="True" />
+    <Node Id="Streamer::whenGlobalEntityPositionChanges" Category="CodeSchema_Method" Bounds="854.541736047936,544.839843573851,271.746666666667,25.96" Label="Streamer::whenGlobalEntityChangesLocation" UseManualLocation="True" />
+    <Node Id="Streamer::whenPerPlayerObjectChangesLocation" Category="CodeSchema_Method" Bounds="853.45655911901,1092.29103675388,291.413333333333,25.96" UseManualLocation="True" />
+    <Node Id="Streamer::whenPlayerPositionChanges" Category="CodeSchema_Method" Bounds="859.4360265676,872.247567356655,239.793333333333,25.96" Label="Streamer::whenPlayerChangesLocation" UseManualLocation="True" />
+    <Node Id="StructureOfTheProgram" Category="Moduled" Bounds="-698.673860460235,-1297.93079355106,498.133333333333,573.801200000001" Group="Expanded" Label="World" UseManualLocation="True" />
+    <Node Id="SummaryOfActions" Bounds="197.079844525684,416.926509529007,144.82,44" Group="Expanded" Label="Summary of actions" UseManualLocation="True" />
+    <Node Id="UniversalObject" Category="CodeSchema_Class" Bounds="-364.677193793568,-1217.93059355106,124.136666666667,26" Label="UniversalObject" />
+    <Node Id="UniversalObjects(PerPlayerStreamables)" Category="List" Bounds="336.725388154519,-821.07370163376,177.344466362233,42.0044663622325" Label="UniversalObjects&#xD;&#xA;(PerPlayerStreamables)" />
+    <Node Id="Vehicle" Category="CodeSchema_Class" Bounds="-374.803860460235,-1105.93039355106,78.3899999999999,26" Label="Vehicle" />
+    <Node Id="Vehicles" Category="List" Bounds="516.069854516752,-997.09156708269,99.4877996955656,42.0044663622325" />
+    <Node Id="WhenGlobalObjectJoin" Category="CodeSchema_Event" Bounds="-652.673860460235,-907.929893551055,158.263333333333,25.96" Label="whenGlobalObjectJoins" />
+    <Node Id="WhenPerPlayerObjectJoin" Category="CodeSchema_Event" Bounds="-652.673860460235,-824.049893551055,172.27,25.96" Label="whenUniversalObjectJoins" />
+    <Node Id="WhenPersonalObjectJoin" Category="CodeSchema_Event" Bounds="-652.673860460235,-879.969893551055,168.68,25.96" Label="whenPersonalObjectJoins" />
+    <Node Id="WhenPlayerJoin" Category="CodeSchema_Event" Bounds="-652.673860460235,-852.009893551055,121.123333333333,25.96" Label="whenPlayerJoins" />
+    <Node Id="WhenPlayerJoins" Category="CodeSchema_Method" Bounds="396.556521183418,-1196.89186708269,108.023333333333,25.96" Label="registerPlayer">
       <Category Ref="Manages" />
     </Node>
-    <Node Id="WhenVehicleJoins" Category="CodeSchema_Event" Bounds="92.946972094223,-422.768087528657,126.523333333333,25.96" Label="whenVehicleJoins" UseManualLocation="True" />
-    <Node Id="World" Category="CodeSchema_Class" Bounds="60.0476377843269,-515.728401054048,224.270028686524,231.913723364258" Group="Expanded" Label="World" UseManualLocation="True" />
+    <Node Id="WhenVehicleJoins" Category="CodeSchema_Event" Bounds="-652.673860460235,-796.089893551055,126.523333333333,25.96" Label="whenVehicleJoins" />
+    <Node Id="World" Category="CodeSchema_Class" Bounds="-678.673860460235,-973.930093551056,224.27,229.8004" Group="Expanded" Label="World" />
   </Nodes>
   <Links>
     <Link Source="ActorHierarchy" Target="GlobalObject" Category="Contains" />
@@ -56,10 +76,10 @@
     <Link Source="ActorHierarchy" Target="StaticVehicle" Category="Contains" />
     <Link Source="ActorHierarchy" Target="UniversalObject" Category="Contains" />
     <Link Source="ActorHierarchy" Target="Vehicle" Category="Contains" />
-    <Link Source="Actors" Target="ChunkActor" Category="Stores" Bounds="-1005.99371165273,-489.437915071321,617.261774242728,62.5264719452678" />
+    <Link Source="Actors" Target="ChunkActor" Category="Stores" Bounds="212.471134520561,-955.087091770056,154.946477574446,222.383907302207" />
     <Link Source="Chunk" Target="Methods" Category="Contains" />
     <Link Source="Chunk" Target="Storage" Category="Contains" />
-    <Link Source="ChunkActor" Target="Object" Category="ddd" Bounds="-276.461092844106,-499.34276457751,1052.05882789265,74.8937168276971" />
+    <Link Source="ChunkActor" Target="Object" Category="ddd" Bounds="-306.538136855665,-1019.25453067594,483.425792034544,293.935683019687" />
     <Link Source="Direct" Target="Chunk" Category="Contains" />
     <Link Source="Direct" Target="ChunkActor" Category="Contains" />
     <Link Source="Direct" Target="GloballyStreamable" Category="Contains" />
@@ -69,17 +89,21 @@
     <Link Source="Events" Target="WhenPersonalObjectJoin" Category="Contains" />
     <Link Source="Events" Target="WhenPlayerJoin" Category="Contains" />
     <Link Source="Events" Target="WhenVehicleJoins" Category="Contains" />
-    <Link Source="GlobalObject" Target="MapObject" Category="DerivesFrom" Bounds="677.439882564306,-418.378454167556,50.2518633825755,41.6457271167746" />
-    <Link Source="GloballyStreamable" Target="ChunkActor" Category="DerivesFrom" Bounds="-314.298439562046,-400.314016710557,83.8548358202865,124.120504289903" />
-    <Link Source="MapObject" Target="Object" Category="DerivesFrom" Bounds="636.171232916054,-529.257565344163,98.0324516517234,79.1362579711165" />
+    <Link Source="FinalState" Target="FinishComment" Category="Contains" />
+    <Link Source="Finish(GlobalEntitiesScoreIsCalculated)" Target="GlobalEntities'ScoreIsCalcua" Category="Contains" />
+    <Link Source="Finish(GlobalEntitiesScoreIsCalculated)" Target="Streamer::spawnGlobalEntities" Category="Supplies This" Bounds="-99.7154280283158,-37.7150264811268,217.711156058454,192.516889896992" Label="Supplies this" LabelBounds="-58.781379689521,60.0416634300703,66.5966666666667,15.96" />
+    <Link Source="GlobalObject" Target="MapObject" Category="DerivesFrom" Bounds="-549.607482910156,-1467.22705078125,59.232421875,34.0550537109375" />
+    <Link Source="GloballyStreamable" Target="ChunkActor" Category="DerivesFrom" Bounds="36.5664640413311,-995.000529785156,149.796694639476,261.869511888915" />
+    <Link Source="MapObject" Target="Object" Category="DerivesFrom" Bounds="-431.340148925781,-1396.10705566406,46.9141540527344,33.2664794921875" />
     <Link Source="Methods" Target="RegisterGlobalObject" Category="Contains" />
     <Link Source="Methods" Target="RegisterPersonalObje" Category="Contains" />
     <Link Source="Methods" Target="RegisterUniversalObject" Category="Contains" />
     <Link Source="Methods" Target="RegisterVehicle" Category="Contains" />
     <Link Source="Methods" Target="WhenPlayerJoins" Category="Contains" />
-    <Link Source="PerPlayerObject" Target="MapObject" Category="DerivesFrom" Bounds="774.451409619535,-418.65326526165,52.8821788602826,40.4509337186811" />
-    <Link Source="PerPlayerStreamable" Target="ChunkActor" Category="DerivesFrom" Bounds="-416.707277804921,-400.070895105995,76.0658217949704,125.747713495889" />
-    <Link Source="PersonalObject" Target="PerPlayerObject" Category="DerivesFrom" Bounds="783.865042341614,-344.622930801584,47.2866165321557,73.8504088289279" />
+    <Link Source="PerPlayerObject" Target="MapObject" Category="DerivesFrom" Bounds="-454.623443603516,-1467.22705078125,0,26.6700439453125" />
+    <Link Source="PerPlayerStreamable" Target="ChunkActor" Category="DerivesFrom" Bounds="198.854058382282,-995.000529785156,6.94180579566,260.684871425289" />
+    <Link Source="PersonalObject" Target="PerPlayerObject" Category="DerivesFrom" Bounds="-454.623443603516,-1538.34716796875,0,26.6700439453125" />
+    <Link Source="PlayerPositionChanged" Target="Streamer::whenPlayerPositionChanges" Category="Fires Delegate" Bounds="1049.72975128474,900.063520791635,187.280894377074,39.4688457896543" />
     <Link Source="RegisterGlobalObject" Target="Actors" Category="Manages" Bounds="-996.996258405671,-492.743577009667,168.727946231192,3.99327445967219" />
     <Link Source="RegisterGlobalObject" Target="GlobalObjects(GlobalStreamables)" Category="Manages" Bounds="-936.183382975694,-474.052516479492,138.184667723145,42.390670034985" />
     <Link Source="RegisterGlobalObject" Target="WhenGlobalObjectJoin" Category="CodeSchema_Calls" Bounds="-683.104978841146,-477.398141773811,972.64110779603,129.106829823728" />
@@ -92,22 +116,32 @@
     <Link Source="RegisterVehicle" Target="Actors" Category="Manages" Bounds="-943.489213484427,-509.581991681921,226.13040460159,35.5808029851468" />
     <Link Source="RegisterVehicle" Target="Vehicles" Category="Manages" Bounds="-783.605030442499,-380.811174152654,65.8513849133981,56.160210777038" />
     <Link Source="RegisterVehicle" Target="WhenVehicleJoins" Category="CodeSchema_Calls" Bounds="-603.935475549504,-509.959874940835,894.270507359268,134.75150054845" />
-    <Link Source="StaticVehicle" Target="Vehicle" Category="DerivesFrom" Bounds="491.72573258643,-415.287094370364,0.552902260433882,38.4358675637232" />
+    <Link Source="Start" Target="Streamer::spawnGlobalEntities" Bounds="-14.7728879416661,-57.7208976527445,331.430053806629,0.805488359526159" />
+    <Link Source="StaticVehicle" Target="Vehicle" Category="DerivesFrom" Bounds="-346.113647460938,-1467.22705078125,8.47393798828125,27.73291015625" />
     <Link Source="Storage" Target="Actors" Category="Contains" />
     <Link Source="Storage" Target="GlobalObjects(GlobalStreamables)" Category="Contains" />
     <Link Source="Storage" Target="PersonalObjects(PerPlayerStreamables)" Category="Contains" />
     <Link Source="Storage" Target="Players" Category="Contains" />
     <Link Source="Storage" Target="UniversalObjects(PerPlayerStreamables)" Category="Contains" />
     <Link Source="Storage" Target="Vehicles" Category="Contains" />
+    <Link Source="Streamer::globalEntityPositionChanged" Target="Streamer::whenGlobalEntityPositionChanges" Category="Fires Delegate" Bounds="1034.16709336861,573.905493369511,217.500633342187,79.9651924511926" />
+    <Link Source="Streamer::incrementScoreAtLocation" Target="SummaryOfActions" Category="Leads To" Bounds="300.635588041992,466.945779707231,361.776244471908,325.460406254683" />
+    <Link Source="Streamer::recalculateGlobalEntityScore" Target="SummaryOfActions" Category="Leads To" Bounds="349.253796994559,461.765134713308,285.967599314519,81.8804311151359" />
+    <Link Source="Streamer::removeScoreAtLocation" Target="Streamer::incrementScoreAtLocation" Bounds="681.687273145399,827.150973307721,4.72472378062344,21.2153126541925" />
+    <Link Source="Streamer::spawnGlobalEntities" Target="FinalState" Category="Leads To" Bounds="-303.610239576753,-56.2385122982176,85.1107115478314,0.365744807468133" />
+    <Link Source="Streamer::whenGlobalEntityPositionChanges" Target="Streamer::recalculateGlobalEntityScore" Bounds="808.870676825675,557.120128433294,45.6710592222609,0.176027092730465" />
+    <Link Source="Streamer::whenPlayerPositionChanges" Target="Streamer::removeScoreAtLocation" Bounds="814.1373322813,871.625261289469,45.2986942863005,3.7299274057799" />
     <Link Source="StructureOfTheProgram" Target="ActorHierarchy" Category="Contains" />
     <Link Source="StructureOfTheProgram" Target="World" Category="Contains" />
-    <Link Source="UniversalObject" Target="PerPlayerObject" Category="DerivesFrom" Bounds="862.81721813737,-345.665389061095,66.6040458082001,70.3809652329704" />
-    <Link Source="Vehicle" Target="Object" Category="DerivesFrom" Bounds="506.751959705212,-528.823366497233,85.5262103408554,78.5372031671548" />
+    <Link Source="SummaryOfActions" Target="Finish(GlobalEntitiesScoreIsCalculated)" Category="Leads To" Bounds="188.470723096106,249.039854102166,71.6323603249385,167.886655426841" />
+    <Link Source="UniversalObject" Target="PerPlayerObject" Category="DerivesFrom" Bounds="-417.873229980469,-1538.34716796875,61.4426879882813,34.17138671875" />
+    <Link Source="Vehicle" Target="Object" Category="DerivesFrom" Bounds="-354.326080322266,-1396.10705566406,0,26.6700439453125" />
     <Link Source="WhenPlayerJoins" Target="Actors" Category="Manages" Bounds="-943.626851137001,-532.897901923153,227.753112606072,54.4892935962731" />
-    <Link Source="WhenPlayerJoins" Target="WhenPlayerJoin" Category="CodeSchema_Calls" Bounds="-609.332374963566,-537.320269413173,898.845799595473,135.550204733877" />
+    <Link Source="WhenPlayerJoins" Target="WhenPlayerJoin" Category="CodeSchema_Calls" Bounds="-718.451407063802,-535.762718392855,737.10014116147,70.8283459900729" />
     <Link Source="World" Target="Events" Category="Contains" />
   </Links>
   <Categories>
+    <Category Id="Algorithm Finish" Label="Algorithm Finish" IsTag="True" />
     <Category Id="CodeSchema_Calls" Label="Calls" CanBeDataDriven="True" CanLinkedNodesBeDataDriven="True" IncomingActionLabel="Called By" OutgoingActionLabel="Calls" />
     <Category Id="CodeSchema_Class" Label="Class" BasedOn="CodeSchema_Type" CanBeDataDriven="True" DefaultAction="Node:Both:CodeSchema_Member" Icon="CodeSchema_Class" NavigationActionLabel="Classes" />
     <Category Id="CodeSchema_Event" Label="Event" BasedOn="CodeSchema_Field" CanBeDataDriven="True" DefaultAction="Microsoft.Contains" Icon="CodeSchema_Event" NavigationActionLabel="Events" />
@@ -115,13 +149,19 @@
     <Category Id="CodeSchema_Member" Label="Member" CanBeDataDriven="True" DefaultAction="Microsoft.Contains" Icon="CodeSchema_Field" NavigationActionLabel="Members" />
     <Category Id="CodeSchema_Method" Label="Method" BasedOn="CodeSchema_Member" CanBeDataDriven="True" DefaultAction="Link:Forward:CodeSchema_Calls" Icon="CodeSchema_Method" NavigationActionLabel="Methods" />
     <Category Id="CodeSchema_Type" Label="Type" CanBeDataDriven="True" DefaultAction="Node:Both:CodeSchema_Member" Icon="CodeSchema_Class" NavigationActionLabel="Types" />
+    <Category Id="Comment" Label="Comment" Description="Represents a user defined comment on the diagram" CanBeDataDriven="True" IsProviderRoot="False" NavigationActionLabel="Comments" />
+    <Category Id="Constant" Label="Constant" IsTag="True" />
     <Category Id="Contains" Label="Contains" Description="Whether the source of the link contains the target object" CanBeDataDriven="False" CanLinkedNodesBeDataDriven="True" IncomingActionLabel="Contained By" IsContainment="True" OutgoingActionLabel="Contains" />
     <Category Id="DerivesFrom" Label="DerivesFrom" IsTag="True" />
+    <Category Id="Final" Label="Final" IsTag="True" />
+    <Category Id="Fires Delegate" Label="Fires Delegate" IsTag="True" />
     <Category Id="Group" Label="Group" CanBeDataDriven="True" DefaultAction="Microsoft.Contains" IsProviderRoot="False" NavigationActionLabel="Groups" />
+    <Category Id="Leads To" Label="Leads To" IsTag="True" />
     <Category Id="List" Label="List" IsTag="True" />
     <Category Id="Manages" Label="Manages" IsTag="True" />
     <Category Id="Moduled" Label="Module" IsTag="True" />
     <Category Id="Stores" Label="Stores" IsTag="True" />
+    <Category Id="Supplies This" Label="Supplies This" IsTag="True" />
     <Category Id="ddd" Label="Encapsulation" IsTag="True" />
   </Categories>
   <Properties>
@@ -139,6 +179,7 @@
     <Property Id="IsProviderRoot" Label="IsProviderRoot" Description="IsProviderRoot" DataType="System.Boolean" />
     <Property Id="IsTag" DataType="System.Boolean" />
     <Property Id="Label" Label="Label" Description="Displayable label of an Annotatable object" DataType="System.String" />
+    <Property Id="LabelBounds" DataType="System.Windows.Rect" />
     <Property Id="Layout" DataType="System.String" />
     <Property Id="LayoutSettings" DataType="Microsoft.VisualStudio.Diagrams.View.GroupLayoutStyle" />
     <Property Id="NavigationActionLabel" Label="NavigationActionLabel" Description="NavigationActionLabel" DataType="System.String" />
@@ -150,6 +191,27 @@
     <Property Id="ZoomLevel" DataType="System.String" />
   </Properties>
   <Styles>
+    <Style TargetType="Link" GroupLabel="Fires Delegate" ValueLabel="True">
+      <Condition Expression="HasCategory('Fires Delegate')" />
+      <Setter Property="Stroke" Value="#FFEDA119" />
+    </Style>
+    <Style TargetType="Node" GroupLabel="Constant" ValueLabel="True">
+      <Condition Expression="HasCategory('Constant')" />
+      <Setter Property="Icon" Value="pack://application:,,,/Microsoft.VisualStudio.Progression.GraphControl;component/Icons/Constant.png" />
+      <Setter Property="Background" Value="#FF48B2CA" />
+    </Style>
+    <Style TargetType="Link" GroupLabel="Supplies This" ValueLabel="True">
+      <Condition Expression="HasCategory('Supplies This')" />
+      <Setter Property="Stroke" Value="#FF00FF8C" />
+    </Style>
+    <Style TargetType="Node" GroupLabel="Algorithm Finish" ValueLabel="True">
+      <Condition Expression="HasCategory('Algorithm Finish')" />
+      <Setter Property="Background" Value="#FF4C4C4C" />
+    </Style>
+    <Style TargetType="Link" GroupLabel="Leads To" ValueLabel="True">
+      <Condition Expression="HasCategory('Leads To')" />
+      <Setter Property="Stroke" Value="#FFFF1010" />
+    </Style>
     <Style TargetType="Link" GroupLabel="Manages" ValueLabel="True">
       <Condition Expression="HasCategory('Manages')" />
       <Setter Property="Stroke" Value="#FF1AC3FF" />
@@ -191,6 +253,14 @@
       <Condition Expression="HasCategory('ddd')" />
       <Setter Property="Stroke" Value="#FFFDA200" />
       <Setter Property="Background" Value="#FF52DABC" />
+    </Style>
+    <Style TargetType="Node" GroupLabel="Comment" ValueLabel="Has comment">
+      <Condition Expression="HasCategory('Comment')" />
+      <Setter Property="Background" Value="#FFFFFACD" />
+      <Setter Property="Stroke" Value="#FFE5C365" />
+      <Setter Property="StrokeThickness" Value="1" />
+      <Setter Property="NodeRadius" Value="2" />
+      <Setter Property="MaxWidth" Value="250" />
     </Style>
   </Styles>
 </DirectedGraph>

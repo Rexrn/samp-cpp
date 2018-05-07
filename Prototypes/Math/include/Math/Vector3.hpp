@@ -145,7 +145,7 @@ public:
 
 	// Allow every non-cv qualified arithmetic type but bool.
 	static_assert(
-		typetraits::isMathScalarV<ValueType>,
+		type_traits::isMathScalarV<ValueType>,
 		"ValueType of a vector must be a non-cv qualified scalar type."
 	);
 
@@ -206,7 +206,7 @@ public:
 	/// </summary>
 	/// <returns>Length of the vector.</returns>
 	template <typename TLengthType = ValueType,
-		typename = std::enable_if_t< typetraits::isMathScalarV<TLengthType> > >
+		typename = std::enable_if_t< type_traits::isMathScalarV<TLengthType> > >
 	TLengthType length() const
 	{
 		if constexpr(std::is_same_v<TLengthType, ValueType>)
@@ -223,7 +223,7 @@ public:
 	/// </summary>
 	/// <returns>Squared length of the vector.</returns>
 	template <typename TLengthType = ValueType,
-		typename = std::enable_if_t< typetraits::isMathScalarV<TLengthType> > >
+		typename = std::enable_if_t< type_traits::isMathScalarV<TLengthType> > >
 	constexpr TLengthType lengthSquared() const
 	{
 		if constexpr(std::is_same_v<TLengthType, ValueType>)
@@ -242,7 +242,7 @@ public:
 	/// <param name="other_">The other vector.</param>
 	/// <returns>Distance between two instances.</returns>
 	template <typename TDistanceType = ValueType,
-		typename = std::enable_if_t< typetraits::isMathScalarV<TDistanceType> > >
+		typename = std::enable_if_t< type_traits::isMathScalarV<TDistanceType> > >
 	TDistanceType distance(Vector3<ValueType> const & other_) const
 	{
 		return (*this - other_).template length<TDistanceType>();
@@ -254,7 +254,7 @@ public:
 	/// <param name="other_">The other vector.</param>
 	/// <returns>Squared distance between two instances.</returns>
 	template <typename TDistanceType = ValueType,
-		typename = std::enable_if_t< typetraits::isMathScalarV<TDistanceType> > >
+		typename = std::enable_if_t< type_traits::isMathScalarV<TDistanceType> > >
 	constexpr TDistanceType distanceSquared(Vector3<ValueType> const & other_) const
 	{
 		return (*this - other_).template lengthSquared<TDistanceType>();
@@ -266,7 +266,7 @@ public:
 	/// <param name="other_">The other vector.</param>
 	/// <returns>Dot product of two vectors.</returns>
 	template <typename TDotType = ValueType,
-		typename = std::enable_if_t< typetraits::isMathScalarV<TDotType> > >
+		typename = std::enable_if_t< type_traits::isMathScalarV<TDotType> > >
 	constexpr TDotType dot(Vector3<ValueType> const & other_) const
 	{
 		if constexpr(std::is_same_v<TDotType, ValueType>)

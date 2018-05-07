@@ -21,7 +21,7 @@ public:
 	using RatioType		= TRatioType;
 	using ValueType		= TLengthType;
 
-	static_assert(typetraits::isRatioV<RatioType>, "Second template parameter must be a valid std::ratio type.");
+	static_assert(type_traits::isRatioV<RatioType>, "Second template parameter must be a valid std::ratio type.");
 	static_assert(std::is_floating_point_v<ValueType>, "Length can only be represented by floating point values.");
 
 	ValueType value;
@@ -185,7 +185,7 @@ inline constexpr Length<TLengthType, RatioType> operator*(Length<TLengthType, Ra
 /// <para>Resulting type matches length type.</para>
 /// </remarks>
 template <	typename TLengthType, typename RatioType, typename TScalarType,
-			std::enable_if_t< std::is_floating_point_v< std::remove_reference_t< std::remove_cv_t<TScalarType> > > > >
+			typename = std::enable_if_t< std::is_floating_point_v< std::remove_reference_t< std::remove_cv_t<TScalarType> > > > >
 inline constexpr Length<TLengthType, RatioType> operator/(Length<TLengthType, RatioType> const & lhs_, TScalarType const scalar_)
 {
 	return { lhs_.value / scalar_ };

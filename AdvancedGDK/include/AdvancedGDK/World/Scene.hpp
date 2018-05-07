@@ -6,6 +6,9 @@
 #include <AdvancedGDK/Core/BasicInterfaces/NonCopyable.hpp>
 
 #include <AdvancedGDK/World/MapObject.hpp>
+#include <AdvancedGDK/World/MapObject/PersonalObject.hpp>
+#include <AdvancedGDK/World/MapObject/UniversalObject.hpp>
+#include <AdvancedGDK/World/MapObject/GlobalObject.hpp>
 
 namespace agdk
 {
@@ -18,26 +21,48 @@ class Scene final
 	: public INonCopyable
 {
 public:	
+	template <typename TType>
+	using ObjectPtrType			= std::shared_ptr<TType>;
+	template <typename TType>
+	using ObjectContainerType	= std::vector< ObjectPtrType<TType> >;
+
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Scene"/> class.
 	/// </summary>
 	Scene();
 
 	/// <summary>
-	/// Adds the specified object to the scene.
+	/// Begins the object construction (it is not added yet to the scene).
 	/// </summary>
-	/// <param name="object_">The object.</param>
-	/// <returns>
-	///		<c>true</c> if succeeded, otherwise <c>false</c>.
-	/// </returns>
-	bool add(IMapObject & object_);
+	/// <param name="args_">The construction params.</param>
+	/// <returns>Owning pointer to the constructed object.</returns>
+	template <typename TType, typename... TArgTypes>
+	ObjectPtrType<TType> beginConstruction(TArgTypes&&...args_)
+	{
+		return std::make_shared<TType>(std::forward<TArgTypes>(args_)...);
+	}
 	
 	/// <summary>
-	/// Removes the specified object from the scene.
+	/// Finalizes the global object construction - adds it to the pool.
 	/// </summary>
-	/// <param name="object_">The object.</param>
-	void remove(IMapObject & object_);
-	
+	/// <param name="globalObject_">The global object.</param>
+	/// <returns>Reference to created object.</returns>
+	GlobalObject& finalizeConstruction(ObjectPtrType< GlobalObject > const& globalObject_);
+
+	/// <summary>
+	/// Finalizes the universal object construction - adds it to the pool.
+	/// </summary>
+	/// <param name="universalObject_">The universal object.</param>
+	/// <returns>Reference to created object.</returns>
+	UniversalObject& finalizeConstruction(ObjectPtrType< UniversalObject > const& universalObject_);
+
+	/// <summary>
+	/// Finalizes the personal object construction - adds it to the pool.
+	/// </summary>
+	/// <param name="personalObject_">The personal object.</param>
+	/// <returns>Reference to created object.</returns>
+	PersonalObject& finalizeConstruction(ObjectPtrType< PersonalObject > const& personalObject_);
+
 	/// <summary>
 	/// Determines whether scene contains the specified object.
 	/// </summary>
@@ -100,10 +125,19 @@ private:
 	/// Recalculates the origin.
 	/// </summary>
 	void recalculateOrigin();
+	
+	/// <summary>
+	/// Applies the new object to origin.
+	/// </summary>
+	/// <param name="object_">The object.</param>
+	void applyNewObjectToOrigin(IMapObject const & object_, std::size_t newObjectsCount_);
 
-	bool						m_autoOrigin;
-	math::Vector3f				m_origin;
-	std::vector< IMapObject* >	m_objects;
+	bool									m_autoOrigin;
+	math::Vector3f							m_origin;
+	std::vector<IMapObject*>				m_objects;
+	ObjectContainerType< GlobalObject >		m_globalObjects;
+	ObjectContainerType< UniversalObject >	m_universalObjects;
+	ObjectContainerType< PersonalObject >	m_personalObjects;
 };
 
 }

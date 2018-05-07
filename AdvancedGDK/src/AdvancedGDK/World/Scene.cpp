@@ -11,39 +11,36 @@ Scene::Scene()
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////
-bool Scene::add(IMapObject & object_)
+GlobalObject& Scene::finalizeConstruction(ObjectPtrType< GlobalObject > const& globalObject_)
 {
-	auto it = std::find(m_objects.begin(), m_objects.end(), &object_);
-	if (it == m_objects.end())
-	{
-		if (m_autoOrigin)
-		{
-			m_origin *= static_cast<float>(m_objects.size());
-			m_origin += object_.getLocation();
-			m_origin /= static_cast<float>(m_objects.size() + 1);
-		}
-		
-		m_objects.emplace_back(&object_);
-		return true;
-	}
-	return false;
+	m_globalObjects.push_back(globalObject_);
+	m_objects.push_back(globalObject_.get());
+
+	this->applyNewObjectToOrigin(*globalObject_, m_objects.size());
+
+	return *globalObject_;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////
-void Scene::remove(IMapObject & object_)
+UniversalObject& Scene::finalizeConstruction(ObjectPtrType< UniversalObject > const& universalObject_)
 {
-	auto it = std::find(m_objects.begin(), m_objects.end(), &object_);
-	if (it != m_objects.end())
-	{
-		if (m_autoOrigin)
-		{
-			m_origin *= static_cast<float>(m_objects.size());
-			m_origin -= object_.getLocation();
-			m_origin /= static_cast<float>(m_objects.size() - 1);
-		}
-		
-		m_objects.erase(it);
-	}
+	m_universalObjects.push_back(universalObject_);
+	m_objects.push_back(universalObject_.get());
+
+	this->applyNewObjectToOrigin(*universalObject_, m_objects.size());
+
+	return *universalObject_;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////
+PersonalObject& Scene::finalizeConstruction(ObjectPtrType< PersonalObject > const& personalObject_)
+{
+	m_personalObjects.push_back(personalObject_);
+	m_objects.push_back(personalObject_.get());
+
+	this->applyNewObjectToOrigin(*personalObject_, m_objects.size());
+
+	return *personalObject_;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////
@@ -55,8 +52,8 @@ bool Scene::contains(IMapObject & object_)
 ///////////////////////////////////////////////////////////////////////////////////////
 void Scene::setOrigin(math::Vector3f const location_)
 {
-	m_autoOrigin = false;
-	m_origin = location_;
+	m_autoOrigin	= false;
+	m_origin		= location_;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////
@@ -84,6 +81,14 @@ void Scene::recalculateOrigin()
 		m_origin += object->getLocation();
 	
 	m_origin /= static_cast<float>(m_objects.size());
+}
+
+///////////////////////////////////////////////////////////////////////////////////////
+void Scene::applyNewObjectToOrigin(IMapObject const & object_, std::size_t newObjectsCount_)
+{
+	m_origin *= static_cast<float>( newObjectsCount_ - 1 );
+	m_origin += object_.getLocation();
+	m_origin /= static_cast<float>( newObjectsCount_ );
 }
 
 } // namespace agdk

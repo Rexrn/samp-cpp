@@ -16,7 +16,7 @@ namespace agdk::text::ascii
 ///		<c>true</c> if the specified character is whitespace; otherwise, <c>false</c>.
 /// </returns>
 template <typename TChar,
-	typename = std::enable_if_t< typetraits::isCharacterV<TChar> > >
+	typename = std::enable_if_t< type_traits::isCharacterV<TChar> > >
 bool isSpace(TChar character_);
 
 /// <summary>
@@ -25,7 +25,7 @@ bool isSpace(TChar character_);
 /// <param name="character_">The character.</param>
 /// <returns>Lower case representation of the character.</returns>
 template <typename TChar,
-	typename = std::enable_if_t< typetraits::isCharacterV<TChar> > >
+	typename = std::enable_if_t< type_traits::isCharacterV<TChar> > >
 char toLower(TChar character_);
 
 /// <summary>
@@ -41,7 +41,7 @@ std::string toLower(std::string_view const string_);
 /// <param name="character_">The character.</param>
 /// <returns>Upper case representation of the character.</returns>
 template <typename TChar,
-	typename = std::enable_if_t< typetraits::isCharacterV<TChar> > >
+	typename = std::enable_if_t< type_traits::isCharacterV<TChar> > >
 char toUpper(TChar character_);
 
 /// <summary>
@@ -60,7 +60,7 @@ std::string toUpper(std::string_view const string_);
 ///		<c>true</c> if equal; otherwise, <c>false</c>.
 /// </returns>
 template <CaseSensitivity _caseSensitivity = CaseSensitive, typename TChar,
-	typename = std::enable_if_t< typetraits::isCharacterV<TChar> > >
+	typename = std::enable_if_t< type_traits::isCharacterV<TChar> > >
 bool equal(TChar lhs_, TChar rhs_);
 
 /// <summary>

@@ -20,7 +20,7 @@ public:
 	using RatioType		= TRatioType;
 	using ValueType		= TLengthType;
 
-	static_assert(typetraits::isRatioV<RatioType>, "Second template parameter must be a valid std::ratio type.");
+	static_assert(type_traits::isRatioV<RatioType>, "Second template parameter must be a valid std::ratio type.");
 	static_assert(std::is_floating_point_v<ValueType>, "Length can only be represented by floating point values.");
 
 	ValueType value;

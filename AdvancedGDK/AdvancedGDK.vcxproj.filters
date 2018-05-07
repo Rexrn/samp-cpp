@@ -219,25 +219,40 @@
     <ClInclude Include="include\AdvancedGDK\World\Actor.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\AdvancedGDK\World\Streaming\ChunkActor.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\AdvancedGDK\World\Streaming\Streamer.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\AdvancedGDK\World\Streaming\Chunk.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\AdvancedGDK\World\MapObject\PerPlayerObject.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\AdvancedGDK\World\Streaming\VehicleChunkActor.hpp">
+    <ClInclude Include="include\AdvancedGDK\World\Streamer\Chunk.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\AdvancedGDK\World\Streaming\GlobalObjectChunkActor.hpp">
+    <ClInclude Include="include\AdvancedGDK\World\Streamer\Streamer.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\AdvancedGDK\World\Streaming\GloballyVisibleActor.hpp">
+    <ClInclude Include="include\AdvancedGDK\World\Streamer\StreamerSettings.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\AdvancedGDK\World\Streamer\VehicleWrapper.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\AdvancedGDK\World\Streamer\GlobalObjectWrapper.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\AdvancedGDK\World\Streamer\GlobalActorWrapper.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\AdvancedGDK\World\Streamer\PlayerWrapper.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\AdvancedGDK\World\Streamer\ChunkActor.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\AdvancedGDK\Core\BasicInterfaces\PlacementTracker.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\AdvancedGDK\Core\Placement.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\AdvancedGDK\World\Map.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -290,9 +305,6 @@
     <ClCompile Include="src\AdvancedGDK\World\MapObject\PersonalObject.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\AdvancedGDK\World\Vehicle\Vehicle.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\AdvancedGDK\World\Vehicle\VehiclePool.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -311,10 +323,34 @@
     <ClCompile Include="src\AdvancedGDK\Core\Actions.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\AdvancedGDK\World\Streaming\Chunk.cpp">
+    <ClCompile Include="src\AdvancedGDK\World\MapObject\PerPlayerObject.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\AdvancedGDK\World\MapObject\PerPlayerObject.cpp">
+    <ClCompile Include="src\AdvancedGDK\World\Streamer\Chunk.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\AdvancedGDK\World\Vehicle\Vehicle.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\AdvancedGDK\World\Streamer\VehicleWrapper.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\AdvancedGDK\World\Streamer\GlobalObjectWrapper.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\AdvancedGDK\World\Streamer\GlobalActorWrapper.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\AdvancedGDK\World\Streamer\ChunkActor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\AdvancedGDK\World\Streamer\PlayerWrapper.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\AdvancedGDK\Core\BasicInterfaces\PlacementTracker.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\AdvancedGDK\World\Streamer\Streamer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

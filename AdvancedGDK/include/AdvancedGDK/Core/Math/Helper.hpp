@@ -2,6 +2,8 @@
 
 #include ADVANCEDGDK_PCH
 
+#include "../TypeTraits.hpp"
+
 namespace agdk::math
 {
 
@@ -64,6 +66,17 @@ bool nearlyEqual(TType const & a_, TType const & b_, TType const & equalityToler
 /// <returns>Clamped value.</returns>
 template <typename TType>
 TType clampChecked(TType const & current_, TType const & lowerBoundary_, TType const & upperBoundary_);
+
+// Note: to be moved to QuickMaffs
+template <typename TType,
+	typename = std::enable_if_t< std::is_floating_point_v< type_traits::removeCVRefT<TType> > > >
+constexpr std::intmax_t ceil(TType number_) {
+	std::intmax_t ceiled = static_cast<std::intmax_t>(number_);
+	if (number_ == static_cast<TType>(ceiled)) {
+		return ceiled;
+	}
+	return ceiled + (number_ > 0 ? 1 : 0);
+}
 
 } // namespace
 

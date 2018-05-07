@@ -5,7 +5,8 @@
 #include <AdvancedGDK/Core/MathInc.hpp>
 #include <AdvancedGDK/Core/Clock.hpp>
 #include <AdvancedGDK/Core/Events.hpp>
-#include <AdvancedGDK/World/Streaming/ChunkActor.hpp>
+
+#include <AdvancedGDK/Core/BasicInterfaces/PlacementTracker.hpp>
 
 namespace agdk
 {
@@ -264,7 +265,6 @@ const std::map<std::uint32_t, TVehicleInfoT> g_vehiclesDataM = {
 /// Class storing vehicle handle and providing methods to manage it.
 /// </summary>
 class Vehicle
-	: public IStreamable
 {
 public:
 	/// <summary>
@@ -277,6 +277,21 @@ public:
 	/// </summary>
 	virtual ~Vehicle();
 	
+	// Tracking:	
+	/// <summary>
+	/// Sets the placement tracker.
+	/// </summary>
+	/// <param name="tracker_">The tracker.</param>
+	void setPlacementTracker(IActorPlacementTracker *tracker_);
+
+	/// <summary>
+	/// Returns the placement tracker.
+	/// </summary>
+	/// <returns>Placement tracker</returns>
+	IActorPlacementTracker* getPlacementTracker() const;
+
+	// TODO: add desc
+
 	/// <summary>
 	/// Respawns this vehicle.
 	/// </summary>
@@ -458,6 +473,14 @@ public:
 	std::int32_t getInterior() const {
 		return m_interior;
 	}
+	
+	/// <summary>
+	/// Returns the vehicle placement.
+	/// </summary>
+	/// <returns>The vehicle placement.</returns>
+	VehiclePlacement getPlacement() const {
+		return { this->getLocation(), this->getWorld(), this->getInterior() };
+	}
 
 	/// <summary>
 	/// Returns vehicle first color index.
@@ -557,7 +580,7 @@ public:
 	// Declare friendship with VehicleManager
 	// TODO: remove this friendship.
 	friend class VehiclePool;
-
+	friend class Server;
 	friend class WorldMap;
 protected:
 
@@ -598,6 +621,15 @@ protected:
 
 	Clock::TimePoint					m_latestUsage;		// Absolute time vehicle was used last time.
 	std::array<Player*, 4>				m_passengers;
+
+private:
+	// Tracking:	
+	/// <summary>
+	/// Sends the placement update to the tracker.
+	/// </summary>
+	void sendPlacementUpdate();
+
+	IActorPlacementTracker*				m_placementTracker;
 };
 
 

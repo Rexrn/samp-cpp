@@ -106,6 +106,7 @@
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <PrecompiledHeaderFile>AdvancedGDKPCH.hpp</PrecompiledHeaderFile>
       <BrowseInformation>true</BrowseInformation>
+      <ObjectFileName>$(IntDir)%(RelativeDir)/</ObjectFileName>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -126,6 +127,7 @@
       <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)dependencies;$(ProjectDir)include</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <PrecompiledHeaderFile>AdvancedGDKPCH.hpp</PrecompiledHeaderFile>
+      <ObjectFileName>$(IntDir)%(RelativeDir)/</ObjectFileName>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -145,6 +147,7 @@
       <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)dependencies;$(ProjectDir)include</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <PrecompiledHeaderFile>AdvancedGDKPCH.hpp</PrecompiledHeaderFile>
+      <ObjectFileName>$(IntDir)%(RelativeDir)/</ObjectFileName>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -166,6 +169,7 @@
       <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)dependencies;$(ProjectDir)include</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <PrecompiledHeaderFile>AdvancedGDKPCH.hpp</PrecompiledHeaderFile>
+      <ObjectFileName>$(IntDir)%(RelativeDir)/</ObjectFileName>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -182,6 +186,7 @@
     <ClInclude Include="dependencies\sampgdk\plugincommon.h" />
     <ClInclude Include="dependencies\sampgdk\sampgdk.h" />
     <ClInclude Include="include\AdvancedGDK\Core\Actions.hpp" />
+    <ClInclude Include="include\AdvancedGDK\Core\BasicInterfaces\PlacementTracker.hpp" />
     <ClInclude Include="include\AdvancedGDK\Core\BasicInterfaces\Updatable.hpp" />
     <ClInclude Include="include\AdvancedGDK\Core\Math\Helper.hpp" />
     <ClInclude Include="include\AdvancedGDK\Core\Math\Length.hpp" />
@@ -193,6 +198,7 @@
     <ClInclude Include="include\AdvancedGDK\Core\Math\Vector2.hpp" />
     <ClInclude Include="include\AdvancedGDK\Core\Math\Vector3.hpp" />
     <ClInclude Include="include\AdvancedGDK\Core\Math\VectorStringBuilder.hpp" />
+    <ClInclude Include="include\AdvancedGDK\Core\Placement.hpp" />
     <ClInclude Include="include\AdvancedGDK\Core\TextInc.hpp" />
     <ClInclude Include="include\AdvancedGDK\Core\Text\ASCII.hpp" />
     <ClInclude Include="include\AdvancedGDK\Core\Text\Essentials.hpp" />
@@ -210,11 +216,14 @@
     <ClInclude Include="include\AdvancedGDK\Core\Events.hpp" />
     <ClInclude Include="include\AdvancedGDK\Server\Player\Teleport.hpp" />
     <ClInclude Include="include\AdvancedGDK\World\Actor.hpp" />
-    <ClInclude Include="include\AdvancedGDK\World\Streaming\ChunkActor.hpp" />
-    <ClInclude Include="include\AdvancedGDK\World\Streaming\GloballyVisibleActor.hpp" />
-    <ClInclude Include="include\AdvancedGDK\World\Streaming\GlobalObjectChunkActor.hpp" />
-    <ClInclude Include="include\AdvancedGDK\World\Streaming\Streamer.hpp" />
-    <ClInclude Include="include\AdvancedGDK\World\Streaming\VehicleChunkActor.hpp" />
+    <ClInclude Include="include\AdvancedGDK\World\Map.hpp" />
+    <ClInclude Include="include\AdvancedGDK\World\Streamer\ChunkActor.hpp" />
+    <ClInclude Include="include\AdvancedGDK\World\Streamer\GlobalActorWrapper.hpp" />
+    <ClInclude Include="include\AdvancedGDK\World\Streamer\GlobalObjectWrapper.hpp" />
+    <ClInclude Include="include\AdvancedGDK\World\Streamer\PlayerWrapper.hpp" />
+    <ClInclude Include="include\AdvancedGDK\World\Streamer\Streamer.hpp" />
+    <ClInclude Include="include\AdvancedGDK\World\Streamer\StreamerSettings.hpp" />
+    <ClInclude Include="include\AdvancedGDK\World\Streamer\VehicleWrapper.hpp" />
     <ClInclude Include="include\AdvancedGDK\World\Vehicle\Vehicle.hpp" />
     <ClInclude Include="include\AdvancedGDK\World\Vehicle\VehiclePool.hpp" />
     <ClInclude Include="include\AdvancedGDK\Server\Player\Weapon.hpp" />
@@ -231,7 +240,7 @@
     <ClInclude Include="include\AdvancedGDK\Server\Player\PlayerPool.hpp" />
     <ClInclude Include="include\AdvancedGDK\World\MapObject\GlobalObject.hpp" />
     <ClInclude Include="include\AdvancedGDK\World\MapObject.hpp" />
-    <ClInclude Include="include\AdvancedGDK\World\Streaming\Chunk.hpp" />
+    <ClInclude Include="include\AdvancedGDK\World\Streamer\Chunk.hpp" />
     <ClInclude Include="include\AdvancedGDK\World\MapObject\PersonalObject.hpp" />
     <ClInclude Include="include\AdvancedGDK\World\Scene.hpp" />
     <ClInclude Include="include\AdvancedGDK\World\MapObject\PerPlayerObject.hpp" />
@@ -252,16 +261,23 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="src\AdvancedGDK\Core\Actions.cpp" />
+    <ClCompile Include="src\AdvancedGDK\Core\BasicInterfaces\PlacementTracker.cpp" />
     <ClCompile Include="src\AdvancedGDK\Core\Math\Random.cpp" />
     <ClCompile Include="src\AdvancedGDK\Core\Text\ASCII.cpp" />
     <ClCompile Include="src\AdvancedGDK\World\Scene.cpp" />
     <ClCompile Include="src\AdvancedGDK\World\MapObject\GlobalObject.cpp" />
-    <ClCompile Include="src\AdvancedGDK\World\Streaming\Chunk.cpp" />
+    <ClCompile Include="src\AdvancedGDK\World\Streamer\Chunk.cpp" />
     <ClCompile Include="src\AdvancedGDK\World\MapObject\PersonalObject.cpp" />
     <ClCompile Include="src\AdvancedGDK\World\MapObject\UniversalObject.cpp" />
     <ClCompile Include="src\AdvancedGDK\Server\Chat.cpp" />
     <ClCompile Include="src\AdvancedGDK\Server\Command\Command.cpp" />
     <ClCompile Include="src\AdvancedGDK\Server\Command\CommandManager.cpp" />
+    <ClCompile Include="src\AdvancedGDK\World\Streamer\ChunkActor.cpp" />
+    <ClCompile Include="src\AdvancedGDK\World\Streamer\GlobalActorWrapper.cpp" />
+    <ClCompile Include="src\AdvancedGDK\World\Streamer\GlobalObjectWrapper.cpp" />
+    <ClCompile Include="src\AdvancedGDK\World\Streamer\PlayerWrapper.cpp" />
+    <ClCompile Include="src\AdvancedGDK\World\Streamer\Streamer.cpp" />
+    <ClCompile Include="src\AdvancedGDK\World\Streamer\VehicleWrapper.cpp" />
     <ClCompile Include="src\AdvancedGDK\World\Vehicle\Vehicle.cpp" />
     <ClCompile Include="src\AdvancedGDK\World\Vehicle\VehiclePool.cpp" />
     <ClCompile Include="src\AdvancedGDK\Server\Player\Weapon.cpp" />

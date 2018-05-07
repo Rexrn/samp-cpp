@@ -2,7 +2,7 @@
 
 #include ADVANCEDGDK_PCH
 
-namespace agdk::typetraits
+namespace agdk::type_traits
 {
 
 template <typename TType>

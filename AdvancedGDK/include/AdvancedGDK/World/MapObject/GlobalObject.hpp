@@ -5,15 +5,18 @@
 #include <AdvancedGDK/World/MapObject.hpp>
 #include <AdvancedGDK/World/Actor.hpp>
 
+#include <AdvancedGDK/Core/BasicInterfaces/PlacementTracker.hpp>
+
 namespace agdk
 {
 
 class GlobalObject
 	:
-	public IMapObject,
-	public IActor
+	public IMapObject
 {
 public:	
+	friend class Server;
+
 	/// <summary>
 	/// Initializes a new instance of the <see cref="GlobalObject"/> class.
 	/// </summary>
@@ -24,6 +27,20 @@ public:
 	/// </summary>
 	virtual ~GlobalObject();
 	
+	// Tracking:	
+	/// <summary>
+	/// Sets the placement tracker.
+	/// </summary>
+	/// <param name="tracker_">The tracker.</param>
+	void setPlacementTracker(IGlobalObjectPlacementTracker *tracker_);
+
+	/// <summary>
+	/// Returns the placement tracker.
+	/// </summary>
+	/// <returns>Placement tracker</returns>
+	IGlobalObjectPlacementTracker* getPlacementTracker() const;
+
+
 	/// <summary>
 	/// Spawns this object in world.
 	/// </summary>
@@ -63,6 +80,14 @@ public:
 	/// </summary>
 	/// <returns>The object rotation.</returns>
 	virtual math::Vector3f getRotation() const override;
+	
+	/// <summary>
+	/// Returns the global object placement.
+	/// </summary>
+	/// <returns>Global object placement</returns>
+	GlobalObjectPlacement getPlacement() const {
+		return { this->getLocation() };
+	}
 
 	/// <summary>
 	/// Returns the object handle.
@@ -81,8 +106,15 @@ public:
 	bool isSpawned() const {
 		return this->getHandle() != INVALID_OBJECT_ID;
 	}
+
 private:
 	
+	// Tracking:	
+	/// <summary>
+	/// Sends the placement update to the tracker.
+	/// </summary>
+	void sendPlacementUpdate();
+
 	/// <summary>
 	/// Applies the text material.
 	/// </summary>
@@ -100,6 +132,8 @@ private:
 	virtual void applyTexture(std::size_t const materialIndex_, Texture const & textureMaterial_, [[maybe_unused]] Player const * player_ = nullptr) override;
 
 	std::int32_t	m_handle;
+
+	IGlobalObjectPlacementTracker* m_placementTracker;
 };
 
 }

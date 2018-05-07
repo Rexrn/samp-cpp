@@ -6,6 +6,7 @@
 #include <AdvancedGDK/Core/MathInc.hpp>
 #include <AdvancedGDK/Core/BasicInterfaces/NonCopyable.hpp>
 
+#include <AdvancedGDK/World/Actor.hpp>
 
 namespace agdk
 {
@@ -18,6 +19,7 @@ class Player;
 /// </summary>
 class IMapObject
 	:
+	public virtual IActor,
 	public INonCopyable
 {	
 protected:

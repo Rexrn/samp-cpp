@@ -8,6 +8,8 @@
 #include <AdvancedGDK/Core/Color.hpp>
 #include <AdvancedGDK/Server/Player/Weapon.hpp>
 
+#include <AdvancedGDK/Core/BasicInterfaces/PlacementTracker.hpp>
+
 namespace agdk
 {	
 class Vehicle;
@@ -44,6 +46,19 @@ public:
 	/// Move constructor (deleted, use explicit index constructor instead).
 	/// </summary>
 	Player(Player &&)		= delete;		
+
+	// Tracking:	
+	/// <summary>
+	/// Sets the placement tracker.
+	/// </summary>
+	/// <param name="tracker_">The tracker.</param>
+	void setPlacementTracker(IActorPlacementTracker *tracker_);
+	
+	/// <summary>
+	/// Returns the placement tracker.
+	/// </summary>
+	/// <returns>Placement tracker</returns>
+	IActorPlacementTracker* getPlacementTracker() const;
 
 	// Player data.		
 
@@ -188,6 +203,14 @@ public:
 		}
 		return 0.f;
 	}
+	
+	/// <summary>
+	/// Returns player's placement.
+	/// </summary>
+	/// <returns>Player's placement.</returns>
+	PlayerPlacement getPlacement() const {
+		return { this->getLocation(), this->getWorld(), this->getInterior() };
+	}
 
 	// Player statistics.
 		
@@ -292,6 +315,7 @@ public:
 	}
 
 	// Vehicle pool must access `getClientVehicle` method and `setVehicle`.
+	friend class Server;
 	friend class VehiclePool;
 protected:
 				
@@ -342,7 +366,13 @@ protected:
 	}
 
 private:
-				
+		
+	// Tracking:	
+	/// <summary>
+	/// Sends the placement update to the tracker.
+	/// </summary>
+	void sendPlacementUpdate();
+
 	/// <summary>
 	/// Sets the player vehicle. It just sets pointer to it.
 	/// </summary>
@@ -382,5 +412,8 @@ private:
 
 	// Player personal settings:
 	std::uint16_t		m_language;			/// Player's language.
+
+	// Tracking:
+	IActorPlacementTracker* m_placementTracker;
 };
 }
