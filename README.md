@@ -1,8 +1,8 @@
-# Advanced GDK
+# SAMP-EDGEngine
 A C++17 library based on SAMPGDK for creating SAMP (San Andreas Multiplayer) game modes.
 ## 1. Status: 75%
 ## 2. Goals:
-The main goal of **Advanced GDK** is to make game mode creation process a real pleasure. User code simplicity and performance stays always at the top.
+The main goal of **SAMP-EDGEngine** is to make game mode creation process a real pleasure. User code simplicity and performance stays always at the top.
 ### 1. Code look predictions.
 Since the library is not finished yet, this section is not 100 percent sure to stay as it is. However I can make certain predictions and show sample code, that I think will do some fun stuff. Lets take a look at it:
 #### 1. Running the server.
