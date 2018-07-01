@@ -1,55 +1,111 @@
-# SAMP-EDGEngine
-A C++17 library based on SAMPGDK for creating SAMP (San Andreas Multiplayer) game modes.
-## 1. Status: 75%
-## 2. Goals:
-The main goal of **SAMP-EDGEngine** is to make game mode creation process a real pleasure. User code simplicity and performance stays always at the top.
-### 1. Code look predictions.
-Since the library is not finished yet, this section is not 100 percent sure to stay as it is. However I can make certain predictions and show sample code, that I think will do some fun stuff. Lets take a look at it:
+# SAMP EDGEngine
+
+A C++17 engine based on SAMPGDK that provides convenient and high level SAMP (San Andreas Multiplayer) gamemode creation framework.
+
+## Goals:
+
+The main goal of *SAMP EDGEngine* is to make game mode creation process a real pleasure. User code simplicity and performance stays always at the top.
+
+## Features:
+
+- [x] Complete basic game mode interface: `IGameMode`
+  - [x] Default "plug-and-play" game mode: `DefaultGameMode`
+- [ ] Easy to use command system interface: `ICommandSystem`
+  - [x] Default "plug-and-play" command system: ~~*(deprecated: `CommandManager`)*~~ `DefaultCommandSystem`
+- [x] Easy to use chat interface: `IChat`
+  - [x] Default "plug-and-play" chat: `DefaultChat`
+- [x] World management system
+  - [x] Map objects
+    - [x] Automatic streaming
+    - [ ] Loading and saving
+  - [x] Vehicles
+    - [x] Automatic streaming
+    - [ ] Loading and saving
+  - [ ] Actors
+  - [x] Gang zones
+    - [ ] Loading and saving
+  - [ ] Checkpoints and race system
+- [ ] Easy to use `TextDraw` system
+- [ ] ... possibly more
+
+## How will my code look?
+
+Since the engine is not fully finished yet, this section is not 100 percent sure to stay as it is. However I can make certain predictions and show sample code, that I think will do some fun stuff. Lets take a look at it:
+
 #### 1. Running the server.
 One thing I want to make significantly easier is the base server setup.
 ```cpp
-#include <.hpp>	// all-in-one header.
+// All-in-one header:
+#include <SAMP-EDGEngine/Everything.hpp>	
 
-// Server main function.
+// In most cases, no other code base will use `samp` namespace.
+// Shorten it to `samp` for our convenciency: 
+namespace samp = samp_edgengine;
+
+// The main function:
+// It is called when plugin launches.
 int main()
 {
-    g_server->setup(std::make_unique<agdk::DefaultGameMode>());
+    samp::Server->setupGameMode<samp::DefaultGameMode>();
 }
 ```
-That runs the default server gamemode implemented inside Advanced GDK.
+
 #### 2. Setting server description.
-To set server description shown in SAMP Client, we will use `Server::setDescription` method:
+
+To set server host name shown in SAMP client, we will use `ServerClass::setHostName` method:
 ```cpp
-g_server->setDescription(">>> My perfect gamemode <<<");
+// `samp::Server` is a pointer to global object of type `ServerClass`.
+samp::Server->setHostName(".•°.•°.•°[     GTA Online SA (ßeta)     ]°•.°•.°•.");
 ```
+
+The result:
+
+![Set the server host name](Documents/Img/Example-Set-Host-Name.png)
 
 #### 3. Adding _basic_ command
-Command parameters are passed using `CommandInput` class. Since commands are dependent on gamemode setup, from now we will use `g_gameMode` global pointer. Lets see how to add simple `/heal` command:
+
+Command parameters are passed using `CommandInput` class. Since commands are dependent on gamemode setup, from now on we will use `GameMode` global pointer. Lets see how to add simple `/heal` command:
+
 ```cpp
-// Forwad declare the command function"
-void healPlayerCommand(agdk::CommandInput input);
+
+// # Command logic:
+// Wrap the command inside `cmds` namespace (optional, good practice)
+namespace cmds
+{
+void healPlayerCommand(samp::CommandInput input)
+{
+	// Player that called the command is stored inside `input.target` pointer:
+	input.target->setHealth(100);
+}
+} // namespace cmds
 
 int main()
 {
-	// ... server setup ...
-	// Add command to game mode:
-	g_gameMode->commands += agdk::Command({"heal", "100hp", "life"}, healPlayerCommand);
+	// # Server setup:
+	// Construct new command:
+	samp::GameMode->Commands->construct<samp::ProcedureCommand>(
+		samp::CommandAliases{"heal", "100hp", "life"}, // List of aliases
+		healPlayerCommand // a procedure to call
+	);
 }
+```
 
-// Define the command:
-void healPlayerCommand(agdk::CommandInput input)
-{
-	// Caller is stored inside `input.target` pointer:
-	input.target->setHealth(100);
-}
-```
-Command adding is the interesting part:
+Command construction is an interesting part:
+
 ```cpp
-g_gameMode->commands += agdk::Command({"heal", "100hp", "life"}, healPlayerCommand);
+samp::GameMode->Commands->construct<samp::ProcedureCommand>(
+	samp::CommandAliases{"heal", "100hp", "life"}, // List of aliases
+	healPlayerCommand // a procedure to call
+);
 ```
-The first argument of `Command` constructor is a vector that contains possible words that player needs to type to invoke the command.
-This code heals player whenever he send one of following commands:
-* `/heal`
-* `/100hp`
-* `/life`
-Thats simple, isn't it?
+
+`CommandList::construct<T>` is using `T`'s constructor and forwards every argument that the method is called with. `ProcedureCommand` constructor takes two parameters.
+
+- List of aliases (type: `std::vector<std::string>`)
+- A procedure to call (type `std::function<void(CommandInput)>`)
+
+For our convencience, there is an alias, that shortens `std::vector<std::string>`:
+
+```cpp
+using CommandAliases = std::vector<std::string>;
+```
