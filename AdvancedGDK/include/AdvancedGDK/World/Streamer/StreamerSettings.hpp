@@ -2,8 +2,6 @@
 
 #include ADVANCEDGDK_PCH
 
-#include <AdvancedGDK/Core/MathInc.hpp>
-
 namespace agdk::default_streamer
 {
 
@@ -13,9 +11,9 @@ namespace agdk::default_streamer
 struct StreamerSettingsType
 {
 	// Precalculated values:
-	math::Meters VisibilityDistance			= 300.0;			// From what distance object should pop into view?
-	math::Meters MaxDisplacementDistance	= 30.0;				// When displacement reaches this value the change is a significant one.
-
+	math::Meters				VisibilityDistance		= 400.0;			// From what distance object should pop into view?
+	math::Meters				MaxDisplacementDistance	= 10.0;				// When displacement reaches this value the change is a significant one.
+	std::chrono::milliseconds	UpdateInterval{ 60 };
 
 	// Methods:	
 

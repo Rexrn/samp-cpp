@@ -23,7 +23,7 @@
     <ProjectGuid>{23AF71CA-C750-46E3-B59E-E4F439B7B122}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>AdvancedGDK</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -59,21 +59,25 @@
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\Configuration\Dependencies.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\Configuration\Dependencies.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\Configuration\Dependencies.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\Configuration\Dependencies.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
     <TargetName>$(ProjectName)</TargetName>
-    <OutDir>$(ProjectDir)lib\$(Platform)\$(Configuration)\</OutDir>
+    <OutDir>$(ProjectDir)output\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(ProjectDir)intermediate\$(Platform)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -102,7 +106,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>ADVANCEDGDK_PCH="AdvancedGDK/../../AdvancedGDKPCH.hpp";ADVANCEDGDK_ACTIVE_PROJECT;ADVANCEDGDK_DEBUG;WIN32;AGDK_DEBUG;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>false</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)dependencies;$(ProjectDir)include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir)dependencies;$(ProjectDir)include;$(QuickMaffsDirectory)include</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <PrecompiledHeaderFile>AdvancedGDKPCH.hpp</PrecompiledHeaderFile>
       <BrowseInformation>true</BrowseInformation>
@@ -124,7 +128,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>ADVANCEDGDK_PCH="AdvancedGDK/../../AdvancedGDKPCH.hpp";ADVANCEDGDK_ACTIVE_PROJECT;ADVANCEDGDK_DEBUG;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)dependencies;$(ProjectDir)include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir)dependencies;$(ProjectDir)include;$(QuickMaffsDirectory)include</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <PrecompiledHeaderFile>AdvancedGDKPCH.hpp</PrecompiledHeaderFile>
       <ObjectFileName>$(IntDir)%(RelativeDir)/</ObjectFileName>
@@ -144,7 +148,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>ADVANCEDGDK_PCH="AdvancedGDK/../../AdvancedGDKPCH.hpp";ADVANCEDGDK_ACTIVE_PROJECT;WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>false</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)dependencies;$(ProjectDir)include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir)dependencies;$(ProjectDir)include;$(QuickMaffsDirectory)include</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <PrecompiledHeaderFile>AdvancedGDKPCH.hpp</PrecompiledHeaderFile>
       <ObjectFileName>$(IntDir)%(RelativeDir)/</ObjectFileName>
@@ -166,7 +170,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>ADVANCEDGDK_PCH="AdvancedGDK/../../AdvancedGDKPCH.hpp";ADVANCEDGDK_ACTIVE_PROJECT;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)dependencies;$(ProjectDir)include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir)dependencies;$(ProjectDir)include;$(QuickMaffsDirectory)include</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <PrecompiledHeaderFile>AdvancedGDKPCH.hpp</PrecompiledHeaderFile>
       <ObjectFileName>$(IntDir)%(RelativeDir)/</ObjectFileName>
@@ -179,25 +183,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="dependencies\sampgdk\amx\amx.h" />
-    <ClInclude Include="dependencies\sampgdk\amx\getch.h" />
-    <ClInclude Include="dependencies\sampgdk\amx\sclinux.h" />
-    <ClInclude Include="dependencies\sampgdk\plugin.h" />
-    <ClInclude Include="dependencies\sampgdk\plugincommon.h" />
-    <ClInclude Include="dependencies\sampgdk\sampgdk.h" />
+    <ClInclude Include="..\Dependencies\sampgdk\amx\amx.h" />
+    <ClInclude Include="..\Dependencies\sampgdk\amx\getch.h" />
+    <ClInclude Include="..\Dependencies\sampgdk\amx\sclinux.h" />
+    <ClInclude Include="..\Dependencies\sampgdk\plugin.h" />
+    <ClInclude Include="..\Dependencies\sampgdk\plugincommon.h" />
+    <ClInclude Include="..\Dependencies\sampgdk\sampgdk.h" />
     <ClInclude Include="include\AdvancedGDK\Core\Actions.hpp" />
     <ClInclude Include="include\AdvancedGDK\Core\BasicInterfaces\PlacementTracker.hpp" />
+    <ClInclude Include="include\AdvancedGDK\Core\BasicInterfaces\Streamer.hpp" />
     <ClInclude Include="include\AdvancedGDK\Core\BasicInterfaces\Updatable.hpp" />
-    <ClInclude Include="include\AdvancedGDK\Core\Math\Helper.hpp" />
-    <ClInclude Include="include\AdvancedGDK\Core\Math\Length.hpp" />
-    <ClInclude Include="include\AdvancedGDK\Core\Math\Random.hpp" />
-    <ClInclude Include="include\AdvancedGDK\Core\Math\ShapesInc.hpp" />
-    <ClInclude Include="include\AdvancedGDK\Core\Math\Shapes\Algorithm.hpp" />
-    <ClInclude Include="include\AdvancedGDK\Core\Math\Shapes\Ball.hpp" />
-    <ClInclude Include="include\AdvancedGDK\Core\Math\Shapes\Box.hpp" />
-    <ClInclude Include="include\AdvancedGDK\Core\Math\Vector2.hpp" />
-    <ClInclude Include="include\AdvancedGDK\Core\Math\Vector3.hpp" />
-    <ClInclude Include="include\AdvancedGDK\Core\Math\VectorStringBuilder.hpp" />
+    <ClInclude Include="include\AdvancedGDK\Core\TypesAndDefinitions.hpp" />
     <ClInclude Include="include\AdvancedGDK\Core\Placement.hpp" />
     <ClInclude Include="include\AdvancedGDK\Core\TextInc.hpp" />
     <ClInclude Include="include\AdvancedGDK\Core\Text\ASCII.hpp" />
@@ -210,51 +206,58 @@
     <ClInclude Include="include\AdvancedGDK\Core\Container\DivisibleGrid2.hpp" />
     <ClInclude Include="include\AdvancedGDK\Core\BasicInterfaces\NonCopyable.hpp" />
     <ClInclude Include="include\AdvancedGDK\Core\Text\StreamLoader.hpp" />
+    <ClInclude Include="include\AdvancedGDK\Dependencies\QuickMaffs.hpp" />
     <ClInclude Include="include\AdvancedGDK\Server\Chat.hpp" />
-    <ClInclude Include="include\AdvancedGDK\Server\Command\Command.hpp" />
-    <ClInclude Include="include\AdvancedGDK\Server\Command\CommandManager.hpp" />
+    <ClInclude Include="include\AdvancedGDK\Server\Command.hpp" />
+    <ClInclude Include="include\AdvancedGDK\Server\CommandManager.hpp" />
     <ClInclude Include="include\AdvancedGDK\Core\Events.hpp" />
-    <ClInclude Include="include\AdvancedGDK\Server\Player\Teleport.hpp" />
-    <ClInclude Include="include\AdvancedGDK\World\Actor.hpp" />
+    <ClInclude Include="include\AdvancedGDK\Server\Dialog.hpp" />
+    <ClInclude Include="include\AdvancedGDK\Server\Keyboard.hpp" />
+    <ClInclude Include="include\AdvancedGDK\Server\Teleport.hpp" />
+    <ClInclude Include="include\AdvancedGDK\World\3DNode.hpp" />
+    <ClInclude Include="include\AdvancedGDK\World\GangZone.hpp" />
     <ClInclude Include="include\AdvancedGDK\World\Map.hpp" />
+    <ClInclude Include="include\AdvancedGDK\World\Pickup.hpp" />
+    <ClInclude Include="include\AdvancedGDK\World\RemovedBuilding.hpp" />
+    <ClInclude Include="include\AdvancedGDK\World\SceneLoader.hpp" />
     <ClInclude Include="include\AdvancedGDK\World\Streamer\ChunkActor.hpp" />
     <ClInclude Include="include\AdvancedGDK\World\Streamer\GlobalActorWrapper.hpp" />
     <ClInclude Include="include\AdvancedGDK\World\Streamer\GlobalObjectWrapper.hpp" />
+    <ClInclude Include="include\AdvancedGDK\World\Streamer\PersonalObjectWrapper.hpp" />
     <ClInclude Include="include\AdvancedGDK\World\Streamer\PlayerWrapper.hpp" />
     <ClInclude Include="include\AdvancedGDK\World\Streamer\Streamer.hpp" />
     <ClInclude Include="include\AdvancedGDK\World\Streamer\StreamerSettings.hpp" />
+    <ClInclude Include="include\AdvancedGDK\World\Streamer\UniversalObjectWrapper.hpp" />
     <ClInclude Include="include\AdvancedGDK\World\Streamer\VehicleWrapper.hpp" />
-    <ClInclude Include="include\AdvancedGDK\World\Vehicle\Vehicle.hpp" />
-    <ClInclude Include="include\AdvancedGDK\World\Vehicle\VehiclePool.hpp" />
-    <ClInclude Include="include\AdvancedGDK\Server\Player\Weapon.hpp" />
-    <ClInclude Include="include\AdvancedGDK\Compilation\PrecompiledHeader.hpp" />
-    <ClInclude Include="include\AdvancedGDK\Compilation\SampGDK.hpp" />
+    <ClInclude Include="include\AdvancedGDK\World\Vehicle.hpp" />
+    <ClInclude Include="include\AdvancedGDK\Server\Weapon.hpp" />
+    <ClInclude Include="include\AdvancedGDK\Dependencies\SampGDK.hpp" />
     <ClInclude Include="include\AdvancedGDK\Server\GameMode.hpp" />
     <ClInclude Include="include\AdvancedGDK\Core\Clock.hpp" />
     <ClInclude Include="include\AdvancedGDK\Core\Color.hpp" />
     <ClInclude Include="include\AdvancedGDK\Core\Exceptions.hpp" />
-    <ClInclude Include="include\AdvancedGDK\Core\MathInc.hpp" />
     <ClInclude Include="include\AdvancedGDK\Core\Pointers.hpp" />
-    <ClInclude Include="include\AdvancedGDK\Server\Player\Player.hpp" />
+    <ClInclude Include="include\AdvancedGDK\Server\Player.hpp" />
     <ClInclude Include="include\AdvancedGDK\Server\Server.hpp" />
-    <ClInclude Include="include\AdvancedGDK\Server\Player\PlayerPool.hpp" />
-    <ClInclude Include="include\AdvancedGDK\World\MapObject\GlobalObject.hpp" />
+    <ClInclude Include="include\AdvancedGDK\Server\PlayerPool.hpp" />
+    <ClInclude Include="include\AdvancedGDK\World\GlobalObject.hpp" />
     <ClInclude Include="include\AdvancedGDK\World\MapObject.hpp" />
     <ClInclude Include="include\AdvancedGDK\World\Streamer\Chunk.hpp" />
-    <ClInclude Include="include\AdvancedGDK\World\MapObject\PersonalObject.hpp" />
+    <ClInclude Include="include\AdvancedGDK\World\PersonalObject.hpp" />
     <ClInclude Include="include\AdvancedGDK\World\Scene.hpp" />
-    <ClInclude Include="include\AdvancedGDK\World\MapObject\PerPlayerObject.hpp" />
-    <ClInclude Include="include\AdvancedGDK\World\MapObject\UniversalObject.hpp" />
+    <ClInclude Include="include\AdvancedGDK\World\PerPlayerObject.hpp" />
+    <ClInclude Include="include\AdvancedGDK\World\UniversalObject.hpp" />
     <ClInclude Include="AdvancedGDKPCH.hpp" />
+    <ClInclude Include="include\AdvancedGDK\World\WI3DNode.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="dependencies\sampgdk\amxplugin.cpp">
+    <ClCompile Include="..\Dependencies\sampgdk\amxplugin.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="dependencies\sampgdk\sampgdk.c">
+    <ClCompile Include="..\Dependencies\sampgdk\sampgdk.c">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
@@ -262,51 +265,57 @@
     </ClCompile>
     <ClCompile Include="src\AdvancedGDK\Core\Actions.cpp" />
     <ClCompile Include="src\AdvancedGDK\Core\BasicInterfaces\PlacementTracker.cpp" />
-    <ClCompile Include="src\AdvancedGDK\Core\Math\Random.cpp" />
     <ClCompile Include="src\AdvancedGDK\Core\Text\ASCII.cpp" />
+    <ClCompile Include="src\AdvancedGDK\Server\Command.cpp" />
+    <ClCompile Include="src\AdvancedGDK\Server\CommandManager.cpp" />
+    <ClCompile Include="src\AdvancedGDK\Server\Keyboard.cpp" />
+    <ClCompile Include="src\AdvancedGDK\Server\Player.cpp" />
+    <ClCompile Include="src\AdvancedGDK\Server\PlayerPool.cpp" />
+    <ClCompile Include="src\AdvancedGDK\Server\Weapon.cpp" />
+    <ClCompile Include="src\AdvancedGDK\World\3DNode.cpp" />
+    <ClCompile Include="src\AdvancedGDK\World\GangZone.cpp" />
+    <ClCompile Include="src\AdvancedGDK\World\Map.cpp" />
     <ClCompile Include="src\AdvancedGDK\World\Scene.cpp" />
-    <ClCompile Include="src\AdvancedGDK\World\MapObject\GlobalObject.cpp" />
+    <ClCompile Include="src\AdvancedGDK\World\GlobalObject.cpp" />
+    <ClCompile Include="src\AdvancedGDK\World\SceneLoader.cpp" />
     <ClCompile Include="src\AdvancedGDK\World\Streamer\Chunk.cpp" />
-    <ClCompile Include="src\AdvancedGDK\World\MapObject\PersonalObject.cpp" />
-    <ClCompile Include="src\AdvancedGDK\World\MapObject\UniversalObject.cpp" />
+    <ClCompile Include="src\AdvancedGDK\World\PersonalObject.cpp" />
+    <ClCompile Include="src\AdvancedGDK\World\UniversalObject.cpp" />
     <ClCompile Include="src\AdvancedGDK\Server\Chat.cpp" />
-    <ClCompile Include="src\AdvancedGDK\Server\Command\Command.cpp" />
-    <ClCompile Include="src\AdvancedGDK\Server\Command\CommandManager.cpp" />
     <ClCompile Include="src\AdvancedGDK\World\Streamer\ChunkActor.cpp" />
     <ClCompile Include="src\AdvancedGDK\World\Streamer\GlobalActorWrapper.cpp" />
     <ClCompile Include="src\AdvancedGDK\World\Streamer\GlobalObjectWrapper.cpp" />
+    <ClCompile Include="src\AdvancedGDK\World\Streamer\PersonalObjectWrapper.cpp" />
     <ClCompile Include="src\AdvancedGDK\World\Streamer\PlayerWrapper.cpp" />
     <ClCompile Include="src\AdvancedGDK\World\Streamer\Streamer.cpp" />
+    <ClCompile Include="src\AdvancedGDK\World\Streamer\UniversalObjectWrapper.cpp" />
     <ClCompile Include="src\AdvancedGDK\World\Streamer\VehicleWrapper.cpp" />
-    <ClCompile Include="src\AdvancedGDK\World\Vehicle\Vehicle.cpp" />
-    <ClCompile Include="src\AdvancedGDK\World\Vehicle\VehiclePool.cpp" />
-    <ClCompile Include="src\AdvancedGDK\Server\Player\Weapon.cpp" />
-    <ClCompile Include="src\AdvancedGDK\Server\Player\PlayerPool.cpp" />
+    <ClCompile Include="src\AdvancedGDK\World\Vehicle.cpp" />
     <ClCompile Include="src\AdvancedGDK\Server\GameMode.cpp" />
     <ClCompile Include="src\AdvancedGDK\Core\Clock.cpp" />
     <ClCompile Include="src\AdvancedGDK\Core\Color.cpp" />
-    <ClCompile Include="src\AdvancedGDK\Server\Player\Player.cpp" />
     <ClCompile Include="src\AdvancedGDK\Server\Server.cpp" />
     <ClCompile Include="src\AdvancedGDK\World\MapObject.cpp" />
-    <ClCompile Include="src\AdvancedGDK\World\MapObject\PerPlayerObject.cpp" />
+    <ClCompile Include="src\AdvancedGDK\World\PerPlayerObject.cpp" />
     <ClCompile Include="AdvancedGDKPCH.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="src\AdvancedGDK\World\WI3DNode.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\AdvancedGDK\Core\BasicInterfacesInc.hpp">
       <FileType>Document</FileType>
     </ClInclude>
     <None Include="include\AdvancedGDK\Core\ContainerInc.hpp" />
-    <None Include="include\AdvancedGDK\Core\Math\Shapes\Algorithm.inl" />
-    <None Include="include\AdvancedGDK\Core\Math\Helper.inl" />
-    <None Include="include\AdvancedGDK\Core\Math\Random.inl" />
     <None Include="include\AdvancedGDK\Core\Text\ASCII.inl" />
     <None Include="include\AdvancedGDK\Core\Text\StreamAlgorithm.inl" />
     <None Include="include\AdvancedGDK\Core\Text\TokenIterator.inl" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="TODO.md" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

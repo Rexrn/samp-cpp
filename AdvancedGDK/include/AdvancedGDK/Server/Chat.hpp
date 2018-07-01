@@ -30,7 +30,7 @@ namespace agdk
 		void messagePlayer(Player const & player_, std::string const & text_);
 
 		/// <summary>
-		/// Sends simple message to all players.
+		/// Sends simple message to all Players.
 		/// </summary>
 		/// <param name="text_">The text message.</param>
 		void messageAll(std::string const & text_);
@@ -43,7 +43,7 @@ namespace agdk
 		void messagePlayerML(Player const & player_, std::vector<std::string> text_);
 
 		/// <summary>
-		/// Sends multilingual message to all players.
+		/// Sends multilingual message to all Players.
 		/// </summary>
 		/// <param name="text_">The text message (each record in std::vector represents one language).</param>
 		void messageAllML(std::vector<std::string> text_);
@@ -65,7 +65,7 @@ namespace agdk
 		/// </summary>
 		/// <param name="player_">The player.</param>
 		/// <param name="text_">The text.</param>
-		virtual void whenPlayerSendsText(Player & player_, std::string const & text_) = 0;
+		virtual void whenPlayerSendsText(Player & player_, std::string_view text_) = 0;
 	};
 	
 	/// <summary>
@@ -83,6 +83,6 @@ namespace agdk
 		/// </summary>
 		/// <param name="player_">The player.</param>
 		/// <param name="text_">The text.</param>
-		virtual void whenPlayerSendsText(Player & player_, std::string const & text_) override;
+		virtual void whenPlayerSendsText(Player & player_, std::string_view text_) override;
 	};
 }

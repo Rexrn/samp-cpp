@@ -90,7 +90,7 @@ ActionScheduler::HandleType ActionScheduler::internalSchedule(DurationType const
 	record.repeatsRemaining		= repeatCount_;
 	record.action				= action_;
 
-	std::size_t uniqueHandle	= this->makeUniqueHandle();
+	HandleType uniqueHandle		= this->makeUniqueHandle();
 
 	record.handle				= uniqueHandle;
 	

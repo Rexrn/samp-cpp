@@ -2,8 +2,7 @@
 
 // Custom headers:
 #include <AdvancedGDK/Core/Color.hpp>			// Color header
-#include <AdvancedGDK/Core/Math/Random.hpp>		// used in Color::random
-#include <AdvancedGDK/Core/Text/ASCII.hpp>			// for string manipulation
+#include <AdvancedGDK/Core/Text/ASCII.hpp>		// for string manipulation
 
 
 namespace agdk

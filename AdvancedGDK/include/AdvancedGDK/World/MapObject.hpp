@@ -1,17 +1,19 @@
 #pragma once
 
+// Precompiled header:
 #include ADVANCEDGDK_PCH
 
-#include <AdvancedGDK/Core/Color.hpp>
-#include <AdvancedGDK/Core/MathInc.hpp>
+// Base class headers:
+#include <AdvancedGDK/World/3DNode.hpp>
 #include <AdvancedGDK/Core/BasicInterfaces/NonCopyable.hpp>
 
-#include <AdvancedGDK/World/Actor.hpp>
+// Other headers:
+#include <AdvancedGDK/Core/Pointers.hpp>
+#include <AdvancedGDK/Core/Color.hpp>
+
 
 namespace agdk
 {
-using RemovedBuilding = std::tuple<std::int32_t, math::Vector3f, math::Meters>;
-
 class Player;
 
 /// <summary>
@@ -19,7 +21,7 @@ class Player;
 /// </summary>
 class IMapObject
 	:
-	public virtual IActor,
+	public virtual I3DNode,
 	public INonCopyable
 {	
 protected:
@@ -55,6 +57,19 @@ protected:
 		virtual void apply(IMapObject &object_, std::size_t const materialIndex_, Player const * player_ = nullptr) const = 0;
 	};
 public:
+	// Types and aliases:
+	using HandleType			= Int32;
+	using MaterialsContainer	= std::vector< UniquePtr<IMaterial> >;
+
+	constexpr static Int32 InvalidHandle = INVALID_OBJECT_ID;
+
+	enum class EditResponse
+	{
+		Cancel	= EDIT_RESPONSE_CANCEL,
+		Final	= EDIT_RESPONSE_FINAL,
+		Update	= EDIT_RESPONSE_UPDATE
+	};
+
 	// Some settings:
 	constexpr static float cxDefaultDrawDistance = 700.f;
 
@@ -167,51 +182,39 @@ public:
 	///		Object can be streamed in from greater distance and still not be visible, because of draw distance.
 	/// </para>
 	/// </remarks>	
-	void setDrawDistance(float const drawDistance_) {
-		m_drawDistance = drawDistance_;
-	}
+	void setDrawDistance(float const drawDistance_);
 
 	/// <summary>
 	/// Returns the object model.
 	/// </summary>
 	/// <returns>The object model.</returns>
-	virtual std::int32_t getModel() const {
-		return m_modelIndex;
-	}
-		
+	virtual std::int32_t getModel() const;
+
 	/// <summary>
 	/// Returns the object rotation.
 	/// </summary>
 	/// <returns>The object rotation.</returns>
-	virtual math::Vector3f getRotation() const {
-		return m_rotation;
-	}
-		
+	virtual math::Vector3f getRotation() const;
+
 	/// <summary>
 	/// Returns the object draw distance.
 	/// </summary>
 	/// <returns></returns>
-	float getDrawDistance() const {
-		return m_drawDistance;
-	}
+	float getDrawDistance() const;
 
 	/// <summary>
 	/// Returns cref to materials.
 	/// </summary>
 	/// <returns>cref to the materials.</returns>
-	auto const & getMaterials() const {
-		return m_materials;
-	}
-	
+	MaterialsContainer const& getMaterials() const;
+
 	/// <summary>
 	/// Determines whether object is in motion.
 	/// </summary>
 	/// <returns>
 	///   <c>true</c> if object is in motion; otherwise, <c>false</c>.
 	/// </returns>
-	bool isInMotion() const {
-		return m_inMotion;
-	}
+	bool isInMotion() const;
 protected:
 	
 	/// <summary>
@@ -230,11 +233,11 @@ protected:
 	/// <param name="player_">The player.</param>
 	virtual void applyTexture(std::size_t const materialIndex_, Texture const & textureMaterial_, Player const * player_ = nullptr) = 0;
 
-	std::int32_t	m_modelIndex;
-	math::Vector3f	m_rotation;
-	float			m_drawDistance;
-	bool			m_inMotion;
-	std::vector< std::unique_ptr<IMaterial> > m_materials;
+	Int32				m_modelIndex;
+	math::Vector3f		m_rotation;
+	float				m_drawDistance;
+	bool				m_inMotion;
+	MaterialsContainer	m_materials;
 };
 
 }

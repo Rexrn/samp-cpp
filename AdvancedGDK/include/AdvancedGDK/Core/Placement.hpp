@@ -1,5 +1,7 @@
 #pragma once
 
+#include ADVANCEDGDK_PCH
+
 namespace agdk
 {
 

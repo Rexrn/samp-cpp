@@ -2,6 +2,8 @@
 
 #include ADVANCEDGDK_PCH
 
+#include <AdvancedGDK/Core/Pointers.hpp>
+
 #include <typeinfo>
 #include <typeindex>
 
@@ -181,7 +183,7 @@ private:
 	}
 
 	IEventReceiver* 						m_receiver;		// pointer to receiver object
-	std::unique_ptr<void, void(*)(void*)> 	m_fnWrapper;	// pointer to wrapper of the method
+	UniquePtr<void, void(*)(void*)> 	m_fnWrapper;	// pointer to wrapper of the method
 	std::type_index 						m_recvType;		// receiver type_index used when comparing
 	InvokerFn 								m_invoker;		// invoker function
 	CompareFn								m_compare;		// compare function
@@ -383,7 +385,7 @@ private:
 	{
 		m_hooks.erase(
 			std::remove_if(m_hooks.begin(), m_hooks.end(),
-				[&recv_](std::unique_ptr< EventHook<_Args...> > const & element_) {
+				[&recv_](UniquePtr< EventHook<_Args...> > const & element_) {
 			return element_->getReceiver() == &recv_;
 		}),
 			m_hooks.end());
@@ -401,7 +403,7 @@ private:
 		// See operator += and operator-= : the object (with automatic storage duration) life extends beyond current function, so its safe.
 		auto &deHook = *static_cast<EventHook<_Args...>*>(hook_);
 		auto it = std::find_if(m_hooks.begin(), m_hooks.end(),
-			[&deHook](std::unique_ptr< EventHook<_Args...> > const & element_) {
+			[&deHook](UniquePtr< EventHook<_Args...> > const & element_) {
 			return *element_ == deHook;
 		});
 		if (it != m_hooks.end())
@@ -410,7 +412,7 @@ private:
 		// At this point reference to a dispatcher inside receiver is still stored.
 		// We need to check if there is any other hook from that receiver; if not - remove ref.
 		std::size_t howManyHooks = std::count_if(m_hooks.begin(), m_hooks.end(),
-			[&deHook](std::unique_ptr< EventHook<_Args...> > const & element_) {
+			[&deHook](UniquePtr< EventHook<_Args...> > const & element_) {
 			return element_->getReceiver() == deHook.getReceiver();
 		});
 		if (howManyHooks == 0)
@@ -418,7 +420,7 @@ private:
 	}
 
 	// Stores every hook.
-	std::vector< std::unique_ptr< EventHook<_Args...> > > m_hooks;
+	std::vector< UniquePtr< EventHook<_Args...> > > m_hooks;
 };
 
 }

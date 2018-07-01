@@ -2,34 +2,71 @@
 
 #include ADVANCEDGDK_PCH
 
-#include <AdvancedGDK/Core/MathInc.hpp>
+// Base class headers:
 #include <AdvancedGDK/Core/BasicInterfaces/NonCopyable.hpp>
 
+// Stored classes:
 #include <AdvancedGDK/World/MapObject.hpp>
-#include <AdvancedGDK/World/MapObject/PersonalObject.hpp>
-#include <AdvancedGDK/World/MapObject/UniversalObject.hpp>
-#include <AdvancedGDK/World/MapObject/GlobalObject.hpp>
+#include <AdvancedGDK/World/PersonalObject.hpp>
+#include <AdvancedGDK/World/UniversalObject.hpp>
+#include <AdvancedGDK/World/GlobalObject.hpp>
+#include <AdvancedGDK/World/RemovedBuilding.hpp>
+
+// Core:
+#include <AdvancedGDK/Core/Pointers.hpp>
 
 namespace agdk
 {
+
+class ISceneLoader;
 
 /// <summary>
 /// Wraps objects inside one scene.
 /// </summary>
 /// <seealso cref="INonCopyable" />
-class Scene final
+class Scene
 	: public INonCopyable
 {
-public:	
+public:
 	template <typename TType>
-	using ObjectPtrType			= std::shared_ptr<TType>;
+	using ObjectPtrType = SharedPtr<TType>;
 	template <typename TType>
-	using ObjectContainerType	= std::vector< ObjectPtrType<TType> >;
+	using ObjectContainerType = std::vector< ObjectPtrType<TType> >;
 
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Scene"/> class.
 	/// </summary>
 	Scene();
+
+	/// <summary>
+	/// Initializes a new instance of the <see cref="Scene"/> class.
+	/// </summary>
+	Scene(Scene&&) = default;
+
+	/// <summary>
+	/// Move assignment operator.
+	/// </summary>
+	/// <param name="other_">The other scene.</param>
+	/// <returns>Reference to self.</returns>
+	Scene& operator=(Scene&& other_) = default;
+	
+	/// <summary>
+	/// Loads scene from stream.
+	/// </summary>
+	/// <param name="stream_">The stream.</param>
+	/// <param name="loader_">The loader.</param>
+	void loadFromStream(std::istream & stream_, ISceneLoader const & loader_);
+
+	/// <summary>
+	/// Constructs specified object on the scene.
+	/// </summary>
+	/// <param name="args_">The construction params.</param>
+	/// <returns>Reference to the constructed object..</returns>
+	template <typename TType, typename... TArgTypes>
+	TType& construct(TArgTypes&&...args_)
+	{
+		return this->finalizeConstruction(this->beginConstruction<TType>(std::forward<TArgTypes>(args_)...));
+	}
 
 	/// <summary>
 	/// Begins the object construction (it is not added yet to the scene).
@@ -41,7 +78,7 @@ public:
 	{
 		return std::make_shared<TType>(std::forward<TArgTypes>(args_)...);
 	}
-	
+
 	/// <summary>
 	/// Finalizes the global object construction - adds it to the pool.
 	/// </summary>
@@ -55,14 +92,19 @@ public:
 	/// <param name="universalObject_">The universal object.</param>
 	/// <returns>Reference to created object.</returns>
 	UniversalObject& finalizeConstruction(ObjectPtrType< UniversalObject > const& universalObject_);
-
+	
 	/// <summary>
-	/// Finalizes the personal object construction - adds it to the pool.
+	/// Removes building from the GTA original map.
 	/// </summary>
-	/// <param name="personalObject_">The personal object.</param>
-	/// <returns>Reference to created object.</returns>
-	PersonalObject& finalizeConstruction(ObjectPtrType< PersonalObject > const& personalObject_);
-
+	/// <param name="building_">The building.</param>
+	void removeBuilding(RemovedBuilding const building_);
+		
+	/// <summary>
+	/// Cancels the building removal. Does not do anything if called after scene was added to map (it cannot restore removed buildings).
+	/// </summary>
+	/// <param name="building_">The building.</param>
+	void cancelBuildingRemoval(RemovedBuilding const building_);
+	
 	/// <summary>
 	/// Determines whether scene contains the specified object.
 	/// </summary>
@@ -71,13 +113,13 @@ public:
 	///   <c>true</c> if scene contains the specified object; otherwise <c>false</c>.
 	/// </returns>
 	bool contains(IMapObject & object_);
-	
+
 	/// <summary>
 	/// Sets the origin to specified location.
 	/// </summary>
 	/// <param name="location_">The location.</param>
 	void setOrigin(math::Vector3f const location_);
-		
+
 	/// <summary>
 	/// Relocates entire scene to new location. Origin will become point set by `location_`.
 	/// </summary>
@@ -89,42 +131,63 @@ public:
 	/// </summary>
 	/// <param name="delta_">The delta.</param>
 	void move(math::Vector3f const delta_);
-	
+
 	/// <summary>
 	/// Sets the automatic origin flag and recalculates origin if set to true.
 	/// </summary>
 	/// <param name="autoOrigin_">The automatic origin.</param>
-	void setAutomaticOrigin(bool const autoOrigin_)
-	{
-		if (autoOrigin_ && !m_autoOrigin)
-			this->recalculateOrigin();
+	void setAutomaticOrigin(bool const autoOrigin_);
 
-		m_autoOrigin = autoOrigin_;
-	}
-			
 	/// <summary>
 	/// Determines whether scene has automatic origin calculation.
 	/// </summary>
 	/// <returns>
 	///   <c>true</c> if has automatic origin; otherwise, <c>false</c>.
 	/// </returns>
-	bool isAutomaticOrigin() const {
-		return m_autoOrigin;
-	}
+	bool isAutomaticOrigin() const;
 
 	/// <summary>
 	/// Returns the origin.
 	/// </summary>
 	/// <returns>The origin.</returns>
-	math::Vector3f getOrigin() const {
-		return m_origin;
+	math::Vector3f getOrigin() const;
+	
+	/// <summary>
+	/// Returns cref to the objects container (containing non-owining ptrs).
+	/// </summary>
+	/// <returns>
+	///		cref to the objects container (containing non-owining ptrs).
+	/// </returns>
+	auto const& getObjects() const {
+		return m_objects;
+	}
+	
+	/// <summary>
+	/// Returns cref to the removed buildings container (containing non-owining ptrs).
+	/// </summary>
+	/// <returns>
+	///		cref to the removed buildings container (containing non-owining ptrs).
+	/// </returns>
+	auto const& getRemovedBuildings() const {
+		return m_removedBuildings;
 	}
 
+	friend class MapClass;
 private:	
+	/// <summary>
+	/// Event reaction designed to be called when scene is added to the map.
+	/// </summary>
+	virtual void whenSceneIsAddedToMap();
+
+	/// <summary>
+	/// Event reaction designed to be called when scene is removed from the map.
+	/// </summary>
+	virtual void whenSceneIsRemovedFromMap();
+
 	/// <summary>
 	/// Recalculates the origin.
 	/// </summary>
-	void recalculateOrigin();
+	virtual void recalculateOrigin();
 	
 	/// <summary>
 	/// Applies the new object to origin.
@@ -132,12 +195,13 @@ private:
 	/// <param name="object_">The object.</param>
 	void applyNewObjectToOrigin(IMapObject const & object_, std::size_t newObjectsCount_);
 
+	bool									m_insideMap;		// Determines whether this scene is placed inside the map.
 	bool									m_autoOrigin;
 	math::Vector3f							m_origin;
 	std::vector<IMapObject*>				m_objects;
+	std::vector<RemovedBuilding>			m_removedBuildings;
 	ObjectContainerType< GlobalObject >		m_globalObjects;
 	ObjectContainerType< UniversalObject >	m_universalObjects;
-	ObjectContainerType< PersonalObject >	m_personalObjects;
 };
 
 }

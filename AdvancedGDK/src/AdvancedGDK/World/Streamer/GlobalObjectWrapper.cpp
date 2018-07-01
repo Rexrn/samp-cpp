@@ -3,28 +3,30 @@
 #include <AdvancedGDK/World/Streamer/GlobalObjectWrapper.hpp>
 
 // Additional includes:
-#include <AdvancedGDK/Server/Player/Player.hpp>
+#include <AdvancedGDK/Server/Player.hpp>
 #include <AdvancedGDK/World/Streamer/StreamerSettings.hpp>
+#include <AdvancedGDK/Server/GameMode.hpp>
 
 namespace agdk::default_streamer
 {
 
 ////////////////////////////////////////////////////////////////////////
-GlobalObjectWrapper::GlobalObjectWrapper()
-	: m_object{ nullptr }
-{
-}
-
-////////////////////////////////////////////////////////////////////////
 GlobalObjectWrapper::GlobalObjectWrapper(GlobalObject& object_)
-	: m_object{ &object_ }
+	:
+	IGlobalObjectPlacementTracker(object_.getPlacement()),
+	m_object{ &object_ }
 {
+	m_object->setPlacementTracker(this);
 }
 
 ////////////////////////////////////////////////////////////////////////
 void GlobalObjectWrapper::setObject(GlobalObject& object_)
 {
+	if (m_object)
+		m_object->setPlacementTracker(nullptr);
+
 	m_object = &object_;
+	m_object->setPlacementTracker(this);
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -49,9 +51,7 @@ bool GlobalObjectWrapper::isPlayerInVisibilityZone(PlayerPlacement const& placem
 ////////////////////////////////////////////////////////////////////////
 void GlobalObjectWrapper::whenPlacementChanges(GlobalObjectPlacement const& prevPlacement_, GlobalObjectPlacement const& newPlacement_)
 {
-	// TODO: implement this:
-	// Find a way to notify streamer without breaking SOLID.
-	// Possibly by interface (like the abstraction layers work).
+	GameMode->Streamer->whenObjectPlacementChanges(*m_object, prevPlacement_, newPlacement_);
 }
 
 }

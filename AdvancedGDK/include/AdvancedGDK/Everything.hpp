@@ -7,7 +7,8 @@
 #define ADVANCEDGDK_PCH "AdvancedGDK/../../AdvancedGDKPCH.hpp"
 #endif
 
-#include <AdvancedGDK/Compilation/SampGDK.hpp>
+#include <AdvancedGDK/Dependencies/SampGDK.hpp>
+#include <AdvancedGDK/Dependencies/QuickMaffs.hpp>
 
 // Core/:
 #include <AdvancedGDK/Core/Actions.hpp>
@@ -18,7 +19,6 @@
 #include <AdvancedGDK/Core/Pointers.hpp>
 #include <AdvancedGDK/Core/TypeTraits.hpp>
 
-#include <AdvancedGDK/Core/MathInc.hpp>
 #include <AdvancedGDK/Core/TextInc.hpp>
 #include <AdvancedGDK/Core/ContainerInc.hpp>
 #include <AdvancedGDK/Core/BasicInterfacesInc.hpp>
@@ -27,18 +27,25 @@
 // World/:
 #include <AdvancedGDK/World/MapObject.hpp>
 #include <AdvancedGDK/World/Scene.hpp>
-#include <AdvancedGDK/World/Streaming/ChunkActor.hpp>
-#include <AdvancedGDK/World/Chunk.hpp>
-
-// --> World/Vehicle/:
-#include <AdvancedGDK/World/Vehicle/Vehicle.hpp>
-#include <AdvancedGDK/World/Vehicle/VehiclePool.hpp>
+#include <AdvancedGDK/World/Vehicle.hpp>
+#include <AdvancedGDK/World/Map.hpp>
+#include <AdvancedGDK/World/SceneLoader.hpp>
+#include <AdvancedGDK/World/GangZone.hpp>
 
 // --> World/MapObject/:
-#include <AdvancedGDK/World/MapObject/GlobalObject.hpp>
-#include <AdvancedGDK/World/MapObject/PersonalObject.hpp>
-#include <AdvancedGDK/World/MapObject/StreamableObject.hpp>
-#include <AdvancedGDK/World/MapObject/UniversalObject.hpp>
+#include <AdvancedGDK/World/GlobalObject.hpp>
+#include <AdvancedGDK/World/PersonalObject.hpp>
+#include <AdvancedGDK/World/UniversalObject.hpp>
+
+// --> World/Streamer/:
+#include <AdvancedGDK/World/Streamer/Chunk.hpp>
+#include <AdvancedGDK/World/Streamer/ChunkActor.hpp>
+#include <AdvancedGDK/World/Streamer/GlobalActorWrapper.hpp>
+#include <AdvancedGDK/World/Streamer/GlobalObjectWrapper.hpp>
+#include <AdvancedGDK/World/Streamer/VehicleWrapper.hpp>
+#include <AdvancedGDK/World/Streamer/PlayerWrapper.hpp>
+#include <AdvancedGDK/World/Streamer/StreamerSettings.hpp>
+#include <AdvancedGDK/World/Streamer/Streamer.hpp>
 
 // Server/:
 #include <AdvancedGDK/Server/Chat.hpp>
@@ -46,11 +53,11 @@
 #include <AdvancedGDK/Server/Server.hpp>
 
 // --> Server/Command/:
-#include <AdvancedGDK/Server/Command/Command.hpp>
-#include <AdvancedGDK/Server/Command/CommandManager.hpp>
+#include <AdvancedGDK/Server/Command.hpp>
+#include <AdvancedGDK/Server/CommandManager.hpp>
 
 // --> Server/Player:
-#include <AdvancedGDK/Server/Player/Player.hpp>
-#include <AdvancedGDK/Server/Player/PlayerPool.hpp>
-#include <AdvancedGDK/Server/Player/Weapon.hpp>
-#include <AdvancedGDK/Server/Player/Teleport.hpp>
+#include <AdvancedGDK/Server/Player.hpp>
+#include <AdvancedGDK/Server/PlayerPool.hpp>
+#include <AdvancedGDK/Server/Weapon.hpp>
+#include <AdvancedGDK/Server/Teleport.hpp>

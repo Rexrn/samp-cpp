@@ -4,7 +4,6 @@
 namespace agdk::text
 {
 
-#ifdef __cpp_template_auto
 template <auto _char, typename TCharType>
 inline std::basic_istream<TCharType>& skipIf(std::basic_istream<TCharType>& istream_)
 {
@@ -16,7 +15,7 @@ inline std::basic_istream<TCharType>& skipIf(std::basic_istream<TCharType>& istr
 	}
 	return istream_;
 }
-#else
+
 template <typename TCharType, TCharType _char>
 inline std::basic_istream<TCharType>& skipIf(std::basic_istream<TCharType>& istream_)
 {
@@ -28,6 +27,5 @@ inline std::basic_istream<TCharType>& skipIf(std::basic_istream<TCharType>& istr
 	}
 	return istream_;
 }
-#endif
 
 } // namespace

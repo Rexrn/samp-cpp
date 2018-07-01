@@ -1,7 +1,7 @@
 #include "AdvancedGDKPCH.hpp"
 
 #include <AdvancedGDK/World/MapObject.hpp>
-#include <AdvancedGDK/Server/Player/Player.hpp>
+#include <AdvancedGDK/Server/Player.hpp>
 
 namespace agdk
 {
@@ -98,6 +98,42 @@ void IMapObject::setMaterial(std::size_t const materialIndex_, Texture const & t
 void IMapObject::setRotation(math::Vector3f const & rotationAxes_)
 {
 	m_rotation = rotationAxes_;
+}
+
+//////////////////////////////////////////////////////////////////////////
+void IMapObject::setDrawDistance(float const drawDistance_)
+{
+	m_drawDistance = drawDistance_;
+}
+
+//////////////////////////////////////////////////////////////////////////
+std::int32_t IMapObject::getModel() const
+{
+	return m_modelIndex;
+}
+
+//////////////////////////////////////////////////////////////////////////
+math::Vector3f IMapObject::getRotation() const
+{
+	return m_rotation;
+}
+
+//////////////////////////////////////////////////////////////////////////
+float IMapObject::getDrawDistance() const
+{
+	return m_drawDistance;
+}
+
+//////////////////////////////////////////////////////////////////////////
+IMapObject::MaterialsContainer const& IMapObject::getMaterials() const
+{
+	return m_materials;
+}
+
+//////////////////////////////////////////////////////////////////////////
+bool IMapObject::isInMotion() const
+{
+	return m_inMotion;
 }
 
 //////////////////////////////////////////////////////////////////////////

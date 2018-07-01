@@ -1,6 +1,6 @@
 #pragma once
 
-#include <AdvancedGDK/World/Actor.hpp>
+#include <AdvancedGDK/World/3DNode.hpp>
 
 namespace agdk::default_streamer
 {
@@ -34,7 +34,14 @@ public:
 	/// <returns>The chunk instance belongs to. May be nullptr.</returns>
 	Chunk* getChunk() const;
 
+	friend class Chunk;
 protected:
+
+	/// <summary>
+	/// Resets chunk pointer to nullptr.
+	/// </summary>
+	/// <param name="ptr_">The nullptr.</param>
+	void setChunk(std::nullptr_t ptr_);
 
 	Chunk* m_chunk; // Chunk in which actor is located.
 };

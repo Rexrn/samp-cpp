@@ -5,7 +5,7 @@
 #include <AdvancedGDK/Core/BasicInterfaces/PlacementTracker.hpp>
 
 // Wrapped class:
-#include <AdvancedGDK/World/MapObject/GlobalObject.hpp>
+#include <AdvancedGDK/World/GlobalObject.hpp>
 
 namespace agdk
 {
@@ -19,11 +19,6 @@ class GlobalObjectWrapper
 	public IGlobalObjectPlacementTracker
 {
 public:
-
-	/// <summary>
-	/// Initializes a new instance of the <see cref="GlobalObjectWrapper"/> class.
-	/// </summary>
-	GlobalObjectWrapper();
 
 	/// <summary>
 	/// Initializes a new instance of the <see cref="GlobalObjectWrapper"/> class.

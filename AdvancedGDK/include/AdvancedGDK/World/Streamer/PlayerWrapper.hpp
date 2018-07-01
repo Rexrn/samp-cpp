@@ -7,7 +7,8 @@
 #include <AdvancedGDK/Core/BasicInterfaces/PlacementTracker.hpp>
 
 // Wrapped class:
-#include <AdvancedGDK/Server/Player/Player.hpp>
+#include <AdvancedGDK/Server/Player.hpp>
+#include <AdvancedGDK/World/PerPlayerObject.hpp>
 
 namespace agdk::default_streamer
 {
@@ -15,14 +16,9 @@ namespace agdk::default_streamer
 class PlayerWrapper
 	:
 	public IChunkActor,
-	public IActorPlacementTracker
+	public I3DNodePlacementTracker
 {
 public:
-	/// <summary>
-	/// Initializes a new instance of the <see cref="PlayerWrapper"/> class.
-	/// </summary>
-	PlayerWrapper();
-
 	/// <summary>
 	/// Initializes a new instance of the <see cref="PlayerWrapper"/> class.
 	/// </summary>
@@ -39,7 +35,7 @@ public:
 	/// Returns pointer to the underlying player.
 	/// </summary>
 	/// <returns>Pointer to the underlying player.</returns>
-	Player* getPlayer() const {
+	Player * getPlayer() const {
 		return m_player;
 	}
 	
@@ -50,6 +46,7 @@ public:
 	/// <param name="newPlacement_">The new placement.</param>
 	virtual void whenPlacementChanges(ActorPlacement const& prevPlacement_, ActorPlacement const& newPlacement_) override;
 
+	std::vector<PerPlayerObject*> spawnedObjects; // List of per-player objects spawned.
 private:
 	Player * m_player; // The underlying player.
 };

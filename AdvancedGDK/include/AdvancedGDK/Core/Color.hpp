@@ -179,7 +179,7 @@ namespace agdk
 	/// Allows to push <see cref="Color"/> objects to std::ostream streams using operator<<.
 	/// </summary>
 	std::ostream& operator<<(std::ostream &stream, const Color &color);
-	
+
 	/// <summary>
 	/// List of built-in colors.
 	/// </summary>

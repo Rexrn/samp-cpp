@@ -2,14 +2,14 @@
 
 
 #include <AdvancedGDK/Server/Chat.hpp>
-#include <AdvancedGDK/Server/Player/PlayerPool.hpp>
-#include <AdvancedGDK/Server/Player/Player.hpp>
+#include <AdvancedGDK/Server/PlayerPool.hpp>
+#include <AdvancedGDK/Server/Player.hpp>
 
 #include <AdvancedGDK/Core/Color.hpp>
 #include <AdvancedGDK/Core/Text/ASCII.hpp>
 
-#include <AdvancedGDK/Server/Server.hpp>
 #include <AdvancedGDK/Server/GameMode.hpp>
+#include <AdvancedGDK/Server/Server.hpp>
 
 
 namespace agdk
@@ -17,7 +17,7 @@ namespace agdk
 	//////////////////////////////////////////////////////////////////////////////////////////////////////
 	IChat::IChat()
 	{
-		g_server->events.playerSendsText += { *this, &IChat::whenPlayerSendsText };
+		Server->Events.PlayerSendsText += { *this, &IChat::whenPlayerSendsText };
 	}
 
 	//////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -113,7 +113,7 @@ namespace agdk
 	{
 		if (!text_.empty())
 		{
-			for (auto player : g_gameMode->players.getPool())
+			for (auto player : GameMode->Players.getPool())
 			{
 				this->messagePlayerML(*player, text_);
 			}
@@ -121,7 +121,7 @@ namespace agdk
 	}
 
 	//////////////////////////////////////////////////////////////////////////////////////////////////////
-	void DefaultChat::whenPlayerSendsText(Player & player_, std::string const & text_)
+	void DefaultChat::whenPlayerSendsText(Player & player_, std::string_view text_)
 	{
 		auto text = text::ascii::compose(player_.getColor(), player_.getName(), colors::White, " (", player_.getIndex(), "): ", text_);
 		this->messageAll(text);

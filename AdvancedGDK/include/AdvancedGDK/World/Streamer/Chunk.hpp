@@ -4,17 +4,20 @@
 
 // Wrappers:
 #include <AdvancedGDK/World/Streamer/GlobalObjectWrapper.hpp>
+#include <AdvancedGDK/World/Streamer/PersonalObjectWrapper.hpp>
+#include <AdvancedGDK/World/Streamer/UniversalObjectWrapper.hpp>
 #include <AdvancedGDK/World/Streamer/VehicleWrapper.hpp>
 #include <AdvancedGDK/World/Streamer/PlayerWrapper.hpp>
 
 // Wrappers' underlying object types:
-#include <AdvancedGDK/World/Vehicle/Vehicle.hpp>
-#include <AdvancedGDK/World/MapObject/GlobalObject.hpp>
-
+#include <AdvancedGDK/World/Vehicle.hpp>
+#include <AdvancedGDK/World/GlobalObject.hpp>
 
 // Additional includes:
-#include <AdvancedGDK/Core/MathInc.hpp>
 #include <AdvancedGDK/Core/BasicInterfaces/NonCopyable.hpp>
+#include <AdvancedGDK/Core/Pointers.hpp>
+#include <AdvancedGDK/Core/Container/DivisibleGrid3.hpp>
+#include <AdvancedGDK/World/GangZone.hpp>
 
 namespace agdk
 {
@@ -27,48 +30,77 @@ namespace default_streamer
 /// </summary>
 /// <seealso cref="INonCopyable" />
 class Chunk
-	: public INonCopyable
+	:
+#ifdef ADVANCEDGDK_DEBUG
+	public IDivisibleGrid3ElementBase,
+#endif
+	public INonCopyable
 {
 public:
 	template <typename TType>
-	using ActorContainer = std::vector< std::unique_ptr<TType> >;
+	using ActorContainer = std::vector< UniquePtr<TType> >;
 	
 	/// <summary>
 	/// Intercepts the specified player.
 	/// </summary>
 	/// <param name="player_">The player.</param>
-	void intercept(Player & player_);
+	void intercept(UniquePtr<PlayerWrapper> && player_);
 	
 	/// <summary>
 	/// Intercepts the specified vehicle.
 	/// </summary>
 	/// <param name="vehicle_">The vehicle.</param>
-	void intercept(Vehicle & vehicle_);
+	void intercept(UniquePtr<VehicleWrapper> && vehicle_);
 	
 	/// <summary>
 	/// Intercepts the specified global object.
 	/// </summary>
 	/// <param name="globalObject_">The global object.</param>
-	void intercept(GlobalObject & globalObject_);
+	void intercept(UniquePtr<GlobalObjectWrapper> && globalObject_);
+
+	/// <summary>
+	/// Intercepts the specified universal object.
+	/// </summary>
+	/// <param name="universalObject_">The universal object.</param>
+	void intercept(UniquePtr<UniversalObjectWrapper> && universalObject_);
+
+	/// <summary>
+	/// Intercepts the specified personal object.
+	/// </summary>
+	/// <param name="personalObject_">The personal object.</param>
+	void intercept(UniquePtr<PersonalObjectWrapper> && personalObject_);
+
 	
 	/// <summary>
 	/// Releases the specified player.
 	/// </summary>
 	/// <param name="player_">The player.</param>
-	void release(Player & player_);
+	[[nodiscard]] UniquePtr<PlayerWrapper> release(Player const & player_);
 	
 	/// <summary>
 	/// Releases the specified vehicle.
 	/// </summary>
 	/// <param name="vehicle_">The vehicle.</param>
-	void release(Vehicle & vehicle_);
+	[[nodiscard]] UniquePtr<VehicleWrapper> release(Vehicle const & vehicle_);
 	
 	/// <summary>
 	/// Releases the specified global object.
 	/// </summary>
 	/// <param name="globalObject_">The global object.</param>
-	void release(GlobalObject & globalObject_);
-			
+	[[nodiscard]] UniquePtr<GlobalObjectWrapper> release(GlobalObject const & globalObject_);
+
+	/// <summary>
+	/// Releases the specified universal object.
+	/// </summary>
+	/// <param name="universalObject_">The universal object.</param>
+	[[nodiscard]] UniquePtr<UniversalObjectWrapper> release(UniversalObject const & universalObject_);
+
+	/// <summary>
+	/// Releases the specified personal object.
+	/// </summary>
+	/// <param name="personalObject_">The personal object.</param>
+	[[nodiscard]] UniquePtr<PersonalObjectWrapper> release(PersonalObject const & personalObject_);
+
 	/// <summary>
 	/// Adds the score around specified player.
 	/// </summary>
@@ -87,9 +119,9 @@ public:
 	void applyGlobalActorsVisibility();
 
 	/// <summary>
-	/// Returns cref to contained list of the players.
+	/// Returns cref to contained list of the Players.
 	/// </summary>
-	/// <returns>cref to contained list of the players.</returns>
+	/// <returns>cref to contained list of the Players.</returns>
 	auto const& getPlayers() const {
 		return m_players;
 	}
@@ -110,10 +142,53 @@ public:
 		return m_globalObjects;
 	}
 
+	/// <summary>
+	/// Returns cref to contained list of the universal objects.
+	/// </summary>
+	/// <returns>cref to contained list of the universal objects.</returns>
+	auto const& getUniversalObjects() const {
+		return m_universalObjects;
+	}
+
+	/// <summary>
+	/// Returns cref to contained list of the personal objects.
+	/// </summary>
+	/// <returns>cref to contained list of the personal objects.</returns>
+	auto const& getPersonalObjects() const {
+		return m_personalObjects;
+	}
+	
+	/// <summary>
+	/// Determines whether this chunk is empty.
+	/// </summary>
+	/// <returns>
+	///   <c>true</c> if this chunk is empty; otherwise, <c>false</c>.
+	/// </returns>
+	bool isEmpty() const {
+		return m_players.empty() && m_vehicles.empty() && m_globalObjects.empty() && m_universalObjects.empty() && m_personalObjects.empty();
+	}
+
 private:
+
+#ifdef ADVANCEDGDK_DEBUG
+
+	void GZThingIntercepted();
+
+	void GZThingReleased();
+
+	Color GZCalculateColor();
+
+	Color GZCalculateFlashingColor();
+
+	GangZone* m_gangZone = nullptr;
+
+#endif
+
 	ActorContainer< PlayerWrapper >				m_players;			// Player wrapper container.
 	ActorContainer< VehicleWrapper >			m_vehicles;			// Vehicle wrapper container.
 	ActorContainer< GlobalObjectWrapper >		m_globalObjects;	// Global object wrapper container.
+	ActorContainer< UniversalObjectWrapper >	m_universalObjects;	// Universal object wrapper container.
+	ActorContainer< PersonalObjectWrapper >		m_personalObjects;	// Personal object wrapper container.
 };
 
 }

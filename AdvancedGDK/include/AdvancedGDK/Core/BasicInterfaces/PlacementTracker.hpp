@@ -9,8 +9,14 @@ namespace agdk
 /// <summary>
 /// An interface for object that tracks actor's placement.
 /// </summary>
-struct IActorPlacementTracker
-{	
+struct I3DNodePlacementTracker
+{		
+	/// <summary>
+	/// Initializes a new instance of the <see cref="I3DNodePlacementTracker"/> struct.
+	/// </summary>
+	/// <param name="initialPlacement_">The initial placement.</param>
+	explicit I3DNodePlacementTracker(ActorPlacement const & initialPlacement_);
+
 	/// <summary>
 	/// Event reaction designed to be called on every placement update.
 	/// </summary>
@@ -23,6 +29,14 @@ struct IActorPlacementTracker
 	/// <param name="prevPlacement_">The previous placement.</param>
 	/// <param name="newPlacement_">The new placement.</param>
 	virtual void whenPlacementChanges(ActorPlacement const & prevPlacement_, ActorPlacement const & newPlacement_) = 0;
+	
+	/// <summary>
+	/// Returns the last placement.
+	/// </summary>
+	/// <returns>Last placement.</returns>
+	ActorPlacement getLastPlacement() const {
+		return m_lastPlacement;
+	}
 private:
 	
 	/// <summary>
@@ -43,6 +57,12 @@ private:
 struct IGlobalObjectPlacementTracker
 {
 	/// <summary>
+	/// Initializes a new instance of the <see cref="IGlobalObjectPlacementTracker"/> struct.
+	/// </summary>
+	/// <param name="initialPlacement_">The initial placement.</param>
+	explicit IGlobalObjectPlacementTracker(GlobalObjectPlacement const & initialPlacement_);
+
+	/// <summary>
 	/// Event reaction designed to be called on every placement update.
 	/// </summary>
 	/// <param name="newPlacement_">The new placement.</param>
@@ -54,6 +74,14 @@ struct IGlobalObjectPlacementTracker
 	/// <param name="prevPlacement_">The previous placement.</param>
 	/// <param name="newPlacement_">The new placement.</param>
 	virtual void whenPlacementChanges(GlobalObjectPlacement const & prevPlacement_, GlobalObjectPlacement const & newPlacement_) = 0;
+
+	/// <summary>
+	/// Returns the last placement.
+	/// </summary>
+	/// <returns>Last placement.</returns>
+	GlobalObjectPlacement getLastPlacement() const {
+		return m_lastPlacement;
+	}
 private:
 
 	/// <summary>

@@ -4,7 +4,7 @@
 #include <AdvancedGDK/World/Streamer/ChunkActor.hpp>
 
 // Additional includes:
-#include <AdvancedGDK/Server/Player/Player.hpp>
+#include <AdvancedGDK/Server/Player.hpp>
 #include <AdvancedGDK/Core/Exceptions.hpp>
 
 namespace agdk
@@ -34,6 +34,12 @@ public:
 	/// Designed to be called when player leaves the visibility zone.
 	/// </summary>
 	void whenPlayerLeavesVisibilityZone();
+	
+	/// <summary>
+	/// Sets the visibility index.
+	/// </summary>
+	/// <param name="visibilityIndex_">Visibility index.</param>
+	void setVisibilityIndex(std::uint16_t const visibilityIndex_);
 
 	/// <summary>
 	/// Returns the visibility index.
@@ -72,7 +78,7 @@ public:
 	}
 private:
 
-	std::uint16_t m_visibilityIndex; // Number of players currently seeing the object.
+	std::uint16_t m_visibilityIndex; // Number of Players currently seeing the object.
 };
 
 } // namespace default_streamer

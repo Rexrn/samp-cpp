@@ -3,39 +3,39 @@
 // Custom includes:
 #include <AdvancedGDK/Server/Server.hpp>
 #include <AdvancedGDK/Server/GameMode.hpp>
-#include <AdvancedGDK/Server/Player/PlayerPool.hpp>
+#include <AdvancedGDK/Server/PlayerPool.hpp>
 #include <AdvancedGDK/Core/Text/ASCII.hpp>
 
 
-std::unique_ptr<agdk::Server>		g_server;		// Initialize g_server instance.
-std::unique_ptr<agdk::IGameMode>	g_gameMode;		// Initialize g_gameMode instance.
+agdk::UniquePtr<agdk::ServerClass>			Server;		// Initialize Server instance.
+agdk::UniquePtr<agdk::IGameMode>			GameMode;	// Initialize GameMode instance.
 
 namespace agdk
 {
 	/////////////////////////////////////////////////////////////////////////////////////////
-	Server::Server()
+	ServerClass::ServerClass()
 	{
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////////
-	Server::~Server()
+	ServerClass::~ServerClass()
 	{
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////////
-	void Server::setup(std::unique_ptr<IGameMode> &&gameMode_)
+	void ServerClass::setup(UniquePtr<IGameMode> &&gameMode_)
 	{
 		// Drop previous game mode.
-		g_gameMode.reset();
+		GameMode.reset();
 		if (gameMode_)
 		{
-			g_gameMode = std::forward< std::unique_ptr<IGameMode> >(gameMode_);
-			g_gameMode->setup();
+			GameMode = std::forward< UniquePtr<IGameMode> >(gameMode_);
+			GameMode->setup();
 		}
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////////
-	bool Server::Default::isPlayerNameValid(const std::string_view name_)
+	bool ServerClass::Default::isPlayerNameValid(const std::string_view name_)
 	{
 		static constexpr const char* cxAvailableCharacters = "qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM0123456789_[]()$@=.";
 
@@ -47,12 +47,12 @@ namespace agdk
 	
 	
 		/* TODO: implement vehicles, scenes, checkpoints and tasks.
-		g_gameMode->vehicles.update();
-		g_gameMode->scenes.update();
-		g_gameMode->checkpoints.update();
-		g_gameMode->tasks.update();
+		GameMode->vehicles.update();
+		GameMode->scenes.update();
+		GameMode->checkpoints.update();
+		GameMode->tasks.update();
 
-		g_gameMode->update(static_cast<float>((Clock::currentTime() - m_lastUpdate).seconds()));
+		GameMode->update(static_cast<float>((Clock::currentTime() - m_lastUpdate).seconds()));
 
 		m_lastUpdate = Clock::currentTime();
 		*/
@@ -60,7 +60,7 @@ namespace agdk
 	
 
 	/////////////////////////////////////////////////////////////////////////////////////////
-	void Server::setDescription(const std::string_view desc_)
+	void ServerClass::setDescription(const std::string_view desc_)
 	{
 		// We cannot avoid copying `desc_`, because const char* passed to sampgdk function must be null terminated.
 		std::string copy{ desc_ };
@@ -70,947 +70,1057 @@ namespace agdk
 	/* TODO: missing implementation.
 	
 	/////////////////////////////////////////////////////////////////////////////////////////
-	bool Server::OnGameModeInit()
+	bool ServerClass::OnGameModeInit()
 	{
-		return g_gameMode->onGameModeInit();
+		return GameMode->onGameModeInit();
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////////
-	bool Server::OnGameModeExit()
+	bool ServerClass::OnGameModeExit()
 	{
-		return g_gameMode->onGameModeExit();
+		return GameMode->onGameModeExit();
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////////
-	bool Server::OnPlayerConnect(int playerid)
+	bool ServerClass::OnPlayerConnect(int playerid)
 	{
-		auto player = g_gameMode->newPlayerInstance(playerid);
+		auto player = GameMode->newPlayerInstance(playerid);
 
 		// add player to the list
-		g_gameMode->players.add(player);
-		g_gameMode->scenes.playerConnected(player);
+		GameMode->Players.add(player);
+		GameMode->scenes.playerConnected(player);
 
-		return g_gameMode->onPlayerConnect(player);
+		return GameMode->onPlayerConnect(player);
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////////
-	bool Server::OnPlayerDisconnect(int playerid, int reason)
+	bool ServerClass::OnPlayerDisconnect(int playerid, int reason)
 	{
-		auto player = g_gameMode->players.findByIndex(playerid);
+		auto player = GameMode->Players.findByIndex(playerid);
 		auto discReason = static_cast<EDisconnectReason>(reason);
 
 		player->setSpawned(false);
 
 		// Make sure that every object is hidden before player disconnects.
-		g_gameMode->scenes.playerDisconnected(player);
-		g_gameMode->vehicles.playerDisconnected(player);
-		g_gameMode->textdrawRegistry.playerDisconnected(player);
+		GameMode->scenes.playerDisconnected(player);
+		GameMode->vehicles.playerDisconnected(player);
+		GameMode->textdrawRegistry.playerDisconnected(player);
 
-		bool result = g_gameMode->onPlayerDisconnect(player, discReason);
+		bool result = GameMode->onPlayerDisconnect(player, discReason);
 		// We need to do it anyway (remove from player manager)
-		g_gameMode->players.remove(player);
+		GameMode->Players.remove(player);
 		return result;
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////////
-	bool Server::OnPlayerSpawn(int playerid)
+	bool ServerClass::OnPlayerSpawn(int playerid)
 	{
-		auto player = g_gameMode->players.findByIndex(playerid);
+		auto player = GameMode->Players.findByIndex(playerid);
 
-		auto result = g_gameMode->onPlayerSpawn(player); // TODO: checking
+		auto result = GameMode->onPlayerSpawn(player); // TODO: checking
 
 		player->onSpawn();
 		return result;
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////////
-	bool Server::OnPlayerDeath(int playerid, int killerid, int reason)
+	bool ServerClass::OnPlayerDeath(int playerid, int killerid, int reason)
 	{
-		auto player = g_gameMode->players.findByIndex(playerid);
-		auto killer = g_gameMode->players.findByIndex(killerid);
+		auto player = GameMode->Players.findByIndex(playerid);
+		auto killer = GameMode->Players.findByIndex(killerid);
 
 		player->onDeath();
 
 		auto deathReason = static_cast<Weapon::Type>(reason);
 
-		return g_gameMode->onPlayerDeath(player, killer, deathReason); // TODO: Checking
+		return GameMode->onPlayerDeath(player, killer, deathReason); // TODO: Checking
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////////
-	bool Server::OnVehicleSpawn(int vehicleid)
+	bool ServerClass::OnVehicleSpawn(int vehicleid)
 	{
-		auto vehicle = g_gameMode->vehicles.findVehicleByIndex(vehicleid);
+		auto vehicle = GameMode->vehicles.findVehicleByIndex(vehicleid);
 
-		return g_gameMode->onVehicleSpawn(vehicle.lock()); // TODO: checking
+		return GameMode->onVehicleSpawn(vehicle.lock()); // TODO: checking
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////////
-	bool Server::OnVehicleDeath(int vehicleid, int killerid)
+	bool ServerClass::OnVehicleDeath(int vehicleid, int killerid)
 	{
-		auto vehicle = g_gameMode->vehicles.findVehicleByIndex(vehicleid);
-		auto killer = g_gameMode->players.findByIndex(killerid);
+		auto vehicle = GameMode->vehicles.findVehicleByIndex(vehicleid);
+		auto killer = GameMode->Players.findByIndex(killerid);
 
-		auto result = g_gameMode->onVehicleDeath(vehicle.lock(), killer); // TODO: checking
+		auto result = GameMode->onVehicleDeath(vehicle.lock(), killer); // TODO: checking
 
 		if (!std::dynamic_pointer_cast<StaticVehicle>(vehicle.lock()))
 		{
-			g_gameMode->vehicles.remove(vehicle.lock());
+			GameMode->vehicles.remove(vehicle.lock());
 		}
 
 		return result;
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////////
-	bool Server::OnPlayerText(int playerid, const char* text)
+	bool ServerClass::OnPlayerText(int playerid, const char* text)
 	{
-		auto player = g_gameMode->players.findByIndex(playerid);
+		auto player = GameMode->Players.findByIndex(playerid);
 		std::string strText(text);
 
-		return g_gameMode->onPlayerText(player, strText); // TODO: checking
+		return GameMode->onPlayerSendText(player, strText); // TODO: checking
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////////
-	bool Server::OnPlayerCommandText(int playerid, const char* cmdtext)
+	bool ServerClass::OnPlayerCommandText(int playerid, const char* cmdtext)
 	{
-		auto player = g_gameMode->players.findByIndex(playerid);
+		auto player = GameMode->Players.findByIndex(playerid);
 		std::string strCmd(cmdtext);
 
-		return g_gameMode->onPlayerCommandText(player, strCmd); // TODO: checking
+		return GameMode->onPlayerSendCommand(player, strCmd); // TODO: checking
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////////
-	bool Server::OnPlayerRequestClass(int playerid, int classid)
+	bool ServerClass::OnPlayerRequestClass(int playerid, int classid)
 	{
-		auto player = g_gameMode->players.findByIndex(playerid);
+		auto player = GameMode->Players.findByIndex(playerid);
 
-		return g_gameMode->onPlayerRequestClass(player, classid); // TODO: checking
+		return GameMode->onPlayerRequestClass(player, classid); // TODO: checking
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////////
-	bool Server::OnPlayerEnterVehicle(int playerid, int vehicleid, bool ispassenger)
+	bool ServerClass::OnPlayerEnterVehicle(int playerid, int vehicleid, bool ispassenger)
 	{
-		auto player = g_gameMode->players.findByIndex(playerid);
-		auto vehicle = g_gameMode->vehicles.findVehicleByIndex(vehicleid);
+		auto player = GameMode->Players.findByIndex(playerid);
+		auto vehicle = GameMode->vehicles.findVehicleByIndex(vehicleid);
 
-		return g_gameMode->onPlayerEnterVehicle(player, vehicle.lock(), ispassenger);
+		return GameMode->onPlayerEnterVehicle(player, vehicle.lock(), ispassenger);
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////////
-	bool Server::OnPlayerExitVehicle(int playerid, int vehicleid)
+	bool ServerClass::OnPlayerExitVehicle(int playerid, int vehicleid)
 	{
-		auto player = g_gameMode->players.findByIndex(playerid);
-		auto vehicle = g_gameMode->vehicles.findVehicleByIndex(vehicleid);
+		auto player = GameMode->Players.findByIndex(playerid);
+		auto vehicle = GameMode->vehicles.findVehicleByIndex(vehicleid);
 
-		return g_gameMode->onPlayerExitVehicle(player, vehicle.lock());
+		return GameMode->onPlayerExitVehicle(player, vehicle.lock());
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////////
-	bool Server::OnPlayerStateChange(int playerid, int newstate, int oldstate)
+	bool ServerClass::OnPlayerStateChange(int playerid, int newstate, int oldstate)
 	{
-		auto player = g_gameMode->players.findByIndex(playerid);
+		auto player = GameMode->Players.findByIndex(playerid);
 
-		g_gameMode->vehicles.playerChangedState(player, newstate, oldstate);
+		GameMode->vehicles.playerChangedState(player, newstate, oldstate);
 
-		return g_gameMode->onPlayerStateChange(player, newstate, oldstate);
+		return GameMode->onPlayerStateChange(player, newstate, oldstate);
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////////
-	bool Server::OnPlayerEnterCheckpoint(int playerid)
+	bool ServerClass::OnPlayerEnterCheckpoint(int playerid)
 	{
-		auto player = g_gameMode->players.findByIndex(playerid);
+		auto player = GameMode->Players.findByIndex(playerid);
 
 		if (auto checkpoint = player->getCheckpoint())
 			checkpoint->onPlayerEnter(player);
 
-		return g_gameMode->onPlayerEnterCheckpoint(player);
+		return GameMode->onPlayerEnterCheckpoint(player);
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////////
-	bool Server::OnPlayerLeaveCheckpoint(int playerid)
+	bool ServerClass::OnPlayerLeaveCheckpoint(int playerid)
 	{
-		auto player = g_gameMode->players.findByIndex(playerid);
+		auto player = GameMode->Players.findByIndex(playerid);
 
 		if (auto checkpoint = player->getCheckpoint())
 			checkpoint->onPlayerLeave(player);
 
-		return g_gameMode->onPlayerLeaveCheckpoint(player);
+		return GameMode->onPlayerLeaveCheckpoint(player);
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////////
-	bool Server::OnPlayerEnterRaceCheckpoint(int playerid)
+	bool ServerClass::OnPlayerEnterRaceCheckpoint(int playerid)
 	{
-		auto player = g_gameMode->players.findByIndex(playerid);
+		auto player = GameMode->Players.findByIndex(playerid);
 
 		if (auto checkpoint = player->getRaceCheckpoint())
 			checkpoint->onPlayerEnter(player);
 
-		return g_gameMode->onPlayerEnterRaceCheckpoint(player);
+		return GameMode->onPlayerEnterRaceCheckpoint(player);
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////////
-	bool Server::OnPlayerLeaveRaceCheckpoint(int playerid)
+	bool ServerClass::OnPlayerLeaveRaceCheckpoint(int playerid)
 	{
-		auto player = g_gameMode->players.findByIndex(playerid);
+		auto player = GameMode->Players.findByIndex(playerid);
 
 		if (auto checkpoint = player->getRaceCheckpoint())
 			checkpoint->onPlayerLeave(player);
 
-		return g_gameMode->onPlayerLeaveRaceCheckpoint(player);
+		return GameMode->onPlayerLeaveRaceCheckpoint(player);
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////////
-	bool Server::OnRconCommand(const char* cmd)
+	bool ServerClass::OnRconCommand(const char* cmd)
 	{
 		std::string rconCmd(cmd);
 
-		return g_gameMode->onRconCommand(rconCmd);
+		return GameMode->onRconCommand(rconCmd);
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////////
-	bool Server::OnPlayerRequestSpawn(int playerid)
+	bool ServerClass::OnPlayerRequestSpawn(int playerid)
 	{
-		auto player = g_gameMode->players.findByIndex(playerid);
+		auto player = GameMode->Players.findByIndex(playerid);
 
 		player->reloadColor();
 
-		return g_gameMode->onPlayerRequestSpawn(player);
+		return GameMode->onPlayerRequestSpawn(player);
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////////
-	bool Server::OnObjectMoved(int objectid)
+	bool ServerClass::OnObjectMoved(int objectid)
 	{
 		// TODO: disable this
-		return g_gameMode->onObjectMoved(objectid);
+		return GameMode->onObjectMoved(objectid);
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////////
-	bool Server::OnPlayerObjectMoved(int playerid, int objectid)
+	bool ServerClass::OnPlayerObjectMoved(int playerid, int objectid)
 	{
-		auto player = g_gameMode->players.findByIndex(playerid);
+		auto player = GameMode->Players.findByIndex(playerid);
 
-		return g_gameMode->onPlayerObjectMoved(player, g_gameMode->scenes.findObject(player, objectid).lock());
+		return GameMode->onPlayerObjectMoved(player, GameMode->scenes.findObject(player, objectid).lock());
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////////
-	bool Server::OnPlayerPickUpPickup(int playerid, int pickupid)
+	bool ServerClass::OnPlayerPickUpPickup(int playerid, int pickupid)
 	{
-		auto player = g_gameMode->players.findByIndex(playerid);
+		auto player = GameMode->Players.findByIndex(playerid);
 
-		return g_gameMode->onPlayerPickUpPickup(player, pickupid);
+		return GameMode->onPlayerPickUpPickup(player, pickupid);
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////////
-	bool Server::OnVehicleMod(int playerid, int vehicleid, int componentid)
+	bool ServerClass::OnVehicleMod(int playerid, int vehicleid, int componentid)
 	{
-		auto player = g_gameMode->players.findByIndex(playerid);
-		auto vehicle = g_gameMode->vehicles.findVehicleByIndex(vehicleid);
+		auto player = GameMode->Players.findByIndex(playerid);
+		auto vehicle = GameMode->vehicles.findVehicleByIndex(vehicleid);
 
-		return g_gameMode->onVehicleMod(player, vehicle.lock(), componentid);
+		return GameMode->onVehicleMod(player, vehicle.lock(), componentid);
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////////
-	bool Server::OnEnterExitModShop(int playerid, int enterexit, int interiorid)
+	bool ServerClass::OnEnterExitModShop(int playerid, int enterexit, int interiorid)
 	{
-		auto player = g_gameMode->players.findByIndex(playerid);
+		auto player = GameMode->Players.findByIndex(playerid);
 
-		return g_gameMode->onEnterExitModShop(player, enterexit, interiorid);
+		return GameMode->onEnterExitModShop(player, enterexit, interiorid);
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////////
-	bool Server::OnVehiclePaintjob(int playerid, int vehicleid, int paintjobid)
+	bool ServerClass::OnVehiclePaintjob(int playerid, int vehicleid, int paintjobid)
 	{
-		auto player = g_gameMode->players.findByIndex(playerid);
-		auto vehicle = g_gameMode->vehicles.findVehicleByIndex(vehicleid);
+		auto player = GameMode->Players.findByIndex(playerid);
+		auto vehicle = GameMode->vehicles.findVehicleByIndex(vehicleid);
 
-		return g_gameMode->onVehiclePaintjob(player, vehicle.lock(), paintjobid);
+		return GameMode->onVehiclePaintjob(player, vehicle.lock(), paintjobid);
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////////
-	bool Server::OnVehicleRespray(int playerid, int vehicleid, int color1, int color2)
+	bool ServerClass::OnVehicleRespray(int playerid, int vehicleid, int color1, int color2)
 	{
-		auto player = g_gameMode->players.findByIndex(playerid);
-		auto vehicle = g_gameMode->vehicles.findVehicleByIndex(vehicleid);
+		auto player = GameMode->Players.findByIndex(playerid);
+		auto vehicle = GameMode->vehicles.findVehicleByIndex(vehicleid);
 
-		return g_gameMode->onVehicleRespray(player, vehicle.lock(), color1, color2);
+		return GameMode->onVehicleRespray(player, vehicle.lock(), color1, color2);
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////////
-	bool Server::OnVehicleDamageStatusUpdate(int vehicleid, int playerid)
+	bool ServerClass::OnVehicleDamageStatusUpdate(int vehicleid, int playerid)
 	{
-		auto player = g_gameMode->players.findByIndex(playerid);
-		auto vehicle = g_gameMode->vehicles.findVehicleByIndex(vehicleid);
+		auto player = GameMode->Players.findByIndex(playerid);
+		auto vehicle = GameMode->vehicles.findVehicleByIndex(vehicleid);
 
-		return g_gameMode->onVehicleDamageStatusUpdate(vehicle.lock(), player);
+		return GameMode->onVehicleDamageStatusUpdate(vehicle.lock(), player);
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////////
-	bool Server::OnUnoccupiedVehicleUpdate(int vehicleid, int playerid, int passenger_seat, float new_x, float new_y, float new_z, float vel_x, float vel_y, float vel_z)
+	bool ServerClass::OnUnoccupiedVehicleUpdate(int vehicleid, int playerid, int passenger_seat, float new_x, float new_y, float new_z, float vel_x, float vel_y, float vel_z)
 	{
-		auto player = g_gameMode->players.findByIndex(playerid);
-		auto vehicle = g_gameMode->vehicles.findVehicleByIndex(vehicleid);
+		auto player = GameMode->Players.findByIndex(playerid);
+		auto vehicle = GameMode->vehicles.findVehicleByIndex(vehicleid);
 
-		return g_gameMode->onUnoccupiedVehicleUpdate(vehicle.lock(), player, passenger_seat, Vector3(new_x, new_y, new_z), Vector3(vel_x, vel_y, vel_z));
+		return GameMode->onUnoccupiedVehicleUpdate(vehicle.lock(), player, passenger_seat, Vector3(new_x, new_y, new_z), Vector3(vel_x, vel_y, vel_z));
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////////
-	bool Server::OnPlayerSelectedMenuRow(int playerid, int row)
+	bool ServerClass::OnPlayerSelectedMenuRow(int playerid, int row)
 	{
-		auto player = g_gameMode->players.findByIndex(playerid);
+		auto player = GameMode->Players.findByIndex(playerid);
 
-		return g_gameMode->onPlayerSelectedMenuRow(player, row);
+		return GameMode->onPlayerSelectedMenuRow(player, row);
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////////
-	bool Server::OnPlayerExitedMenu(int playerid)
+	bool ServerClass::OnPlayerExitedMenu(int playerid)
 	{
-		auto player = g_gameMode->players.findByIndex(playerid);
+		auto player = GameMode->Players.findByIndex(playerid);
 
-		return g_gameMode->onPlayerExitedMenu(player);
+		return GameMode->onPlayerExitedMenu(player);
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////////
-	bool Server::OnPlayerInteriorChange(int playerid, int newinteriorid, int oldinteriorid)
+	bool ServerClass::OnPlayerInteriorChange(int playerid, int newinteriorid, int oldinteriorid)
 	{
-		auto player = g_gameMode->players.findByIndex(playerid);
+		auto player = GameMode->Players.findByIndex(playerid);
 
-		return g_gameMode->onPlayerInteriorChange(player, newinteriorid, oldinteriorid);
+		return GameMode->onPlayerInteriorChange(player, newinteriorid, oldinteriorid);
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////////
-	bool Server::OnPlayerKeyStateChange(int playerid, int newkeys, int oldkeys)
+	bool ServerClass::OnPlayerKeyStateChange(int playerid, int newkeys, int oldkeys)
 	{
-		auto player = g_gameMode->players.findByIndex(playerid);
+		auto player = GameMode->Players.findByIndex(playerid);
 
 		int keys = 0, leftRight = 0, upDown = 0;
 		sampgdk_GetPlayerKeys(playerid, &keys, &upDown, &leftRight);
 		player->getKeyboard().update(keys, upDown, leftRight);
 
-		return g_gameMode->onPlayerKeyStateChange(player, player->getKeyboard());
+		return GameMode->onPlayerKeyStateChange(player, player->getKeyboard());
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////////
-	bool Server::OnRconLoginAttempt(const char* ip, const char* password, bool success)
+	bool ServerClass::OnRconLoginAttempt(const char* ip, const char* password, bool success)
 	{
-		return g_gameMode->onRconLoginAttempt(std::string(ip), std::string(password), success);
+		return GameMode->onRconLoginAttempt(std::string(ip), std::string(password), success);
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////////
-	bool Server::OnPlayerUpdate(int playerid)
+	bool ServerClass::OnPlayerUpdate(int playerid)
 	{
-		auto player = g_gameMode->players.findByIndex(playerid);
+		auto player = GameMode->Players.findByIndex(playerid);
 
 		int keys = 0, leftRight = 0, upDown = 0;
 		sampgdk_GetPlayerKeys(playerid, &keys, &upDown, &leftRight);
 		player->getKeyboard().update(keys, upDown, leftRight);
 
-		return g_gameMode->onPlayerUpdate(player);
+		return GameMode->onPlayerUpdate(player);
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////////
-	bool Server::OnPlayerStreamIn(int playerid, int forplayerid)
+	bool ServerClass::OnPlayerStreamIn(int playerid, int forplayerid)
 	{
-		auto player = g_gameMode->players.findByIndex(playerid);
-		auto forPlayer = g_gameMode->players.findByIndex(forplayerid);
+		auto player = GameMode->Players.findByIndex(playerid);
+		auto forPlayer = GameMode->Players.findByIndex(forplayerid);
 
-		return g_gameMode->onPlayerStreamIn(player, forPlayer);
+		return GameMode->onPlayerStreamIn(player, forPlayer);
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////////
-	bool Server::OnPlayerStreamOut(int playerid, int forplayerid)
+	bool ServerClass::OnPlayerStreamOut(int playerid, int forplayerid)
 	{
-		auto player = g_gameMode->players.findByIndex(playerid);
-		auto forPlayer = g_gameMode->players.findByIndex(forplayerid);
+		auto player = GameMode->Players.findByIndex(playerid);
+		auto forPlayer = GameMode->Players.findByIndex(forplayerid);
 
-		return g_gameMode->onPlayerStreamOut(player, forPlayer);
+		return GameMode->onPlayerStreamOut(player, forPlayer);
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////////
-	bool Server::OnVehicleStreamIn(int vehicleid, int forplayerid)
+	bool ServerClass::OnVehicleStreamIn(int vehicleid, int forplayerid)
 	{
-		auto vehicle = g_gameMode->vehicles.findVehicleByIndex(vehicleid);
-		auto forPlayer = g_gameMode->players.findByIndex(forplayerid);
+		auto vehicle = GameMode->vehicles.findVehicleByIndex(vehicleid);
+		auto forPlayer = GameMode->Players.findByIndex(forplayerid);
 
-		return g_gameMode->onVehicleStreamIn(vehicle.lock(), forPlayer);
+		return GameMode->onVehicleStreamIn(vehicle.lock(), forPlayer);
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////////
-	bool Server::OnVehicleStreamOut(int vehicleid, int forplayerid)
+	bool ServerClass::OnVehicleStreamOut(int vehicleid, int forplayerid)
 	{
-		auto vehicle = g_gameMode->vehicles.findVehicleByIndex(vehicleid);
-		auto forPlayer = g_gameMode->players.findByIndex(forplayerid);
+		auto vehicle = GameMode->vehicles.findVehicleByIndex(vehicleid);
+		auto forPlayer = GameMode->Players.findByIndex(forplayerid);
 
-		return g_gameMode->onVehicleStreamOut(vehicle.lock(), forPlayer);
+		return GameMode->onVehicleStreamOut(vehicle.lock(), forPlayer);
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////////
-	bool Server::OnActorStreamIn(int actorid, int forplayerid)
+	bool ServerClass::OnActorStreamIn(int actorid, int forplayerid)
 	{
-		auto forPlayer = g_gameMode->players.findByIndex(forplayerid);
+		auto forPlayer = GameMode->Players.findByIndex(forplayerid);
 
-		return g_gameMode->onActorStreamIn(actorid, forPlayer);
+		return GameMode->onActorStreamIn(actorid, forPlayer);
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////////
-	bool Server::OnActorStreamOut(int actorid, int forplayerid)
+	bool ServerClass::OnActorStreamOut(int actorid, int forplayerid)
 	{
-		auto forPlayer = g_gameMode->players.findByIndex(forplayerid);
+		auto forPlayer = GameMode->Players.findByIndex(forplayerid);
 
-		return g_gameMode->onActorStreamOut(actorid, forPlayer);
+		return GameMode->onActorStreamOut(actorid, forPlayer);
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////////
-	bool Server::OnDialogResponse(int playerid, int dialogid, int response, int listitem, const char* inputtext)
+	bool ServerClass::OnDialogResponse(int playerid, int dialogid, int response, int listitem, const char* inputtext)
 	{
 		// TODO: create dialog classes
-		auto player = g_gameMode->players.findByIndex(playerid);
+		auto player = GameMode->Players.findByIndex(playerid);
 
-		return g_gameMode->onDialogResponse(player, response, listitem, std::string(inputtext));
+		return GameMode->onDialogResponse(player, response, listitem, std::string(inputtext));
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////////
-	bool Server::OnPlayerTakeDamage(int playerid, int issuerid, float amount, int weaponid, int bodypart)
+	bool ServerClass::OnPlayerTakeDamage(int playerid, int issuerid, float amount, int weaponid, int bodypart)
 	{
-		auto player = g_gameMode->players.findByIndex(playerid);
-		auto issuer = g_gameMode->players.findByIndex(issuerid);
+		auto player = GameMode->Players.findByIndex(playerid);
+		auto issuer = GameMode->Players.findByIndex(issuerid);
 
-		return g_gameMode->onPlayerTakeDamage(player, issuer, amount, static_cast<Weapon::Type>(weaponid), bodypart);
+		return GameMode->onPlayerTakeDamage(player, issuer, amount, static_cast<Weapon::Type>(weaponid), bodypart);
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////////
-	bool Server::OnPlayerGiveDamage(int playerid, int damagedid, float amount, int weaponid, int bodypart)
+	bool ServerClass::OnPlayerGiveDamage(int playerid, int damagedid, float amount, int weaponid, int bodypart)
 	{
-		auto player = g_gameMode->players.findByIndex(playerid);
-		auto damaged = g_gameMode->players.findByIndex(damagedid);
+		auto player = GameMode->Players.findByIndex(playerid);
+		auto damaged = GameMode->Players.findByIndex(damagedid);
 
-		return g_gameMode->onPlayerGiveDamage(player, damaged, amount, static_cast<Weapon::Type>(weaponid), bodypart);
+		return GameMode->onPlayerGiveDamage(player, damaged, amount, static_cast<Weapon::Type>(weaponid), bodypart);
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////////
-	bool Server::OnPlayerGiveDamageActor(int playerid, int damaged_actorid, float amount, int weaponid, int bodypart)
+	bool ServerClass::OnPlayerGiveDamageActor(int playerid, int damaged_actorid, float amount, int weaponid, int bodypart)
 	{
-		auto player = g_gameMode->players.findByIndex(playerid);
+		auto player = GameMode->Players.findByIndex(playerid);
 
-		return g_gameMode->onPlayerGiveDamageActor(player, damaged_actorid, amount, static_cast<Weapon::Type>(weaponid), bodypart);
+		return GameMode->onPlayerGiveDamageActor(player, damaged_actorid, amount, static_cast<Weapon::Type>(weaponid), bodypart);
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////////
-	bool Server::OnPlayerClickMap(int playerid, float fX, float fY, float fZ)
+	bool ServerClass::OnPlayerClickMap(int playerid, float fX, float fY, float fZ)
 	{
-		auto player = g_gameMode->players.findByIndex(playerid);
+		auto player = GameMode->Players.findByIndex(playerid);
 
-		return g_gameMode->onPlayerClickMap(player, Vector3(fX, fY, fZ));
+		return GameMode->onPlayerClickMap(player, Vector3(fX, fY, fZ));
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////////
-	bool Server::OnPlayerClickTextDraw(int playerid, int clickedid)
+	bool ServerClass::OnPlayerClickTextDraw(int playerid, int clickedid)
 	{
-		auto player = g_gameMode->players.findByIndex(playerid);
+		auto player = GameMode->Players.findByIndex(playerid);
 
-		g_gameMode->sendDebug(String::format("Player ", player->getName(), " clicked td: ", clickedid));
+		GameMode->sendDebug(String::format("Player ", player->getName(), " clicked td: ", clickedid));
 
-		auto weak_textDraw = g_gameMode->textdrawRegistry.find(clickedid);
+		auto weak_textDraw = GameMode->textdrawRegistry.find(clickedid);
 		if (auto textDraw = weak_textDraw.lock())
 		{
 			textDraw->onClick(player);
-			return g_gameMode->onPlayerClickTextDraw(player, textDraw);
+			return GameMode->onPlayerClickTextDraw(player, textDraw);
 		}
 		return false;
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////////
-	bool Server::OnPlayerClickPlayerTextDraw(int playerid, int playertextid)
+	bool ServerClass::OnPlayerClickPlayerTextDraw(int playerid, int playertextid)
 	{
-		auto player = g_gameMode->players.findByIndex(playerid);
+		auto player = GameMode->Players.findByIndex(playerid);
 
-		auto weak_textDraw = g_gameMode->textdrawRegistry.find(playerid, playertextid);
+		auto weak_textDraw = GameMode->textdrawRegistry.find(playerid, playertextid);
 		if (auto textDraw = weak_textDraw.lock())
 		{
 			textDraw->onClick(player);
-			return g_gameMode->onPlayerClickPlayerTextDraw(player, textDraw);
+			return GameMode->onPlayerClickPlayerTextDraw(player, textDraw);
 		}
 		return false;
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////////
-	bool Server::OnIncomingConnection(int playerid, const char* ip_address, int port)
+	bool ServerClass::OnIncomingConnection(int playerid, const char* ip_address, int port)
 	{
 		// This function is called before onPlayerConnect and thus player was not created yet.
-		return g_gameMode->onIncomingConnection(playerid, std::string(ip_address), port);
+		return GameMode->onIncomingConnection(playerid, std::string(ip_address), port);
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////////
-	bool Server::OnTrailerUpdate(int playerid, int vehicleid)
+	bool ServerClass::OnTrailerUpdate(int playerid, int vehicleid)
 	{
-		auto player = g_gameMode->players.findByIndex(playerid);
-		auto vehicle = g_gameMode->vehicles.findVehicleByIndex(vehicleid);
+		auto player = GameMode->Players.findByIndex(playerid);
+		auto vehicle = GameMode->vehicles.findVehicleByIndex(vehicleid);
 
-		return g_gameMode->onTrailerUpdate(player, vehicle.lock());
+		return GameMode->onTrailerUpdate(player, vehicle.lock());
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////////
-	bool Server::OnVehicleSirenStateChange(int playerid, int vehicleid, int newstate)
+	bool ServerClass::OnVehicleSirenStateChange(int playerid, int vehicleid, int newstate)
 	{
-		auto player = g_gameMode->players.findByIndex(playerid);
-		auto vehicle = g_gameMode->vehicles.findVehicleByIndex(vehicleid);
+		auto player = GameMode->Players.findByIndex(playerid);
+		auto vehicle = GameMode->vehicles.findVehicleByIndex(vehicleid);
 
-		return g_gameMode->onVehicleSirenStateChange(player, vehicle.lock(), newstate);
+		return GameMode->onVehicleSirenStateChange(player, vehicle.lock(), newstate);
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////////
-	bool Server::OnPlayerClickPlayer(int playerid, int clickedplayerid, int source)
+	bool ServerClass::OnPlayerClickPlayer(int playerid, int clickedplayerid, int source)
 	{
-		auto player = g_gameMode->players.findByIndex(playerid);
-		auto clicked = g_gameMode->players.findByIndex(clickedplayerid);
+		auto player = GameMode->Players.findByIndex(playerid);
+		auto clicked = GameMode->Players.findByIndex(clickedplayerid);
 
-		return g_gameMode->onPlayerClickPlayer(player, clicked, source);
+		return GameMode->onPlayerClickPlayer(player, clicked, source);
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////////
-	bool Server::OnPlayerEditObject(int playerid, bool playerobject, int objectid, int response, float fX, float fY, float fZ, float fRotX, float fRotY, float fRotZ)
+	bool ServerClass::OnPlayerEditObject(int playerid, bool playerobject, int objectid, int response, float fX, float fY, float fZ, float fRotX, float fRotY, float fRotZ)
 	{
-		auto player = g_gameMode->players.findByIndex(playerid);
+		auto player = GameMode->Players.findByIndex(playerid);
 
-		return g_gameMode->onPlayerEditObject(player, playerobject, objectid, response, Vector3(fX, fY, fZ), Vector3(fRotX, fRotY, fRotZ));
+		return GameMode->onPlayerEditObject(player, playerobject, objectid, response, Vector3(fX, fY, fZ), Vector3(fRotX, fRotY, fRotZ));
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////////
-	bool Server::OnPlayerEditAttachedObject(int playerid, int response, int index, int modelid, int boneid, float fOffsetX, float fOffsetY, float fOffsetZ, float fRotX, float fRotY, float fRotZ, float fScaleX, float fScaleY, float fScaleZ)
+	bool ServerClass::OnPlayerEditAttachedObject(int playerid, int response, int index, int modelid, int boneid, float fOffsetX, float fOffsetY, float fOffsetZ, float fRotX, float fRotY, float fRotZ, float fScaleX, float fScaleY, float fScaleZ)
 	{
-		auto player = g_gameMode->players.findByIndex(playerid);
+		auto player = GameMode->Players.findByIndex(playerid);
 
-		return g_gameMode->onPlayerEditAttachedObject(player, response, index, modelid, boneid, Vector3(fOffsetX, fOffsetY, fOffsetZ), Vector3(fRotX, fRotY, fRotZ), Vector3(fScaleX, fScaleY, fScaleZ));
+		return GameMode->onPlayerEditAttachedObject(player, response, index, modelid, boneid, Vector3(fOffsetX, fOffsetY, fOffsetZ), Vector3(fRotX, fRotY, fRotZ), Vector3(fScaleX, fScaleY, fScaleZ));
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////////
-	bool Server::OnPlayerSelectObject(int playerid, int type, int objectid, int modelid, float fX, float fY, float fZ)
+	bool ServerClass::OnPlayerSelectObject(int playerid, int type, int objectid, int modelid, float fX, float fY, float fZ)
 	{
-		auto player = g_gameMode->players.findByIndex(playerid);
+		auto player = GameMode->Players.findByIndex(playerid);
 
-		return g_gameMode->onPlayerSelectObject(player, type, objectid, modelid, Vector3(fX, fY, fZ));
+		return GameMode->onPlayerSelectObject(player, type, objectid, modelid, Vector3(fX, fY, fZ));
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////////
-	bool Server::OnPlayerWeaponShot(int playerid, int weaponid, int hittype, int hitid, float fX, float fY, float fZ)
+	bool ServerClass::OnPlayerWeaponShot(int playerid, int weaponid, int hittype, int hitid, float fX, float fY, float fZ)
 	{
-		auto player = g_gameMode->players.findByIndex(playerid);
+		auto player = GameMode->Players.findByIndex(playerid);
 
-		return g_gameMode->onPlayerWeaponShot(player, static_cast<Weapon::Type>(weaponid), hittype, hitid, Vector3(fX, fY, fZ));
+		return GameMode->onPlayerWeaponShot(player, static_cast<Weapon::Type>(weaponid), hittype, hitid, Vector3(fX, fY, fZ));
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////////
-	bool Server::_impl_OnPlayerEnterRaceCheckpoint(int playerid)
+	bool ServerClass::_impl_OnPlayerEnterRaceCheckpoint(int playerid)
 	{
-		auto player = g_gameMode->players.findByIndex(playerid);
+		auto player = GameMode->Players.findByIndex(playerid);
 
 		if (auto checkpoint = player->getRaceCheckpoint())
 		{
 			if (checkpoint->getType() == RaceCheckpoint::Air || checkpoint->getType() == RaceCheckpoint::AirFinish)
 			{
 				checkpoint->onPlayerLeave(player);
-				return g_gameMode->onPlayerEnterRaceCheckpoint(player);
+				return GameMode->onPlayerEnterRaceCheckpoint(player);
 			}
 		}
 		return true;
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////////
-	bool Server::_impl_OnPlayerLeaveRaceCheckpoint(int playerid)
+	bool ServerClass::_impl_OnPlayerLeaveRaceCheckpoint(int playerid)
 	{
-		auto player = g_gameMode->players.findByIndex(playerid);
+		auto player = GameMode->Players.findByIndex(playerid);
 
 		if (auto checkpoint = player->getRaceCheckpoint())
 		{
 			if (checkpoint->getType() == RaceCheckpoint::Air || checkpoint->getType() == RaceCheckpoint::AirFinish)
 			{
 				checkpoint->onPlayerLeave(player);
-				return g_gameMode->onPlayerLeaveRaceCheckpoint(player);
+				return GameMode->onPlayerLeaveRaceCheckpoint(player);
 			}
 		}
 		return true;
 	}*/
 
 /////////////////////////////////////////////////////////////////////////////////////////
-void Server::SampEvents::onUpdate()
+void ServerClass::SampEventListType::onUpdate()
 {
-	g_server->events.serverUpdates.emit(Clock::now());
+	Server->Events.ServerUpdates.emit(Clock::now());
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
-bool Server::SampEvents::onGameModeInit()
+bool ServerClass::SampEventListType::onGameModeInit()
 {
-	g_server->events.gameModeInits.emit();
+	Server->Events.GameModeInits.emit();
 	return true;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
-bool Server::SampEvents::onGameModeExit()
+bool ServerClass::SampEventListType::onGameModeExit()
 {
-	g_server->events.gameModeExits.emit();
+	Server->Events.GameModeExits.emit();
 	return true;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
-bool Server::SampEvents::onPlayerConnect(int playerid)
+bool ServerClass::SampEventListType::onPlayerConnect(Int32 playerIndex_)
 {
-	auto& player = g_gameMode->players.whenPlayerConnectsEx(
-		g_gameMode->newPlayerInstance( static_cast<std::size_t>(playerid) )
+	auto& player = GameMode->Players.whenPlayerConnectsEx(
+		GameMode->newPlayerInstance( static_cast<std::size_t>(playerIndex_) )
 	);
-
-	g_server->events.playerConnects.emit(player);
+	GameMode->Streamer->whenPlayerJoinsServer(player);
+	Server->Events.PlayerConnects.emit(player);
 	return true;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
-bool Server::SampEvents::onPlayerDisconnect(int playerid, int reason)
+bool ServerClass::SampEventListType::onPlayerDisconnect(Int32 playerIndex_, Player::DisconnectReason reason_)
 {
-	auto& player = *g_gameMode->players[static_cast<std::size_t>(playerid)];
+	auto& player = *GameMode->Players[static_cast<std::size_t>(playerIndex_)];
 
-	g_server->events.playerDisconnects.emit(player);
-	g_gameMode->players.whenPlayerDisconnectsEx(static_cast<std::size_t>(playerid));
+	Server->Events.PlayerDisconnects.emit(player);
+
+	// Note: this is very important to tell vehicle, that player is no longer inside
+	if (auto vehicle = player.getVehicle())
+	{
+		vehicle->whenPlayerExits(player);
+	}
+
+	GameMode->Streamer->whenPlayerLeavesServer(player);
+	GameMode->Players.whenPlayerDisconnectsEx(static_cast<std::size_t>(playerIndex_));
 	return true;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
-bool Server::SampEvents::onPlayerSpawn(int playerid)
+bool ServerClass::SampEventListType::onPlayerSpawn(Int32 playerIndex_)
 {
-	auto& player = *g_gameMode->players[static_cast<std::size_t>(playerid)];
+	auto& player = *GameMode->Players[static_cast<std::size_t>(playerIndex_)];
 
-	g_server->events.playerSpawns.emit(player);
+	player.setExistingStatus( Player::ExistingStatus::Spawning );
+	
+	Server->Events.PlayerSpawns.emit(player);
+
+	player.setExistingStatus( Player::ExistingStatus::Spawned );
 	return true;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
-bool Server::SampEvents::onPlayerDeath(int playerid, int killerid, int reason)
+bool ServerClass::SampEventListType::onPlayerDeath(Int32 playerIndex_, Int32 killerIndex_, Weapon::Type reason_)
 {
-	auto& player = *g_gameMode->players[static_cast<std::size_t>(playerid)];
+	auto& player = *GameMode->Players[static_cast<std::size_t>(playerIndex_)];
+
+	player.setExistingStatus( Player::ExistingStatus::Dead );
+
 	// Killer may be null.
-	auto killer = (killerid == INVALID_PLAYER_ID ? nullptr : g_gameMode->players[static_cast<std::size_t>(killerid)]);
+	auto killer = (killerIndex_ == Player::InvalidIndex ? nullptr : GameMode->Players[static_cast<std::size_t>(killerIndex_)]);
 
-	g_server->events.playerDies.emit(player, killer, static_cast<agdk::Weapon::Type>(reason));
+	Server->Events.PlayerDies.emit(player, killer, static_cast<Weapon::Type>(reason_));
 	return true;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
-bool Server::SampEvents::onVehicleSpawn(int vehicleid)
+bool ServerClass::SampEventListType::onVehicleSpawn(Int32 vehicleHandle_)
 {
-	auto& vehicle = *g_gameMode->vehicles.findVehicle(vehicleid);
+	auto& vehicle = *GameMode->Map.findVehicleByHandle(vehicleHandle_);
 
-	g_server->events.vehicleSpawns.emit(vehicle);
+	Server->Events.VehicleSpawns.emit(vehicle);
 	return true;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
-bool Server::SampEvents::onVehicleDeath(int vehicleid, int killerid)
+bool ServerClass::SampEventListType::onVehicleDeath(Int32 vehicleHandle_, Int32 killerIndex_)
 {
-	auto& vehicle = *g_gameMode->vehicles.findVehicle(vehicleid);
+	auto& vehicle = *GameMode->Map.findVehicleByHandle(vehicleHandle_);
 	// Killer may be null.
-	auto killer = (killerid == INVALID_PLAYER_ID ? nullptr : g_gameMode->players[static_cast<std::size_t>(killerid)]);
+	auto killer = (killerIndex_ == Player::InvalidIndex ? nullptr : GameMode->Players[static_cast<std::size_t>(killerIndex_)]);
 
-	g_server->events.vehicleDies.emit(vehicle, killer);
+	Server->Events.VehicleDies.emit(vehicle, killer);
 	return true;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
-bool Server::SampEvents::onPlayerText(int playerid, const char * text)
+bool ServerClass::SampEventListType::onPlayerSendText(Int32 playerIndex_, std::string_view text_)
 {
-	auto& player = *g_gameMode->players[static_cast<std::size_t>(playerid)];
-	g_server->events.playerSendsText.emit(player, std::string(text));
+	auto& player = *GameMode->Players[static_cast<std::size_t>(playerIndex_)];
+	Server->Events.PlayerSendsText.emit(player, std::string(text_));
 	return false;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
-bool Server::SampEvents::onPlayerCommandText(int playerid, const char * cmdtext)
+bool ServerClass::SampEventListType::onPlayerSendCommand(Int32 playerIndex_, std::string_view command_)
 {
-	auto& player = *g_gameMode->players[static_cast<std::size_t>(playerid)];
+	auto& player = *GameMode->Players[static_cast<std::size_t>(playerIndex_)];
 
-	g_server->events.playerSendsCommandText.emit(player, std::string(cmdtext));
+	Server->Events.PlayerSendsCommandText.emit(player, command_);
 	return true;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
-bool Server::SampEvents::onPlayerRequestClass(int playerid, int classid)
-{
-	return true;
-}
-
-/////////////////////////////////////////////////////////////////////////////////////////
-bool Server::SampEvents::onPlayerEnterVehicle(int playerid, int vehicleid, bool ispassenger)
+bool ServerClass::SampEventListType::onPlayerRequestClass(Int32 playerIndex_, Int32 classIndex_)
 {
 	return true;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
-bool Server::SampEvents::onPlayerExitVehicle(int playerid, int vehicleid)
+bool ServerClass::SampEventListType::onPlayerEnterVehicle(Int32 playerIndex_, Int32 vehicleHandle_, bool isPassenger_)
+{
+	auto& player = *GameMode->Players[ static_cast<Int32>(playerIndex_) ];
+
+	if ( auto vehicle = GameMode->Map.findVehicleByHandle(static_cast<Int32>(vehicleHandle_)) )
+	{
+		Server->Events.PlayerStartsToEnterVehicle.emit(player, *vehicle, isPassenger_);
+	}
+
+	return true;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+bool ServerClass::SampEventListType::onPlayerExitVehicle(Int32 playerIndex_, Int32 vehicleHandle_)
+{
+	auto& player = *GameMode->Players[static_cast<Int32>(playerIndex_)];
+
+	if (auto const vehicle = GameMode->Map.findVehicleByHandle(static_cast<Int32>(vehicleHandle_)))
+	{
+		Server->Events.PlayerStartsToExitVehicle.emit(player, *vehicle);
+	}
+
+	return true;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+bool ServerClass::SampEventListType::onPlayerStateChange(Int32 playerIndex_, Int32 newState_, Int32 oldState_)
+{
+	auto& player = *GameMode->Players[static_cast<Int32>(playerIndex_)];
+
+
+	if (oldState_ == PLAYER_STATE_DRIVER && newState_ != PLAYER_STATE_DRIVER)
+	{
+		// For this single moment player have still saved pointer to the vehicle.
+		if (auto const vehicle = player.getVehicle())
+		{
+			Server->Events.PlayerExitedVehicle.emit(player, *vehicle);
+
+			// Note: it is very important to tell vehicle, that it is no longer in use.
+			vehicle->whenPlayerExits(player);
+		}
+		player.setVehicle(nullptr);
+	}
+	else if (oldState_ == PLAYER_STATE_PASSENGER && newState_ != PLAYER_STATE_PASSENGER)
+	{
+		// For this single moment player have still saved pointer to the vehicle.
+		if (auto const vehicle = player.getVehicle())
+		{
+			Server->Events.PlayerExitedVehicle.emit(player, *vehicle);
+			
+			// Note: it is very important to tell vehicle, that it is no longer in use.
+			vehicle->whenPlayerExits(player);
+		}
+		player.setVehicle(nullptr);
+	}
+	
+	// Note: this does not start with "else if", since there is a hypothetical situation,
+	// when player changes state from passenger to driver.
+
+	// TODO: confirm that this method works when player is falling with parachute and immediately spawns a vehicle,
+	// because it will kill him.
+	if (oldState_ != PLAYER_STATE_DRIVER && newState_ == PLAYER_STATE_DRIVER)
+	{
+		if ( auto const vehicle = GameMode->Map.findVehicleByHandle(player.getClientVehicle()) )
+		{
+			player.setVehicle(vehicle);
+
+			// Note: it is very important to tell vehicle, that player entered the vehicle.
+			vehicle->whenPlayerEnters(player, 0);
+
+			Server->Events.PlayerEnteredVehicle.emit(player, *vehicle, 0);
+		}
+	}
+	else if (oldState_ != PLAYER_STATE_DRIVER && newState_ == PLAYER_STATE_PASSENGER)
+	{
+		if ( auto const vehicle = GameMode->Map.findVehicleByHandle(player.getClientVehicle()))
+		{
+			player.setVehicle(vehicle);
+
+			// Note: it is very important to tell vehicle, that player entered the vehicle.
+			vehicle->whenPlayerEnters(player, player.getVehicleSeat());
+
+			Server->Events.PlayerEnteredVehicle.emit(player, *vehicle, player.getVehicleSeat());
+		}
+	}
+	
+	return true;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+bool ServerClass::SampEventListType::onPlayerEnterCheckpoint(Int32 playerIndex_)
 {
 	return true;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
-bool Server::SampEvents::onPlayerStateChange(int playerid, int newstate, int oldstate)
+bool ServerClass::SampEventListType::onPlayerLeaveCheckpoint(Int32 playerIndex_)
 {
 	return true;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
-bool Server::SampEvents::onPlayerEnterCheckpoint(int playerid)
+bool ServerClass::SampEventListType::onPlayerEnterRaceCheckpoint(Int32 playerIndex_)
 {
 	return true;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
-bool Server::SampEvents::onPlayerLeaveCheckpoint(int playerid)
+bool ServerClass::SampEventListType::onPlayerLeaveRaceCheckpoint(Int32 playerIndex_)
 {
 	return true;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
-bool Server::SampEvents::onPlayerEnterRaceCheckpoint(int playerid)
+bool ServerClass::SampEventListType::onRconCommand(std::string_view rconCommand_)
 {
 	return true;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
-bool Server::SampEvents::onPlayerLeaveRaceCheckpoint(int playerid)
+bool ServerClass::SampEventListType::onPlayerRequestSpawn(Int32 playerIndex_)
 {
 	return true;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
-bool Server::SampEvents::onRconCommand(const char * cmd)
+bool ServerClass::SampEventListType::onObjectMoved(IMapObject::HandleType pbjectHandle_)
 {
 	return true;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
-bool Server::SampEvents::onPlayerRequestSpawn(int playerid)
+bool ServerClass::SampEventListType::onPlayerObjectMoved(Int32 playerIndex_, Int32 objectHandle_)
 {
 	return true;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
-bool Server::SampEvents::onObjectMoved(int objectid)
+bool ServerClass::SampEventListType::onPlayerPickUpPickup(Int32 playerIndex_, Int32 pickupHandle_)
 {
 	return true;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
-bool Server::SampEvents::onPlayerObjectMoved(int playerid, int objectid)
+bool ServerClass::SampEventListType::onVehicleMod(Int32 playerIndex_, Int32 vehicleHandle_, Int32 componentIndex_)
 {
 	return true;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
-bool Server::SampEvents::onPlayerPickUpPickup(int playerid, int pickupid)
+bool ServerClass::SampEventListType::onPlayerEnterModShop(Int32 playerIndex_, Int32 interiorIndex_)
 {
 	return true;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
-bool Server::SampEvents::onVehicleMod(int playerid, int vehicleid, int componentid)
+bool ServerClass::SampEventListType::onPlayerExitModShop(Int32 playerIndex_, Int32 interiorIndex_)
 {
 	return true;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
-bool Server::SampEvents::onEnterExitModShop(int playerid, int enterexit, int interiorid)
+bool ServerClass::SampEventListType::onVehiclePaintjob(Int32 playerIndex_, Int32 vehicleHandle_, Int32 paintjobIndex_)
 {
 	return true;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
-bool Server::SampEvents::onVehiclePaintjob(int playerid, int vehicleid, int paintjobid)
+bool ServerClass::SampEventListType::onVehicleRespray(Int32 playerIndex_, Int32 vehicleHandle_, Vehicle::Colors colors_)
 {
 	return true;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
-bool Server::SampEvents::onVehicleRespray(int playerid, int vehicleid, int color1, int color2)
+bool ServerClass::SampEventListType::onVehicleDamageStatusUpdate(Int32 vehicleHandle_, Int32 playerIndex_)
 {
 	return true;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
-bool Server::SampEvents::onVehicleDamageStatusUpdate(int vehicleid, int playerid)
+bool ServerClass::SampEventListType::onUnoccupiedVehicleUpdate(Int32 vehicleHandle_, Int32 playerIndex_, math::Vector3f location_, math::Vector3f velocity_)
+{
+	return true;
+}
+
+bool ServerClass::SampEventListType::onUnoccupiedVehicleUpdate(Int32 vehicleHandle_, Int32 playerIndex_, Int32 passengerSeat_, math::Vector3f location_, math::Vector3f velocity_)
 {
 	return true;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
-bool Server::SampEvents::onUnoccupiedVehicleUpdate(int vehicleid, int playerid, int passenger_seat, float new_x, float new_y, float new_z, float vel_x, float vel_y, float vel_z)
+bool ServerClass::SampEventListType::onPlayerSelectedMenuRow(Int32 playerIndex_, Int32 row_)
 {
 	return true;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
-bool Server::SampEvents::onPlayerSelectedMenuRow(int playerid, int row)
+bool ServerClass::SampEventListType::onPlayerExitedMenu(Int32 playerIndex_)
 {
 	return true;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
-bool Server::SampEvents::onPlayerExitedMenu(int playerid)
+bool ServerClass::SampEventListType::onPlayerInteriorChange(Int32 playerIndex_, Int32 newInterior_, Int32 oldInterior_)
 {
 	return true;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
-bool Server::SampEvents::onPlayerInteriorChange(int playerid, int newinteriorid, int oldinteriorid)
+bool ServerClass::SampEventListType::onPlayerKeyboardStateChange(Int32 playerIndex_, Keyboard const & newState_, Keyboard const & oldState_)
 {
 	return true;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
-bool Server::SampEvents::onPlayerKeyStateChange(int playerid, int newkeys, int oldkeys)
+bool ServerClass::SampEventListType::onRconLoginAttempt(std::string_view IP_, std::string_view password_, bool success_)
 {
 	return true;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
-bool Server::SampEvents::onRconLoginAttempt(const char * ip, const char * password, bool success)
+bool ServerClass::SampEventListType::onPlayerUpdate(Int32 playerIndex_)
 {
 	return true;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
-bool Server::SampEvents::onPlayerUpdate(int playerid)
+bool ServerClass::SampEventListType::onPlayerStreamIn(Int32 playerIndex_, Int32 forPlayerIndex_)
 {
 	return true;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
-bool Server::SampEvents::onPlayerStreamIn(int playerid, int forplayerid)
+bool ServerClass::SampEventListType::onPlayerStreamOut(Int32 playerIndex_, Int32 forPlayerIndex_)
 {
 	return true;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
-bool Server::SampEvents::onPlayerStreamOut(int playerid, int forplayerid)
+bool ServerClass::SampEventListType::onVehicleStreamIn(Int32 vehicleHandle_, Int32 forPlayerIndex_)
 {
 	return true;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
-bool Server::SampEvents::onVehicleStreamIn(int vehicleid, int forplayerid)
+bool ServerClass::SampEventListType::onVehicleStreamOut(Int32 vehicleHandle_, Int32 forPlayerIndex_)
 {
 	return true;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
-bool Server::SampEvents::onVehicleStreamOut(int vehicleid, int forplayerid)
+bool ServerClass::SampEventListType::onActorStreamIn(Int32 actorIndex_, Int32 forPlayerIndex_)
 {
 	return true;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
-bool Server::SampEvents::onActorStreamIn(int actorid, int forplayerid)
+bool ServerClass::SampEventListType::onActorStreamOut(Int32 actorIndex_, Int32 forPlayerIndex_)
 {
 	return true;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
-bool Server::SampEvents::onActorStreamOut(int actorid, int forplayerid)
+bool ServerClass::SampEventListType::onDialogResponse(Int32 playerIndex_, Int32 dialogIndex_, Dialog::Button button_, Int32 listItem_, std::string_view inputText_)
 {
 	return true;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
-bool Server::SampEvents::onDialogResponse(int playerid, int dialogid, int response, int listitem, const char * inputtext)
+bool ServerClass::SampEventListType::onPlayerTakeDamage(Int32 playerIndex_, Int32 issuerIndex_, float amount_, Weapon::Type weaponIndex_, Player::BodyPart bodyPart_)
 {
 	return true;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
-bool Server::SampEvents::onPlayerTakeDamage(int playerid, int issuerid, float amount, int weaponid, int bodypart)
+bool ServerClass::SampEventListType::onPlayerGiveDamage(Int32 playerIndex_, Int32 damagedIndex_, float amount_, Weapon::Type weaponIndex_, Player::BodyPart bodyPart_)
 {
 	return true;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
-bool Server::SampEvents::onPlayerGiveDamage(int playerid, int damagedid, float amount, int weaponid, int bodypart)
+bool ServerClass::SampEventListType::onPlayerGiveDamageActor(Int32 playerIndex_, Int32 damagedActorIndex_, float amount_, Weapon::Type weaponIndex_, Player::BodyPart bodyPart_)
 {
 	return true;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
-bool Server::SampEvents::onPlayerGiveDamageActor(int playerid, int damaged_actorid, float amount, int weaponid, int bodypart)
+bool ServerClass::SampEventListType::onPlayerClickMap(Int32 playerIndex_, math::Vector3f location_)
 {
 	return true;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
-bool Server::SampEvents::onPlayerClickMap(int playerid, float fX, float fY, float fZ)
+bool ServerClass::SampEventListType::onPlayerClickTextDraw(Int32 playerIndex_, Int32 textDrawIndex_)
 {
 	return true;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
-bool Server::SampEvents::onPlayerClickTextDraw(int playerid, int clickedid)
+bool ServerClass::SampEventListType::onPlayerClickPlayerTextDraw(Int32 playerIndex_, Int32 textDrawIndex_)
 {
 	return true;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
-bool Server::SampEvents::onPlayerClickPlayerTextDraw(int playerid, int playertextid)
+bool ServerClass::SampEventListType::onIncomingConnection(Int32 playerIndex_, std::string_view IPAddress_, Int32 port_)
 {
 	return true;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
-bool Server::SampEvents::onIncomingConnection(int playerid, const char * ip_address, int port)
+bool ServerClass::SampEventListType::onTrailerUpdate(Int32 playerIndex_, Int32 vehicleHandle_)
 {
 	return true;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
-bool Server::SampEvents::onTrailerUpdate(int playerid, int vehicleid)
+bool ServerClass::SampEventListType::onVehicleSirenStateChange(Int32 playerIndex_, Int32 vehicleHandle_, bool turnedOn_)
 {
 	return true;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
-bool Server::SampEvents::onVehicleSirenStateChange(int playerid, int vehicleid, int newstate)
+bool ServerClass::SampEventListType::onPlayerClickPlayer(Int32 playerIndex_, Int32 clickedPlayerIndex_, Int32 source_)
 {
 	return true;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
-bool Server::SampEvents::onPlayerClickPlayer(int playerid, int clickedplayerid, int source)
+bool ServerClass::SampEventListType::onPlayerEditObject(Int32 playerIndex_, Int32 objectHandle_, IMapObject::EditResponse response_, math::Vector3f location_, math::Vector3f rotation_)
 {
 	return true;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
-bool Server::SampEvents::onPlayerEditObject(int playerid, bool playerobject, int objectid, int response, float fX, float fY, float fZ, float fRotX, float fRotY, float fRotZ)
+bool ServerClass::SampEventListType::onPlayerEditPlayerObject(Int32 playerIndex_, Int32 objectHandle_, IMapObject::EditResponse response_, math::Vector3f location_, math::Vector3f rotation_)
 {
 	return true;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
-bool Server::SampEvents::onPlayerEditAttachedObject(int playerid, int response, int index, int modelid, int boneid, float fOffsetX, float fOffsetY, float fOffsetZ, float fRotX, float fRotY, float fRotZ, float fScaleX, float fScaleY, float fScaleZ)
+bool ServerClass::SampEventListType::onPlayerEditAttachedObject(Int32 playerIndex_, bool applied_, Int32 slotIndex_, Int32 modelIndex_, Int32 boneIndex_, math::Vector3f offset_, math::Vector3f rotation_, math::Vector3f scale_)
 {
 	return true;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
-bool Server::SampEvents::onPlayerSelectObject(int playerid, int type, int objectid, int modelid, float fX, float fY, float fZ)
+bool ServerClass::SampEventListType::onPlayerSelectObject(Int32 playerIndex_, Int32 objectHandle_, Int32 modelIndex_, math::Vector3f location_)
 {
 	return true;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
-bool Server::SampEvents::onPlayerWeaponShot(int playerid, int weaponid, int hittype, int hitid, float fX, float fY, float fZ)
+bool ServerClass::SampEventListType::onPlayerSelectPlayerObject(Int32 playerIndex_, Int32 objectHandle_, Int32 modelIndex_, math::Vector3f location_)
 {
 	return true;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
-bool Server::SampEvents::_impl_OnPlayerEnterRaceCheckpoint(int playerid)
+bool ServerClass::SampEventListType::onPlayerWeaponShot(Int32 playerIndex_, Weapon::Type weapon_, Weapon::HitResult hitResult_)
 {
 	return true;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
-bool Server::SampEvents::_impl_OnPlayerLeaveRaceCheckpoint(int playerid)
+bool ServerClass::SampEventListType::_impl_OnPlayerEnterRaceCheckpoint(Int32 playerIndex_)
+{
+	return true;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+bool ServerClass::SampEventListType::_impl_OnPlayerLeaveRaceCheckpoint(Int32 playerIndex_)
 {
 	return true;
 }
@@ -1045,111 +1155,111 @@ PLUGIN_EXPORT void PLUGIN_CALL ProcessTick()
 {
 	sampgdk_ProcessTick();
 
-	if (g_server)
-		g_server->sampEvents.onUpdate();
+	if (Server)
+		Server->SampEvents.onUpdate();
 }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////////////////
 PLUGIN_EXPORT bool PLUGIN_CALL OnGameModeInit()
 {
-	g_server = std::make_unique<agdk::Server>();
+	Server = std::make_unique<agdk::ServerClass>();
 
 	// call user defined startup method
 	main();
 
-	return g_server->sampEvents.onGameModeInit();
+	return Server->SampEvents.onGameModeInit();
 }
 /////////////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////////////////
 PLUGIN_EXPORT bool PLUGIN_CALL OnGameModeExit()
 {
-	return g_server->sampEvents.onGameModeExit();
+	return Server->SampEvents.onGameModeExit();
 }
 /////////////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////////////////
 PLUGIN_EXPORT bool PLUGIN_CALL OnPlayerConnect(int playerid)
 {
-	return g_server->sampEvents.onPlayerConnect(playerid);
+	return Server->SampEvents.onPlayerConnect( playerid );
 }
 /////////////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////////////////
 PLUGIN_EXPORT bool PLUGIN_CALL OnPlayerDisconnect(int playerid, int reason)
 {
-	return g_server->sampEvents.onPlayerDisconnect(playerid, reason);
+	return Server->SampEvents.onPlayerDisconnect( playerid, static_cast<agdk::Player::DisconnectReason>(reason) );
 }
 /////////////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////////////////
 PLUGIN_EXPORT bool PLUGIN_CALL OnPlayerSpawn(int playerid)
 {
-	return g_server->sampEvents.onPlayerSpawn(playerid);
+	return Server->SampEvents.onPlayerSpawn( playerid );
 }
 /////////////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////////////////
 PLUGIN_EXPORT bool PLUGIN_CALL OnPlayerDeath(int playerid, int killerid, int reason)
 {
-	return g_server->sampEvents.onPlayerDeath(playerid, killerid, reason);
+	return Server->SampEvents.onPlayerDeath( playerid, killerid, static_cast<agdk::Weapon::Type>(reason) );
 }
 /////////////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////////////////
 PLUGIN_EXPORT bool PLUGIN_CALL OnVehicleSpawn(int vehicleid)
 {
-	return g_server->sampEvents.onVehicleSpawn(vehicleid);
+	return Server->SampEvents.onVehicleSpawn( vehicleid );
 }
 /////////////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////////////////
 PLUGIN_EXPORT bool PLUGIN_CALL OnVehicleDeath(int vehicleid, int killerid)
 {
-	return g_server->sampEvents.onVehicleDeath(vehicleid, killerid);
+	return Server->SampEvents.onVehicleDeath( vehicleid, killerid );
 }
 /////////////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////////////////
 PLUGIN_EXPORT bool PLUGIN_CALL OnPlayerText(int playerid, const char * text)
 {
-	return g_server->sampEvents.onPlayerText(playerid, text);
+	return Server->SampEvents.onPlayerSendText( playerid, std::string_view{ text } );
 }
 /////////////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////////////////
 PLUGIN_EXPORT bool PLUGIN_CALL OnPlayerCommandText(int playerid, const char * cmdtext)
 {
-	return g_server->sampEvents.onPlayerCommandText(playerid, cmdtext);
+	return Server->SampEvents.onPlayerSendCommand( playerid, std::string_view{ cmdtext } );
 }
 /////////////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////////////////
 PLUGIN_EXPORT bool PLUGIN_CALL OnPlayerRequestClass(int playerid, int classid)
 {
-	return g_server->sampEvents.onPlayerRequestClass(playerid, classid);
+	return Server->SampEvents.onPlayerRequestClass( playerid, classid );
 }
 /////////////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////////////////
 PLUGIN_EXPORT bool PLUGIN_CALL OnPlayerEnterVehicle(int playerid, int vehicleid, bool ispassenger)
 {
-	return g_server->sampEvents.onPlayerEnterVehicle(playerid, vehicleid, ispassenger);
+	return Server->SampEvents.onPlayerEnterVehicle( playerid, vehicleid, ispassenger );
 }
 /////////////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////////////////
 PLUGIN_EXPORT bool PLUGIN_CALL OnPlayerExitVehicle(int playerid, int vehicleid)
 {
-	return g_server->sampEvents.onPlayerExitVehicle(playerid, vehicleid);
+	return Server->SampEvents.onPlayerExitVehicle( playerid, vehicleid );
 }
 /////////////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////////////////
 PLUGIN_EXPORT bool PLUGIN_CALL OnPlayerStateChange(int playerid, int newstate, int oldstate)
 {
-	return g_server->sampEvents.onPlayerStateChange(playerid, newstate, oldstate);
+	return Server->SampEvents.onPlayerStateChange( playerid, newstate, oldstate );
 }
 /////////////////////////////////////////////////////////////////////////////////////////
 
@@ -1170,278 +1280,310 @@ PLUGIN_EXPORT bool PLUGIN_CALL OnPlayerLeaveCheckpoint(int playerid)
 /////////////////////////////////////////////////////////////////////////////////////////
 PLUGIN_EXPORT bool PLUGIN_CALL OnPlayerEnterRaceCheckpoint(int playerid)
 {
-	return g_server->sampEvents._impl_OnPlayerEnterRaceCheckpoint(playerid);
+	return Server->SampEvents._impl_OnPlayerEnterRaceCheckpoint(playerid);
 }
 /////////////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////////////////
 PLUGIN_EXPORT bool PLUGIN_CALL OnPlayerLeaveRaceCheckpoint(int playerid)
 {
-	return g_server->sampEvents._impl_OnPlayerLeaveRaceCheckpoint(playerid);
+	return Server->SampEvents._impl_OnPlayerLeaveRaceCheckpoint(playerid);
 }
 /////////////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////////////////
 PLUGIN_EXPORT bool PLUGIN_CALL OnRconCommand(const char * cmd)
 {
-	return g_server->sampEvents.onRconCommand(cmd);
+	return Server->SampEvents.onRconCommand(std::string_view{ cmd });
 }
 /////////////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////////////////
 PLUGIN_EXPORT bool PLUGIN_CALL OnPlayerRequestSpawn(int playerid)
 {
-	return g_server->sampEvents.onPlayerRequestSpawn(playerid);
+	return Server->SampEvents.onPlayerRequestSpawn(playerid);
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 PLUGIN_EXPORT bool PLUGIN_CALL OnObjectMoved(int objectid)
 {
-	return g_server->sampEvents.onObjectMoved(objectid);
+	return Server->SampEvents.onObjectMoved(objectid);
 }
 /////////////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////////////////
 PLUGIN_EXPORT bool PLUGIN_CALL OnPlayerObjectMoved(int playerid, int objectid)
 {
-	return g_server->sampEvents.onPlayerObjectMoved(playerid, objectid);
+	return Server->SampEvents.onPlayerObjectMoved(playerid, objectid);
 }
 /////////////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////////////////
 PLUGIN_EXPORT bool PLUGIN_CALL OnPlayerPickUpPickup(int playerid, int pickupid)
 {
-	return g_server->sampEvents.onPlayerPickUpPickup(playerid, pickupid);
+	return Server->SampEvents.onPlayerPickUpPickup(playerid, pickupid);
 }
 /////////////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////////////////
 PLUGIN_EXPORT bool PLUGIN_CALL OnVehicleMod(int playerid, int vehicleid, int componentid)
 {
-	return g_server->sampEvents.onVehicleMod(playerid, vehicleid, componentid);
+	return Server->SampEvents.onVehicleMod(playerid, vehicleid, componentid);
 }
 /////////////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////////////////
 PLUGIN_EXPORT bool PLUGIN_CALL OnEnterExitModShop(int playerid, int enterexit, int interiorid)
 {
-	return g_server->sampEvents.onEnterExitModShop(playerid, enterexit, interiorid);
+	if (enterexit == 1)
+		return Server->SampEvents.onPlayerEnterModShop(playerid, interiorid);
+	else
+		return Server->SampEvents.onPlayerExitModShop(playerid, interiorid);
 }
 /////////////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////////////////
 PLUGIN_EXPORT bool PLUGIN_CALL OnVehiclePaintjob(int playerid, int vehicleid, int paintjobid)
 {
-	return g_server->sampEvents.onVehiclePaintjob(playerid, vehicleid, paintjobid);
+	return Server->SampEvents.onVehiclePaintjob(playerid, vehicleid, paintjobid);
 }
 /////////////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////////////////
 PLUGIN_EXPORT bool PLUGIN_CALL OnVehicleRespray(int playerid, int vehicleid, int color1, int color2)
 {
-	return g_server->sampEvents.onVehicleRespray(playerid, vehicleid, color1, color2);
+	return Server->SampEvents.onVehicleRespray( playerid, vehicleid, std::make_pair( color1, color2 ) );
 }
 /////////////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////////////////
 PLUGIN_EXPORT bool PLUGIN_CALL OnVehicleDamageStatusUpdate(int vehicleid, int playerid)
 {
-	return g_server->sampEvents.onVehicleDamageStatusUpdate(vehicleid, playerid);
+	return Server->SampEvents.onVehicleDamageStatusUpdate( vehicleid, playerid );
 }
 /////////////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////////////////
 PLUGIN_EXPORT bool PLUGIN_CALL OnUnoccupiedVehicleUpdate(int vehicleid, int playerid, int passenger_seat, float new_x, float new_y, float new_z, float vel_x, float vel_y, float vel_z)
 {
-	return g_server->sampEvents.onUnoccupiedVehicleUpdate(vehicleid, playerid, passenger_seat, new_x, new_y, new_z, vel_x, vel_y, vel_z);
+	if (passenger_seat != 0)
+		return Server->SampEvents.onUnoccupiedVehicleUpdate(vehicleid, playerid, passenger_seat, { new_x, new_y, new_z }, { vel_x, vel_y, vel_z });
+
+	return Server->SampEvents.onUnoccupiedVehicleUpdate(vehicleid, playerid, { new_x, new_y, new_z }, { vel_x, vel_y, vel_z });
 }
 /////////////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////////////////
 PLUGIN_EXPORT bool PLUGIN_CALL OnPlayerSelectedMenuRow(int playerid, int row)
 {
-	return g_server->sampEvents.onPlayerSelectedMenuRow(playerid, row);
+	return Server->SampEvents.onPlayerSelectedMenuRow(playerid, row);
 }
 /////////////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////////////////
 PLUGIN_EXPORT bool PLUGIN_CALL OnPlayerExitedMenu(int playerid)
 {
-	return g_server->sampEvents.onPlayerExitedMenu(playerid);
+	return Server->SampEvents.onPlayerExitedMenu(playerid);
 }
 /////////////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////////////////
 PLUGIN_EXPORT bool PLUGIN_CALL OnPlayerInteriorChange(int playerid, int newinteriorid, int oldinteriorid)
 {
-	return g_server->sampEvents.onPlayerInteriorChange(playerid, newinteriorid, oldinteriorid);
+	return Server->SampEvents.onPlayerInteriorChange( playerid, newinteriorid, oldinteriorid );
 }
 /////////////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////////////////
 PLUGIN_EXPORT bool PLUGIN_CALL OnPlayerKeyStateChange(int playerid, int newkeys, int oldkeys)
 {
-	return g_server->sampEvents.onPlayerKeyStateChange(playerid, newkeys, oldkeys);
+	agdk::Int32 upDown;
+	agdk::Int32 leftRight;
+	agdk::Int32 unusedKeys;
+	sampgdk_GetPlayerKeys(playerid, &unusedKeys, &upDown, &leftRight);
+
+	// Note:
+	// Old keyboard state has does not ever know whether up/down/left or right key was pressed.
+	// TODO: fix this if possible.
+	return Server->SampEvents.onPlayerKeyboardStateChange(
+		playerid,
+		agdk::Keyboard{ newkeys, upDown, leftRight },
+		agdk::Keyboard{ oldkeys }
+	);
 }
 /////////////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////////////////
 PLUGIN_EXPORT bool PLUGIN_CALL OnRconLoginAttempt(const char * ip, const char * password, bool success)
 {
-	return g_server->sampEvents.onRconLoginAttempt(ip, password, success);
+	return Server->SampEvents.onRconLoginAttempt( std::string_view{ ip }, std::string_view{ password }, success );
 }
 /////////////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////////////////
 PLUGIN_EXPORT bool PLUGIN_CALL OnPlayerUpdate(int playerid)
 {
-	return g_server->sampEvents.onPlayerUpdate(playerid);
+	return Server->SampEvents.onPlayerUpdate( playerid );
 }
 /////////////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////////////////
-PLUGIN_EXPORT bool PLUGIN_CALL OnPlayerStreamIn(int playerid, int forplayerid)
+PLUGIN_EXPORT bool PLUGIN_CALL OnPlayerStreamIn(int playerid, int forplayerid )
 {
-	return g_server->sampEvents.onPlayerStreamIn(playerid, forplayerid);
+	return Server->SampEvents.onPlayerStreamIn( playerid, forplayerid );
 }
 /////////////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////////////////
-PLUGIN_EXPORT bool PLUGIN_CALL OnPlayerStreamOut(int playerid, int forplayerid)
+PLUGIN_EXPORT bool PLUGIN_CALL OnPlayerStreamOut(int playerid, int forplayerid )
 {
-	return g_server->sampEvents.onPlayerStreamOut(playerid, forplayerid);
+	return Server->SampEvents.onPlayerStreamOut( playerid, forplayerid );
 }
 /////////////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////////////////
-PLUGIN_EXPORT bool PLUGIN_CALL OnVehicleStreamIn(int vehicleid, int forplayerid)
+PLUGIN_EXPORT bool PLUGIN_CALL OnVehicleStreamIn(int vehicleid, int forplayerid )
 {
-	return g_server->sampEvents.onVehicleStreamIn(vehicleid, forplayerid);
+	return Server->SampEvents.onVehicleStreamIn( vehicleid, forplayerid);
 }
 /////////////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////////////////
-PLUGIN_EXPORT bool PLUGIN_CALL OnVehicleStreamOut(int vehicleid, int forplayerid)
+PLUGIN_EXPORT bool PLUGIN_CALL OnVehicleStreamOut(int vehicleid, int forplayerid )
 {
-	return g_server->sampEvents.onVehicleStreamOut(vehicleid, forplayerid);
+	return Server->SampEvents.onVehicleStreamOut( vehicleid, forplayerid );
 }
 /////////////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////////////////
-PLUGIN_EXPORT bool PLUGIN_CALL OnActorStreamIn(int actorid, int forplayerid)
+PLUGIN_EXPORT bool PLUGIN_CALL OnActorStreamIn(int actorid, int forplayerid )
 {
-	return g_server->sampEvents.onActorStreamIn(actorid, forplayerid);
+	return Server->SampEvents.onActorStreamIn( actorid, forplayerid );
 }
 /////////////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////////////////
-PLUGIN_EXPORT bool PLUGIN_CALL OnActorStreamOut(int actorid, int forplayerid)
+PLUGIN_EXPORT bool PLUGIN_CALL OnActorStreamOut(int actorid, int forplayerid )
 {
-	return g_server->sampEvents.onActorStreamOut(actorid, forplayerid);
+	return Server->SampEvents.onActorStreamOut( actorid, forplayerid );
 }
 /////////////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////////////////
 PLUGIN_EXPORT bool PLUGIN_CALL OnDialogResponse(int playerid, int dialogid, int response, int listitem, const char * inputtext)
 {
-	return g_server->sampEvents.onDialogResponse(playerid, dialogid, response, listitem, inputtext);
+	return Server->SampEvents.onDialogResponse( playerid, dialogid, static_cast<agdk::Dialog::Button>(response), listitem, inputtext );
 }
 /////////////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////////////////
 PLUGIN_EXPORT bool PLUGIN_CALL OnPlayerTakeDamage(int playerid, int issuerid, float amount, int weaponid, int bodypart)
 {
-	return g_server->sampEvents.onPlayerTakeDamage(playerid, issuerid, amount, weaponid, bodypart);
+	return Server->SampEvents.onPlayerTakeDamage( playerid, issuerid, amount, static_cast<agdk::Weapon::Type>(weaponid), static_cast<agdk::Player::BodyPart>(bodypart) );
 }
 /////////////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////////////////
 PLUGIN_EXPORT bool PLUGIN_CALL OnPlayerGiveDamage(int playerid, int damagedid, float amount, int weaponid, int bodypart)
 {
-	return g_server->sampEvents.onPlayerGiveDamage(playerid, damagedid, amount, weaponid, bodypart);
+	return Server->SampEvents.onPlayerGiveDamage( playerid, damagedid, amount, static_cast<agdk::Weapon::Type>(weaponid), static_cast<agdk::Player::BodyPart>(bodypart) );
 }
 /////////////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////////////////
 PLUGIN_EXPORT bool PLUGIN_CALL OnPlayerGiveDamageActor(int playerid, int damaged_actorid, float amount, int weaponid, int bodypart)
 {
-	return g_server->sampEvents.onPlayerGiveDamageActor(playerid, damaged_actorid, amount, weaponid, bodypart);
+	return Server->SampEvents.onPlayerGiveDamageActor( playerid, damaged_actorid, amount, static_cast<agdk::Weapon::Type>(weaponid), static_cast<agdk::Player::BodyPart>(bodypart) );
 }
 /////////////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////////////////
 PLUGIN_EXPORT bool PLUGIN_CALL OnPlayerClickMap(int playerid, float fX, float fY, float fZ)
 {
-	return g_server->sampEvents.onPlayerClickMap(playerid, fX, fY, fZ);
+	return Server->SampEvents.onPlayerClickMap(playerid, { fX, fY, fZ } );
 }
 /////////////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////////////////
 PLUGIN_EXPORT bool PLUGIN_CALL OnPlayerClickTextDraw(int playerid, int clickedid)
 {
-	return g_server->sampEvents.onPlayerClickTextDraw(playerid, clickedid);
+	return Server->SampEvents.onPlayerClickTextDraw(playerid, clickedid);
 }
 /////////////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////////////////
 PLUGIN_EXPORT bool PLUGIN_CALL OnPlayerClickPlayerTextDraw(int playerid, int playertextid)
 {
-	return g_server->sampEvents.onPlayerClickPlayerTextDraw(playerid, playertextid);
+	return Server->SampEvents.onPlayerClickPlayerTextDraw(playerid, playertextid);
 }
 /////////////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////////////////
 PLUGIN_EXPORT bool PLUGIN_CALL OnIncomingConnection(int playerid, const char * ip_address, int port)
 {
-	return g_server->sampEvents.onIncomingConnection(playerid, ip_address, port);
+	return Server->SampEvents.onIncomingConnection(playerid, std::string_view{ ip_address }, port);
 }
 /////////////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////////////////
 PLUGIN_EXPORT bool PLUGIN_CALL OnTrailerUpdate(int playerid, int vehicleid)
 {
-	return g_server->sampEvents.onTrailerUpdate(playerid, vehicleid);
+	return Server->SampEvents.onTrailerUpdate(playerid, vehicleid);
 }
 /////////////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////////////////
 PLUGIN_EXPORT bool PLUGIN_CALL OnVehicleSirenStateChange(int playerid, int vehicleid, int newstate)
 {
-	return g_server->sampEvents.onVehicleSirenStateChange(playerid, vehicleid, newstate);
+	return Server->SampEvents.onVehicleSirenStateChange(playerid, vehicleid, newstate == 1);
 }
 /////////////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////////////////
 PLUGIN_EXPORT bool PLUGIN_CALL OnPlayerClickPlayer(int playerid, int clickedplayerid, int source)
 {
-	return g_server->sampEvents.onPlayerClickPlayer(playerid, clickedplayerid, source);
+	return Server->SampEvents.onPlayerClickPlayer(playerid, clickedplayerid, source);
 }
 /////////////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////////////////
 PLUGIN_EXPORT bool PLUGIN_CALL OnPlayerEditObject(int playerid, bool playerobject, int objectid, int response, float fX, float fY, float fZ, float fRotX, float fRotY, float fRotZ)
 {
-	return g_server->sampEvents.onPlayerEditObject(playerid, playerobject, objectid, response, fX, fY, fZ, fRotX, fRotY, fRotZ);
+	if (playerobject == 1)
+		return Server->SampEvents.onPlayerEditPlayerObject(playerid, objectid, static_cast<agdk::IMapObject::EditResponse>(response), { fX, fY, fZ }, { fRotX, fRotY, fRotZ });
+	else
+		return Server->SampEvents.onPlayerEditObject(playerid, objectid, static_cast<agdk::IMapObject::EditResponse>(response), { fX, fY, fZ }, { fRotX, fRotY, fRotZ });
 }
 /////////////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////////////////
 PLUGIN_EXPORT bool PLUGIN_CALL OnPlayerEditAttachedObject(int playerid, int response, int index, int modelid, int boneid, float fOffsetX, float fOffsetY, float fOffsetZ, float fRotX, float fRotY, float fRotZ, float fScaleX, float fScaleY, float fScaleZ)
 {
-	return g_server->sampEvents.onPlayerEditAttachedObject(playerid, response, index, modelid, boneid, fOffsetX, fOffsetY, fOffsetZ, fRotX, fRotY, fRotZ, fScaleX, fScaleY, fScaleZ);
+	return Server->SampEvents.onPlayerEditAttachedObject(playerid, response == 1, index, modelid, boneid, { fOffsetX, fOffsetY, fOffsetZ }, { fRotX, fRotY, fRotZ }, { fScaleX, fScaleY, fScaleZ } );
 }
 /////////////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////////////////
 PLUGIN_EXPORT bool PLUGIN_CALL OnPlayerSelectObject(int playerid, int type, int objectid, int modelid, float fX, float fY, float fZ)
 {
-	return g_server->sampEvents.onPlayerSelectObject(playerid, type, objectid, modelid, fX, fY, fZ);
+	if (type == SELECT_OBJECT_GLOBAL_OBJECT)
+		return Server->SampEvents.onPlayerSelectObject(playerid, objectid, modelid, { fX, fY, fZ } );
+	else // if (type == SELECT_OBJECT_PLAYER_OBJECT) // Note: there is currently no other option.
+		return Server->SampEvents.onPlayerSelectPlayerObject(playerid, objectid, modelid, { fX, fY, fZ });
 }
 /////////////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////////////////
 PLUGIN_EXPORT bool PLUGIN_CALL OnPlayerWeaponShot(int playerid, int weaponid, int hittype, int hitid, float fX, float fY, float fZ)
 {
-	return g_server->sampEvents.onPlayerWeaponShot(playerid, weaponid, hittype, hitid, fX, fY, fZ);
+	return Server->SampEvents.onPlayerWeaponShot(
+		playerid,
+		static_cast<agdk::Weapon::Type>(weaponid),
+		agdk::Weapon::HitResult{
+			static_cast<agdk::Weapon::HitResult::Target>(hittype),
+			hitid,
+			{ fX, fY, fZ }
+		}
+	);
 }
 /////////////////////////////////////////////////////////////////////////////////////////

@@ -5,7 +5,13 @@
 namespace agdk
 {
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
-void IActorPlacementTracker::whenPlacementUpdateReceived(ActorPlacement const& newPlacement_)
+I3DNodePlacementTracker::I3DNodePlacementTracker(ActorPlacement const & initialPlacement_)
+	: m_lastPlacement{ initialPlacement_ }
+{
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
+void I3DNodePlacementTracker::whenPlacementUpdateReceived(ActorPlacement const& newPlacement_)
 {
 	if (this->isSignificantChange(newPlacement_))
 	{
@@ -15,11 +21,17 @@ void IActorPlacementTracker::whenPlacementUpdateReceived(ActorPlacement const& n
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
-bool IActorPlacementTracker::isSignificantChange(ActorPlacement const& newPlacement_) const
+bool I3DNodePlacementTracker::isSignificantChange(ActorPlacement const& newPlacement_) const
 {
 	return	newPlacement_.world != m_lastPlacement.world ||
 			newPlacement_.interior != m_lastPlacement.interior ||
 			newPlacement_.location.distanceSquared(m_lastPlacement.location) >= default_streamer::StreamerSettings.getMaxDisplacementDistanceSquared().value;
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
+IGlobalObjectPlacementTracker::IGlobalObjectPlacementTracker(GlobalObjectPlacement const & initialPlacement_)
+	: m_lastPlacement{ initialPlacement_ }
+{
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////

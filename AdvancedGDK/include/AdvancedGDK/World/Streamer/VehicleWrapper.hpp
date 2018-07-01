@@ -8,7 +8,7 @@
 #include <AdvancedGDK/Core/BasicInterfaces/PlacementTracker.hpp>
 
 // Wrapped class:
-#include <AdvancedGDK/World/Vehicle/Vehicle.hpp>
+#include <AdvancedGDK/World/Vehicle.hpp>
 
 namespace agdk
 {
@@ -18,15 +18,10 @@ namespace default_streamer
 class VehicleWrapper
 	:
 	public IGlobalActorWrapper,
-	public IActorPlacementTracker
+	public I3DNodePlacementTracker
 {
 public:	
 
-	/// <summary>
-	/// Initializes a new instance of the <see cref="VehicleWrapper"/> class.
-	/// </summary>
-	VehicleWrapper();
-	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="VehicleWrapper"/> class.
 	/// </summary>

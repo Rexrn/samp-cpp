@@ -2,7 +2,7 @@
 
 #include ADVANCEDGDK_PCH
 
-#include <AdvancedGDK/Core/MathInc.hpp>
+#include <AdvancedGDK/Core/Pointers.hpp>
 
 namespace agdk
 {
@@ -116,7 +116,7 @@ public:
 	using LowerLevelType	= DivisibleGrid2Node<t_elementType, LowerLevelRatio, t_numDivisions, t_levelsLeft - 1>;
 
 	// Pointer to contained nodes.
-	using NodePointer		= std::unique_ptr< LowerLevelType >;
+	using NodePointer		= UniquePtr< LowerLevelType >;
 	// Raw pointer to contained nodes.
 	using RawNodePointer	= LowerLevelType* ;
 	

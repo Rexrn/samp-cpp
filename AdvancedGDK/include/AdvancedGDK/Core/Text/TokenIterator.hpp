@@ -2,6 +2,8 @@
 
 #include ADVANCEDGDK_PCH
 
+#include <AdvancedGDK/Core/Pointers.hpp>
+
 namespace agdk::text
 {
 
@@ -16,8 +18,8 @@ public:
 	using SeparatorType		= TSeparatorType;
 	using StringType		= TStringType;
 	using SeparatorsType	= std::vector<SeparatorType>;
-	using SeparatorsPtrType	= std::shared_ptr<SeparatorsType>;
-	using StringPtrType		= std::shared_ptr<StringType>;
+	using SeparatorsPtrType	= SharedPtr<SeparatorsType>;
+	using StringPtrType		= SharedPtr<StringType>;
 	using IteratorType		= typename StringType::const_iterator;
 	using DiffType			= typename StringType::difference_type;
 	

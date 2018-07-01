@@ -2,10 +2,43 @@
 
 #include ADVANCEDGDK_PCH
 
-#include <AdvancedGDK/Core/MathInc.hpp>
+#include <AdvancedGDK/Core/Pointers.hpp>
 
 namespace agdk
 {
+
+#ifdef ADVANCEDGDK_DEBUG
+struct DivisibleGrid3ElementDebugInfo
+{
+	math::Vector3f center, halfExtent;
+};
+struct IDivisibleGrid3ElementBase
+{
+public:
+	/// <summary>
+	/// Returns the debug information.
+	/// </summary>
+	/// <returns>
+	///		The debug information.
+	/// </returns>
+	auto const & getDebugInfo() const
+	{
+		return m_debugInfo;
+	}
+
+	/// <summary>
+	/// Sets the debug information.
+	/// </summary>
+	/// <param name="debugInfo_">The debug information.</param>
+	void setDebugInfo(DivisibleGrid3ElementDebugInfo debugInfo_)
+	{
+		m_debugInfo = debugInfo_;
+	}
+protected:	
+	
+	DivisibleGrid3ElementDebugInfo m_debugInfo;
+};
+#endif
 
 /// <summary>
 /// Interface for every grid node.
@@ -118,7 +151,7 @@ public:
 	using LowerLevelType	= DivisibleGrid3Node<TElementType, LowerLevelRatio, _numDivisions, _levelsLeft - 1>;
 
 	// Pointer to contained nodes.
-	using NodePointer		= std::unique_ptr< LowerLevelType >;
+	using NodePointer		= UniquePtr< LowerLevelType >;
 	// Raw pointer to contained nodes.
 	using RawNodePointer	= LowerLevelType* ;
 	
@@ -326,16 +359,16 @@ private:
 	/// <returns>Vector of array indices that represents node containing specified location.</returns>
 	auto computeArrayIndices(math::Vector3f const & location_) const
 	{
-		constexpr auto halfExtent		= Super::getHalfExtent();
-		constexpr auto childHalfExtent	= LowerLevelType::getHalfExtent();
+		constexpr auto halfExtent		= Super::getHalfExtent().template convert<double>();
+		constexpr auto childHalfExtent	= LowerLevelType::getHalfExtent().template convert<double>();
 
-		auto relativeLocation = location_ - (this->getCenter() - halfExtent);
+		math::Vector3d relativeLocation = location_.convert<double>() - (this->getCenter().template convert<double>() - halfExtent);
 
 		// Assertion note:
 		// You tried to get instance of a chunk that does not exist in this node (or entire grid if Level is the one you set as the highest).
-		assert(	relativeLocation.x >= 0 &&
-				relativeLocation.y >= 0 &&
-				relativeLocation.z >= 0);
+		assert(	relativeLocation.x >= 0.0 &&
+				relativeLocation.y >= 0.0 &&
+				relativeLocation.z >= 0.0);
 
 #ifdef ADVANCEDGDK_DEBUG
 		using VectorType = math::Vector3i64;
@@ -344,9 +377,9 @@ private:
 #endif
 		
 		return VectorType {
-			static_cast<VectorType::ValueType>(std::floor(relativeLocation.x / (childHalfExtent.x * 2))),
-			static_cast<VectorType::ValueType>(std::floor(relativeLocation.y / (childHalfExtent.y * 2))),
-			static_cast<VectorType::ValueType>(std::floor(relativeLocation.z / (childHalfExtent.z * 2)))
+			static_cast<VectorType::ValueType>(std::floor(relativeLocation.x / (childHalfExtent.x * 2.0))),
+			static_cast<VectorType::ValueType>(std::floor(relativeLocation.y / (childHalfExtent.y * 2.0))),
+			static_cast<VectorType::ValueType>(std::floor(relativeLocation.z / (childHalfExtent.z * 2.0)))
 		};
 	}
 
@@ -377,6 +410,9 @@ public:
 	DivisibleGrid3Node(math::Vector3f const center_)
 		: Super(center_)
 	{
+#ifdef ADVANCEDGDK_DEBUG
+		m_element.setDebugInfo( { center_, Super::getHalfExtent() });
+#endif
 	}
 
 	/// <summary>
