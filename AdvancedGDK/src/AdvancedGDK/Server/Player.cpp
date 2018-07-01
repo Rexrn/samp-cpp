@@ -5,6 +5,7 @@
 #include <AdvancedGDK/Server/Server.hpp>
 #include <AdvancedGDK/Core/Text/ASCII.hpp>
 #include <AdvancedGDK/Server/GameMode.hpp>
+#include <AdvancedGDK/World/Vehicle.hpp>
 
 namespace agdk
 {
@@ -225,6 +226,47 @@ void Player::setArmour(float const armour_)
 	m_armour = armour_;
 	if (m_existingStatus != ExistingStatus::Dead)
 		sampgdk_SetPlayerArmour(this->getIndex(), m_armour);
+}
+
+///////////////////////////////////////////////////////////////////////////
+bool Player::putInVehicle(Vehicle& vehicle_, Int32 seatIndex_)
+{
+	// TODO: confirm that no vehicle has seat index of 6.
+	assert(seatIndex_ >= 0 && seatIndex_ <= 5);
+
+	// Cancel if seat is already occupied:
+	if (vehicle_.getPassengers()[seatIndex_])
+	{
+		return false;
+	}
+
+	// Kick player from current vehicle:
+	this->kickFromVehicle();
+
+	if (sampgdk_PutPlayerInVehicle(this->getIndex(), vehicle_.getHandle(), seatIndex_))
+	{
+		return true;
+	}
+	return false;
+}
+
+///////////////////////////////////////////////////////////////////////////
+bool Player::kickFromVehicle()
+{
+	if (this->isInVehicle())
+	{
+		// TODO: It won't work when player is in RC Vehicle.
+		// Try using sampgdk_SetPlayerPos instead.
+		sampgdk_RemovePlayerFromVehicle(this->getIndex());
+		return true;
+	}
+	return false;
+}
+
+///////////////////////////////////////////////////////////////////////////
+bool Player::isInVehicle() const
+{
+	return m_vehicle != nullptr;
 }
 
 ///////////////////////////////////////////////////////////////////////////

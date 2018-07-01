@@ -305,12 +305,6 @@ Player* Vehicle::getDriver() const
 }
 
 /////////////////////////////////////////////////////////////////////////////////
-auto const& Vehicle::getPassengers() const
-{
-	return m_passengers;
-}
-
-/////////////////////////////////////////////////////////////////////////////////
 bool Vehicle::isSpawned() const
 {
 	return m_handle != InvalidHandle;
@@ -319,8 +313,12 @@ bool Vehicle::isSpawned() const
 /////////////////////////////////////////////////////////////////////////////////
 bool Vehicle::isOccupied() const
 {
-	return m_passengers[0] || m_passengers[1] ||
-		m_passengers[2] || m_passengers[3];
+	for (auto passenger : m_passengers)
+	{
+		if (passenger)
+			return true;
+	}
+	return false;
 }
 
 /////////////////////////////////////////////////////////////////////////////////

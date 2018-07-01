@@ -18,7 +18,7 @@ namespace agdk
 class Vehicle;
 
 /// <summary>
-/// Class wrapping SAMP player data into class.
+/// Wraps SAMP player data into class.
 /// </summary>
 class Player
 	:
@@ -201,6 +201,44 @@ public:
 	{	
 	}
 
+	/// <summary>
+	/// Puts player inside the vehicle.
+	/// </summary>
+	/// <param name="vehicle_">The vehicle.</param>
+	/// <param name="seatIndex_">Index of the seat (0 = driver).</param>
+	/// <returns>
+	///		<c>true</c> if player was put successfully; otherwise, <c>false</c>.
+	/// </returns>
+	bool putInVehicle(Vehicle & vehicle_, Int32 seatIndex_);
+	
+	/// <summary>
+	/// Kicks player from current vehicle.
+	/// </summary>
+	/// <returns>
+	///		<c>true</c> if player was in vehicle and was kicked; otherwise, <c>false</c>.
+	/// </returns>
+	bool kickFromVehicle();
+	
+	/// <summary>
+	/// Determines whether player is in vehicle.
+	/// </summary>
+	/// <returns>
+	///		<c>true</c> if player is in vehicle; otherwise, <c>false</c>.
+	/// </returns>
+	bool isInVehicle() const;
+
+	/// <summary>
+	/// Returns the player's (client) vehicle seat.
+	/// </summary>
+	/// <returns></returns>
+	std::int32_t getVehicleSeat() const;
+
+	/// <summary>
+	/// Returns the player's vehicle.
+	/// </summary>
+	/// <returns>Player's vehicle.</returns>
+	Vehicle* getVehicle() const;
+
 	// Weapons:
 		
 	/// <summary>
@@ -301,18 +339,6 @@ public:
 	/// </summary>
 	/// <returns>Player's color</returns>
 	Color getColor() const;
-
-	/// <summary>
-	/// Returns the player's (client) vehicle seat.
-	/// </summary>
-	/// <returns></returns>
-	std::int32_t getVehicleSeat() const;
-
-	/// <summary>
-	/// Returns the player's vehicle.
-	/// </summary>
-	/// <returns>Player's vehicle.</returns>
-	Vehicle* getVehicle() const;
 
 	// Player personal settings:
 		

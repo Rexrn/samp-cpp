@@ -489,7 +489,10 @@ public:
 	/// Returns cref to the vehicle passengers.
 	/// </summary>
 	/// <returns>cref to the vehicle passengers.</returns>
-	auto const& getPassengers() const;
+	auto const& getPassengers() const
+	{
+		return m_passengers;
+	}
 
 	/// <summary>
 	/// Determines whether this vehicle is spawned.
@@ -602,7 +605,7 @@ protected:
 	std::int32_t						m_secondColor;		// Vehicle's second color.		It is NOT updated at real time. Its used when vehicle is not spawned.
 
 	Clock::TimePoint					m_latestUsage;		// Absolute time vehicle was used last time.
-	std::array<Player*, 4>				m_passengers;
+	std::array<Player*, 6>				m_passengers;
 
 private:
 
