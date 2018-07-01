@@ -8,7 +8,7 @@ Since the library is not finished yet, this section is not 100 percent sure to s
 #### 1. Running the server.
 One thing I want to make significantly easier is the base server setup.
 ```cpp
-#include <AdvancedGDK.hpp>	// all-in-one header.
+#include <.hpp>	// all-in-one header.
 
 // Server main function.
 int main()
