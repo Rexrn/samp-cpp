@@ -7,21 +7,20 @@
 
 namespace agdk
 {
-	// Commit: removed invalid code artifacts from previous library project.
+// TODO: implement exception classes.
 
-	// TODO: implement exception classes.
+class AlgorithmError
+	: public std::exception
+{
+public:
+	using std::exception::exception;
+};
 
-	class AlgorithmError
-		: public std::exception
-	{
-	public:
-		using std::exception::exception;
-	};
+class ReferenceCountingError
+	: public AlgorithmError
+{
+public:
+	using AlgorithmError::AlgorithmError;
+};
 
-	class ReferenceCountingError
-		: public AlgorithmError
-	{
-	public:
-		using AlgorithmError::AlgorithmError;
-	};
 }

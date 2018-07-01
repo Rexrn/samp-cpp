@@ -8,12 +8,11 @@ namespace agdk
 /////////////////////////////////////////////////////////////////////////////////////////////
 bool ActionScheduler::stop(HandleType const handle_)
 {
-	ContainerType* containers[2]{ &m_actions, &m_pendingActions };
-
-	for (auto cont : containers)
+	for (auto cont : { &m_actions, &m_pendingActions })
 	{
 		auto it = this->findAction(*cont, handle_);
-		if (it != cont->end()) {
+		if (it != cont->end())
+		{
 			it->repeatsRemaining = 0;
 			return true;
 		}
@@ -35,7 +34,8 @@ void ActionScheduler::update(double const deltaTime_, IUpdatable::TimePointType 
 	{
 		// Calculate number of actions that must be fired.
 		ContainerType::size_type numReady = 0;
-		for (auto const & action : m_actions) {
+		for (auto const & action : m_actions)
+		{
 			if (action.invokeTime < timeMoment_)
 				numReady++;
 			else

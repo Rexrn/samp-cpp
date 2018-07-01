@@ -12,622 +12,624 @@ agdk::UniquePtr<agdk::IGameMode>			GameMode;	// Initialize GameMode instance.
 
 namespace agdk
 {
-	/////////////////////////////////////////////////////////////////////////////////////////
-	ServerClass::ServerClass()
+/////////////////////////////////////////////////////////////////////////////////////////
+ServerClass::ServerClass()
+	:
+	m_lastUpdate{}
+{
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+ServerClass::~ServerClass()
+{
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+void ServerClass::setup(UniquePtr<IGameMode> &&gameMode_)
+{
+	// Drop previous game mode.
+	GameMode.reset();
+	if (gameMode_)
 	{
+		GameMode = std::forward< UniquePtr<IGameMode> >(gameMode_);
+		GameMode->setup();
+	}
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+bool ServerClass::Default::isPlayerNameValid(const std::string_view name_)
+{
+	static constexpr const char* cxAvailableCharacters = "qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM0123456789_[]()$@=.";
+
+	return name_.length() >= 3 && name_.length() <= 20
+		&& name_.find_first_not_of(cxAvailableCharacters) == std::string_view::npos;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+
+	/* TODO: implement vehicles, scenes, checkpoints and tasks.
+	GameMode->vehicles.update();
+	GameMode->scenes.update();
+	GameMode->checkpoints.update();
+	GameMode->tasks.update();
+
+	GameMode->update(static_cast<float>((Clock::currentTime() - m_lastUpdate).seconds()));
+
+	m_lastUpdate = Clock::currentTime();
+	*/
+	
+
+
+/////////////////////////////////////////////////////////////////////////////////////////
+void ServerClass::setDescription(const std::string_view desc_)
+{
+	// We cannot avoid copying `desc_`, because const char* passed to sampgdk function must be null terminated.
+	std::string copy{ desc_ };
+	sampgdk_SetGameModeText(copy.c_str());
+}
+
+/* TODO: missing implementation.
+
+/////////////////////////////////////////////////////////////////////////////////////////
+bool ServerClass::OnGameModeInit()
+{
+	return GameMode->onGameModeInit();
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+bool ServerClass::OnGameModeExit()
+{
+	return GameMode->onGameModeExit();
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+bool ServerClass::OnPlayerConnect(int playerid)
+{
+	auto player = GameMode->newPlayerInstance(playerid);
+
+	// add player to the list
+	GameMode->Players.add(player);
+	GameMode->scenes.playerConnected(player);
+
+	return GameMode->onPlayerConnect(player);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+bool ServerClass::OnPlayerDisconnect(int playerid, int reason)
+{
+	auto player = GameMode->Players.findByIndex(playerid);
+	auto discReason = static_cast<EDisconnectReason>(reason);
+
+	player->setSpawned(false);
+
+	// Make sure that every object is hidden before player disconnects.
+	GameMode->scenes.playerDisconnected(player);
+	GameMode->vehicles.playerDisconnected(player);
+	GameMode->textdrawRegistry.playerDisconnected(player);
+
+	bool result = GameMode->onPlayerDisconnect(player, discReason);
+	// We need to do it anyway (remove from player manager)
+	GameMode->Players.remove(player);
+	return result;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+bool ServerClass::OnPlayerSpawn(int playerid)
+{
+	auto player = GameMode->Players.findByIndex(playerid);
+
+	auto result = GameMode->onPlayerSpawn(player); // TODO: checking
+
+	player->onSpawn();
+	return result;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+bool ServerClass::OnPlayerDeath(int playerid, int killerid, int reason)
+{
+	auto player = GameMode->Players.findByIndex(playerid);
+	auto killer = GameMode->Players.findByIndex(killerid);
+
+	player->onDeath();
+
+	auto deathReason = static_cast<Weapon::Type>(reason);
+
+	return GameMode->onPlayerDeath(player, killer, deathReason); // TODO: Checking
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+bool ServerClass::OnVehicleSpawn(int vehicleid)
+{
+	auto vehicle = GameMode->vehicles.findVehicleByIndex(vehicleid);
+
+	return GameMode->onVehicleSpawn(vehicle.lock()); // TODO: checking
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+bool ServerClass::OnVehicleDeath(int vehicleid, int killerid)
+{
+	auto vehicle = GameMode->vehicles.findVehicleByIndex(vehicleid);
+	auto killer = GameMode->Players.findByIndex(killerid);
+
+	auto result = GameMode->onVehicleDeath(vehicle.lock(), killer); // TODO: checking
+
+	if (!std::dynamic_pointer_cast<StaticVehicle>(vehicle.lock()))
+	{
+		GameMode->vehicles.remove(vehicle.lock());
 	}
 
-	/////////////////////////////////////////////////////////////////////////////////////////
-	ServerClass::~ServerClass()
-	{
-	}
+	return result;
+}
 
-	/////////////////////////////////////////////////////////////////////////////////////////
-	void ServerClass::setup(UniquePtr<IGameMode> &&gameMode_)
+/////////////////////////////////////////////////////////////////////////////////////////
+bool ServerClass::OnPlayerText(int playerid, const char* text)
+{
+	auto player = GameMode->Players.findByIndex(playerid);
+	std::string strText(text);
+
+	return GameMode->onPlayerSendText(player, strText); // TODO: checking
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+bool ServerClass::OnPlayerCommandText(int playerid, const char* cmdtext)
+{
+	auto player = GameMode->Players.findByIndex(playerid);
+	std::string strCmd(cmdtext);
+
+	return GameMode->onPlayerSendCommand(player, strCmd); // TODO: checking
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+bool ServerClass::OnPlayerRequestClass(int playerid, int classid)
+{
+	auto player = GameMode->Players.findByIndex(playerid);
+
+	return GameMode->onPlayerRequestClass(player, classid); // TODO: checking
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+bool ServerClass::OnPlayerEnterVehicle(int playerid, int vehicleid, bool ispassenger)
+{
+	auto player = GameMode->Players.findByIndex(playerid);
+	auto vehicle = GameMode->vehicles.findVehicleByIndex(vehicleid);
+
+	return GameMode->onPlayerEnterVehicle(player, vehicle.lock(), ispassenger);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+bool ServerClass::OnPlayerExitVehicle(int playerid, int vehicleid)
+{
+	auto player = GameMode->Players.findByIndex(playerid);
+	auto vehicle = GameMode->vehicles.findVehicleByIndex(vehicleid);
+
+	return GameMode->onPlayerExitVehicle(player, vehicle.lock());
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+bool ServerClass::OnPlayerStateChange(int playerid, int newstate, int oldstate)
+{
+	auto player = GameMode->Players.findByIndex(playerid);
+
+	GameMode->vehicles.playerChangedState(player, newstate, oldstate);
+
+	return GameMode->onPlayerStateChange(player, newstate, oldstate);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+bool ServerClass::OnPlayerEnterCheckpoint(int playerid)
+{
+	auto player = GameMode->Players.findByIndex(playerid);
+
+	if (auto checkpoint = player->getCheckpoint())
+		checkpoint->onPlayerEnter(player);
+
+	return GameMode->onPlayerEnterCheckpoint(player);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+bool ServerClass::OnPlayerLeaveCheckpoint(int playerid)
+{
+	auto player = GameMode->Players.findByIndex(playerid);
+
+	if (auto checkpoint = player->getCheckpoint())
+		checkpoint->onPlayerLeave(player);
+
+	return GameMode->onPlayerLeaveCheckpoint(player);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+bool ServerClass::OnPlayerEnterRaceCheckpoint(int playerid)
+{
+	auto player = GameMode->Players.findByIndex(playerid);
+
+	if (auto checkpoint = player->getRaceCheckpoint())
+		checkpoint->onPlayerEnter(player);
+
+	return GameMode->onPlayerEnterRaceCheckpoint(player);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+bool ServerClass::OnPlayerLeaveRaceCheckpoint(int playerid)
+{
+	auto player = GameMode->Players.findByIndex(playerid);
+
+	if (auto checkpoint = player->getRaceCheckpoint())
+		checkpoint->onPlayerLeave(player);
+
+	return GameMode->onPlayerLeaveRaceCheckpoint(player);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+bool ServerClass::OnRconCommand(const char* cmd)
+{
+	std::string rconCmd(cmd);
+
+	return GameMode->onRconCommand(rconCmd);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+bool ServerClass::OnPlayerRequestSpawn(int playerid)
+{
+	auto player = GameMode->Players.findByIndex(playerid);
+
+	player->reloadColor();
+
+	return GameMode->onPlayerRequestSpawn(player);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+bool ServerClass::OnObjectMoved(int objectid)
+{
+	// TODO: disable this
+	return GameMode->onObjectMoved(objectid);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+bool ServerClass::OnPlayerObjectMoved(int playerid, int objectid)
+{
+	auto player = GameMode->Players.findByIndex(playerid);
+
+	return GameMode->onPlayerObjectMoved(player, GameMode->scenes.findObject(player, objectid).lock());
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+bool ServerClass::OnPlayerPickUpPickup(int playerid, int pickupid)
+{
+	auto player = GameMode->Players.findByIndex(playerid);
+
+	return GameMode->onPlayerPickUpPickup(player, pickupid);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+bool ServerClass::OnVehicleMod(int playerid, int vehicleid, int componentid)
+{
+	auto player = GameMode->Players.findByIndex(playerid);
+	auto vehicle = GameMode->vehicles.findVehicleByIndex(vehicleid);
+
+	return GameMode->onVehicleMod(player, vehicle.lock(), componentid);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+bool ServerClass::OnEnterExitModShop(int playerid, int enterexit, int interiorid)
+{
+	auto player = GameMode->Players.findByIndex(playerid);
+
+	return GameMode->onEnterExitModShop(player, enterexit, interiorid);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+bool ServerClass::OnVehiclePaintjob(int playerid, int vehicleid, int paintjobid)
+{
+	auto player = GameMode->Players.findByIndex(playerid);
+	auto vehicle = GameMode->vehicles.findVehicleByIndex(vehicleid);
+
+	return GameMode->onVehiclePaintjob(player, vehicle.lock(), paintjobid);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+bool ServerClass::OnVehicleRespray(int playerid, int vehicleid, int color1, int color2)
+{
+	auto player = GameMode->Players.findByIndex(playerid);
+	auto vehicle = GameMode->vehicles.findVehicleByIndex(vehicleid);
+
+	return GameMode->onVehicleRespray(player, vehicle.lock(), color1, color2);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+bool ServerClass::OnVehicleDamageStatusUpdate(int vehicleid, int playerid)
+{
+	auto player = GameMode->Players.findByIndex(playerid);
+	auto vehicle = GameMode->vehicles.findVehicleByIndex(vehicleid);
+
+	return GameMode->onVehicleDamageStatusUpdate(vehicle.lock(), player);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+bool ServerClass::OnUnoccupiedVehicleUpdate(int vehicleid, int playerid, int passenger_seat, float new_x, float new_y, float new_z, float vel_x, float vel_y, float vel_z)
+{
+	auto player = GameMode->Players.findByIndex(playerid);
+	auto vehicle = GameMode->vehicles.findVehicleByIndex(vehicleid);
+
+	return GameMode->onUnoccupiedVehicleUpdate(vehicle.lock(), player, passenger_seat, Vector3(new_x, new_y, new_z), Vector3(vel_x, vel_y, vel_z));
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+bool ServerClass::OnPlayerSelectedMenuRow(int playerid, int row)
+{
+	auto player = GameMode->Players.findByIndex(playerid);
+
+	return GameMode->onPlayerSelectedMenuRow(player, row);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+bool ServerClass::OnPlayerExitedMenu(int playerid)
+{
+	auto player = GameMode->Players.findByIndex(playerid);
+
+	return GameMode->onPlayerExitedMenu(player);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+bool ServerClass::OnPlayerInteriorChange(int playerid, int newinteriorid, int oldinteriorid)
+{
+	auto player = GameMode->Players.findByIndex(playerid);
+
+	return GameMode->onPlayerInteriorChange(player, newinteriorid, oldinteriorid);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+bool ServerClass::OnPlayerKeyStateChange(int playerid, int newkeys, int oldkeys)
+{
+	auto player = GameMode->Players.findByIndex(playerid);
+
+	int keys = 0, leftRight = 0, upDown = 0;
+	sampgdk_GetPlayerKeys(playerid, &keys, &upDown, &leftRight);
+	player->getKeyboard().update(keys, upDown, leftRight);
+
+	return GameMode->onPlayerKeyStateChange(player, player->getKeyboard());
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+bool ServerClass::OnRconLoginAttempt(const char* ip, const char* password, bool success)
+{
+	return GameMode->onRconLoginAttempt(std::string(ip), std::string(password), success);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+bool ServerClass::OnPlayerUpdate(int playerid)
+{
+	auto player = GameMode->Players.findByIndex(playerid);
+
+	int keys = 0, leftRight = 0, upDown = 0;
+	sampgdk_GetPlayerKeys(playerid, &keys, &upDown, &leftRight);
+	player->getKeyboard().update(keys, upDown, leftRight);
+
+	return GameMode->onPlayerUpdate(player);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+bool ServerClass::OnPlayerStreamIn(int playerid, int forplayerid)
+{
+	auto player = GameMode->Players.findByIndex(playerid);
+	auto forPlayer = GameMode->Players.findByIndex(forplayerid);
+
+	return GameMode->onPlayerStreamIn(player, forPlayer);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+bool ServerClass::OnPlayerStreamOut(int playerid, int forplayerid)
+{
+	auto player = GameMode->Players.findByIndex(playerid);
+	auto forPlayer = GameMode->Players.findByIndex(forplayerid);
+
+	return GameMode->onPlayerStreamOut(player, forPlayer);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+bool ServerClass::OnVehicleStreamIn(int vehicleid, int forplayerid)
+{
+	auto vehicle = GameMode->vehicles.findVehicleByIndex(vehicleid);
+	auto forPlayer = GameMode->Players.findByIndex(forplayerid);
+
+	return GameMode->onVehicleStreamIn(vehicle.lock(), forPlayer);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+bool ServerClass::OnVehicleStreamOut(int vehicleid, int forplayerid)
+{
+	auto vehicle = GameMode->vehicles.findVehicleByIndex(vehicleid);
+	auto forPlayer = GameMode->Players.findByIndex(forplayerid);
+
+	return GameMode->onVehicleStreamOut(vehicle.lock(), forPlayer);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+bool ServerClass::OnActorStreamIn(int actorid, int forplayerid)
+{
+	auto forPlayer = GameMode->Players.findByIndex(forplayerid);
+
+	return GameMode->onActorStreamIn(actorid, forPlayer);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+bool ServerClass::OnActorStreamOut(int actorid, int forplayerid)
+{
+	auto forPlayer = GameMode->Players.findByIndex(forplayerid);
+
+	return GameMode->onActorStreamOut(actorid, forPlayer);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+bool ServerClass::OnDialogResponse(int playerid, int dialogid, int response, int listitem, const char* inputtext)
+{
+	// TODO: create dialog classes
+	auto player = GameMode->Players.findByIndex(playerid);
+
+	return GameMode->onDialogResponse(player, response, listitem, std::string(inputtext));
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+bool ServerClass::OnPlayerTakeDamage(int playerid, int issuerid, float amount, int weaponid, int bodypart)
+{
+	auto player = GameMode->Players.findByIndex(playerid);
+	auto issuer = GameMode->Players.findByIndex(issuerid);
+
+	return GameMode->onPlayerTakeDamage(player, issuer, amount, static_cast<Weapon::Type>(weaponid), bodypart);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+bool ServerClass::OnPlayerGiveDamage(int playerid, int damagedid, float amount, int weaponid, int bodypart)
+{
+	auto player = GameMode->Players.findByIndex(playerid);
+	auto damaged = GameMode->Players.findByIndex(damagedid);
+
+	return GameMode->onPlayerGiveDamage(player, damaged, amount, static_cast<Weapon::Type>(weaponid), bodypart);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+bool ServerClass::OnPlayerGiveDamageActor(int playerid, int damaged_actorid, float amount, int weaponid, int bodypart)
+{
+	auto player = GameMode->Players.findByIndex(playerid);
+
+	return GameMode->onPlayerGiveDamageActor(player, damaged_actorid, amount, static_cast<Weapon::Type>(weaponid), bodypart);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+bool ServerClass::OnPlayerClickMap(int playerid, float fX, float fY, float fZ)
+{
+	auto player = GameMode->Players.findByIndex(playerid);
+
+	return GameMode->onPlayerClickMap(player, Vector3(fX, fY, fZ));
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+bool ServerClass::OnPlayerClickTextDraw(int playerid, int clickedid)
+{
+	auto player = GameMode->Players.findByIndex(playerid);
+
+	GameMode->sendDebug(String::format("Player ", player->getName(), " clicked td: ", clickedid));
+
+	auto weak_textDraw = GameMode->textdrawRegistry.find(clickedid);
+	if (auto textDraw = weak_textDraw.lock())
 	{
-		// Drop previous game mode.
-		GameMode.reset();
-		if (gameMode_)
+		textDraw->onClick(player);
+		return GameMode->onPlayerClickTextDraw(player, textDraw);
+	}
+	return false;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+bool ServerClass::OnPlayerClickPlayerTextDraw(int playerid, int playertextid)
+{
+	auto player = GameMode->Players.findByIndex(playerid);
+
+	auto weak_textDraw = GameMode->textdrawRegistry.find(playerid, playertextid);
+	if (auto textDraw = weak_textDraw.lock())
+	{
+		textDraw->onClick(player);
+		return GameMode->onPlayerClickPlayerTextDraw(player, textDraw);
+	}
+	return false;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+bool ServerClass::OnIncomingConnection(int playerid, const char* ip_address, int port)
+{
+	// This function is called before onPlayerConnect and thus player was not created yet.
+	return GameMode->onIncomingConnection(playerid, std::string(ip_address), port);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+bool ServerClass::OnTrailerUpdate(int playerid, int vehicleid)
+{
+	auto player = GameMode->Players.findByIndex(playerid);
+	auto vehicle = GameMode->vehicles.findVehicleByIndex(vehicleid);
+
+	return GameMode->onTrailerUpdate(player, vehicle.lock());
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+bool ServerClass::OnVehicleSirenStateChange(int playerid, int vehicleid, int newstate)
+{
+	auto player = GameMode->Players.findByIndex(playerid);
+	auto vehicle = GameMode->vehicles.findVehicleByIndex(vehicleid);
+
+	return GameMode->onVehicleSirenStateChange(player, vehicle.lock(), newstate);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+bool ServerClass::OnPlayerClickPlayer(int playerid, int clickedplayerid, int source)
+{
+	auto player = GameMode->Players.findByIndex(playerid);
+	auto clicked = GameMode->Players.findByIndex(clickedplayerid);
+
+	return GameMode->onPlayerClickPlayer(player, clicked, source);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+bool ServerClass::OnPlayerEditObject(int playerid, bool playerobject, int objectid, int response, float fX, float fY, float fZ, float fRotX, float fRotY, float fRotZ)
+{
+	auto player = GameMode->Players.findByIndex(playerid);
+
+	return GameMode->onPlayerEditObject(player, playerobject, objectid, response, Vector3(fX, fY, fZ), Vector3(fRotX, fRotY, fRotZ));
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+bool ServerClass::OnPlayerEditAttachedObject(int playerid, int response, int index, int modelid, int boneid, float fOffsetX, float fOffsetY, float fOffsetZ, float fRotX, float fRotY, float fRotZ, float fScaleX, float fScaleY, float fScaleZ)
+{
+	auto player = GameMode->Players.findByIndex(playerid);
+
+	return GameMode->onPlayerEditAttachedObject(player, response, index, modelid, boneid, Vector3(fOffsetX, fOffsetY, fOffsetZ), Vector3(fRotX, fRotY, fRotZ), Vector3(fScaleX, fScaleY, fScaleZ));
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+bool ServerClass::OnPlayerSelectObject(int playerid, int type, int objectid, int modelid, float fX, float fY, float fZ)
+{
+	auto player = GameMode->Players.findByIndex(playerid);
+
+	return GameMode->onPlayerSelectObject(player, type, objectid, modelid, Vector3(fX, fY, fZ));
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+bool ServerClass::OnPlayerWeaponShot(int playerid, int weaponid, int hittype, int hitid, float fX, float fY, float fZ)
+{
+	auto player = GameMode->Players.findByIndex(playerid);
+
+	return GameMode->onPlayerWeaponShot(player, static_cast<Weapon::Type>(weaponid), hittype, hitid, Vector3(fX, fY, fZ));
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+bool ServerClass::_impl_OnPlayerEnterRaceCheckpoint(int playerid)
+{
+	auto player = GameMode->Players.findByIndex(playerid);
+
+	if (auto checkpoint = player->getRaceCheckpoint())
+	{
+		if (checkpoint->getType() == RaceCheckpoint::Air || checkpoint->getType() == RaceCheckpoint::AirFinish)
 		{
-			GameMode = std::forward< UniquePtr<IGameMode> >(gameMode_);
-			GameMode->setup();
-		}
-	}
-
-	/////////////////////////////////////////////////////////////////////////////////////////
-	bool ServerClass::Default::isPlayerNameValid(const std::string_view name_)
-	{
-		static constexpr const char* cxAvailableCharacters = "qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM0123456789_[]()$@=.";
-
-		return name_.length() >= 3 && name_.length() <= 20
-			&& name_.find_first_not_of(cxAvailableCharacters) == std::string_view::npos;
-	}
-
-	/////////////////////////////////////////////////////////////////////////////////////////
-	
-	
-		/* TODO: implement vehicles, scenes, checkpoints and tasks.
-		GameMode->vehicles.update();
-		GameMode->scenes.update();
-		GameMode->checkpoints.update();
-		GameMode->tasks.update();
-
-		GameMode->update(static_cast<float>((Clock::currentTime() - m_lastUpdate).seconds()));
-
-		m_lastUpdate = Clock::currentTime();
-		*/
-		
-	
-
-	/////////////////////////////////////////////////////////////////////////////////////////
-	void ServerClass::setDescription(const std::string_view desc_)
-	{
-		// We cannot avoid copying `desc_`, because const char* passed to sampgdk function must be null terminated.
-		std::string copy{ desc_ };
-		sampgdk_SetGameModeText(copy.c_str());
-	}
-
-	/* TODO: missing implementation.
-	
-	/////////////////////////////////////////////////////////////////////////////////////////
-	bool ServerClass::OnGameModeInit()
-	{
-		return GameMode->onGameModeInit();
-	}
-
-	/////////////////////////////////////////////////////////////////////////////////////////
-	bool ServerClass::OnGameModeExit()
-	{
-		return GameMode->onGameModeExit();
-	}
-
-	/////////////////////////////////////////////////////////////////////////////////////////
-	bool ServerClass::OnPlayerConnect(int playerid)
-	{
-		auto player = GameMode->newPlayerInstance(playerid);
-
-		// add player to the list
-		GameMode->Players.add(player);
-		GameMode->scenes.playerConnected(player);
-
-		return GameMode->onPlayerConnect(player);
-	}
-
-	/////////////////////////////////////////////////////////////////////////////////////////
-	bool ServerClass::OnPlayerDisconnect(int playerid, int reason)
-	{
-		auto player = GameMode->Players.findByIndex(playerid);
-		auto discReason = static_cast<EDisconnectReason>(reason);
-
-		player->setSpawned(false);
-
-		// Make sure that every object is hidden before player disconnects.
-		GameMode->scenes.playerDisconnected(player);
-		GameMode->vehicles.playerDisconnected(player);
-		GameMode->textdrawRegistry.playerDisconnected(player);
-
-		bool result = GameMode->onPlayerDisconnect(player, discReason);
-		// We need to do it anyway (remove from player manager)
-		GameMode->Players.remove(player);
-		return result;
-	}
-
-	/////////////////////////////////////////////////////////////////////////////////////////
-	bool ServerClass::OnPlayerSpawn(int playerid)
-	{
-		auto player = GameMode->Players.findByIndex(playerid);
-
-		auto result = GameMode->onPlayerSpawn(player); // TODO: checking
-
-		player->onSpawn();
-		return result;
-	}
-
-	/////////////////////////////////////////////////////////////////////////////////////////
-	bool ServerClass::OnPlayerDeath(int playerid, int killerid, int reason)
-	{
-		auto player = GameMode->Players.findByIndex(playerid);
-		auto killer = GameMode->Players.findByIndex(killerid);
-
-		player->onDeath();
-
-		auto deathReason = static_cast<Weapon::Type>(reason);
-
-		return GameMode->onPlayerDeath(player, killer, deathReason); // TODO: Checking
-	}
-
-	/////////////////////////////////////////////////////////////////////////////////////////
-	bool ServerClass::OnVehicleSpawn(int vehicleid)
-	{
-		auto vehicle = GameMode->vehicles.findVehicleByIndex(vehicleid);
-
-		return GameMode->onVehicleSpawn(vehicle.lock()); // TODO: checking
-	}
-
-	/////////////////////////////////////////////////////////////////////////////////////////
-	bool ServerClass::OnVehicleDeath(int vehicleid, int killerid)
-	{
-		auto vehicle = GameMode->vehicles.findVehicleByIndex(vehicleid);
-		auto killer = GameMode->Players.findByIndex(killerid);
-
-		auto result = GameMode->onVehicleDeath(vehicle.lock(), killer); // TODO: checking
-
-		if (!std::dynamic_pointer_cast<StaticVehicle>(vehicle.lock()))
-		{
-			GameMode->vehicles.remove(vehicle.lock());
-		}
-
-		return result;
-	}
-
-	/////////////////////////////////////////////////////////////////////////////////////////
-	bool ServerClass::OnPlayerText(int playerid, const char* text)
-	{
-		auto player = GameMode->Players.findByIndex(playerid);
-		std::string strText(text);
-
-		return GameMode->onPlayerSendText(player, strText); // TODO: checking
-	}
-
-	/////////////////////////////////////////////////////////////////////////////////////////
-	bool ServerClass::OnPlayerCommandText(int playerid, const char* cmdtext)
-	{
-		auto player = GameMode->Players.findByIndex(playerid);
-		std::string strCmd(cmdtext);
-
-		return GameMode->onPlayerSendCommand(player, strCmd); // TODO: checking
-	}
-
-	/////////////////////////////////////////////////////////////////////////////////////////
-	bool ServerClass::OnPlayerRequestClass(int playerid, int classid)
-	{
-		auto player = GameMode->Players.findByIndex(playerid);
-
-		return GameMode->onPlayerRequestClass(player, classid); // TODO: checking
-	}
-
-	/////////////////////////////////////////////////////////////////////////////////////////
-	bool ServerClass::OnPlayerEnterVehicle(int playerid, int vehicleid, bool ispassenger)
-	{
-		auto player = GameMode->Players.findByIndex(playerid);
-		auto vehicle = GameMode->vehicles.findVehicleByIndex(vehicleid);
-
-		return GameMode->onPlayerEnterVehicle(player, vehicle.lock(), ispassenger);
-	}
-
-	/////////////////////////////////////////////////////////////////////////////////////////
-	bool ServerClass::OnPlayerExitVehicle(int playerid, int vehicleid)
-	{
-		auto player = GameMode->Players.findByIndex(playerid);
-		auto vehicle = GameMode->vehicles.findVehicleByIndex(vehicleid);
-
-		return GameMode->onPlayerExitVehicle(player, vehicle.lock());
-	}
-
-	/////////////////////////////////////////////////////////////////////////////////////////
-	bool ServerClass::OnPlayerStateChange(int playerid, int newstate, int oldstate)
-	{
-		auto player = GameMode->Players.findByIndex(playerid);
-
-		GameMode->vehicles.playerChangedState(player, newstate, oldstate);
-
-		return GameMode->onPlayerStateChange(player, newstate, oldstate);
-	}
-
-	/////////////////////////////////////////////////////////////////////////////////////////
-	bool ServerClass::OnPlayerEnterCheckpoint(int playerid)
-	{
-		auto player = GameMode->Players.findByIndex(playerid);
-
-		if (auto checkpoint = player->getCheckpoint())
-			checkpoint->onPlayerEnter(player);
-
-		return GameMode->onPlayerEnterCheckpoint(player);
-	}
-
-	/////////////////////////////////////////////////////////////////////////////////////////
-	bool ServerClass::OnPlayerLeaveCheckpoint(int playerid)
-	{
-		auto player = GameMode->Players.findByIndex(playerid);
-
-		if (auto checkpoint = player->getCheckpoint())
 			checkpoint->onPlayerLeave(player);
-
-		return GameMode->onPlayerLeaveCheckpoint(player);
+			return GameMode->onPlayerEnterRaceCheckpoint(player);
+		}
 	}
+	return true;
+}
 
-	/////////////////////////////////////////////////////////////////////////////////////////
-	bool ServerClass::OnPlayerEnterRaceCheckpoint(int playerid)
+/////////////////////////////////////////////////////////////////////////////////////////
+bool ServerClass::_impl_OnPlayerLeaveRaceCheckpoint(int playerid)
+{
+	auto player = GameMode->Players.findByIndex(playerid);
+
+	if (auto checkpoint = player->getRaceCheckpoint())
 	{
-		auto player = GameMode->Players.findByIndex(playerid);
-
-		if (auto checkpoint = player->getRaceCheckpoint())
-			checkpoint->onPlayerEnter(player);
-
-		return GameMode->onPlayerEnterRaceCheckpoint(player);
-	}
-
-	/////////////////////////////////////////////////////////////////////////////////////////
-	bool ServerClass::OnPlayerLeaveRaceCheckpoint(int playerid)
-	{
-		auto player = GameMode->Players.findByIndex(playerid);
-
-		if (auto checkpoint = player->getRaceCheckpoint())
+		if (checkpoint->getType() == RaceCheckpoint::Air || checkpoint->getType() == RaceCheckpoint::AirFinish)
+		{
 			checkpoint->onPlayerLeave(player);
-
-		return GameMode->onPlayerLeaveRaceCheckpoint(player);
-	}
-
-	/////////////////////////////////////////////////////////////////////////////////////////
-	bool ServerClass::OnRconCommand(const char* cmd)
-	{
-		std::string rconCmd(cmd);
-
-		return GameMode->onRconCommand(rconCmd);
-	}
-
-	/////////////////////////////////////////////////////////////////////////////////////////
-	bool ServerClass::OnPlayerRequestSpawn(int playerid)
-	{
-		auto player = GameMode->Players.findByIndex(playerid);
-
-		player->reloadColor();
-
-		return GameMode->onPlayerRequestSpawn(player);
-	}
-
-	/////////////////////////////////////////////////////////////////////////////////////////
-	bool ServerClass::OnObjectMoved(int objectid)
-	{
-		// TODO: disable this
-		return GameMode->onObjectMoved(objectid);
-	}
-
-	/////////////////////////////////////////////////////////////////////////////////////////
-	bool ServerClass::OnPlayerObjectMoved(int playerid, int objectid)
-	{
-		auto player = GameMode->Players.findByIndex(playerid);
-
-		return GameMode->onPlayerObjectMoved(player, GameMode->scenes.findObject(player, objectid).lock());
-	}
-
-	/////////////////////////////////////////////////////////////////////////////////////////
-	bool ServerClass::OnPlayerPickUpPickup(int playerid, int pickupid)
-	{
-		auto player = GameMode->Players.findByIndex(playerid);
-
-		return GameMode->onPlayerPickUpPickup(player, pickupid);
-	}
-
-	/////////////////////////////////////////////////////////////////////////////////////////
-	bool ServerClass::OnVehicleMod(int playerid, int vehicleid, int componentid)
-	{
-		auto player = GameMode->Players.findByIndex(playerid);
-		auto vehicle = GameMode->vehicles.findVehicleByIndex(vehicleid);
-
-		return GameMode->onVehicleMod(player, vehicle.lock(), componentid);
-	}
-
-	/////////////////////////////////////////////////////////////////////////////////////////
-	bool ServerClass::OnEnterExitModShop(int playerid, int enterexit, int interiorid)
-	{
-		auto player = GameMode->Players.findByIndex(playerid);
-
-		return GameMode->onEnterExitModShop(player, enterexit, interiorid);
-	}
-
-	/////////////////////////////////////////////////////////////////////////////////////////
-	bool ServerClass::OnVehiclePaintjob(int playerid, int vehicleid, int paintjobid)
-	{
-		auto player = GameMode->Players.findByIndex(playerid);
-		auto vehicle = GameMode->vehicles.findVehicleByIndex(vehicleid);
-
-		return GameMode->onVehiclePaintjob(player, vehicle.lock(), paintjobid);
-	}
-
-	/////////////////////////////////////////////////////////////////////////////////////////
-	bool ServerClass::OnVehicleRespray(int playerid, int vehicleid, int color1, int color2)
-	{
-		auto player = GameMode->Players.findByIndex(playerid);
-		auto vehicle = GameMode->vehicles.findVehicleByIndex(vehicleid);
-
-		return GameMode->onVehicleRespray(player, vehicle.lock(), color1, color2);
-	}
-
-	/////////////////////////////////////////////////////////////////////////////////////////
-	bool ServerClass::OnVehicleDamageStatusUpdate(int vehicleid, int playerid)
-	{
-		auto player = GameMode->Players.findByIndex(playerid);
-		auto vehicle = GameMode->vehicles.findVehicleByIndex(vehicleid);
-
-		return GameMode->onVehicleDamageStatusUpdate(vehicle.lock(), player);
-	}
-
-	/////////////////////////////////////////////////////////////////////////////////////////
-	bool ServerClass::OnUnoccupiedVehicleUpdate(int vehicleid, int playerid, int passenger_seat, float new_x, float new_y, float new_z, float vel_x, float vel_y, float vel_z)
-	{
-		auto player = GameMode->Players.findByIndex(playerid);
-		auto vehicle = GameMode->vehicles.findVehicleByIndex(vehicleid);
-
-		return GameMode->onUnoccupiedVehicleUpdate(vehicle.lock(), player, passenger_seat, Vector3(new_x, new_y, new_z), Vector3(vel_x, vel_y, vel_z));
-	}
-
-	/////////////////////////////////////////////////////////////////////////////////////////
-	bool ServerClass::OnPlayerSelectedMenuRow(int playerid, int row)
-	{
-		auto player = GameMode->Players.findByIndex(playerid);
-
-		return GameMode->onPlayerSelectedMenuRow(player, row);
-	}
-
-	/////////////////////////////////////////////////////////////////////////////////////////
-	bool ServerClass::OnPlayerExitedMenu(int playerid)
-	{
-		auto player = GameMode->Players.findByIndex(playerid);
-
-		return GameMode->onPlayerExitedMenu(player);
-	}
-
-	/////////////////////////////////////////////////////////////////////////////////////////
-	bool ServerClass::OnPlayerInteriorChange(int playerid, int newinteriorid, int oldinteriorid)
-	{
-		auto player = GameMode->Players.findByIndex(playerid);
-
-		return GameMode->onPlayerInteriorChange(player, newinteriorid, oldinteriorid);
-	}
-
-	/////////////////////////////////////////////////////////////////////////////////////////
-	bool ServerClass::OnPlayerKeyStateChange(int playerid, int newkeys, int oldkeys)
-	{
-		auto player = GameMode->Players.findByIndex(playerid);
-
-		int keys = 0, leftRight = 0, upDown = 0;
-		sampgdk_GetPlayerKeys(playerid, &keys, &upDown, &leftRight);
-		player->getKeyboard().update(keys, upDown, leftRight);
-
-		return GameMode->onPlayerKeyStateChange(player, player->getKeyboard());
-	}
-
-	/////////////////////////////////////////////////////////////////////////////////////////
-	bool ServerClass::OnRconLoginAttempt(const char* ip, const char* password, bool success)
-	{
-		return GameMode->onRconLoginAttempt(std::string(ip), std::string(password), success);
-	}
-
-	/////////////////////////////////////////////////////////////////////////////////////////
-	bool ServerClass::OnPlayerUpdate(int playerid)
-	{
-		auto player = GameMode->Players.findByIndex(playerid);
-
-		int keys = 0, leftRight = 0, upDown = 0;
-		sampgdk_GetPlayerKeys(playerid, &keys, &upDown, &leftRight);
-		player->getKeyboard().update(keys, upDown, leftRight);
-
-		return GameMode->onPlayerUpdate(player);
-	}
-
-	/////////////////////////////////////////////////////////////////////////////////////////
-	bool ServerClass::OnPlayerStreamIn(int playerid, int forplayerid)
-	{
-		auto player = GameMode->Players.findByIndex(playerid);
-		auto forPlayer = GameMode->Players.findByIndex(forplayerid);
-
-		return GameMode->onPlayerStreamIn(player, forPlayer);
-	}
-
-	/////////////////////////////////////////////////////////////////////////////////////////
-	bool ServerClass::OnPlayerStreamOut(int playerid, int forplayerid)
-	{
-		auto player = GameMode->Players.findByIndex(playerid);
-		auto forPlayer = GameMode->Players.findByIndex(forplayerid);
-
-		return GameMode->onPlayerStreamOut(player, forPlayer);
-	}
-
-	/////////////////////////////////////////////////////////////////////////////////////////
-	bool ServerClass::OnVehicleStreamIn(int vehicleid, int forplayerid)
-	{
-		auto vehicle = GameMode->vehicles.findVehicleByIndex(vehicleid);
-		auto forPlayer = GameMode->Players.findByIndex(forplayerid);
-
-		return GameMode->onVehicleStreamIn(vehicle.lock(), forPlayer);
-	}
-
-	/////////////////////////////////////////////////////////////////////////////////////////
-	bool ServerClass::OnVehicleStreamOut(int vehicleid, int forplayerid)
-	{
-		auto vehicle = GameMode->vehicles.findVehicleByIndex(vehicleid);
-		auto forPlayer = GameMode->Players.findByIndex(forplayerid);
-
-		return GameMode->onVehicleStreamOut(vehicle.lock(), forPlayer);
-	}
-
-	/////////////////////////////////////////////////////////////////////////////////////////
-	bool ServerClass::OnActorStreamIn(int actorid, int forplayerid)
-	{
-		auto forPlayer = GameMode->Players.findByIndex(forplayerid);
-
-		return GameMode->onActorStreamIn(actorid, forPlayer);
-	}
-
-	/////////////////////////////////////////////////////////////////////////////////////////
-	bool ServerClass::OnActorStreamOut(int actorid, int forplayerid)
-	{
-		auto forPlayer = GameMode->Players.findByIndex(forplayerid);
-
-		return GameMode->onActorStreamOut(actorid, forPlayer);
-	}
-
-	/////////////////////////////////////////////////////////////////////////////////////////
-	bool ServerClass::OnDialogResponse(int playerid, int dialogid, int response, int listitem, const char* inputtext)
-	{
-		// TODO: create dialog classes
-		auto player = GameMode->Players.findByIndex(playerid);
-
-		return GameMode->onDialogResponse(player, response, listitem, std::string(inputtext));
-	}
-
-	/////////////////////////////////////////////////////////////////////////////////////////
-	bool ServerClass::OnPlayerTakeDamage(int playerid, int issuerid, float amount, int weaponid, int bodypart)
-	{
-		auto player = GameMode->Players.findByIndex(playerid);
-		auto issuer = GameMode->Players.findByIndex(issuerid);
-
-		return GameMode->onPlayerTakeDamage(player, issuer, amount, static_cast<Weapon::Type>(weaponid), bodypart);
-	}
-
-	/////////////////////////////////////////////////////////////////////////////////////////
-	bool ServerClass::OnPlayerGiveDamage(int playerid, int damagedid, float amount, int weaponid, int bodypart)
-	{
-		auto player = GameMode->Players.findByIndex(playerid);
-		auto damaged = GameMode->Players.findByIndex(damagedid);
-
-		return GameMode->onPlayerGiveDamage(player, damaged, amount, static_cast<Weapon::Type>(weaponid), bodypart);
-	}
-
-	/////////////////////////////////////////////////////////////////////////////////////////
-	bool ServerClass::OnPlayerGiveDamageActor(int playerid, int damaged_actorid, float amount, int weaponid, int bodypart)
-	{
-		auto player = GameMode->Players.findByIndex(playerid);
-
-		return GameMode->onPlayerGiveDamageActor(player, damaged_actorid, amount, static_cast<Weapon::Type>(weaponid), bodypart);
-	}
-
-	/////////////////////////////////////////////////////////////////////////////////////////
-	bool ServerClass::OnPlayerClickMap(int playerid, float fX, float fY, float fZ)
-	{
-		auto player = GameMode->Players.findByIndex(playerid);
-
-		return GameMode->onPlayerClickMap(player, Vector3(fX, fY, fZ));
-	}
-
-	/////////////////////////////////////////////////////////////////////////////////////////
-	bool ServerClass::OnPlayerClickTextDraw(int playerid, int clickedid)
-	{
-		auto player = GameMode->Players.findByIndex(playerid);
-
-		GameMode->sendDebug(String::format("Player ", player->getName(), " clicked td: ", clickedid));
-
-		auto weak_textDraw = GameMode->textdrawRegistry.find(clickedid);
-		if (auto textDraw = weak_textDraw.lock())
-		{
-			textDraw->onClick(player);
-			return GameMode->onPlayerClickTextDraw(player, textDraw);
+			return GameMode->onPlayerLeaveRaceCheckpoint(player);
 		}
-		return false;
 	}
-
-	/////////////////////////////////////////////////////////////////////////////////////////
-	bool ServerClass::OnPlayerClickPlayerTextDraw(int playerid, int playertextid)
-	{
-		auto player = GameMode->Players.findByIndex(playerid);
-
-		auto weak_textDraw = GameMode->textdrawRegistry.find(playerid, playertextid);
-		if (auto textDraw = weak_textDraw.lock())
-		{
-			textDraw->onClick(player);
-			return GameMode->onPlayerClickPlayerTextDraw(player, textDraw);
-		}
-		return false;
-	}
-
-	/////////////////////////////////////////////////////////////////////////////////////////
-	bool ServerClass::OnIncomingConnection(int playerid, const char* ip_address, int port)
-	{
-		// This function is called before onPlayerConnect and thus player was not created yet.
-		return GameMode->onIncomingConnection(playerid, std::string(ip_address), port);
-	}
-
-	/////////////////////////////////////////////////////////////////////////////////////////
-	bool ServerClass::OnTrailerUpdate(int playerid, int vehicleid)
-	{
-		auto player = GameMode->Players.findByIndex(playerid);
-		auto vehicle = GameMode->vehicles.findVehicleByIndex(vehicleid);
-
-		return GameMode->onTrailerUpdate(player, vehicle.lock());
-	}
-
-	/////////////////////////////////////////////////////////////////////////////////////////
-	bool ServerClass::OnVehicleSirenStateChange(int playerid, int vehicleid, int newstate)
-	{
-		auto player = GameMode->Players.findByIndex(playerid);
-		auto vehicle = GameMode->vehicles.findVehicleByIndex(vehicleid);
-
-		return GameMode->onVehicleSirenStateChange(player, vehicle.lock(), newstate);
-	}
-
-	/////////////////////////////////////////////////////////////////////////////////////////
-	bool ServerClass::OnPlayerClickPlayer(int playerid, int clickedplayerid, int source)
-	{
-		auto player = GameMode->Players.findByIndex(playerid);
-		auto clicked = GameMode->Players.findByIndex(clickedplayerid);
-
-		return GameMode->onPlayerClickPlayer(player, clicked, source);
-	}
-
-	/////////////////////////////////////////////////////////////////////////////////////////
-	bool ServerClass::OnPlayerEditObject(int playerid, bool playerobject, int objectid, int response, float fX, float fY, float fZ, float fRotX, float fRotY, float fRotZ)
-	{
-		auto player = GameMode->Players.findByIndex(playerid);
-
-		return GameMode->onPlayerEditObject(player, playerobject, objectid, response, Vector3(fX, fY, fZ), Vector3(fRotX, fRotY, fRotZ));
-	}
-
-	/////////////////////////////////////////////////////////////////////////////////////////
-	bool ServerClass::OnPlayerEditAttachedObject(int playerid, int response, int index, int modelid, int boneid, float fOffsetX, float fOffsetY, float fOffsetZ, float fRotX, float fRotY, float fRotZ, float fScaleX, float fScaleY, float fScaleZ)
-	{
-		auto player = GameMode->Players.findByIndex(playerid);
-
-		return GameMode->onPlayerEditAttachedObject(player, response, index, modelid, boneid, Vector3(fOffsetX, fOffsetY, fOffsetZ), Vector3(fRotX, fRotY, fRotZ), Vector3(fScaleX, fScaleY, fScaleZ));
-	}
-
-	/////////////////////////////////////////////////////////////////////////////////////////
-	bool ServerClass::OnPlayerSelectObject(int playerid, int type, int objectid, int modelid, float fX, float fY, float fZ)
-	{
-		auto player = GameMode->Players.findByIndex(playerid);
-
-		return GameMode->onPlayerSelectObject(player, type, objectid, modelid, Vector3(fX, fY, fZ));
-	}
-
-	/////////////////////////////////////////////////////////////////////////////////////////
-	bool ServerClass::OnPlayerWeaponShot(int playerid, int weaponid, int hittype, int hitid, float fX, float fY, float fZ)
-	{
-		auto player = GameMode->Players.findByIndex(playerid);
-
-		return GameMode->onPlayerWeaponShot(player, static_cast<Weapon::Type>(weaponid), hittype, hitid, Vector3(fX, fY, fZ));
-	}
-
-	/////////////////////////////////////////////////////////////////////////////////////////
-	bool ServerClass::_impl_OnPlayerEnterRaceCheckpoint(int playerid)
-	{
-		auto player = GameMode->Players.findByIndex(playerid);
-
-		if (auto checkpoint = player->getRaceCheckpoint())
-		{
-			if (checkpoint->getType() == RaceCheckpoint::Air || checkpoint->getType() == RaceCheckpoint::AirFinish)
-			{
-				checkpoint->onPlayerLeave(player);
-				return GameMode->onPlayerEnterRaceCheckpoint(player);
-			}
-		}
-		return true;
-	}
-
-	/////////////////////////////////////////////////////////////////////////////////////////
-	bool ServerClass::_impl_OnPlayerLeaveRaceCheckpoint(int playerid)
-	{
-		auto player = GameMode->Players.findByIndex(playerid);
-
-		if (auto checkpoint = player->getRaceCheckpoint())
-		{
-			if (checkpoint->getType() == RaceCheckpoint::Air || checkpoint->getType() == RaceCheckpoint::AirFinish)
-			{
-				checkpoint->onPlayerLeave(player);
-				return GameMode->onPlayerLeaveRaceCheckpoint(player);
-			}
-		}
-		return true;
-	}*/
+	return true;
+}*/
 
 /////////////////////////////////////////////////////////////////////////////////////////
 void ServerClass::SampEventListType::onUpdate()
