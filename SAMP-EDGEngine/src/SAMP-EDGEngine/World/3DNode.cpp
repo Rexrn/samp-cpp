@@ -2,7 +2,7 @@
 
 #include <SAMP-EDGEngine/World/3DNode.hpp>
 
-namespace agdk
+namespace samp_edgengine
 {
 
 /////////////////////////////////////////////////////////////////////

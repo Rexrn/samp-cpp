@@ -6,7 +6,7 @@
 #include <SAMP-EDGEngine/Server/Server.hpp>
 #include <SAMP-EDGEngine/Server/GameMode.hpp>
 
-namespace agdk
+namespace samp_edgengine
 {
 
 ////////////////////////////////////////////////////////////////////////

@@ -1,6 +1,6 @@
 #pragma once
 
-namespace agdk::text
+namespace samp_edgengine::text
 {
 /// <summary>
 /// Lits of popular encodings.

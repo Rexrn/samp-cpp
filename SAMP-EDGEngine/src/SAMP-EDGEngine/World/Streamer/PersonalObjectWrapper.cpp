@@ -3,7 +3,7 @@
 #include <SAMP-EDGEngine/World/Streamer/PersonalObjectWrapper.hpp>
 #include <SAMP-EDGEngine/Server/GameMode.hpp>
 
-namespace agdk
+namespace samp_edgengine
 {
 
 namespace default_streamer

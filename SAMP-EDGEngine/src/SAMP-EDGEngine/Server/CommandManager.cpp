@@ -6,7 +6,7 @@
 #include <SAMP-EDGEngine/Server/Server.hpp>
 #include <SAMP-EDGEngine/Core/Text/StreamAlgorithm.hpp>
 
-namespace agdk
+namespace samp_edgengine
 {
 //////////////////////////////////////////////////////////////////////////////
 CommandManager::CommandManager()

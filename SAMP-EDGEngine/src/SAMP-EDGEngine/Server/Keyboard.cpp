@@ -2,7 +2,7 @@
 
 #include <SAMP-EDGEngine/Server/Server.hpp>
 
-namespace agdk
+namespace samp_edgengine
 {
 
 ///////////////////////////////////////////////////////////////////////////

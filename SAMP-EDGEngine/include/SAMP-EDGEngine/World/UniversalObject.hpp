@@ -6,7 +6,7 @@
 // Base class header:
 #include <SAMP-EDGEngine/World/PerPlayerObject.hpp>
 
-namespace agdk
+namespace samp_edgengine
 {
 
 /// <summary>

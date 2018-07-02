@@ -5,7 +5,7 @@
 #include <SAMP-EDGEngine/Core/Text/ASCII.hpp>		// for string manipulation
 
 
-namespace agdk
+namespace samp_edgengine
 {
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 	Color::Color(const std::string &strColor_)

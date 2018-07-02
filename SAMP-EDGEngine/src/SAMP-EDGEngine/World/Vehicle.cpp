@@ -6,7 +6,7 @@
 #include <SAMP-EDGEngine/Core/Text/ASCII.hpp>
 #include <SAMP-EDGEngine/Core/Clock.hpp>
 
-namespace agdk
+namespace samp_edgengine
 {
 
 /////////////////////////////////////////////////////////////////////////////////

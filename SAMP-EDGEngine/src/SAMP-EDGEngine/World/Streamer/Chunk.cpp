@@ -3,7 +3,7 @@
 #include <SAMP-EDGEngine/World/Streamer/Chunk.hpp>
 #include <SAMP-EDGEngine/Server/GameMode.hpp>
 
-namespace agdk::default_streamer
+namespace samp_edgengine::default_streamer
 {
 
 //////////////////////////////////////////////////////////////////////////////
@@ -237,7 +237,7 @@ void Chunk::GZThingIntercepted()
 {
 	if (!this->isEmpty() && !m_gangZone)
 	{
-		auto gangZone = GameMode->Map.beginConstruction<agdk::GangZone>();
+		auto gangZone = GameMode->Map.beginConstruction<samp_edgengine::GangZone>();
 
 		auto start = m_debugInfo.center - m_debugInfo.halfExtent;
 		auto end = start + (m_debugInfo.halfExtent * 2.f);

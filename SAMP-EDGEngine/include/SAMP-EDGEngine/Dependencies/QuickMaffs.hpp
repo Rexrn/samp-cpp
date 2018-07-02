@@ -7,7 +7,7 @@
 #endif
 
 
-namespace agdk::math
+namespace samp_edgengine::math
 {
 // Unwrap quickmaffs namespace to agdk::math.
 using namespace quickmaffs; 

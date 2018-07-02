@@ -10,7 +10,7 @@
 #include <SAMP-EDGEngine/Core/Events.hpp>
 #include <SAMP-EDGEngine/World/GangZone.hpp>
 
-namespace agdk
+namespace samp_edgengine
 {
 
 /// <summary>

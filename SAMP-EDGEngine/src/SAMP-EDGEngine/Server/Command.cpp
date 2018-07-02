@@ -3,7 +3,7 @@
 #include <SAMP-EDGEngine/Server/Command.hpp>
 #include <SAMP-EDGEngine/Server/Server.hpp>
 
-namespace agdk
+namespace samp_edgengine
 {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 CommandInput::CommandInput(Player & target_, std::string const & input_, std::string const & params_)

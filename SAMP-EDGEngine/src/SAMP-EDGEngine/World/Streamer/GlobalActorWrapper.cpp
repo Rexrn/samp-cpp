@@ -2,7 +2,7 @@
 
 #include <SAMP-EDGEngine/World/Streamer/GlobalActorWrapper.hpp>
 
-namespace agdk::default_streamer
+namespace samp_edgengine::default_streamer
 {
 
 /////////////////////////////////////////////////////////////////////////////////

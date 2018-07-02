@@ -9,7 +9,7 @@
 #include <SAMP-EDGEngine/Server/Player.hpp>
 #include <SAMP-EDGEngine/Core/Pointers.hpp>
 
-namespace agdk
+namespace samp_edgengine
 {		
 class ServerClass;
 

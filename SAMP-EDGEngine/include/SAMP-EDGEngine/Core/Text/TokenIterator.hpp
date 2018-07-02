@@ -4,7 +4,7 @@
 
 #include <SAMP-EDGEngine/Core/Pointers.hpp>
 
-namespace agdk::text
+namespace samp_edgengine::text
 {
 
 /// <summary>

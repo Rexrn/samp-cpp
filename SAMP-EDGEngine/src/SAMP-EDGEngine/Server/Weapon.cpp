@@ -4,7 +4,7 @@
 
 #include <SAMP-EDGEngine/Core/Text/ASCII.hpp>
 
-namespace agdk
+namespace samp_edgengine
 {
 	// Initialize default Weapon variables
 	Weapon::GetNameFnPtr Weapon::getNameFn = &Weapon::Default::getName;

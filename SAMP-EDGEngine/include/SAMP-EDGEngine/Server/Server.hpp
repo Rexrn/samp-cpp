@@ -23,7 +23,7 @@
 #include <SAMP-EDGEngine/Core/Events.hpp>
 #include <SAMP-EDGEngine/Core/Clock.hpp>
 
-namespace agdk
+namespace samp_edgengine
 {
 // Forward declarations
 class IGameMode;
@@ -193,4 +193,4 @@ private:
 
 } // namespace agdk
 
-extern agdk::UniquePtr<agdk::ServerClass>	Server; /// Global pointer to ServerClass
+extern samp_edgengine::UniquePtr<samp_edgengine::ServerClass>	Server; /// Global pointer to ServerClass

@@ -1,7 +1,7 @@
 // Note: this file is not meant to be included on its own.
 // Include "ASCII.hpp" instead.
 
-namespace agdk::text::ascii
+namespace samp_edgengine::text::ascii
 {
 
 ///////////////////////////////////////////////////////////////////////

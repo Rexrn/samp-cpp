@@ -3,7 +3,7 @@
 #include <SAMP-EDGEngine/Core/Placement.hpp>
 #include <SAMP-EDGEngine/World/Streamer/StreamerSettings.hpp>
 
-namespace agdk
+namespace samp_edgengine
 {
 
 /// <summary>

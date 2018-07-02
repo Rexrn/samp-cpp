@@ -2,7 +2,7 @@
 
 #include SAMP_EDGENGINE_PCH
 
-namespace agdk::type_traits
+namespace samp_edgengine::type_traits
 {
 
 template <typename TType>

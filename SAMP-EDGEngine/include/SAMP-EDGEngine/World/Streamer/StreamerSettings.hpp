@@ -2,7 +2,7 @@
 
 #include SAMP_EDGENGINE_PCH
 
-namespace agdk::default_streamer
+namespace samp_edgengine::default_streamer
 {
 
 /// <summary>

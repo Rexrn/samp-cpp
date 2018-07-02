@@ -2,7 +2,7 @@
 
 #include SAMP_EDGENGINE_PCH
 
-namespace agdk::text
+namespace samp_edgengine::text
 {
 
 

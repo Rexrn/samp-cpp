@@ -7,10 +7,10 @@
 #include <SAMP-EDGEngine/Core/Text/ASCII.hpp>
 
 
-agdk::UniquePtr<agdk::ServerClass>			Server;		// Initialize Server instance.
-agdk::UniquePtr<agdk::IGameMode>			GameMode;	// Initialize GameMode instance.
+samp_edgengine::UniquePtr<samp_edgengine::ServerClass>			Server;		// Initialize Server instance.
+samp_edgengine::UniquePtr<samp_edgengine::IGameMode>			GameMode;	// Initialize GameMode instance.
 
-namespace agdk
+namespace samp_edgengine
 {
 /////////////////////////////////////////////////////////////////////////////////////////
 ServerClass::ServerClass()
@@ -1165,7 +1165,7 @@ PLUGIN_EXPORT void PLUGIN_CALL ProcessTick()
 /////////////////////////////////////////////////////////////////////////////////////////
 PLUGIN_EXPORT bool PLUGIN_CALL OnGameModeInit()
 {
-	Server = std::make_unique<agdk::ServerClass>();
+	Server = std::make_unique<samp_edgengine::ServerClass>();
 
 	// call user defined startup method
 	main();
@@ -1191,7 +1191,7 @@ PLUGIN_EXPORT bool PLUGIN_CALL OnPlayerConnect(int playerid)
 /////////////////////////////////////////////////////////////////////////////////////////
 PLUGIN_EXPORT bool PLUGIN_CALL OnPlayerDisconnect(int playerid, int reason)
 {
-	return Server->SampEvents.onPlayerDisconnect( playerid, static_cast<agdk::Player::DisconnectReason>(reason) );
+	return Server->SampEvents.onPlayerDisconnect( playerid, static_cast<samp_edgengine::Player::DisconnectReason>(reason) );
 }
 /////////////////////////////////////////////////////////////////////////////////////////
 
@@ -1205,7 +1205,7 @@ PLUGIN_EXPORT bool PLUGIN_CALL OnPlayerSpawn(int playerid)
 /////////////////////////////////////////////////////////////////////////////////////////
 PLUGIN_EXPORT bool PLUGIN_CALL OnPlayerDeath(int playerid, int killerid, int reason)
 {
-	return Server->SampEvents.onPlayerDeath( playerid, killerid, static_cast<agdk::Weapon::Type>(reason) );
+	return Server->SampEvents.onPlayerDeath( playerid, killerid, static_cast<samp_edgengine::Weapon::Type>(reason) );
 }
 /////////////////////////////////////////////////////////////////////////////////////////
 
@@ -1399,9 +1399,9 @@ PLUGIN_EXPORT bool PLUGIN_CALL OnPlayerInteriorChange(int playerid, int newinter
 /////////////////////////////////////////////////////////////////////////////////////////
 PLUGIN_EXPORT bool PLUGIN_CALL OnPlayerKeyStateChange(int playerid, int newkeys, int oldkeys)
 {
-	agdk::Int32 upDown;
-	agdk::Int32 leftRight;
-	agdk::Int32 unusedKeys;
+	samp_edgengine::Int32 upDown;
+	samp_edgengine::Int32 leftRight;
+	samp_edgengine::Int32 unusedKeys;
 	sampgdk_GetPlayerKeys(playerid, &unusedKeys, &upDown, &leftRight);
 
 	// Note:
@@ -1409,8 +1409,8 @@ PLUGIN_EXPORT bool PLUGIN_CALL OnPlayerKeyStateChange(int playerid, int newkeys,
 	// TODO: fix this if possible.
 	return Server->SampEvents.onPlayerKeyboardStateChange(
 		playerid,
-		agdk::Keyboard{ newkeys, upDown, leftRight },
-		agdk::Keyboard{ oldkeys }
+		samp_edgengine::Keyboard{ newkeys, upDown, leftRight },
+		samp_edgengine::Keyboard{ oldkeys }
 	);
 }
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -1474,28 +1474,28 @@ PLUGIN_EXPORT bool PLUGIN_CALL OnActorStreamOut(int actorid, int forplayerid )
 /////////////////////////////////////////////////////////////////////////////////////////
 PLUGIN_EXPORT bool PLUGIN_CALL OnDialogResponse(int playerid, int dialogid, int response, int listitem, const char * inputtext)
 {
-	return Server->SampEvents.onDialogResponse( playerid, dialogid, static_cast<agdk::Dialog::Button>(response), listitem, inputtext );
+	return Server->SampEvents.onDialogResponse( playerid, dialogid, static_cast<samp_edgengine::Dialog::Button>(response), listitem, inputtext );
 }
 /////////////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////////////////
 PLUGIN_EXPORT bool PLUGIN_CALL OnPlayerTakeDamage(int playerid, int issuerid, float amount, int weaponid, int bodypart)
 {
-	return Server->SampEvents.onPlayerTakeDamage( playerid, issuerid, amount, static_cast<agdk::Weapon::Type>(weaponid), static_cast<agdk::Player::BodyPart>(bodypart) );
+	return Server->SampEvents.onPlayerTakeDamage( playerid, issuerid, amount, static_cast<samp_edgengine::Weapon::Type>(weaponid), static_cast<samp_edgengine::Player::BodyPart>(bodypart) );
 }
 /////////////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////////////////
 PLUGIN_EXPORT bool PLUGIN_CALL OnPlayerGiveDamage(int playerid, int damagedid, float amount, int weaponid, int bodypart)
 {
-	return Server->SampEvents.onPlayerGiveDamage( playerid, damagedid, amount, static_cast<agdk::Weapon::Type>(weaponid), static_cast<agdk::Player::BodyPart>(bodypart) );
+	return Server->SampEvents.onPlayerGiveDamage( playerid, damagedid, amount, static_cast<samp_edgengine::Weapon::Type>(weaponid), static_cast<samp_edgengine::Player::BodyPart>(bodypart) );
 }
 /////////////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////////////////
 PLUGIN_EXPORT bool PLUGIN_CALL OnPlayerGiveDamageActor(int playerid, int damaged_actorid, float amount, int weaponid, int bodypart)
 {
-	return Server->SampEvents.onPlayerGiveDamageActor( playerid, damaged_actorid, amount, static_cast<agdk::Weapon::Type>(weaponid), static_cast<agdk::Player::BodyPart>(bodypart) );
+	return Server->SampEvents.onPlayerGiveDamageActor( playerid, damaged_actorid, amount, static_cast<samp_edgengine::Weapon::Type>(weaponid), static_cast<samp_edgengine::Player::BodyPart>(bodypart) );
 }
 /////////////////////////////////////////////////////////////////////////////////////////
 
@@ -1552,9 +1552,9 @@ PLUGIN_EXPORT bool PLUGIN_CALL OnPlayerClickPlayer(int playerid, int clickedplay
 PLUGIN_EXPORT bool PLUGIN_CALL OnPlayerEditObject(int playerid, bool playerobject, int objectid, int response, float fX, float fY, float fZ, float fRotX, float fRotY, float fRotZ)
 {
 	if (playerobject == 1)
-		return Server->SampEvents.onPlayerEditPlayerObject(playerid, objectid, static_cast<agdk::IMapObject::EditResponse>(response), { fX, fY, fZ }, { fRotX, fRotY, fRotZ });
+		return Server->SampEvents.onPlayerEditPlayerObject(playerid, objectid, static_cast<samp_edgengine::IMapObject::EditResponse>(response), { fX, fY, fZ }, { fRotX, fRotY, fRotZ });
 	else
-		return Server->SampEvents.onPlayerEditObject(playerid, objectid, static_cast<agdk::IMapObject::EditResponse>(response), { fX, fY, fZ }, { fRotX, fRotY, fRotZ });
+		return Server->SampEvents.onPlayerEditObject(playerid, objectid, static_cast<samp_edgengine::IMapObject::EditResponse>(response), { fX, fY, fZ }, { fRotX, fRotY, fRotZ });
 }
 /////////////////////////////////////////////////////////////////////////////////////////
 
@@ -1580,9 +1580,9 @@ PLUGIN_EXPORT bool PLUGIN_CALL OnPlayerWeaponShot(int playerid, int weaponid, in
 {
 	return Server->SampEvents.onPlayerWeaponShot(
 		playerid,
-		static_cast<agdk::Weapon::Type>(weaponid),
-		agdk::Weapon::HitResult{
-			static_cast<agdk::Weapon::HitResult::Target>(hittype),
+		static_cast<samp_edgengine::Weapon::Type>(weaponid),
+		samp_edgengine::Weapon::HitResult{
+			static_cast<samp_edgengine::Weapon::HitResult::Target>(hittype),
 			hitid,
 			{ fX, fY, fZ }
 		}

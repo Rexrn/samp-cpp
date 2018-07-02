@@ -11,7 +11,7 @@ namespace UnitTests
 
 		TEST_METHOD(lengthTest)
 		{
-			namespace math = agdk::math;
+			namespace math = samp_edgengine::math;
 			math::Vector3f simpleVector{ 3, 4, 0 };
 
 			// Check if std::sqrt(3*3 + 4*4) = 5

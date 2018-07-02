@@ -1,6 +1,6 @@
 #pragma once
 
-namespace agdk
+namespace samp_edgengine
 {
 
 /// <summary>

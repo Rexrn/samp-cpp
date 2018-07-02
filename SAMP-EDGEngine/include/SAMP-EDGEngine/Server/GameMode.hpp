@@ -18,7 +18,7 @@
 #include <SAMP-EDGEngine/Core/Events.hpp>
 
 
-namespace agdk
+namespace samp_edgengine
 {	
 
 /// <summary>
@@ -86,7 +86,7 @@ public:
 };
 
 }
-extern agdk::UniquePtr<agdk::IGameMode> GameMode;
+extern samp_edgengine::UniquePtr<samp_edgengine::IGameMode> GameMode;
 
 
 

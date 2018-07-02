@@ -5,7 +5,7 @@
 // Precompiled header:
 #include SAMP_EDGENGINE_PCH
 
-namespace agdk
+namespace samp_edgengine
 {
 namespace chrono		= std::chrono;
 using seconds_f			= chrono::duration<float>;

@@ -9,7 +9,7 @@
 #include <SAMP-EDGEngine/Core/Events.hpp>
 
 
-namespace agdk::default_streamer
+namespace samp_edgengine::default_streamer
 {
 class Streamer
 	:

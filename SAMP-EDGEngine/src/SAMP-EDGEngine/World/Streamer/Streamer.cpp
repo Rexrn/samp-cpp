@@ -15,7 +15,7 @@
 #include <SAMP-EDGEngine/World/Streamer/PersonalObjectWrapper.hpp>
 #include <SAMP-EDGEngine/World/Streamer/UniversalObjectWrapper.hpp>
 
-namespace agdk::default_streamer
+namespace samp_edgengine::default_streamer
 {
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////

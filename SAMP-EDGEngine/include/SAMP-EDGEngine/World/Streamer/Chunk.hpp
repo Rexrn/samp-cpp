@@ -19,7 +19,7 @@
 #include <SAMP-EDGEngine/Core/Container/DivisibleGrid3.hpp>
 #include <SAMP-EDGEngine/World/GangZone.hpp>
 
-namespace agdk
+namespace samp_edgengine
 {
 
 namespace default_streamer

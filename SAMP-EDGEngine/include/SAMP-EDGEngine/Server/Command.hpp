@@ -5,7 +5,7 @@
 #include <SAMP-EDGEngine/Core/Text/ASCII.hpp>
 #include <SAMP-EDGEngine/Server/Teleport.hpp>
 
-namespace agdk
+namespace samp_edgengine
 {
 using CmdInvocations = std::vector< std::string >;
 

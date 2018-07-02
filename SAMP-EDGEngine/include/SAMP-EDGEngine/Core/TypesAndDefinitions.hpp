@@ -12,7 +12,7 @@
 #define cv_a const volatile auto
 #endif
 
-namespace agdk
+namespace samp_edgengine
 {
 using Int32 = int;
 }

@@ -8,7 +8,7 @@
 // Other headers:
 #include <SAMP-EDGEngine/Core/BasicInterfaces/PlacementTracker.hpp>
 
-namespace agdk
+namespace samp_edgengine
 {
 
 class GlobalObject

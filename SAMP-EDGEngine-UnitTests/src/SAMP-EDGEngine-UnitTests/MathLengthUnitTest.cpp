@@ -12,7 +12,7 @@ namespace UnitTests
 		
 		TEST_METHOD(LightYearsValueTest)
 		{
-			namespace math = agdk::math;
+			namespace math = samp_edgengine::math;
 
 			math::LightYears const fiveLightYears = 5;
 			// Compute how many metres 5ly is:

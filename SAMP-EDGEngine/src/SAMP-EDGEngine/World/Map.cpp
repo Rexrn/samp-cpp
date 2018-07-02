@@ -5,7 +5,7 @@
 #include <SAMP-EDGEngine/Core/TypesAndDefinitions.hpp>
 #include <SAMP-EDGEngine/Server/Server.hpp>
 
-namespace agdk
+namespace samp_edgengine
 {
 
 ///////////////////////////////////////////////////////////////////////////////////////

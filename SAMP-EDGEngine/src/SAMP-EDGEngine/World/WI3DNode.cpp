@@ -3,7 +3,7 @@
 // The header of this class:
 #include <SAMP-EDGEngine/World/WI3DNode.hpp>
 
-namespace agdk
+namespace samp_edgengine
 {
 
 ////////////////////////////////////////////////////////////////////////

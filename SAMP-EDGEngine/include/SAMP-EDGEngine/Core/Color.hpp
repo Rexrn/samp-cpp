@@ -5,7 +5,7 @@
 // Precompiled header:
 #include SAMP_EDGENGINE_PCH
 
-namespace agdk
+namespace samp_edgengine
 {	
 	/// <summary>
 	/// Represents color with 8-bit channels red, green, blue and alpha channels.

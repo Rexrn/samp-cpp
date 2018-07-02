@@ -7,7 +7,7 @@
 #include <SAMP-EDGEngine/Server/Player.hpp>
 #include <SAMP-EDGEngine/Core/Exceptions.hpp>
 
-namespace agdk
+namespace samp_edgengine
 {
 
 namespace default_streamer

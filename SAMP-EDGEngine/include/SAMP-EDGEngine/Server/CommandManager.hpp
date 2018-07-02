@@ -8,7 +8,7 @@
 #include <SAMP-EDGEngine/Core/Events.hpp>
 #include <SAMP-EDGEngine/Core/Pointers.hpp>
 
-namespace agdk
+namespace samp_edgengine
 {
 /// <summary>
 /// Class used to manage commands.

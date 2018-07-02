@@ -4,7 +4,7 @@
 
 #include SAMP_EDGENGINE_PCH
 
-namespace agdk
+namespace samp_edgengine
 {
 	template <typename T>
 	using SharedPtr		= std::shared_ptr<T>;

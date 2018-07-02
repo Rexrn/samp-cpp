@@ -7,7 +7,7 @@
 #include <SAMP-EDGEngine/Server/GameMode.hpp>
 #include <SAMP-EDGEngine/World/Vehicle.hpp>
 
-namespace agdk
+namespace samp_edgengine
 {
 
 ///////////////////////////////////////////////////////////////////////////

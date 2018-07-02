@@ -5,7 +5,7 @@
 #include <SAMP-EDGEngine/Core/TypeTraits.hpp>
 #include <SAMP-EDGEngine/Core/Text/Essentials.hpp>
 
-namespace agdk::text::ascii
+namespace samp_edgengine::text::ascii
 {
 
 /// <summary>

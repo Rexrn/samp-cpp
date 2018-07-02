@@ -5,7 +5,7 @@
 #include <SAMP-EDGEngine/Core/TypesAndDefinitions.hpp>
 #include <SAMP-EDGEngine/World/SceneLoader.hpp>
 
-namespace agdk
+namespace samp_edgengine
 {
 ///////////////////////////////////////////////////////////////////////////////////////
 Scene::Scene()

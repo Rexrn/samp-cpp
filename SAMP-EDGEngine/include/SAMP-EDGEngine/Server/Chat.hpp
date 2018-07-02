@@ -5,7 +5,7 @@
 
 #include <SAMP-EDGEngine/Core/Events.hpp>
 
-namespace agdk
+namespace samp_edgengine
 {
 	class Player;
 

@@ -7,7 +7,7 @@
 #include <typeinfo>
 #include <typeindex>
 
-namespace agdk
+namespace samp_edgengine
 {
 
 class IEventReceiver;

@@ -5,7 +5,7 @@
 #include <SAMP-EDGEngine/Core/Color.hpp>
 #include <SAMP-EDGEngine/Core/TypesAndDefinitions.hpp>
 
-namespace agdk
+namespace samp_edgengine
 {
 class Player;
 

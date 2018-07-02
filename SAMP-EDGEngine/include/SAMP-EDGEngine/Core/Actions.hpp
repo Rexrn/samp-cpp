@@ -4,7 +4,7 @@
 
 #include <SAMP-EDGEngine/Core/BasicInterfaces/Updatable.hpp>
 
-namespace agdk
+namespace samp_edgengine
 {
 
 /// <summary>

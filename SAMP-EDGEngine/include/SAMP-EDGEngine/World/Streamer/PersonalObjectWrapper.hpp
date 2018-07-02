@@ -6,7 +6,7 @@
 #include <SAMP-EDGEngine/Core/BasicInterfaces/PlacementTracker.hpp>
 #include <SAMP-EDGEngine/World/Streamer/ChunkActor.hpp>
 
-namespace agdk
+namespace samp_edgengine
 {
 
 namespace default_streamer

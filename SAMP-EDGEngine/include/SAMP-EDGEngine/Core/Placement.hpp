@@ -2,7 +2,7 @@
 
 #include SAMP_EDGENGINE_PCH
 
-namespace agdk
+namespace samp_edgengine
 {
 
 struct ActorPlacement

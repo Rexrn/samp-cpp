@@ -3,7 +3,7 @@
 #include <SAMP-EDGEngine/World/MapObject.hpp>
 #include <SAMP-EDGEngine/Server/Player.hpp>
 
-namespace agdk
+namespace samp_edgengine
 {
 
 //////////////////////////////////////////////////////////////////////////

@@ -12,7 +12,7 @@
 #include <SAMP-EDGEngine/Core/Color.hpp>
 
 
-namespace agdk
+namespace samp_edgengine
 {
 class Player;
 

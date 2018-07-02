@@ -7,7 +7,7 @@
 #include <SAMP-EDGEngine/Core/Pointers.hpp>
 #include <SAMP-EDGEngine/Server/GameMode.hpp>
 
-namespace agdk
+namespace samp_edgengine
 {
 
 ////////////////////////////////////////////////////////////
@@ -275,7 +275,7 @@ void DefaultSceneLoader::loadFromStream(Scene& scene_, std::istream& stream_) co
 
 			std::istringstream lineStream{ line };
 
-			agdk::RemovedBuilding building;
+			samp_edgengine::RemovedBuilding building;
 			if (lineStream >>
 				text::skipIf<','> >> building.model >>
 				text::skipIf<','> >> building.origin.x >> text::skipIf<','> >> building.origin.y >> text::skipIf<','> >> building.origin.z >>

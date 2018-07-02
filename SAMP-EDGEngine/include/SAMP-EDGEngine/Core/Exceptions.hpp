@@ -5,7 +5,7 @@
 // Precompiled header:
 #include SAMP_EDGENGINE_PCH
 
-namespace agdk
+namespace samp_edgengine
 {
 // TODO: implement exception classes.
 

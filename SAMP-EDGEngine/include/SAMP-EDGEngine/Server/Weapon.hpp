@@ -6,7 +6,7 @@
 
 #include <SAMP-EDGEngine/Core/TypesAndDefinitions.hpp>
 
-namespace agdk
+namespace samp_edgengine
 {	
 /// <summary>
 /// This class is used to define weapon type and ammunition.
