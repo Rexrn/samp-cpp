@@ -382,7 +382,7 @@ std::vector< Chunk* > Streamer::getChunksInRadiusFrom(math::Vector3f const& loca
 
 	constexpr math::Meters	cxNodeHalfExtent	= GridType::ZeroLevelRatio::num / static_cast< double >(GridType::ZeroLevelRatio::den);
 	constexpr float			cxNodeHalfExtentF	= static_cast<float>(cxNodeHalfExtent.value);
-	auto const				numChunks			= std::size_t( std::ceil((radius_ * 2.0 / cxNodeHalfExtent.value).value) + 2 );
+	std::size_t const		numChunks			= std::ceil((radius_ * 2.0 / cxNodeHalfExtent.value).value) + 2;
 
 	std::vector< Chunk* > chunks;
 	chunks.reserve(numChunks * numChunks * numChunks + 1); // + 1 because we might need to add m_entireWorld
