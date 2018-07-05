@@ -171,7 +171,7 @@ bool storesInteger(std::string_view const string_);
 ///		<c>true</c> if string contains real number; otherwise, <c>false</c>.
 /// </returns>
 template <typename TFloatType = long double,
-	typename = std::enable_if_t< std::is_floating_point_v<TIntegerType> > >
+	typename = std::enable_if_t< std::is_floating_point_v<TFloatType> > >
 bool storesReal(std::string_view const string_);
 
 /// <summary>
