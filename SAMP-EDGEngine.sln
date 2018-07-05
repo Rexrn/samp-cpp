@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27102.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SAMP-EDGEngine", "SAMP-EDGEngine\SAMP-EDGEngine.vcxproj", "{23AF71CA-C750-46E3-B59E-E4F439B7B122}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Engine", "Engine\Engine.vcxproj", "{23AF71CA-C750-46E3-B59E-E4F439B7B122}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{BC3648BA-5F72-41CD-A8C4-FA6DEC8A74D1}"
 	ProjectSection(SolutionItems) = preProject
@@ -12,7 +12,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SAMP-EDGEngine-UnitTests", "SAMP-EDGEngine-UnitTests\SAMP-EDGEngine-UnitTests.vcxproj", "{262D9C29-6B68-4CB9-9465-1AEEDA187A0A}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "UnitTests", "UnitTests\UnitTests.vcxproj", "{262D9C29-6B68-4CB9-9465-1AEEDA187A0A}"
 	ProjectSection(ProjectDependencies) = postProject
 		{23AF71CA-C750-46E3-B59E-E4F439B7B122} = {23AF71CA-C750-46E3-B59E-E4F439B7B122}
 	EndProjectSection
@@ -24,9 +24,9 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestGM", "Examples\TestGM\T
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Examples", "Examples", "{EB2F613B-D0FC-4585-BD1C-7F582D440786}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "IO", "IO", "{22E7E37A-4523-4B46-A7F5-2780FFE5B5B1}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Extensions", "Extensions", "{22E7E37A-4523-4B46-A7F5-2780FFE5B5B1}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Converter", "IO\Converter\Converter.vcxproj", "{72E297D6-3282-48D1-8C97-960E156858E1}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "InputConverter", "Extensions\InputConverter\InputConverter.vcxproj", "{72E297D6-3282-48D1-8C97-960E156858E1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
