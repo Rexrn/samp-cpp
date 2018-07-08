@@ -33,6 +33,19 @@ public:
 	/// <param name="intersectionRadius_">The intersection radius.</param>
 	/// <param name="intersectionHeight_">Height of the intersection.</param>
 	Checkpoint(math::Vector3f const &location_, float size_, float intersectionRadius_ = -1, float intersectionHeight_ = -1);
+	
+	/// <summary>
+	/// Initializes a new instance of the <see cref="Checkpoint"/> class.
+	/// </summary>
+	/// <param name="other_">The other.</param>
+	Checkpoint(Checkpoint const& other_);
+	
+	/// <summary>
+	/// Copy-assignment operator.
+	/// </summary>
+	/// <param name="other_">The other.</param>
+	/// <returns>Reference to self.</returns>
+	Checkpoint& operator=(Checkpoint const& other_);
 
 	// Tracking:	
 	/// <summary>
@@ -106,5 +119,11 @@ protected:
 	// Placement tracker:
 	I3DNodePlacementTracker * m_placementTracker;
 };
+
+////////////////////////////////////////////////////////////////////////////////////
+bool operator==(Checkpoint const& lhs_, Checkpoint const& rhs_);
+
+////////////////////////////////////////////////////////////////////////////////////
+bool operator!=(Checkpoint const& lhs_, Checkpoint const& rhs_);
 
 }

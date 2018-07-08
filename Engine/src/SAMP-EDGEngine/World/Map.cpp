@@ -61,6 +61,7 @@ GangZone& MapClass::finalizeConstruction(ActorPtrType< GangZone > const& gangZon
 Checkpoint& MapClass::finalizeConstruction(ActorPtrType< Checkpoint > const& checkpoint_)
 {
 	m_checkpoints.push_back(checkpoint_);
+	GameMode->Streamer->whenCheckpointJoinsMap(*checkpoint_);
 	return *checkpoint_;
 }
 
@@ -68,6 +69,7 @@ Checkpoint& MapClass::finalizeConstruction(ActorPtrType< Checkpoint > const& che
 RaceCheckpoint& MapClass::finalizeConstruction(ActorPtrType< RaceCheckpoint > const& raceCheckpoint_)
 {
 	m_raceCheckpoints.push_back(raceCheckpoint_);
+	GameMode->Streamer->whenCheckpointJoinsMap(*raceCheckpoint_);
 	return *raceCheckpoint_;
 }
 

@@ -26,6 +26,24 @@ Checkpoint::Checkpoint(math::Vector3f const& location_, float size_, float inter
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////
+Checkpoint::Checkpoint(Checkpoint const& other_)
+	: Checkpoint{ other_.getLocation(), other_.getSize(), other_.getIntersectionRadius(), other_.getIntersectionHeight() }
+{
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+Checkpoint& Checkpoint::operator=(Checkpoint const& other_)
+{
+	this->setSize(other_.getSize());
+	this->setLocation(other_.getLocation());
+	this->setIntersectionHeight(other_.getIntersectionHeight());
+	this->setIntersectionRadius(other_.getIntersectionRadius());
+	this->setWorldAndMode(other_.getWorld(), other_.getWorldMode());
+	this->setInteriorAndMode(other_.getInterior(), other_.getInteriorMode());
+	return *this;
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////
 void Checkpoint::setPlacementTracker(I3DNodePlacementTracker* tracker_)
 {
 	m_placementTracker = tracker_;
@@ -85,6 +103,27 @@ float Checkpoint::getIntersectionRadius() const
 float Checkpoint::getIntersectionHeight() const
 {
 	return m_intersectionHeight;
+}
+
+////////////////////////////////////////////////////////////////////////////////////
+bool operator==(Checkpoint const& lhs_, Checkpoint const& rhs_)
+{
+	return
+		lhs_.getLocation()			== rhs_.getLocation()
+		&& math::nearlyEqual(lhs_.getSize(), rhs_.getSize(), math::constants::MediumTolerance<float>)
+		&& math::nearlyEqual(lhs_.getIntersectionHeight(), rhs_.getIntersectionHeight(), math::constants::MediumTolerance<float>)
+		&& math::nearlyEqual(lhs_.getIntersectionRadius(), rhs_.getIntersectionRadius(), math::constants::MediumTolerance<float>)
+		&& lhs_.getWorld()			== rhs_.getWorld()
+		&& lhs_.getWorldMode()		== rhs_.getWorldMode()
+		&& lhs_.getInterior()		== rhs_.getInterior()
+		&& lhs_.getInteriorMode()	== rhs_.getInteriorMode();
+		
+}
+
+////////////////////////////////////////////////////////////////////////////////////
+bool operator!=(Checkpoint const& lhs_, Checkpoint const& rhs_)
+{
+	return !(lhs_ == rhs_);
 }
 
 }

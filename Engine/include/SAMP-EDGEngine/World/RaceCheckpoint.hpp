@@ -42,6 +42,19 @@ public:
 	/// <param name="intersectionRadius_">The intersection radius.</param>
 	/// <param name="intersectionHeight_">Height of the intersection.</param>
 	RaceCheckpoint(math::Vector3f const &location_, math::Vector3f const &lookAt_, Type type_, float size_, float intersectionRadius_ = -1, float intersectionHeight_ = -1);
+	
+	/// <summary>
+	/// Initializes a new instance of the <see cref="RaceCheckpoint"/> class.
+	/// </summary>
+	/// <param name="other_">The other.</param>
+	RaceCheckpoint(RaceCheckpoint const& other_);
+	
+	/// <summary>
+	/// Copy-assignment operator.
+	/// </summary>
+	/// <param name="other_">The other.</param>
+	/// <returns>Reference to self.</returns>
+	RaceCheckpoint& operator=(RaceCheckpoint const& other_);
 
 	/// <summary>
 	/// Sets the look-at location.
@@ -74,5 +87,10 @@ private:
 	// Race checkpoint type.
 	Type m_type;
 };
+
+
+bool operator==(RaceCheckpoint const &lhs_, RaceCheckpoint const &rhs_);
+
+bool operator!=(RaceCheckpoint const &lhs_, RaceCheckpoint const &rhs_);
 
 }

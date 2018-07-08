@@ -535,8 +535,6 @@ void Streamer::checkIfUnusedAndRemove(math::Vector3f const& location_)
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 void Streamer::streamNearestCheckpointForPlayer(Player& player_)
 {
-	player_.removeCheckpoint();
-
 	auto chunksInRadius = this->getChunksInRadiusFrom(player_.getLocation(), StreamerSettings.VisibilityDistance);
 
 	std::vector<Checkpoint*> checkpoints;
@@ -571,14 +569,15 @@ void Streamer::streamNearestCheckpointForPlayer(Player& player_)
 		});
 
 	if (nearestCheckpointIt != checkpoints.end())
-		player_.setCheckpoint(*(*nearestCheckpointIt));
+	{
+		if (*(*nearestCheckpointIt) != player_.getLastCheckpoint())
+			player_.setCheckpoint(*(*nearestCheckpointIt));
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 void Streamer::streamNearestRaceCheckpointForPlayer(Player& player_)
 {
-	player_.removeRaceCheckpoint();
-
 	auto chunksInRadius = this->getChunksInRadiusFrom(player_.getLocation(), StreamerSettings.VisibilityDistance);
 
 	std::vector<RaceCheckpoint*> checkpoints;
@@ -613,7 +612,10 @@ void Streamer::streamNearestRaceCheckpointForPlayer(Player& player_)
 		});
 
 	if (nearestCheckpointIt != checkpoints.end())
-		player_.setRaceCheckpoint(*(*nearestCheckpointIt));
+	{
+		if (*(*nearestCheckpointIt) != player_.getLastRaceCheckpoint())
+			player_.setRaceCheckpoint(*(*nearestCheckpointIt));
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////

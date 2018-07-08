@@ -188,6 +188,24 @@ public:
 	///		<c>true</c> if player intersects with race checkpoint; otherwise, <c>false</c>.
 	/// </returns>
 	bool intersectsWithRaceCheckpoint() const;
+	
+	/// <summary>
+	/// Returns the last checkpoint set.
+	/// </summary>
+	/// <returns>The last checkpoint set.</returns>
+	Checkpoint getLastCheckpoint() const
+	{
+		return m_checkpoint;
+	}
+
+	/// <summary>
+	/// Returns the last race checkpoint set.
+	/// </summary>
+	/// <returns>The last race checkpoint set.</returns>
+	RaceCheckpoint getLastRaceCheckpoint() const
+	{
+		return m_raceCheckpoint;
+	}
 
 	// Personal object:
 
