@@ -13,7 +13,7 @@ class Player;
 /// A in-game race checkpoint.
 /// </summary>
 /// <seealso cref="Checkpoint" />
-class RaceCheckpoint final
+class RaceCheckpoint
 	: public Checkpoint
 {
 public:

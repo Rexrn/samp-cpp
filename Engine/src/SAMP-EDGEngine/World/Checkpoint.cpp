@@ -78,10 +78,4 @@ float Checkpoint::getIntersectionHeight() const
 	return m_intersectionHeight;
 }
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////
-bool Checkpoint::isAllowedForPlayer(Player const& player_) const
-{
-	return true;
-}
-
 }

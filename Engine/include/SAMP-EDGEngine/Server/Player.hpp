@@ -11,10 +11,14 @@
 #include <SAMP-EDGEngine/Core/Pointers.hpp>
 #include <SAMP-EDGEngine/Core/BasicInterfaces/PlacementTracker.hpp>
 #include <SAMP-EDGEngine/Core/TypesAndDefinitions.hpp>
+#include <SAMP-EDGEngine/World/Checkpoint.hpp>
+#include <SAMP-EDGEngine/World/RaceCheckpoint.hpp>
 
 
 namespace samp_edgengine
-{	
+{
+class RaceCheckpoint;
+class Checkpoint;
 class Vehicle;
 
 /// <summary>
@@ -100,6 +104,74 @@ public:
 	/// </summary>
 	/// <returns>Placement tracker</returns>
 	I3DNodePlacementTracker* getPlacementTracker() const;
+
+	// Checkpoints:
+	
+	/// <summary>
+	/// Sets the checkpoint streaming on or off.
+	/// </summary>
+	/// <param name="streamCheckpoints_">if set to <c>true</c> then player has streamed checkpoints.</param>
+	void setCheckpointStreaming(bool streamCheckpoints_);
+	
+	/// <summary>
+	/// Sets the race checkpoint streaming.
+	/// </summary>
+	/// <param name="streamRaceCheckpoints_">if set to <c>true</c> then player has streamed race checkpoints.</param>
+	void setRaceCheckpointStreaming(bool streamRaceCheckpoints_);
+	
+	/// <summary>
+	/// Determines whether player has streamed checkpoints.
+	/// </summary>
+	/// <returns>
+	///		<c>true</c> if player has streamed checkpoints; otherwise, <c>false</c>.
+	/// </returns>
+	bool hasStreamedCheckpoints() const;
+	
+	/// <summary>
+	/// Determines whether player has streamed race checkpoints.
+	/// </summary>
+	/// <returns>
+	///   <c>true</c> if has streamed race checkpoints; otherwise, <c>false</c>.
+	/// </returns>
+	bool hasStreamedRaceCheckpoints() const;
+	
+	/// <summary>
+	/// Sets the checkpoint.
+	/// </summary>
+	/// <param name="checkpoint_">The checkpoint.</param>
+	void setCheckpoint(Checkpoint const& checkpoint_);
+	
+	/// <summary>
+	/// Sets the race checkpoint.
+	/// </summary>
+	/// <param name="raceCheckpoint_">The race checkpoint.</param>
+	void setRaceCheckpoint(RaceCheckpoint const& raceCheckpoint_);
+	
+	/// <summary>
+	/// Removes the checkpoint.
+	/// </summary>
+	void removeCheckpoint();
+	
+	/// <summary>
+	/// Removes the race checkpoint.
+	/// </summary>
+	void removeRaceCheckpoint();
+	
+	/// <summary>
+	/// Determines whether player has checkpoint set.
+	/// </summary>
+	/// <returns>
+	///		<c>true</c> if player has checkpoint set; otherwise, <c>false</c>.
+	/// </returns>
+	bool hasCheckpointSet() const;
+	
+	/// <summary>
+	/// Determines whether player has race checkpoint set.
+	/// </summary>
+	/// <returns>
+	///   <c>true</c> if player has race checkpoint set; otherwise, <c>false</c>.
+	/// </returns>
+	bool hasRaceCheckpointSet() const;
 
 	// Personal object:
 
@@ -483,6 +555,14 @@ private:
 
 	// Tracking:
 	I3DNodePlacementTracker* m_placementTracker;
+
+	// Checkpoint:
+	Checkpoint			m_checkpoint;
+	RaceCheckpoint		m_raceCheckpoint;
+	bool				m_checkpointSet,
+						m_raceCheckpointSet,
+						m_checkpointStreamingOn,
+						m_raceCheckpointStreamingOn;
 
 	std::vector< UniquePtr<PersonalObject> > m_personalObjects;
 };

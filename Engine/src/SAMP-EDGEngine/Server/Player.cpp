@@ -5,7 +5,9 @@
 #include <SAMP-EDGEngine/Server/Server.hpp>
 #include <SAMP-EDGEngine/Core/Text/ASCII.hpp>
 #include <SAMP-EDGEngine/Server/GameMode.hpp>
+
 #include <SAMP-EDGEngine/World/Vehicle.hpp>
+
 
 namespace samp_edgengine
 {
@@ -18,7 +20,9 @@ Player::Player(IndexType const index_)
 	m_health{ 100 }, m_armour{ 0 },
 	m_lastWorld{ 0 }, m_lastInterior{ 0 },
 	m_placementTracker{ nullptr },
-	m_vehicle{ nullptr }
+	m_vehicle{ nullptr },
+	m_checkpointSet{ false }, m_raceCheckpointSet{ false },
+	m_checkpointStreamingOn{ true }, m_raceCheckpointStreamingOn{ true }
 {
 	m_name = this->getClientName();
 }
@@ -42,6 +46,75 @@ void Player::setPlacementTracker(I3DNodePlacementTracker* tracker_)
 I3DNodePlacementTracker* Player::getPlacementTracker() const
 {
 	return m_placementTracker;
+}
+
+///////////////////////////////////////////////////////////////////////////
+void Player::setCheckpointStreaming(bool streamCheckpoints_)
+{
+	m_checkpointStreamingOn = streamCheckpoints_;
+}
+
+///////////////////////////////////////////////////////////////////////////
+void Player::setRaceCheckpointStreaming(bool streamRaceCheckpoints_)
+{
+	m_raceCheckpointStreamingOn = streamRaceCheckpoints_;
+}
+
+///////////////////////////////////////////////////////////////////////////
+bool Player::hasStreamedCheckpoints() const
+{
+	return m_checkpointStreamingOn;
+}
+
+///////////////////////////////////////////////////////////////////////////
+bool Player::hasStreamedRaceCheckpoints() const
+{
+	return m_raceCheckpointStreamingOn;
+}
+
+///////////////////////////////////////////////////////////////////////////
+void Player::setCheckpoint(Checkpoint const& checkpoint_)
+{
+	m_checkpoint = checkpoint_;
+
+	const_a loc = m_checkpoint.getLocation();
+	sampgdk_SetPlayerCheckpoint(this->getIndex(), loc.x, loc.y, loc.z, m_checkpoint.getSize());
+}
+
+///////////////////////////////////////////////////////////////////////////
+void Player::setRaceCheckpoint(RaceCheckpoint const& raceCheckpoint_)
+{
+	m_raceCheckpoint = raceCheckpoint_;
+
+	const_a loc		= m_raceCheckpoint.getLocation();
+	const_a lookAt	= m_raceCheckpoint.getLookAt();
+	sampgdk_SetPlayerRaceCheckpoint(this->getIndex(), static_cast<Int32>( m_raceCheckpoint.getType() ), loc.x, loc.y, loc.z, lookAt.x, lookAt.y, lookAt.z, m_raceCheckpoint.getSize());
+}
+
+///////////////////////////////////////////////////////////////////////////
+void Player::removeCheckpoint()
+{
+	m_checkpointSet = false;
+	sampgdk_DisablePlayerCheckpoint(this->getIndex());
+}
+
+///////////////////////////////////////////////////////////////////////////
+void Player::removeRaceCheckpoint()
+{
+	m_raceCheckpointSet = false;
+	sampgdk_DisablePlayerRaceCheckpoint(this->getIndex());
+}
+
+///////////////////////////////////////////////////////////////////////////
+bool Player::hasCheckpointSet() const
+{
+	return m_checkpointSet;
+}
+
+///////////////////////////////////////////////////////////////////////////
+bool Player::hasRaceCheckpointSet() const
+{
+	return m_raceCheckpointSet;
 }
 
 ///////////////////////////////////////////////////////////////////////////

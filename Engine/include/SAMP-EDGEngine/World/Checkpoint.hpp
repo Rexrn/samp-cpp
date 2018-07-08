@@ -83,15 +83,6 @@ public:
 	/// </summary>
 	/// <returns>The height of the intersection.</returns>
 	float getIntersectionHeight() const;
-	
-	/// <summary>
-	/// Determines whether player is allowed to see or interact with the checkpoint.
-	/// </summary>
-	/// <param name="player_">The player.</param>
-	/// <returns>
-	///   <c>true</c> if player is allowed to see or interact with the checkpoint; otherwise, <c>false</c>.
-	/// </returns>
-	virtual bool isAllowedForPlayer(Player const & player_) const;
 
 protected:
 
