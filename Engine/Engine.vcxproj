@@ -219,6 +219,7 @@
     <ClInclude Include="include\SAMP-EDGEngine\World\GangZone.hpp" />
     <ClInclude Include="include\SAMP-EDGEngine\World\Map.hpp" />
     <ClInclude Include="include\SAMP-EDGEngine\World\Pickup.hpp" />
+    <ClInclude Include="include\SAMP-EDGEngine\World\RaceCheckpoint.hpp" />
     <ClInclude Include="include\SAMP-EDGEngine\World\RemovedBuilding.hpp" />
     <ClInclude Include="include\SAMP-EDGEngine\World\Streamer\ChunkActor.hpp" />
     <ClInclude Include="include\SAMP-EDGEngine\World\Streamer\GlobalActorWrapper.hpp" />
@@ -273,8 +274,10 @@
     <ClCompile Include="src\SAMP-EDGEngine\Server\PlayerPool.cpp" />
     <ClCompile Include="src\SAMP-EDGEngine\Server\Weapon.cpp" />
     <ClCompile Include="src\SAMP-EDGEngine\World\3DNode.cpp" />
+    <ClCompile Include="src\SAMP-EDGEngine\World\Checkpoint.cpp" />
     <ClCompile Include="src\SAMP-EDGEngine\World\GangZone.cpp" />
     <ClCompile Include="src\SAMP-EDGEngine\World\Map.cpp" />
+    <ClCompile Include="src\SAMP-EDGEngine\World\RaceCheckpoint.cpp" />
     <ClCompile Include="src\SAMP-EDGEngine\World\Scene.cpp" />
     <ClCompile Include="src\SAMP-EDGEngine\World\GlobalObject.cpp" />
     <ClCompile Include="src\SAMP-EDGEngine\World\Streamer\Chunk.cpp" />

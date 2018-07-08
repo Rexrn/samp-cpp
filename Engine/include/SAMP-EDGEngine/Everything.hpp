@@ -30,6 +30,8 @@
 #include <SAMP-EDGEngine/World/Vehicle.hpp>
 #include <SAMP-EDGEngine/World/Map.hpp>
 #include <SAMP-EDGEngine/World/GangZone.hpp>
+#include <SAMP-EDGEngine/World/Checkpoint.hpp>
+#include <SAMP-EDGEngine/World/RaceCheckpoint.hpp>
 
 // --> World/MapObject/:
 #include <SAMP-EDGEngine/World/GlobalObject.hpp>
