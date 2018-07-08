@@ -97,6 +97,12 @@
     <Filter Include="Source Files\World\MapObject">
       <UniqueIdentifier>{b03a4d04-681d-443e-a298-449f2cf2907c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Server\TextDraw">
+      <UniqueIdentifier>{723a7b63-24a4-4683-aef8-12feb18ad200}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Server\TextDraw">
+      <UniqueIdentifier>{eb599bf7-6d1a-4d05-9011-a4fa8e4cab7b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Dependencies\sampgdk\plugin.h">
@@ -309,8 +315,23 @@
     <ClInclude Include="include\SAMP-EDGEngine\World\Streamer\CheckpointWrapper.hpp">
       <Filter>Header Files\World\Streamer\Wrappers</Filter>
     </ClInclude>
+    <ClInclude Include="include\SAMP-EDGEngine\Server\PlayerTextDrawPanel.hpp">
+      <Filter>Header Files\Server\TextDraw</Filter>
+    </ClInclude>
+    <ClInclude Include="include\SAMP-EDGEngine\Server\PlayerTextDraw.hpp">
+      <Filter>Header Files\Server\TextDraw</Filter>
+    </ClInclude>
+    <ClInclude Include="include\SAMP-EDGEngine\Server\GlobalTextDrawPanel.hpp">
+      <Filter>Header Files\Server\TextDraw</Filter>
+    </ClInclude>
+    <ClInclude Include="include\SAMP-EDGEngine\Server\GlobalTextDraw.hpp">
+      <Filter>Header Files\Server\TextDraw</Filter>
+    </ClInclude>
+    <ClInclude Include="include\SAMP-EDGEngine\Server\TextDraw.hpp">
+      <Filter>Header Files\Server\TextDraw</Filter>
+    </ClInclude>
     <ClInclude Include="include\SAMP-EDGEngine\World\Streamer\RaceCheckpointWrapper.hpp">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\World\Streamer\Wrappers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -435,7 +456,22 @@
       <Filter>Source Files\World\Node</Filter>
     </ClCompile>
     <ClCompile Include="src\SAMP-EDGEngine\World\Streamer\CheckpointWrapper.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\World\Streamer\Wrappers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SAMP-EDGEngine\Server\PlayerTextDrawPanel.cpp">
+      <Filter>Source Files\Server\TextDraw</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SAMP-EDGEngine\Server\PlayerTextDraw.cpp">
+      <Filter>Source Files\Server\TextDraw</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SAMP-EDGEngine\Server\GlobalTextDrawPanel.cpp">
+      <Filter>Source Files\Server\TextDraw</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SAMP-EDGEngine\Server\GlobalTextDraw.cpp">
+      <Filter>Source Files\Server\TextDraw</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SAMP-EDGEngine\Server\TextDraw.cpp">
+      <Filter>Source Files\Server\TextDraw</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

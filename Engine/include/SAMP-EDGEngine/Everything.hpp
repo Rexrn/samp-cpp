@@ -52,6 +52,12 @@
 #include <SAMP-EDGEngine/Server/Chat.hpp>
 #include <SAMP-EDGEngine/Server/GameMode.hpp>
 #include <SAMP-EDGEngine/Server/Server.hpp>
+#include <SAMP-EDGEngine/Server/TextDraw.hpp>
+#include <SAMP-EDGEngine/Server/PlayerTextDraw.hpp>
+#include <SAMP-EDGEngine/Server/GlobalTextDraw.hpp>
+#include <SAMP-EDGEngine/Server/PlayerTextDrawPanel.hpp>
+#include <SAMP-EDGEngine/Server/GlobalTextDrawPanel.hpp>
+
 
 // --> Server/Command/:
 #include <SAMP-EDGEngine/Server/Command.hpp>
