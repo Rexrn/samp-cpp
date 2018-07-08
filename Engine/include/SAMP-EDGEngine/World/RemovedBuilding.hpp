@@ -27,6 +27,14 @@ struct RemovedBuilding
 	{
 		return model == other_.model && origin == other_.origin && radius == other_.radius;
 	}
+	
+	/// <summary>
+	/// Initializes a new instance of the <see cref="RemovedBuilding"/> struct.
+	/// </summary>
+	RemovedBuilding()
+		: model{ -1 }
+	{
+	}
 
 	Int32			model;		// What model should be removed?
 	math::Vector3f	origin;		// From where the object should be removed?

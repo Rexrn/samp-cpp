@@ -1,0 +1,216 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Precompiled Header">
+      <UniqueIdentifier>{309fcf32-ae1c-4d80-b738-cebab75c66a8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Dependencies">
+      <UniqueIdentifier>{599ad293-6614-4557-a31b-a281812e056d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Serializers">
+      <UniqueIdentifier>{cb5f84b1-8802-41c8-a47d-5fdac8f7028a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Deserializers">
+      <UniqueIdentifier>{80d72c20-d9bf-48a7-bc48-366fd9e878aa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Serializers\XML">
+      <UniqueIdentifier>{5f200a9c-c5c8-4736-9109-4795df0e55ee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Deserializers\XML">
+      <UniqueIdentifier>{7673741d-c5cd-4c5b-8ca2-4398e7d7f333}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Serializers">
+      <UniqueIdentifier>{4f8977b9-dbb6-424f-8e85-041e03bdcaed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Deserializers">
+      <UniqueIdentifier>{bde560cd-1b8e-43b6-82f3-ce23f84f1806}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Deserializers\XML">
+      <UniqueIdentifier>{486ef49c-57de-45f6-a982-988996cb1c9f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Serializers\XML">
+      <UniqueIdentifier>{a8798562-c96b-4849-92ae-2a766969252b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Deserializers\PAWN">
+      <UniqueIdentifier>{2034e27c-e801-464e-b300-f07a6858073a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Deserializers\PAWN">
+      <UniqueIdentifier>{12258ca1-ed11-4719-a821-f5a5d75c339c}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\SAMP-EDGEngine-Ext\ResourceIO\Everything.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ResourceIOPCH.hpp">
+      <Filter>Precompiled Header</Filter>
+    </ClInclude>
+    <ClInclude Include="include\SAMP-EDGEngine-Ext\ResourceIO\XMLHelperFunctions.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\SAMP-EDGEngine-Ext\ResourceIO\XMLNames.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\SAMP-EDGEngine-Ext\ResourceIO\XMLTextureMaterialSerializer.hpp">
+      <Filter>Header Files\Serializers\XML</Filter>
+    </ClInclude>
+    <ClInclude Include="include\SAMP-EDGEngine-Ext\ResourceIO\XMLTextMaterialSerializer.hpp">
+      <Filter>Header Files\Serializers\XML</Filter>
+    </ClInclude>
+    <ClInclude Include="include\SAMP-EDGEngine-Ext\ResourceIO\XMLPerPlayerObjectSerializer.hpp">
+      <Filter>Header Files\Serializers\XML</Filter>
+    </ClInclude>
+    <ClInclude Include="include\SAMP-EDGEngine-Ext\ResourceIO\XMLMapObjectSerializer.hpp">
+      <Filter>Header Files\Serializers\XML</Filter>
+    </ClInclude>
+    <ClInclude Include="include\SAMP-EDGEngine-Ext\ResourceIO\XMLMapObjectMaterialSerializer.hpp">
+      <Filter>Header Files\Serializers\XML</Filter>
+    </ClInclude>
+    <ClInclude Include="include\SAMP-EDGEngine-Ext\ResourceIO\XMLGlobalObjectSerializer.hpp">
+      <Filter>Header Files\Serializers\XML</Filter>
+    </ClInclude>
+    <ClInclude Include="include\SAMP-EDGEngine-Ext\ResourceIO\MapObjectSerializer.hpp">
+      <Filter>Header Files\Serializers</Filter>
+    </ClInclude>
+    <ClInclude Include="include\SAMP-EDGEngine-Ext\ResourceIO\Serializer.hpp">
+      <Filter>Header Files\Serializers</Filter>
+    </ClInclude>
+    <ClInclude Include="include\SAMP-EDGEngine-Ext\ResourceIO\MapObjectMaterialSerializer.hpp">
+      <Filter>Header Files\Serializers</Filter>
+    </ClInclude>
+    <ClInclude Include="include\SAMP-EDGEngine-Ext\ResourceIO\Deserializer.hpp">
+      <Filter>Header Files\Deserializers</Filter>
+    </ClInclude>
+    <ClInclude Include="include\SAMP-EDGEngine-Ext\ResourceIO\MapObjectMaterialDeserializer.hpp">
+      <Filter>Header Files\Deserializers</Filter>
+    </ClInclude>
+    <ClInclude Include="include\SAMP-EDGEngine-Ext\ResourceIO\MapObjectDeserializer.hpp">
+      <Filter>Header Files\Deserializers</Filter>
+    </ClInclude>
+    <ClInclude Include="include\SAMP-EDGEngine-Ext\ResourceIO\XMLTextureMaterialDeserializer.hpp">
+      <Filter>Header Files\Deserializers\XML</Filter>
+    </ClInclude>
+    <ClInclude Include="include\SAMP-EDGEngine-Ext\ResourceIO\XMLTextMaterialDeserializer.hpp">
+      <Filter>Header Files\Deserializers\XML</Filter>
+    </ClInclude>
+    <ClInclude Include="include\SAMP-EDGEngine-Ext\ResourceIO\XMLPerPlayerObjectDeserializer.hpp">
+      <Filter>Header Files\Deserializers\XML</Filter>
+    </ClInclude>
+    <ClInclude Include="include\SAMP-EDGEngine-Ext\ResourceIO\XMLMapObjectMaterialDeserializer.hpp">
+      <Filter>Header Files\Deserializers\XML</Filter>
+    </ClInclude>
+    <ClInclude Include="include\SAMP-EDGEngine-Ext\ResourceIO\XMLMapObjectDeserializer.hpp">
+      <Filter>Header Files\Deserializers\XML</Filter>
+    </ClInclude>
+    <ClInclude Include="include\SAMP-EDGEngine-Ext\ResourceIO\XMLGlobalObjectDeserializer.hpp">
+      <Filter>Header Files\Deserializers\XML</Filter>
+    </ClInclude>
+    <ClInclude Include="include\SAMP-EDGEngine-Ext\ResourceIO\SceneSerializer.hpp">
+      <Filter>Header Files\Serializers</Filter>
+    </ClInclude>
+    <ClInclude Include="include\SAMP-EDGEngine-Ext\ResourceIO\XMLSceneSerializer.hpp">
+      <Filter>Header Files\Serializers\XML</Filter>
+    </ClInclude>
+    <ClInclude Include="include\SAMP-EDGEngine-Ext\ResourceIO\XMLSerializer.hpp">
+      <Filter>Header Files\Serializers\XML</Filter>
+    </ClInclude>
+    <ClInclude Include="include\SAMP-EDGEngine-Ext\ResourceIO\XMLSceneDeserializer.hpp">
+      <Filter>Header Files\Deserializers\XML</Filter>
+    </ClInclude>
+    <ClInclude Include="include\SAMP-EDGEngine-Ext\ResourceIO\Dependencies\RapidXML.hpp">
+      <Filter>Header Files\Dependencies</Filter>
+    </ClInclude>
+    <ClInclude Include="include\SAMP-EDGEngine-Ext\ResourceIO\XMLDeserializer.hpp">
+      <Filter>Header Files\Deserializers\XML</Filter>
+    </ClInclude>
+    <ClInclude Include="include\SAMP-EDGEngine-Ext\ResourceIO\PAWNDeserializer.hpp">
+      <Filter>Header Files\Deserializers\PAWN</Filter>
+    </ClInclude>
+    <ClInclude Include="include\SAMP-EDGEngine-Ext\ResourceIO\PAWNSceneDeserializer.hpp">
+      <Filter>Header Files\Deserializers\PAWN</Filter>
+    </ClInclude>
+    <ClInclude Include="include\SAMP-EDGEngine-Ext\ResourceIO\SceneDeserializer.hpp">
+      <Filter>Header Files\Deserializers</Filter>
+    </ClInclude>
+    <ClInclude Include="include\SAMP-EDGEngine-Ext\ResourceIO\XMLRemovedBuildingDeserializer.hpp">
+      <Filter>Header Files\Deserializers\XML</Filter>
+    </ClInclude>
+    <ClInclude Include="include\SAMP-EDGEngine-Ext\ResourceIO\XMLRemovedBuildingSerializer.hpp">
+      <Filter>Header Files\Serializers\XML</Filter>
+    </ClInclude>
+    <ClInclude Include="include\SAMP-EDGEngine-Ext\ResourceIO\RemovedBuildingSerializer.hpp">
+      <Filter>Header Files\Serializers</Filter>
+    </ClInclude>
+    <ClInclude Include="include\SAMP-EDGEngine-Ext\ResourceIO\RemovedBuildingDeserializer.hpp">
+      <Filter>Header Files\Deserializers</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="ResourceIOPCH.cpp">
+      <Filter>Precompiled Header</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SAMP-EDGEngine-Ext\ResourceIO\XMLHelperFunctions.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SAMP-EDGEngine-Ext\ResourceIO\XMLTextureMaterialSerializer.cpp">
+      <Filter>Source Files\Serializers\XML</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SAMP-EDGEngine-Ext\ResourceIO\XMLTextMaterialSerializer.cpp">
+      <Filter>Source Files\Serializers\XML</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SAMP-EDGEngine-Ext\ResourceIO\XMLPerPlayerObjectSerializer.cpp">
+      <Filter>Source Files\Serializers\XML</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SAMP-EDGEngine-Ext\ResourceIO\XMLMapObjectSerializer.cpp">
+      <Filter>Source Files\Serializers\XML</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SAMP-EDGEngine-Ext\ResourceIO\XMLGlobalObjectSerializer.cpp">
+      <Filter>Source Files\Serializers\XML</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SAMP-EDGEngine-Ext\ResourceIO\XMLTextureMaterialDeserializer.cpp">
+      <Filter>Source Files\Deserializers\XML</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SAMP-EDGEngine-Ext\ResourceIO\XMLTextMaterialDeserializer.cpp">
+      <Filter>Source Files\Deserializers\XML</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SAMP-EDGEngine-Ext\ResourceIO\XMLPerPlayerObjectDeserializer.cpp">
+      <Filter>Source Files\Deserializers\XML</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SAMP-EDGEngine-Ext\ResourceIO\XMLMapObjectMaterialDeserializer.cpp">
+      <Filter>Source Files\Deserializers\XML</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SAMP-EDGEngine-Ext\ResourceIO\XMLMapObjectDeserializer.cpp">
+      <Filter>Source Files\Deserializers\XML</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SAMP-EDGEngine-Ext\ResourceIO\XMLGlobalObjectDeserializer.cpp">
+      <Filter>Source Files\Deserializers\XML</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SAMP-EDGEngine-Ext\ResourceIO\XMLSceneSerializer.cpp">
+      <Filter>Source Files\Serializers\XML</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SAMP-EDGEngine-Ext\ResourceIO\XMLSceneDeserializer.cpp">
+      <Filter>Source Files\Deserializers\XML</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SAMP-EDGEngine-Ext\ResourceIO\PAWNSceneDeserializer.cpp">
+      <Filter>Source Files\Deserializers\PAWN</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SAMP-EDGEngine-Ext\ResourceIO\XMLRemovedBuildingDeserializer.cpp">
+      <Filter>Source Files\Deserializers\XML</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SAMP-EDGEngine-Ext\ResourceIO\XMLRemovedBuildingSerializer.cpp">
+      <Filter>Source Files\Serializers\XML</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

@@ -75,7 +75,7 @@ public:
 	/// Sets the world visibility mode.
 	/// </summary>
 	/// <param name="visibilityMode_">The visibility mode.</param>
-	virtual void setWorldVisibility(VisibilityMode const visibilityMode_);
+	virtual void setWorldMode(VisibilityMode const visibilityMode_);
 
 	/// <summary>
 	/// Sets the object interior and changes the visibility mode.
@@ -88,7 +88,7 @@ public:
 	/// Sets the interior visibility mode.
 	/// </summary>
 	/// <param name="visibilityMode_">The visibility mode.</param>
-	virtual void setInteriorVisibility(VisibilityMode const visibilityMode_);
+	virtual void setInteriorMode(VisibilityMode const visibilityMode_);
 
 	/// <summary>
 	/// Returns the distance squared to specified player.
@@ -134,10 +134,32 @@ public:
 	/// <param name="player_">The player.</param>
 	/// <returns>The object rotation for specified player.</returns>
 	virtual math::Vector3f getRotationFor(Player const & player_) const = 0;
+	
+	/// <summary>
+	/// Returns the world visibility mode.
+	/// </summary>
+	/// <returns>
+	///		The world visibility mode.
+	/// </returns>
+	VisibilityMode getWorldMode() const
+	{
+		return m_worldMode;
+	}
+
+	/// <summary>
+	/// Returns the interior visibility mode.
+	/// </summary>
+	/// <returns>
+	///		The interior visibility mode.
+	/// </returns>
+	VisibilityMode getInteriorMode() const
+	{
+		return m_interiorMode;
+	}
 
 protected:
-	VisibilityMode				m_worldVisibility,
-								m_interiorVisibility;
+	VisibilityMode				m_worldMode,
+								m_interiorMode;
 
 	I3DNodePlacementTracker*	m_placementTracker;
 };

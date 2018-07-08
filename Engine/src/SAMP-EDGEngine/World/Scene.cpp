@@ -3,7 +3,6 @@
 #include <SAMP-EDGEngine/World/Scene.hpp>
 #include <SAMP-EDGEngine/Server/GameMode.hpp>
 #include <SAMP-EDGEngine/Core/TypesAndDefinitions.hpp>
-#include <SAMP-EDGEngine/World/SceneLoader.hpp>
 
 namespace samp_edgengine
 {
@@ -13,12 +12,6 @@ Scene::Scene()
 	m_insideMap{ false },
 	m_autoOrigin{ true }
 {
-}
-
-///////////////////////////////////////////////////////////////////////////////////////
-void Scene::loadFromStream(std::istream& stream_, ISceneLoader const& loader_)
-{
-	loader_.loadFromStream(*this, stream_);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////

@@ -24,8 +24,10 @@ class IMapObject
 	public virtual I3DNode,
 	public INonCopyable
 {	
-protected:
+public:
 	class IMaterial;
+protected:
+	
 
 	/// <summary>
 	/// Applies the material.
@@ -33,6 +35,9 @@ protected:
 	/// <param name="materialIndex_">Index of the material.</param>
 	/// <param name="textureMaterial_">The texture material.</param>
 	void applyMaterial(std::size_t const materialIndex_, IMaterial const & textureMaterial_, Player const * player_ = nullptr);
+
+public:
+	constexpr static std::uint8_t MaxMaterialCount = 16;
 
 	/// <summary>
 	/// A base class for Texture and Text materials.
@@ -46,7 +51,7 @@ protected:
 		virtual ~IMaterial() = default;
 
 		friend void IMapObject::applyMaterial(std::size_t const materialIndex_, IMaterial const & textureMaterial_, Player const * player_);
-	protected:		
+	protected:
 
 		/// <summary>
 		/// Applies material to the specified object.
@@ -56,7 +61,7 @@ protected:
 		/// <param name="player_">The player.</param>
 		virtual void apply(IMapObject &object_, std::size_t const materialIndex_, Player const * player_ = nullptr) const = 0;
 	};
-public:
+
 	// Types and aliases:
 	using HandleType			= Int32;
 	using MaterialsContainer	= std::vector< UniquePtr<IMaterial> >;
@@ -68,6 +73,13 @@ public:
 		Cancel	= EDIT_RESPONSE_CANCEL,
 		Final	= EDIT_RESPONSE_FINAL,
 		Update	= EDIT_RESPONSE_UPDATE
+	};
+
+	enum Type
+	{
+		Global,
+		Universal,
+		Personal
 	};
 
 	// Some settings:
@@ -215,6 +227,14 @@ public:
 	///   <c>true</c> if object is in motion; otherwise, <c>false</c>.
 	/// </returns>
 	bool isInMotion() const;
+	
+	/// <summary>
+	/// Returns object type.
+	/// </summary>
+	/// <returns>
+	///		Type of the object.
+	/// </returns>
+	virtual Type getType() const = 0;
 protected:
 	
 	/// <summary>

@@ -220,7 +220,6 @@
     <ClInclude Include="include\SAMP-EDGEngine\World\Map.hpp" />
     <ClInclude Include="include\SAMP-EDGEngine\World\Pickup.hpp" />
     <ClInclude Include="include\SAMP-EDGEngine\World\RemovedBuilding.hpp" />
-    <ClInclude Include="include\SAMP-EDGEngine\World\SceneLoader.hpp" />
     <ClInclude Include="include\SAMP-EDGEngine\World\Streamer\ChunkActor.hpp" />
     <ClInclude Include="include\SAMP-EDGEngine\World\Streamer\GlobalActorWrapper.hpp" />
     <ClInclude Include="include\SAMP-EDGEngine\World\Streamer\GlobalObjectWrapper.hpp" />
@@ -278,7 +277,6 @@
     <ClCompile Include="src\SAMP-EDGEngine\World\Map.cpp" />
     <ClCompile Include="src\SAMP-EDGEngine\World\Scene.cpp" />
     <ClCompile Include="src\SAMP-EDGEngine\World\GlobalObject.cpp" />
-    <ClCompile Include="src\SAMP-EDGEngine\World\SceneLoader.cpp" />
     <ClCompile Include="src\SAMP-EDGEngine\World\Streamer\Chunk.cpp" />
     <ClCompile Include="src\SAMP-EDGEngine\World\PersonalObject.cpp" />
     <ClCompile Include="src\SAMP-EDGEngine\World\UniversalObject.cpp" />

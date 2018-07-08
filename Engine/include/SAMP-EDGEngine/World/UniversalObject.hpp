@@ -79,7 +79,16 @@ public:
 	/// The object rotation for specified player.
 	/// </returns>
 	virtual math::Vector3f getRotationFor(Player const & player_) const override;
-
+	
+	/// <summary>
+	/// Returns object type.
+	/// </summary>
+	/// <returns>
+	///		Type of the object.
+	/// </returns>
+	virtual Type getType() const override {
+		return Type::Universal;
+	}
 protected:
 	/// <summary>
 	/// Applies the text.

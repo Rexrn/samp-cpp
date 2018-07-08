@@ -3,12 +3,17 @@
   <ImportGroup Label="PropertySheets" />
   <PropertyGroup Label="UserMacros">
     <QuickMaffsDirectory>D:\Inne\Repos\quickmaffs\quickmaffs\</QuickMaffsDirectory>
+    <RapidXMLDirectory>D:\Inne\Biblioteki\rapidxml-1.13</RapidXMLDirectory>
   </PropertyGroup>
   <PropertyGroup />
   <ItemDefinitionGroup />
   <ItemGroup>
     <BuildMacro Include="QuickMaffsDirectory">
       <Value>$(QuickMaffsDirectory)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+    <BuildMacro Include="RapidXMLDirectory">
+      <Value>$(RapidXMLDirectory)</Value>
       <EnvironmentVariable>true</EnvironmentVariable>
     </BuildMacro>
   </ItemGroup>

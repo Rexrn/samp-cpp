@@ -29,7 +29,6 @@
 #include <SAMP-EDGEngine/World/Scene.hpp>
 #include <SAMP-EDGEngine/World/Vehicle.hpp>
 #include <SAMP-EDGEngine/World/Map.hpp>
-#include <SAMP-EDGEngine/World/SceneLoader.hpp>
 #include <SAMP-EDGEngine/World/GangZone.hpp>
 
 // --> World/MapObject/:

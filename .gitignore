@@ -52,7 +52,13 @@
 /Examples/TestGM/output
 /Examples/TestGM/intermediate
 
-/Extensions/InputConverter/.vs
-/Extensions/InputConverter/output
-/Extensions/InputConverter/intermediate
+/Extensions/ResourceIO/.vs
+/Extensions/ResourceIO/output
+/Extensions/ResourceIO/intermediate
+
+/Extensions/ResourceConverter/.vs
+/Extensions/ResourceConverter/output
+/Extensions/ResourceConverter/intermediate
+
+
 

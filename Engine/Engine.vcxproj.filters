@@ -285,9 +285,6 @@
     <ClInclude Include="include\SAMP-EDGEngine\World\Scene.hpp">
       <Filter>Header Files\World</Filter>
     </ClInclude>
-    <ClInclude Include="include\SAMP-EDGEngine\World\SceneLoader.hpp">
-      <Filter>Header Files\World</Filter>
-    </ClInclude>
     <ClInclude Include="include\SAMP-EDGEngine\World\UniversalObject.hpp">
       <Filter>Header Files\World\MapObject</Filter>
     </ClInclude>
@@ -402,9 +399,6 @@
       <Filter>Source Files\World\MapObject</Filter>
     </ClCompile>
     <ClCompile Include="src\SAMP-EDGEngine\World\Scene.cpp">
-      <Filter>Source Files\World</Filter>
-    </ClCompile>
-    <ClCompile Include="src\SAMP-EDGEngine\World\SceneLoader.cpp">
       <Filter>Source Files\World</Filter>
     </ClCompile>
     <ClCompile Include="src\SAMP-EDGEngine\World\UniversalObject.cpp">

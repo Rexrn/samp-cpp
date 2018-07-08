@@ -49,13 +49,6 @@ public:
 	/// <param name="other_">The other scene.</param>
 	/// <returns>Reference to self.</returns>
 	Scene& operator=(Scene&& other_) = default;
-	
-	/// <summary>
-	/// Loads scene from stream.
-	/// </summary>
-	/// <param name="stream_">The stream.</param>
-	/// <param name="loader_">The loader.</param>
-	void loadFromStream(std::istream & stream_, ISceneLoader const & loader_);
 
 	/// <summary>
 	/// Constructs specified object on the scene.

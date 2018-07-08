@@ -79,10 +79,10 @@ protected:
 public:
 	PlayerPool					Players;
 	MapClass					Map;
-	CommandManager				commands;
+	CommandManager				Commands;
 
-	UniquePtr<IStreamer>	Streamer;
-	UniquePtr<IChat>		chat;
+	UniquePtr<IStreamer>		Streamer;
+	UniquePtr<IChat>			Chat;
 };
 
 }

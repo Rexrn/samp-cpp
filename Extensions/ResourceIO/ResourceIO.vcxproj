@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>15.0</VCProjectVersion>
+    <ProjectGuid>{72E297D6-3282-48D1-8C97-960E156858E1}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>ResourceIO</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\..\Configuration\Dependencies.props" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\..\Configuration\Dependencies.props" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\..\Configuration\Dependencies.props" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\..\Configuration\Dependencies.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+    <OutDir>$(ProjectDir)output\$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(ProjectDir)intermediate\$(Platform)\$(Configuration)\</IntDir>
+    <TargetName>ResourceIO</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
+    <OutDir>$(ProjectDir)output\$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(ProjectDir)intermediate\$(Platform)\$(Configuration)\</IntDir>
+    <TargetName>ResourceIO</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(ProjectDir)output\$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(ProjectDir)intermediate\$(Platform)\$(Configuration)\</IntDir>
+    <TargetName>ResourceIO</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(ProjectDir)output\$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(ProjectDir)intermediate\$(Platform)\$(Configuration)\</IntDir>
+    <TargetName>ResourceIO</TargetName>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>SAMP_EDGENGINE_EXT_RESOURCEIO_PCH="SAMP-EDGEngine-Ext/ResourceIO/../../../ResourceIOPCH.hpp";WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <PrecompiledHeaderFile>ResourceIOPCH.hpp</PrecompiledHeaderFile>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)include;$(SolutionDir)Engine/include;$(QuickMaffsDirectory)include;$(RapidXMLDirectory)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>SAMP_EDGENGINE_EXT_RESOURCEIO_PCH="SAMP-EDGEngine-Ext/ResourceIO/../../../ResourceIOPCH.hpp";_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <PrecompiledHeaderFile>ResourceIOPCH.hpp</PrecompiledHeaderFile>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)include;$(SolutionDir)Engine/include;$(QuickMaffsDirectory)include;$(RapidXMLDirectory)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>SAMP_EDGENGINE_EXT_RESOURCEIO_PCH="SAMP-EDGEngine-Ext/ResourceIO/../../../ResourceIOPCH.hpp";WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <PrecompiledHeaderFile>ResourceIOPCH.hpp</PrecompiledHeaderFile>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)include;$(SolutionDir)Engine/include;$(QuickMaffsDirectory)include;$(RapidXMLDirectory)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>SAMP_EDGENGINE_EXT_RESOURCEIO_PCH="SAMP-EDGEngine-Ext/ResourceIO/../../../ResourceIOPCH.hpp";NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <PrecompiledHeaderFile>ResourceIOPCH.hpp</PrecompiledHeaderFile>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)include;$(SolutionDir)Engine/include;$(QuickMaffsDirectory)include;$(RapidXMLDirectory)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="include\SAMP-EDGEngine-Ext\ResourceIO\Dependencies\RapidXML.hpp" />
+    <ClInclude Include="include\SAMP-EDGEngine-Ext\ResourceIO\Deserializer.hpp" />
+    <ClInclude Include="include\SAMP-EDGEngine-Ext\ResourceIO\Everything.hpp" />
+    <ClInclude Include="include\SAMP-EDGEngine-Ext\ResourceIO\PAWNDeserializer.hpp" />
+    <ClInclude Include="include\SAMP-EDGEngine-Ext\ResourceIO\PAWNSceneDeserializer.hpp" />
+    <ClInclude Include="include\SAMP-EDGEngine-Ext\ResourceIO\RemovedBuildingDeserializer.hpp" />
+    <ClInclude Include="include\SAMP-EDGEngine-Ext\ResourceIO\RemovedBuildingSerializer.hpp" />
+    <ClInclude Include="include\SAMP-EDGEngine-Ext\ResourceIO\SceneDeserializer.hpp" />
+    <ClInclude Include="include\SAMP-EDGEngine-Ext\ResourceIO\XMLDeserializer.hpp" />
+    <ClInclude Include="include\SAMP-EDGEngine-Ext\ResourceIO\XMLRemovedBuildingDeserializer.hpp" />
+    <ClInclude Include="include\SAMP-EDGEngine-Ext\ResourceIO\XMLRemovedBuildingSerializer.hpp" />
+    <ClInclude Include="include\SAMP-EDGEngine-Ext\ResourceIO\XMLSceneDeserializer.hpp" />
+    <ClInclude Include="include\SAMP-EDGEngine-Ext\ResourceIO\XMLSerializer.hpp" />
+    <ClInclude Include="include\SAMP-EDGEngine-Ext\ResourceIO\MapObjectDeserializer.hpp" />
+    <ClInclude Include="include\SAMP-EDGEngine-Ext\ResourceIO\MapObjectMaterialDeserializer.hpp" />
+    <ClInclude Include="include\SAMP-EDGEngine-Ext\ResourceIO\MapObjectMaterialSerializer.hpp" />
+    <ClInclude Include="include\SAMP-EDGEngine-Ext\ResourceIO\MapObjectSerializer.hpp" />
+    <ClInclude Include="include\SAMP-EDGEngine-Ext\ResourceIO\Serializer.hpp" />
+    <ClInclude Include="include\SAMP-EDGEngine-Ext\ResourceIO\XMLGlobalObjectDeserializer.hpp" />
+    <ClInclude Include="include\SAMP-EDGEngine-Ext\ResourceIO\XMLGlobalObjectSerializer.hpp" />
+    <ClInclude Include="include\SAMP-EDGEngine-Ext\ResourceIO\XMLHelperFunctions.hpp" />
+    <ClInclude Include="include\SAMP-EDGEngine-Ext\ResourceIO\XMLMapObjectDeserializer.hpp" />
+    <ClInclude Include="include\SAMP-EDGEngine-Ext\ResourceIO\XMLMapObjectMaterialDeserializer.hpp" />
+    <ClInclude Include="include\SAMP-EDGEngine-Ext\ResourceIO\XMLMapObjectMaterialSerializer.hpp" />
+    <ClInclude Include="include\SAMP-EDGEngine-Ext\ResourceIO\XMLNames.hpp" />
+    <ClInclude Include="include\SAMP-EDGEngine-Ext\ResourceIO\XMLPerPlayerObjectDeserializer.hpp" />
+    <ClInclude Include="include\SAMP-EDGEngine-Ext\ResourceIO\XMLPerPlayerObjectSerializer.hpp" />
+    <ClInclude Include="include\SAMP-EDGEngine-Ext\ResourceIO\XMLMapObjectSerializer.hpp" />
+    <ClInclude Include="include\SAMP-EDGEngine-Ext\ResourceIO\XMLTextMaterialDeserializer.hpp" />
+    <ClInclude Include="include\SAMP-EDGEngine-Ext\ResourceIO\XMLTextMaterialSerializer.hpp" />
+    <ClInclude Include="include\SAMP-EDGEngine-Ext\ResourceIO\XMLTextureMaterialDeserializer.hpp" />
+    <ClInclude Include="include\SAMP-EDGEngine-Ext\ResourceIO\XMLTextureMaterialSerializer.hpp" />
+    <ClInclude Include="ResourceIOPCH.hpp" />
+    <ClInclude Include="include\SAMP-EDGEngine-Ext\ResourceIO\SceneSerializer.hpp" />
+    <ClInclude Include="include\SAMP-EDGEngine-Ext\ResourceIO\XMLSceneSerializer.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="ResourceIOPCH.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="src\SAMP-EDGEngine-Ext\ResourceIO\PAWNSceneDeserializer.cpp" />
+    <ClCompile Include="src\SAMP-EDGEngine-Ext\ResourceIO\XMLGlobalObjectDeserializer.cpp" />
+    <ClCompile Include="src\SAMP-EDGEngine-Ext\ResourceIO\XMLGlobalObjectSerializer.cpp" />
+    <ClCompile Include="src\SAMP-EDGEngine-Ext\ResourceIO\XMLHelperFunctions.cpp" />
+    <ClCompile Include="src\SAMP-EDGEngine-Ext\ResourceIO\XMLMapObjectDeserializer.cpp" />
+    <ClCompile Include="src\SAMP-EDGEngine-Ext\ResourceIO\XMLMapObjectMaterialDeserializer.cpp" />
+    <ClCompile Include="src\SAMP-EDGEngine-Ext\ResourceIO\XMLMapObjectSerializer.cpp" />
+    <ClCompile Include="src\SAMP-EDGEngine-Ext\ResourceIO\XMLPerPlayerObjectDeserializer.cpp" />
+    <ClCompile Include="src\SAMP-EDGEngine-Ext\ResourceIO\XMLPerPlayerObjectSerializer.cpp" />
+    <ClCompile Include="src\SAMP-EDGEngine-Ext\ResourceIO\XMLRemovedBuildingDeserializer.cpp" />
+    <ClCompile Include="src\SAMP-EDGEngine-Ext\ResourceIO\XMLRemovedBuildingSerializer.cpp" />
+    <ClCompile Include="src\SAMP-EDGEngine-Ext\ResourceIO\XMLSceneDeserializer.cpp" />
+    <ClCompile Include="src\SAMP-EDGEngine-Ext\ResourceIO\XMLSceneSerializer.cpp" />
+    <ClCompile Include="src\SAMP-EDGEngine-Ext\ResourceIO\XMLTextMaterialDeserializer.cpp" />
+    <ClCompile Include="src\SAMP-EDGEngine-Ext\ResourceIO\XMLTextMaterialSerializer.cpp" />
+    <ClCompile Include="src\SAMP-EDGEngine-Ext\ResourceIO\XMLTextureMaterialDeserializer.cpp" />
+    <ClCompile Include="src\SAMP-EDGEngine-Ext\ResourceIO\XMLTextureMaterialSerializer.cpp" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

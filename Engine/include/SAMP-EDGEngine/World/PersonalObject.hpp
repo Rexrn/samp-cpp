@@ -77,6 +77,16 @@ public:
 	///   <c>true</c> if this instance is spawned; otherwise, <c>false</c>.
 	/// </returns>
 	bool isSpawned() const;
+
+	/// <summary>
+	/// Returns object type.
+	/// </summary>
+	/// <returns>
+	///		Type of the object.
+	/// </returns>
+	virtual Type getType() const override {
+		return Type::Personal;
+	}
 private:
 
 	/// <summary>
