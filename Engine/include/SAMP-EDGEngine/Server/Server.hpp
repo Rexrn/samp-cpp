@@ -38,7 +38,8 @@ class IGameMode;
 class ServerClass final
 {
 public:
-		
+	constexpr static chrono::milliseconds CheckpointUpdateInterval{ 50 };
+	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="ServerClass"/> class.
 	/// </summary>
@@ -130,9 +131,6 @@ private:
 		bool onPlayerSelectObject(Int32 playerIndex_, Int32 objectHandle_, Int32 modelIndex_, math::Vector3f location_);
 		bool onPlayerSelectPlayerObject(Int32 playerIndex_, Int32 objectHandle_, Int32 modelIndex_, math::Vector3f location_);
 		bool onPlayerWeaponShot(Int32 playerIndex_, Weapon::Type weapon_, Weapon::HitResult hitResult_);
-
-		bool _impl_OnPlayerEnterRaceCheckpoint(Int32 playerIndex_);
-		bool _impl_OnPlayerLeaveRaceCheckpoint(Int32 playerIndex_);
 	};
 
 	struct EventListType
@@ -188,7 +186,15 @@ public:
 	SampEventListType					SampEvents;
 	EventListType						Events;
 private:
-	Clock::TimePoint					m_lastUpdate; /// Stores last server update call (used to determine deltaTime).
+	
+	/// <summary>
+	/// Updates the player-checkpoint intersection,
+	/// </summary>
+	/// <param name="frameTime_">The frame time.</param>
+	void updateCheckpoints();
+
+	Clock::TimePoint					m_nextCheckpointUpdate;
+	Clock::TimePoint					m_nextUpdate; /// Stores last server update call (used to determine deltaTime).
 };
 
 } // namespace agdk

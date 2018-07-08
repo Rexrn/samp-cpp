@@ -16,16 +16,6 @@ PlayerWrapper::PlayerWrapper(Player & player_)
 }
 
 /////////////////////////////////////////////////////////////
-void PlayerWrapper::setPlayer(Player & player_)
-{
-	if (m_player)
-		m_player->setPlacementTracker(nullptr);
-
-	m_player = &player_;
-	m_player->setPlacementTracker(this);
-}
-
-/////////////////////////////////////////////////////////////
 void PlayerWrapper::whenPlacementChanges(ActorPlacement const& prevPlacement_, ActorPlacement const& newPlacement_)
 {
 	GameMode->Streamer->whenPlayerPlacementChanges(*m_player, prevPlacement_, newPlacement_);

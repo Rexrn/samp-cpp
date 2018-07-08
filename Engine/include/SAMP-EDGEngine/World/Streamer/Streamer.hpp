@@ -65,6 +65,18 @@ public:
 	virtual void whenObjectJoinsMap(UniversalObject& universalObject_) override;
 	
 	/// <summary>
+	/// Event reaction designed to be called when checkpoint joins map.
+	/// </summary>
+	/// <param name="checkpoint_">The checkpoint.</param>
+	virtual void whenCheckpointJoinsMap(Checkpoint& checkpoint_) override;
+	
+	/// <summary>
+	/// Event reaction designed to be called when race checkpoint joins map.
+	/// </summary>
+	/// <param name="raceCheckpoint_">The race checkpoint.</param>
+	virtual void whenCheckpointJoinsMap(RaceCheckpoint& raceCheckpoint_) override;
+
+	/// <summary>
 	/// Event reaction designed to be called when player leaves the server.
 	/// </summary>
 	/// <param name="player_">The player.</param>
@@ -99,6 +111,18 @@ public:
 	/// </summary>
 	/// <param name="universalObject_">The universal object.</param>
 	virtual void whenObjectLeavesMap(UniversalObject& universalObject_) override;
+	
+	/// <summary>
+	/// Event reaction designed to be called when checkpoint leaves map.
+	/// </summary>
+	/// <param name="checkpoint_">The checkpoint.</param>
+	virtual void whenCheckpointLeavesMap(Checkpoint& checkpoint_) override;
+	
+	/// <summary>
+	/// Event reaction designed to be called when race checkpoint leaves map.
+	/// </summary>
+	/// <param name="raceCheckpoint_">The race checkpoint.</param>
+	virtual void whenRaceCheckpointLeavesMap(RaceCheckpoint& raceCheckpoint_) override;
 
 
 
@@ -108,7 +132,7 @@ public:
 	/// <param name="player_">The player.</param>
 	/// <param name="previousPlacement_">The previous placement.</param>
 	/// <param name="currentPlacement_">The current placement.</param>
-	virtual void whenPlayerPlacementChanges(Player const& player_, PlayerPlacement const& previousPlacement_, PlayerPlacement const& currentPlacement_) override;
+	virtual void whenPlayerPlacementChanges(Player & player_, PlayerPlacement const& previousPlacement_, PlayerPlacement const& currentPlacement_) override;
 	
 	/// <summary>
 	/// Event reaction designed to be called when the vehicle changes location significantly.
@@ -116,7 +140,7 @@ public:
 	/// <param name="vehicle_">The vehicle.</param>
 	/// <param name="previousPlacement_">The previous placement.</param>
 	/// <param name="currentPlacement_">The current placement.</param>
-	virtual void whenVehiclePlacementChanges(Vehicle const& vehicle_, ActorPlacement const& previousPlacement_, ActorPlacement const& currentPlacement_) override;
+	virtual void whenVehiclePlacementChanges(Vehicle & vehicle_, ActorPlacement const& previousPlacement_, ActorPlacement const& currentPlacement_) override;
 		
 	/// <summary>
 	/// Event reaction designed to be called when the static vehicle changes location significantly.
@@ -124,7 +148,7 @@ public:
 	/// <param name="staticVehicle_">The static vehicle_.</param>
 	/// <param name="previousPlacement_">The previous placement.</param>
 	/// <param name="currentPlacement_">The current placement.</param>
-	void whenStaticVehiclePlacementChanges(StaticVehicle const& staticVehicle_, ActorPlacement const& previousPlacement_, ActorPlacement const& currentPlacement_) override;
+	void whenStaticVehiclePlacementChanges(StaticVehicle & staticVehicle_, ActorPlacement const& previousPlacement_, ActorPlacement const& currentPlacement_) override;
 
 	/// <summary>
 	/// Event reaction designed to be called when the global object changes location significantly.
@@ -132,7 +156,7 @@ public:
 	/// <param name="globalObject_">The global object.</param>
 	/// <param name="previousPlacement_">The previous placement.</param>
 	/// <param name="currentPlacement_">The current placement.</param>
-	void whenObjectPlacementChanges(GlobalObject const& globalObject_, GlobalObjectPlacement const& previousPlacement_, GlobalObjectPlacement const& currentPlacement_) override;
+	void whenObjectPlacementChanges(GlobalObject & globalObject_, GlobalObjectPlacement const& previousPlacement_, GlobalObjectPlacement const& currentPlacement_) override;
 	
 	/// <summary>
 	/// Event reaction designed to be called when the universal object changes location significantly.
@@ -140,7 +164,7 @@ public:
 	/// <param name="universalObject_">The universal object.</param>
 	/// <param name="previousPlacement_">The previous placement.</param>
 	/// <param name="currentPlacement_">The current placement.</param>
-	void whenObjectPlacementChanges(UniversalObject const& universalObject_, ActorPlacement const& previousPlacement_, ActorPlacement const& currentPlacement_) override;
+	void whenObjectPlacementChanges(UniversalObject & universalObject_, ActorPlacement const& previousPlacement_, ActorPlacement const& currentPlacement_) override;
 	
 	/// <summary>
 	/// Event reaction designed to be called when the personal object changes location significantly.
@@ -148,7 +172,7 @@ public:
 	/// <param name="personalObject_">The personal object.</param>
 	/// <param name="previousPlacement_">The previous placement.</param>
 	/// <param name="currentPlacement_">The current placement.</param>
-	void whenObjectPlacementChanges(PersonalObject const& personalObject_, ActorPlacement const& previousPlacement_, ActorPlacement const& currentPlacement_) override;
+	void whenObjectPlacementChanges(PersonalObject & personalObject_, ActorPlacement const& previousPlacement_, ActorPlacement const& currentPlacement_) override;
 
 
 	/// <summary>
@@ -188,6 +212,18 @@ private:
 	/// </summary>
 	/// <param name="location_">The location.</param>
 	void checkIfUnusedAndRemove(math::Vector3f const & location_);
+	
+	/// <summary>
+	/// Streams the nearest checkpoint for player.
+	/// </summary>
+	/// <param name="player_">The player.</param>
+	void streamNearestCheckpointForPlayer(Player &player_);
+
+	/// <summary>
+	/// Streams the nearest race checkpoint for player.
+	/// </summary>
+	/// <param name="player_">The player.</param>
+	void streamNearestRaceCheckpointForPlayer(Player &player_);
 
 	/// <summary>
 	/// Returns reference to player wrapper.
@@ -239,7 +275,8 @@ private:
 	/// </remarks>
 	static UniversalObjectWrapper& getWrapper(UniversalObject const & universalObject_);
 
-	Clock::TimePoint	m_nextUpdate;
+	Clock::TimePoint	m_nextUpdate,
+						m_nextCheckpointRestream;
 
 	GridType			m_worldGrid;	// Stores chunks in certain area (typically huge cube with center on {0, 0, 0}) as divisible grid. Searching through it is really fast.
 	Chunk				m_entireWorld;	// Contains every actor that does not fit outside m_worldGrid. Searching through this chunks is a lot slower since it is not divided into smaller ones.

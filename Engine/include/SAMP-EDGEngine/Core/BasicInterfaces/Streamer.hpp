@@ -51,7 +51,21 @@ public:
 	/// <param name="universalObject_">The universal object.</param>
 	virtual void whenObjectJoinsMap(UniversalObject & universalObject_) = 0;
 
-	
+	/// <summary>
+	/// Event reaction designed to be called when checkpoint joins map.
+	/// </summary>
+	/// <param name="checkpoint_">The checkpoint.</param>
+	virtual void whenCheckpointJoinsMap(Checkpoint & checkpoint_) = 0;
+
+	/// <summary>
+	/// Event reaction designed to be called when race checkpoint joins map.
+	/// </summary>
+	/// <param name="raceCheckpoint_">The race checkpoint.</param>
+	virtual void whenCheckpointJoinsMap(RaceCheckpoint & raceCheckpoint_) = 0;
+
+
+
+
 	/// <summary>
 	/// Event reaction designed to be called when player leaves the server.
 	/// </summary>
@@ -88,6 +102,19 @@ public:
 	/// <param name="universalObject_">The universal object.</param>
 	virtual void whenObjectLeavesMap(UniversalObject & universalObject_) = 0;
 
+	/// <summary>
+	/// Event reaction designed to be called when checkpoint leaves map.
+	/// </summary>
+	/// <param name="checkpoint_">The checkpoint.</param>
+	virtual void whenCheckpointLeavesMap(Checkpoint & checkpoint_) = 0;
+
+	/// <summary>
+	/// Event reaction designed to be called when race checkpoint leaves map.
+	/// </summary>
+	/// <param name="raceCheckpoint_">The race checkpoint.</param>
+	virtual void whenRaceCheckpointLeavesMap(RaceCheckpoint & raceCheckpoint_) = 0;
+
+
 
 
 	/// <summary>
@@ -96,7 +123,7 @@ public:
 	/// <param name="player_">The player.</param>
 	/// <param name="previousPlacement_">The previous placement.</param>
 	/// <param name="currentPlacement_">The current placement.</param>
-	virtual void whenPlayerPlacementChanges(Player const& player_, PlayerPlacement const& previousPlacement_, PlayerPlacement const& currentPlacement_) = 0;
+	virtual void whenPlayerPlacementChanges(Player & player_, PlayerPlacement const& previousPlacement_, PlayerPlacement const& currentPlacement_) = 0;
 
 	/// <summary>
 	/// Event reaction designed to be called when the vehicle changes location significantly.
@@ -104,7 +131,7 @@ public:
 	/// <param name="vehicle_">The vehicle_.</param>
 	/// <param name="previousPlacement_">The previous placement.</param>
 	/// <param name="currentPlacement_">The current placement.</param>
-	virtual void whenVehiclePlacementChanges(Vehicle const& vehicle_, ActorPlacement const& previousPlacement_, ActorPlacement const& currentPlacement_) = 0;
+	virtual void whenVehiclePlacementChanges(Vehicle & vehicle_, ActorPlacement const& previousPlacement_, ActorPlacement const& currentPlacement_) = 0;
 
 	/// <summary>
 	/// Event reaction designed to be called when the static vehicle changes location significantly.
@@ -112,7 +139,7 @@ public:
 	/// <param name="staticVehicle_">The static vehicle_.</param>
 	/// <param name="previousPlacement_">The previous placement.</param>
 	/// <param name="currentPlacement_">The current placement.</param>
-	virtual void whenStaticVehiclePlacementChanges(StaticVehicle const& staticVehicle_, ActorPlacement const& previousPlacement_, ActorPlacement const& currentPlacement_) = 0;
+	virtual void whenStaticVehiclePlacementChanges(StaticVehicle & staticVehicle_, ActorPlacement const& previousPlacement_, ActorPlacement const& currentPlacement_) = 0;
 
 	/// <summary>
 	/// Event reaction designed to be called when the global object changes location significantly.
@@ -120,7 +147,7 @@ public:
 	/// <param name="globalObject_">The global object.</param>
 	/// <param name="previousPlacement_">The previous placement.</param>
 	/// <param name="currentPlacement_">The current placement.</param>
-	virtual void whenObjectPlacementChanges(GlobalObject const& globalObject_, GlobalObjectPlacement const& previousPlacement_, GlobalObjectPlacement const& currentPlacement_) = 0;
+	virtual void whenObjectPlacementChanges(GlobalObject & globalObject_, GlobalObjectPlacement const& previousPlacement_, GlobalObjectPlacement const& currentPlacement_) = 0;
 
 	/// <summary>
 	/// Event reaction designed to be called when the universal object changes location significantly.
@@ -128,7 +155,7 @@ public:
 	/// <param name="universalObject_">The universal object.</param>
 	/// <param name="previousPlacement_">The previous placement.</param>
 	/// <param name="currentPlacement_">The current placement.</param>
-	virtual void whenObjectPlacementChanges(UniversalObject const& universalObject_, ActorPlacement const& previousPlacement_, ActorPlacement const& currentPlacement_) = 0;
+	virtual void whenObjectPlacementChanges(UniversalObject & universalObject_, ActorPlacement const& previousPlacement_, ActorPlacement const& currentPlacement_) = 0;
 
 	/// <summary>
 	/// Event reaction designed to be called when the personal object changes location significantly.
@@ -136,7 +163,7 @@ public:
 	/// <param name="personalObject_">The personal object.</param>
 	/// <param name="previousPlacement_">The previous placement.</param>
 	/// <param name="currentPlacement_">The current placement.</param>
-	virtual void whenObjectPlacementChanges(PersonalObject const& personalObject_, ActorPlacement const& previousPlacement_, ActorPlacement const& currentPlacement_) = 0;
+	virtual void whenObjectPlacementChanges(PersonalObject & personalObject_, ActorPlacement const& previousPlacement_, ActorPlacement const& currentPlacement_) = 0;
 };
 
 }

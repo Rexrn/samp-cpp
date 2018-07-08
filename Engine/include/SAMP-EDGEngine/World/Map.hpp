@@ -5,10 +5,13 @@
 #include <SAMP-EDGEngine/World/Vehicle.hpp>
 #include <SAMP-EDGEngine/World/Scene.hpp>
 #include <SAMP-EDGEngine/World/RemovedBuilding.hpp>
+#include <SAMP-EDGEngine/World/GangZone.hpp>
+#include <SAMP-EDGEngine/World/Checkpoint.hpp>
+#include <SAMP-EDGEngine/World/RaceCheckpoint.hpp>
 
 #include <SAMP-EDGEngine/Core/Pointers.hpp>
 #include <SAMP-EDGEngine/Core/Events.hpp>
-#include <SAMP-EDGEngine/World/GangZone.hpp>
+
 
 namespace samp_edgengine
 {
@@ -65,7 +68,7 @@ public:
 	/// </summary>
 	/// <param name="vehicle_">The vehicle.</param>
 	/// <returns>Reference to created static vehicle.</returns>
-	Vehicle& finalizeConstruction(ActorPtrType< StaticVehicle > const& staticVehicle_);
+	StaticVehicle& finalizeConstruction(ActorPtrType< StaticVehicle > const& staticVehicle_);
 
 	/// <summary>
 	/// Finalizes the scene construction - adds it to the pool.
@@ -80,7 +83,21 @@ public:
 	/// <param name="gangZone_">The gang zone.</param>
 	/// <returns>Reference to created gang zone.</returns>
 	GangZone& finalizeConstruction(ActorPtrType< GangZone > const& gangZone_);
-	
+
+	/// <summary>
+	/// Finalizes the checkpoint construction - adds it to the pool.
+	/// </summary>
+	/// <param name="checkpoint_">The checkpoint.</param>
+	/// <returns>Reference to created checkpoint.</returns>
+	Checkpoint& finalizeConstruction(ActorPtrType< Checkpoint > const& checkpoint_);
+
+	/// <summary>
+	/// Finalizes the race checkpoint construction - adds it to the pool.
+	/// </summary>
+	/// <param name="raceCheckpoint_">The race checkpoint.</param>
+	/// <returns>Reference to created race checkpoint.</returns>
+	RaceCheckpoint& finalizeConstruction(ActorPtrType< RaceCheckpoint > const& raceCheckpoint_);
+
 	/// <summary>
 	/// Removes the specified gang zone.
 	/// </summary>
@@ -89,6 +106,24 @@ public:
 	///		<c>true</c> if gang zone existed and was removed; otherwise, <c>false</c>.
 	/// </returns>
 	bool remove(GangZone const & gangZone_);
+	
+	/// <summary>
+	/// Removes the specified checkpoint.
+	/// </summary>
+	/// <param name="checkpoint_">The checkpoint.</param>
+	/// <returns>
+	///		<c>true</c> if checkpoint existed and was removed; otherwise, <c>false</c>.
+	/// </returns>
+	bool remove(Checkpoint const &checkpoint_);
+	
+	/// <summary>
+	/// Removes the specified race checkpoint.
+	/// </summary>
+	/// <param name="raceCheckpoint_">The race checkpoint.</param>
+	/// <returns>
+	///		<c>true</c> if race checkpoint existed and was removed; otherwise, <c>false</c>.
+	/// </returns>
+	bool remove(RaceCheckpoint const &raceCheckpoint_);
 
 	/// <summary>
 	/// Finds the vehicle using SAMP handle.
@@ -148,12 +183,14 @@ private:
 	/// <param name="player_">The player.</param>
 	void applyRemovedBuildings(Player & player_);
 
-	ActorContainerType< Vehicle >		m_vehicles;
-	ActorContainerType< StaticVehicle >	m_staticVehicles;
-	ActorContainerType< Scene >			m_scenes;
-	ActorContainerType< GangZone >		m_gangZones;
+	ActorContainerType< Vehicle >			m_vehicles;
+	ActorContainerType< StaticVehicle >		m_staticVehicles;
+	ActorContainerType< Scene >				m_scenes;
+	ActorContainerType< GangZone >			m_gangZones;
+	ActorContainerType< Checkpoint >		m_checkpoints;
+	ActorContainerType< RaceCheckpoint >	m_raceCheckpoints;
 
-	std::vector< RemovedBuilding >		m_removedBuildings;
+	std::vector< RemovedBuilding >			m_removedBuildings;
 };
 
 }

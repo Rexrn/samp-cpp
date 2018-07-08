@@ -14,6 +14,8 @@
 #include <SAMP-EDGEngine/Server/GameMode.hpp>
 #include <SAMP-EDGEngine/World/Streamer/PersonalObjectWrapper.hpp>
 #include <SAMP-EDGEngine/World/Streamer/UniversalObjectWrapper.hpp>
+#include <SAMP-EDGEngine/World/Streamer/CheckpointWrapper.hpp>
+#include <SAMP-EDGEngine/World/Streamer/RaceCheckpointWrapper.hpp>
 
 namespace samp_edgengine::default_streamer
 {
@@ -66,6 +68,20 @@ void Streamer::whenObjectJoinsMap(UniversalObject& universalObject_)
 {
 	auto& chunk = this->selectChunk(universalObject_.getLocation());
 	chunk.intercept( std::make_unique<UniversalObjectWrapper>(universalObject_) );
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+void Streamer::whenCheckpointJoinsMap(Checkpoint& checkpoint_)
+{
+	auto& chunk = this->selectChunk(checkpoint_.getLocation());
+	chunk.intercept(std::make_unique<CheckpointWrapper>(checkpoint_));
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+void Streamer::whenCheckpointJoinsMap(RaceCheckpoint& raceCheckpoint_)
+{
+	auto& chunk = this->selectChunk(raceCheckpoint_.getLocation());
+	chunk.intercept(std::make_unique<RaceCheckpointWrapper>(raceCheckpoint_));
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -171,7 +187,17 @@ void Streamer::whenObjectLeavesMap(UniversalObject& universalObject_)
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////
-void Streamer::whenPlayerPlacementChanges(Player const& player_, PlayerPlacement const& previousPlacement_, PlayerPlacement const& currentPlacement_)
+void Streamer::whenCheckpointLeavesMap(Checkpoint& checkpoint_)
+{
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+void Streamer::whenRaceCheckpointLeavesMap(RaceCheckpoint& raceCheckpoint_)
+{
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+void Streamer::whenPlayerPlacementChanges(Player & player_, PlayerPlacement const& previousPlacement_, PlayerPlacement const& currentPlacement_)
 {
 	auto affectedChunksPrev = this->getChunksInRadiusFrom(previousPlacement_.location, StreamerSettings.VisibilityDistance);
 	auto affectedChunksCurr = this->getChunksInRadiusFrom(currentPlacement_.location, StreamerSettings.VisibilityDistance);
@@ -271,10 +297,18 @@ void Streamer::whenPlayerPlacementChanges(Player const& player_, PlayerPlacement
 
 		playerWrapper.spawnedObjects = std::move(objectsInChunks);
 	}
+
+	// Recalculate checkpoints
+	{
+		if (player_.hasStreamedCheckpoints())
+			this->streamNearestCheckpointForPlayer(player_);
+		if (player_.hasStreamedRaceCheckpoints())
+			this->streamNearestRaceCheckpointForPlayer(player_);
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////
-void Streamer::whenVehiclePlacementChanges(Vehicle const& vehicle_, ActorPlacement const& previousPlacement_, ActorPlacement const& currentPlacement_)
+void Streamer::whenVehiclePlacementChanges(Vehicle & vehicle_, ActorPlacement const& previousPlacement_, ActorPlacement const& currentPlacement_)
 {
 	auto chunksAround = this->getChunksInRadiusFrom(currentPlacement_.location, StreamerSettings.VisibilityDistance);
 
@@ -306,14 +340,14 @@ void Streamer::whenVehiclePlacementChanges(Vehicle const& vehicle_, ActorPlaceme
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////
-void Streamer::whenStaticVehiclePlacementChanges(StaticVehicle const& staticVehicle_, ActorPlacement const& previousPlacement_, ActorPlacement const& currentPlacement_)
+void Streamer::whenStaticVehiclePlacementChanges(StaticVehicle & staticVehicle_, ActorPlacement const& previousPlacement_, ActorPlacement const& currentPlacement_)
 {
 	// Note: this might change in the future.
 	this->whenVehiclePlacementChanges(staticVehicle_, previousPlacement_, currentPlacement_);
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////
-void Streamer::whenObjectPlacementChanges(GlobalObject const& globalObject_, GlobalObjectPlacement const& previousPlacement_, GlobalObjectPlacement const& currentPlacement_)
+void Streamer::whenObjectPlacementChanges(GlobalObject & globalObject_, GlobalObjectPlacement const& previousPlacement_, GlobalObjectPlacement const& currentPlacement_)
 {
 	auto chunksAround = this->getChunksInRadiusFrom(currentPlacement_.location, StreamerSettings.VisibilityDistance);
 
@@ -345,7 +379,7 @@ void Streamer::whenObjectPlacementChanges(GlobalObject const& globalObject_, Glo
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////
-void Streamer::whenObjectPlacementChanges(UniversalObject const& universalObject_, ActorPlacement const& previousPlacement_, ActorPlacement const& currentPlacement_)
+void Streamer::whenObjectPlacementChanges(UniversalObject & universalObject_, ActorPlacement const& previousPlacement_, ActorPlacement const& currentPlacement_)
 {
 	// Check whether we should relocate object to new chunk.
 	auto& prevChunk = this->selectChunk(previousPlacement_.location);
@@ -360,7 +394,7 @@ void Streamer::whenObjectPlacementChanges(UniversalObject const& universalObject
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////
-void Streamer::whenObjectPlacementChanges(PersonalObject const& personalObject_, ActorPlacement const& previousPlacement_, ActorPlacement const& currentPlacement_)
+void Streamer::whenObjectPlacementChanges(PersonalObject & personalObject_, ActorPlacement const& previousPlacement_, ActorPlacement const& currentPlacement_)
 {
 	// Check whether we should relocate object to new chunk.
 	auto& prevChunk = this->selectChunk(previousPlacement_.location);
@@ -439,10 +473,27 @@ void Streamer::whenServerUpdates(Clock::TimePoint frameTime_)
 	{
 		m_nextUpdate = frameTime_ + StreamerSettings.UpdateInterval;
 
+		bool shouldRestreamCheckpoints = false;
+		if (m_nextCheckpointRestream < frameTime_)
+		{
+			shouldRestreamCheckpoints = true;
+			m_nextCheckpointRestream = frameTime_ + StreamerSettings.CheckpointRestreamInterval;
+		}
+
 		for(auto player : GameMode->Players.getPool())
 		{
 			if (player) {
+
 				player->sendPlacementUpdate();
+
+				if (shouldRestreamCheckpoints)
+				{
+					if (player->hasStreamedCheckpoints())
+						this->streamNearestCheckpointForPlayer(*player);
+
+					if (player->hasStreamedRaceCheckpoints())
+						this->streamNearestRaceCheckpointForPlayer(*player);
+				}
 			}
 		}
 
@@ -479,6 +530,90 @@ void Streamer::checkIfUnusedAndRemove(math::Vector3f const& location_)
 			}
 		}
 	}
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+void Streamer::streamNearestCheckpointForPlayer(Player& player_)
+{
+	player_.removeCheckpoint();
+
+	auto chunksInRadius = this->getChunksInRadiusFrom(player_.getLocation(), StreamerSettings.VisibilityDistance);
+
+	std::vector<Checkpoint*> checkpoints;
+
+	std::size_t numCheckpoints = 0;
+	for(auto chunk : chunksInRadius)
+	{
+		numCheckpoints += chunk->getCheckpoints().size();
+	}
+
+	checkpoints.reserve(numCheckpoints);
+
+	for (auto chunk : chunksInRadius)
+	{
+		for (auto const& checkpointWrapper : chunk->getCheckpoints())
+		{
+			auto checkpoint = checkpointWrapper->getCheckpoint();
+
+			// Sort out checkpoints that are either too far or in wrong world/interior.
+			if (checkpoint->shouldBeVisibleIn(player_.getWorld(), player_.getInterior()) &&
+				checkpoint->getLocation().distanceSquared(player_.getLocation()) <= StreamerSettings.getVisibilityDistanceSquared().value)
+			{
+				checkpoints.push_back(checkpoint);
+			}
+		}
+	}
+
+	auto nearestCheckpointIt = std::min_element(checkpoints.begin(), checkpoints.end(),
+		[&player_](Checkpoint* left_, Checkpoint* right_)
+		{
+			return left_->getLocation().distanceSquared(player_.getLocation()) < right_->getLocation().distanceSquared(player_.getLocation());
+		});
+
+	if (nearestCheckpointIt != checkpoints.end())
+		player_.setCheckpoint(*(*nearestCheckpointIt));
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+void Streamer::streamNearestRaceCheckpointForPlayer(Player& player_)
+{
+	player_.removeRaceCheckpoint();
+
+	auto chunksInRadius = this->getChunksInRadiusFrom(player_.getLocation(), StreamerSettings.VisibilityDistance);
+
+	std::vector<RaceCheckpoint*> checkpoints;
+
+	std::size_t numCheckpoints = 0;
+	for(auto chunk : chunksInRadius)
+	{
+		numCheckpoints += chunk->getRaceCheckpoints().size();
+	}
+
+	checkpoints.reserve(numCheckpoints);
+
+	for (auto chunk : chunksInRadius)
+	{
+		for (auto const& checkpointWrapper : chunk->getRaceCheckpoints())
+		{
+			auto checkpoint = checkpointWrapper->getCheckpoint();
+
+			// Sort out checkpoints that are either too far or in wrong world/interior.
+			if (checkpoint->shouldBeVisibleIn(player_.getWorld(), player_.getInterior()) &&
+				checkpoint->getLocation().distanceSquared(player_.getLocation()) <= StreamerSettings.getVisibilityDistanceSquared().value)
+			{
+				checkpoints.push_back(static_cast<RaceCheckpoint*>(checkpoint));
+			}
+		}
+	}
+
+	auto nearestCheckpointIt = std::min_element(checkpoints.begin(), checkpoints.end(),
+		[&player_](RaceCheckpoint* left_, RaceCheckpoint* right_)
+		{
+			return left_->getLocation().distanceSquared(player_.getLocation()) < right_->getLocation().distanceSquared(player_.getLocation());
+		});
+
+	if (nearestCheckpointIt != checkpoints.end())
+		player_.setRaceCheckpoint(*(*nearestCheckpointIt));
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////

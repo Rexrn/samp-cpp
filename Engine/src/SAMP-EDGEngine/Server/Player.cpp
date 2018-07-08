@@ -22,7 +22,8 @@ Player::Player(IndexType const index_)
 	m_placementTracker{ nullptr },
 	m_vehicle{ nullptr },
 	m_checkpointSet{ false }, m_raceCheckpointSet{ false },
-	m_checkpointStreamingOn{ true }, m_raceCheckpointStreamingOn{ true }
+	m_checkpointStreamingOn{ true }, m_raceCheckpointStreamingOn{ true },
+	m_insideCheckpoint{ false }, m_insideRaceCheckpoint{ false }
 {
 	m_name = this->getClientName();
 }
@@ -75,19 +76,19 @@ bool Player::hasStreamedRaceCheckpoints() const
 ///////////////////////////////////////////////////////////////////////////
 void Player::setCheckpoint(Checkpoint const& checkpoint_)
 {
-	m_checkpoint = checkpoint_;
-
-	const_a loc = m_checkpoint.getLocation();
+	m_checkpoint	= checkpoint_;
+	m_checkpointSet = true;
+	const_a loc		= m_checkpoint.getLocation();
 	sampgdk_SetPlayerCheckpoint(this->getIndex(), loc.x, loc.y, loc.z, m_checkpoint.getSize());
 }
 
 ///////////////////////////////////////////////////////////////////////////
 void Player::setRaceCheckpoint(RaceCheckpoint const& raceCheckpoint_)
 {
-	m_raceCheckpoint = raceCheckpoint_;
-
-	const_a loc		= m_raceCheckpoint.getLocation();
-	const_a lookAt	= m_raceCheckpoint.getLookAt();
+	m_raceCheckpoint	= raceCheckpoint_;
+	m_raceCheckpointSet = true;
+	const_a loc			= m_raceCheckpoint.getLocation();
+	const_a lookAt		= m_raceCheckpoint.getLookAt();
 	sampgdk_SetPlayerRaceCheckpoint(this->getIndex(), static_cast<Int32>( m_raceCheckpoint.getType() ), loc.x, loc.y, loc.z, lookAt.x, lookAt.y, lookAt.z, m_raceCheckpoint.getSize());
 }
 
@@ -115,6 +116,34 @@ bool Player::hasCheckpointSet() const
 bool Player::hasRaceCheckpointSet() const
 {
 	return m_raceCheckpointSet;
+}
+
+///////////////////////////////////////////////////////////////////////////
+bool Player::intersectsWithCheckpoint() const
+{
+	if (!m_checkpointSet)
+		return false;
+
+	const_a loc						= this->getLocation();
+	const_a checkLoc				= m_checkpoint.getLocation();
+	const_a radius					= m_checkpoint.getIntersectionRadius();
+	math::Vector2f const playerXY	= { loc.x, loc.y };
+	math::Vector2f const checkXY	= { checkLoc.x, checkLoc.y };
+	return (playerXY.distanceSquared(checkXY) <= (radius * radius) && std::fabs(loc.z - checkLoc.z) <= m_checkpoint.getIntersectionHeight());
+}
+
+///////////////////////////////////////////////////////////////////////////
+bool Player::intersectsWithRaceCheckpoint() const
+{
+	if (!m_raceCheckpointSet)
+		return false;
+
+	const_a loc						= this->getLocation();
+	const_a checkLoc				= m_raceCheckpoint.getLocation();
+	const_a radius					= m_raceCheckpoint.getIntersectionRadius();
+	math::Vector2f const playerXY	= { loc.x, loc.y };
+	math::Vector2f const checkXY	= { checkLoc.x, checkLoc.y };
+	return (playerXY.distanceSquared(checkXY) <= (radius * radius) && std::fabs(loc.z - checkLoc.z) <= m_raceCheckpoint.getIntersectionHeight());
 }
 
 ///////////////////////////////////////////////////////////////////////////

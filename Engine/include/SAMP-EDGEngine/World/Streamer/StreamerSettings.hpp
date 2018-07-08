@@ -14,6 +14,7 @@ struct StreamerSettingsType
 	math::Meters				VisibilityDistance		= 400.0;			// From what distance object should pop into view?
 	math::Meters				MaxDisplacementDistance	= 10.0;				// When displacement reaches this value the change is a significant one.
 	std::chrono::milliseconds	UpdateInterval{ 60 };
+	std::chrono::milliseconds	CheckpointRestreamInterval{ 1000 };
 
 	// Methods:	
 

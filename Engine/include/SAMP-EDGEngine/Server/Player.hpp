@@ -172,6 +172,22 @@ public:
 	///   <c>true</c> if player has race checkpoint set; otherwise, <c>false</c>.
 	/// </returns>
 	bool hasRaceCheckpointSet() const;
+	
+	/// <summary>
+	/// Checks if player intersects with checkpoint.
+	/// </summary>
+	/// <returns>
+	///		<c>true</c> if player intersects with checkpoint; otherwise, <c>false</c>.
+	/// </returns>
+	bool intersectsWithCheckpoint() const;
+
+	/// <summary>
+	/// Checks if player intersects with race checkpoint.
+	/// </summary>
+	/// <returns>
+	///		<c>true</c> if player intersects with race checkpoint; otherwise, <c>false</c>.
+	/// </returns>
+	bool intersectsWithRaceCheckpoint() const;
 
 	// Personal object:
 
@@ -471,7 +487,6 @@ public:
 	/// </summary>
 	void sendPlacementUpdate(PlayerPlacement const customPlacement_);
 
-	// Vehicle pool must access `getClientVehicle` method and `setVehicle`.
 	friend class ServerClass;
 	friend class MapClass;
 	friend class IStreamer;
@@ -508,7 +523,25 @@ protected:
 	std::int32_t getClientVehicle() const;
 
 private:
-			
+	
+	/// <summary>
+	/// Sets whether player is inside checkpoint.
+	/// </summary>
+	/// <param name="inside_">if set to <c>true</c> player is inside checkpoint.</param>
+	void setInsideCheckpoint(bool inside_)
+	{
+		m_insideCheckpoint = inside_;
+	}
+
+	/// <summary>
+	/// Sets whether player is inside race checkpoint.
+	/// </summary>
+	/// <param name="inside_">if set to <c>true</c> player is inside race checkpoint.</param>
+	void setInsideRaceCheckpoint(bool inside_)
+	{
+		m_insideRaceCheckpoint = inside_;
+	}
+
 	/// <summary>
 	/// Sets whether the player is spawned or not.
 	/// </summary>
@@ -563,6 +596,9 @@ private:
 						m_raceCheckpointSet,
 						m_checkpointStreamingOn,
 						m_raceCheckpointStreamingOn;
+
+	bool				m_insideCheckpoint,
+						m_insideRaceCheckpoint;
 
 	std::vector< UniquePtr<PersonalObject> > m_personalObjects;
 };

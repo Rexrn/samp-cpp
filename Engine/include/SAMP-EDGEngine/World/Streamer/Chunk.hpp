@@ -8,9 +8,10 @@
 #include <SAMP-EDGEngine/World/Streamer/UniversalObjectWrapper.hpp>
 #include <SAMP-EDGEngine/World/Streamer/VehicleWrapper.hpp>
 #include <SAMP-EDGEngine/World/Streamer/PlayerWrapper.hpp>
+#include <SAMP-EDGEngine/World/Streamer/CheckpointWrapper.hpp>
+#include <SAMP-EDGEngine/World/Streamer/RaceCheckpointWrapper.hpp>
 
 // Wrappers' underlying object types:
-#include <SAMP-EDGEngine/World/Vehicle.hpp>
 #include <SAMP-EDGEngine/World/GlobalObject.hpp>
 
 // Additional includes:
@@ -18,6 +19,7 @@
 #include <SAMP-EDGEngine/Core/Pointers.hpp>
 #include <SAMP-EDGEngine/Core/Container/DivisibleGrid3.hpp>
 #include <SAMP-EDGEngine/World/GangZone.hpp>
+
 
 namespace samp_edgengine
 {
@@ -70,7 +72,18 @@ public:
 	/// <param name="personalObject_">The personal object.</param>
 	void intercept(UniquePtr<PersonalObjectWrapper> && personalObject_);
 
-	
+	/// <summary>
+	/// Intercepts the specified checkpoint.
+	/// </summary>
+	/// <param name="checkpoint_">The checkpoint object.</param>
+	void intercept(UniquePtr<CheckpointWrapper> && checkpoint_);
+
+	/// <summary>
+	/// Intercepts the specified race checkpoint.
+	/// </summary>
+	/// <param name="raceCheckpoint_">The race checkpoint object.</param>
+	void intercept(UniquePtr<RaceCheckpointWrapper> && raceCheckpoint_);
+
 	/// <summary>
 	/// Releases the specified player.
 	/// </summary>
@@ -100,6 +113,18 @@ public:
 	/// </summary>
 	/// <param name="personalObject_">The personal object.</param>
 	[[nodiscard]] UniquePtr<PersonalObjectWrapper> release(PersonalObject const & personalObject_);
+
+	/// <summary>
+	/// Releases the specified checkpoint.
+	/// </summary>
+	/// <param name="checkpoint_">The checkpoint.</param>
+	[[nodiscard]] UniquePtr<CheckpointWrapper> release(Checkpoint const & checkpoint_);
+
+	/// <summary>
+	/// Releases the specified race checkpoint.
+	/// </summary>
+	/// <param name="raceCheckpoint_">The race checkpoint.</param>
+	[[nodiscard]] UniquePtr<RaceCheckpointWrapper> release(RaceCheckpoint const & raceCheckpoint_);
 
 	/// <summary>
 	/// Adds the score around specified player.
@@ -157,6 +182,22 @@ public:
 	auto const& getPersonalObjects() const {
 		return m_personalObjects;
 	}
+
+	/// <summary>
+	/// Returns cref to contained list of the checkpoints.
+	/// </summary>
+	/// <returns>cref to contained list of the checkpoints.</returns>
+	auto const& getCheckpoints() const {
+		return m_checkpoints;
+	}
+
+	/// <summary>
+	/// Returns cref to contained list of the race checkpoints.
+	/// </summary>
+	/// <returns>cref to contained list of the race checkpoints.</returns>
+	auto const& getRaceCheckpoints() const {
+		return m_raceCheckpoints;
+	}
 	
 	/// <summary>
 	/// Determines whether this chunk is empty.
@@ -189,6 +230,8 @@ private:
 	ActorContainer< GlobalObjectWrapper >		m_globalObjects;	// Global object wrapper container.
 	ActorContainer< UniversalObjectWrapper >	m_universalObjects;	// Universal object wrapper container.
 	ActorContainer< PersonalObjectWrapper >		m_personalObjects;	// Personal object wrapper container.
+	ActorContainer< CheckpointWrapper >			m_checkpoints;		// Checkpoint wrapper container.
+	ActorContainer< RaceCheckpointWrapper >		m_raceCheckpoints;	// Race checkpoint wrapper container.
 };
 
 }

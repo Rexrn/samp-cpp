@@ -14,8 +14,6 @@ namespace samp_edgengine
 {
 /////////////////////////////////////////////////////////////////////////////////////////
 ServerClass::ServerClass()
-	:
-	m_lastUpdate{}
 {
 }
 
@@ -43,6 +41,50 @@ bool ServerClass::Default::isPlayerNameValid(const std::string_view name_)
 
 	return name_.length() >= 3 && name_.length() <= 20
 		&& name_.find_first_not_of(cxAvailableCharacters) == std::string_view::npos;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+void ServerClass::updateCheckpoints()
+{
+	for (auto player : GameMode->Players.getPool())
+	{
+		if (player)
+		{
+			if (player->m_insideCheckpoint)
+			{
+				if (!player->intersectsWithCheckpoint()) // Player was inside checkpoint and now is not.
+				{
+					player->setInsideCheckpoint(false);
+					SampEvents.onPlayerLeaveCheckpoint(player->getIndex());
+				}
+			}
+			else
+			{
+				if (player->intersectsWithCheckpoint()) // Player wasn't inside checkpoint and now is.
+				{
+					player->setInsideCheckpoint(true);
+					SampEvents.onPlayerEnterCheckpoint(player->getIndex());
+				}
+			}
+
+			if (player->m_insideRaceCheckpoint)
+			{
+				if (!player->intersectsWithRaceCheckpoint()) // Player was inside race checkpoint and now is not.
+				{
+					player->setInsideRaceCheckpoint(false);
+					SampEvents.onPlayerLeaveRaceCheckpoint(player->getIndex());
+				}
+			}
+			else
+			{
+				if (player->intersectsWithRaceCheckpoint()) // Player wasn't inside race checkpoint and now is.
+				{
+					player->setInsideRaceCheckpoint(true);
+					SampEvents.onPlayerEnterRaceCheckpoint(player->getIndex());
+				}
+			}
+		}
+	}
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -634,7 +676,16 @@ bool ServerClass::_impl_OnPlayerLeaveRaceCheckpoint(int playerid)
 /////////////////////////////////////////////////////////////////////////////////////////
 void ServerClass::SampEventListType::onUpdate()
 {
-	Server->Events.ServerUpdates.emit(Clock::now());
+	auto frameTime = Clock::now();
+
+	if (Server->m_nextCheckpointUpdate < frameTime)
+	{
+		Server->m_nextCheckpointUpdate = frameTime + ServerClass::CheckpointUpdateInterval;
+
+		Server->updateCheckpoints();
+	}
+
+	Server->Events.ServerUpdates.emit(frameTime);
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -1115,17 +1166,6 @@ bool ServerClass::SampEventListType::onPlayerWeaponShot(Int32 playerIndex_, Weap
 	return true;
 }
 
-/////////////////////////////////////////////////////////////////////////////////////////
-bool ServerClass::SampEventListType::_impl_OnPlayerEnterRaceCheckpoint(Int32 playerIndex_)
-{
-	return true;
-}
-
-/////////////////////////////////////////////////////////////////////////////////////////
-bool ServerClass::SampEventListType::_impl_OnPlayerLeaveRaceCheckpoint(Int32 playerIndex_)
-{
-	return true;
-}
 
 } // namespace agdk
 
@@ -1282,14 +1322,14 @@ PLUGIN_EXPORT bool PLUGIN_CALL OnPlayerLeaveCheckpoint(int playerid)
 /////////////////////////////////////////////////////////////////////////////////////////
 PLUGIN_EXPORT bool PLUGIN_CALL OnPlayerEnterRaceCheckpoint(int playerid)
 {
-	return Server->SampEvents._impl_OnPlayerEnterRaceCheckpoint(playerid);
+	return false;
 }
 /////////////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////////////////
 PLUGIN_EXPORT bool PLUGIN_CALL OnPlayerLeaveRaceCheckpoint(int playerid)
 {
-	return Server->SampEvents._impl_OnPlayerLeaveRaceCheckpoint(playerid);
+	return false;
 }
 /////////////////////////////////////////////////////////////////////////////////////////
 

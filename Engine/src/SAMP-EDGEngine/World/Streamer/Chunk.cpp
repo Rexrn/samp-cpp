@@ -62,6 +62,20 @@ void Chunk::intercept(UniquePtr<PersonalObjectWrapper>&& personalObject_)
 }
 
 //////////////////////////////////////////////////////////////////////////////
+void Chunk::intercept(UniquePtr<CheckpointWrapper>&& checkpoint_)
+{
+	checkpoint_->setChunk(*this);
+	m_checkpoints.push_back(std::forward< UniquePtr<CheckpointWrapper> >(checkpoint_));
+}
+
+//////////////////////////////////////////////////////////////////////////////
+void Chunk::intercept(UniquePtr<RaceCheckpointWrapper>&& raceCheckpoint_)
+{
+	raceCheckpoint_->setChunk(*this);
+	m_raceCheckpoints.push_back(std::forward< UniquePtr<RaceCheckpointWrapper> >(raceCheckpoint_));
+}
+
+//////////////////////////////////////////////////////////////////////////////
 UniquePtr<PlayerWrapper> Chunk::release(Player const& player_)
 {
 	auto const it = std::find_if(m_players.begin(), m_players.end(),
@@ -187,6 +201,50 @@ UniquePtr<PersonalObjectWrapper> Chunk::release(PersonalObject const & personalO
 #ifdef SAMP_EDGENGINE_DEBUG
 	this->GZThingReleased();
 #endif
+
+	return result;
+}
+
+//////////////////////////////////////////////////////////////////////////////
+UniquePtr<CheckpointWrapper> Chunk::release(Checkpoint const& checkpoint_)
+{
+	auto const it = std::find_if(m_checkpoints.begin(), m_checkpoints.end(),
+		[&checkpoint_](UniquePtr<CheckpointWrapper> const& element_)
+		{
+			return element_->getCheckpoint() == &checkpoint_;
+		});
+
+#ifdef SAMP_EDGENGINE_DEBUG
+	// # Assertion note:
+	// You tried to release checkpoint that does not belong to this chunk. Fix your code.
+	assert(it != m_checkpoints.end());
+#endif
+
+	auto result = std::move(*it);
+	result->setChunk(nullptr);
+	m_checkpoints.erase(it);
+
+	return result;
+}
+
+//////////////////////////////////////////////////////////////////////////////
+UniquePtr<RaceCheckpointWrapper> Chunk::release(RaceCheckpoint const& raceCheckpoint_)
+{
+	auto const it = std::find_if(m_raceCheckpoints.begin(), m_raceCheckpoints.end(),
+		[&raceCheckpoint_](UniquePtr<RaceCheckpointWrapper> const& element_)
+		{
+			return element_->getCheckpoint() == &raceCheckpoint_;
+		});
+
+#ifdef SAMP_EDGENGINE_DEBUG
+	// # Assertion note:
+	// You tried to release checkpoint that does not belong to this chunk. Fix your code.
+	assert(it != m_raceCheckpoints.end());
+#endif
+
+	auto result = std::move(*it);
+	result->setChunk(nullptr);
+	m_raceCheckpoints.erase(it);
 
 	return result;
 }

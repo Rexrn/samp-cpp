@@ -3,6 +3,9 @@
 #include SAMP_EDGENGINE_PCH
 
 #include <SAMP-EDGEngine/Core/TypesAndDefinitions.hpp>
+#include <SAMP-EDGEngine/World/WI3DStreamableNode.hpp>
+#include <SAMP-EDGEngine/Core/Placement.hpp>
+#include "SAMP-EDGEngine/Core/BasicInterfaces/PlacementTracker.hpp"
 
 namespace samp_edgengine
 {
@@ -13,6 +16,7 @@ class Player;
 /// A in-game checkpoint.
 /// </summary>
 class Checkpoint
+	: public IWI3DStreamableNode
 {
 public:
 	
@@ -29,13 +33,33 @@ public:
 	/// <param name="intersectionRadius_">The intersection radius.</param>
 	/// <param name="intersectionHeight_">Height of the intersection.</param>
 	Checkpoint(math::Vector3f const &location_, float size_, float intersectionRadius_ = -1, float intersectionHeight_ = -1);
+
+	// Tracking:	
+	/// <summary>
+	/// Sets the placement tracker.
+	/// </summary>
+	/// <param name="tracker_">The tracker.</param>
+	void setPlacementTracker(I3DNodePlacementTracker *tracker_);
+
+	/// <summary>
+	/// Returns the placement tracker.
+	/// </summary>
+	/// <returns>Placement tracker</returns>
+	I3DNodePlacementTracker* getPlacementTracker() const;
 	
 	/// <summary>
-	/// Sets the location.
+	/// Sends the placement update.
 	/// </summary>
-	/// <param name="location_">The location.</param>
-	void setLocation(math::Vector3f const &location_);
-	
+	void sendPlacementUpdate();
+
+	/// <summary>
+	/// Returns player's placement.
+	/// </summary>
+	/// <returns>Player's placement.</returns>
+	ActorPlacement getPlacement() const;
+
+	// Checkpoint functions:
+
 	/// <summary>
 	/// Sets the (visible) size.
 	/// </summary>
@@ -53,18 +77,6 @@ public:
 	/// </summary>
 	/// <param name="intersectionHeight_">Height of the intersection.</param>
 	void setIntersectionHeight(float intersectionHeight_);
-	
-	/// <summary>
-	/// Moves checkpoint by the specified delta.
-	/// </summary>
-	/// <param name="delta_">The delta.</param>
-	void move(math::Vector3f const& delta_);
-
-	/// <summary>
-	/// Returns the location.
-	/// </summary>
-	/// <returns>The location.</returns>
-	math::Vector3f getLocation() const;
 
 	/// <summary>
 	/// Returns the visible size.
@@ -86,13 +98,13 @@ public:
 
 protected:
 
-	// Checkpoint location.
-	math::Vector3f m_location;
-
 	// Checkpoint size (visible radius).
 	float m_size;
 	float m_intersectionRadius;
 	float m_intersectionHeight;
+
+	// Placement tracker:
+	I3DNodePlacementTracker * m_placementTracker;
 };
 
 }

@@ -17,17 +17,38 @@ Checkpoint::Checkpoint()
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 Checkpoint::Checkpoint(math::Vector3f const& location_, float size_, float intersectionRadius_, float intersectionHeight_)
 	:
-	m_location{ location_ },
 	m_size{ size_ },
 	m_intersectionRadius{ (intersectionRadius_ <= 0 ? m_size : intersectionRadius_) },
 	m_intersectionHeight{ (intersectionHeight_ <= 0 ? 7.f : intersectionHeight_) }
 {
+	// Note: statically resolved virtual method does not matter here.
+	this->setLocation(location_);
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////
-void Checkpoint::setLocation(math::Vector3f const& location_)
+void Checkpoint::setPlacementTracker(I3DNodePlacementTracker* tracker_)
 {
-	m_location = location_;
+	m_placementTracker = tracker_;
+	this->sendPlacementUpdate();
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+I3DNodePlacementTracker* Checkpoint::getPlacementTracker() const
+{
+	return m_placementTracker;
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+void Checkpoint::sendPlacementUpdate()
+{
+	if (m_placementTracker)
+		m_placementTracker->whenPlacementUpdateReceived( this->getPlacement() );
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+ActorPlacement Checkpoint::getPlacement() const
+{
+	return { this->getLocation(), this->getWorld(), this->getInterior() };
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -46,18 +67,6 @@ void Checkpoint::setIntersectionRadius(float intersectionRadius_)
 void Checkpoint::setIntersectionHeight(float intersectionHeight_)
 {
 	m_intersectionHeight = intersectionHeight_;
-}
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////
-void Checkpoint::move(math::Vector3f const& delta_)
-{
-	this->setLocation(this->getLocation() + delta_);
-}
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////
-math::Vector3f Checkpoint::getLocation() const
-{
-	return m_location;
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////

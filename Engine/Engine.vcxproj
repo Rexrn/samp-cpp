@@ -226,6 +226,7 @@
     <ClInclude Include="include\SAMP-EDGEngine\World\Streamer\GlobalObjectWrapper.hpp" />
     <ClInclude Include="include\SAMP-EDGEngine\World\Streamer\PersonalObjectWrapper.hpp" />
     <ClInclude Include="include\SAMP-EDGEngine\World\Streamer\PlayerWrapper.hpp" />
+    <ClInclude Include="include\SAMP-EDGEngine\World\Streamer\RaceCheckpointWrapper.hpp" />
     <ClInclude Include="include\SAMP-EDGEngine\World\Streamer\Streamer.hpp" />
     <ClInclude Include="include\SAMP-EDGEngine\World\Streamer\StreamerSettings.hpp" />
     <ClInclude Include="include\SAMP-EDGEngine\World\Streamer\UniversalObjectWrapper.hpp" />
@@ -251,6 +252,7 @@
     <ClInclude Include="EnginePCH.hpp" />
     <ClInclude Include="include\SAMP-EDGEngine\World\WI3DNode.hpp" />
     <ClInclude Include="include\SAMP-EDGEngine\World\WI3DStreamableNode.hpp" />
+    <ClInclude Include="include\SAMP-EDGEngine\World\Streamer\CheckpointWrapper.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Dependencies\sampgdk\amxplugin.cpp">
@@ -281,6 +283,7 @@
     <ClCompile Include="src\SAMP-EDGEngine\World\RaceCheckpoint.cpp" />
     <ClCompile Include="src\SAMP-EDGEngine\World\Scene.cpp" />
     <ClCompile Include="src\SAMP-EDGEngine\World\GlobalObject.cpp" />
+    <ClCompile Include="src\SAMP-EDGEngine\World\Streamer\CheckpointWrapper.cpp" />
     <ClCompile Include="src\SAMP-EDGEngine\World\Streamer\Chunk.cpp" />
     <ClCompile Include="src\SAMP-EDGEngine\World\PersonalObject.cpp" />
     <ClCompile Include="src\SAMP-EDGEngine\World\UniversalObject.cpp" />

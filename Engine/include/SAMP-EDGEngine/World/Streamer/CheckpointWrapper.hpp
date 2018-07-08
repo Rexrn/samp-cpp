@@ -7,32 +7,32 @@
 #include <SAMP-EDGEngine/Core/BasicInterfaces/PlacementTracker.hpp>
 
 // Wrapped class:
-#include <SAMP-EDGEngine/Server/Player.hpp>
-#include <SAMP-EDGEngine/World/PerPlayerObject.hpp>
+#include <SAMP-EDGEngine/World/Checkpoint.hpp>
 
 namespace samp_edgengine::default_streamer
 {
 
-class PlayerWrapper
+class CheckpointWrapper
 	:
 	public IChunkActor,
 	public I3DNodePlacementTracker
 {
 public:
 	/// <summary>
-	/// Initializes a new instance of the <see cref="PlayerWrapper"/> class.
+	/// Initializes a new instance of the <see cref="CheckpointWrapper"/> class.
 	/// </summary>
-	/// <param name="player_">The player.</param>
-	PlayerWrapper(Player & player_);
+	/// <param name="checkpoint_">The checkpoint.</param>
+	CheckpointWrapper(Checkpoint & checkpoint_);
+
 
 	/// <summary>
-	/// Returns pointer to the underlying player.
+	/// Returns pointer to the underlying checkpoint.
 	/// </summary>
-	/// <returns>Pointer to the underlying player.</returns>
-	Player * getPlayer() const {
-		return m_player;
+	/// <returns>Pointer to the underlying checkpoint.</returns>
+	Checkpoint * getCheckpoint() const {
+		return m_checkpoint;
 	}
-	
+
 	/// <summary>
 	/// Event reaction called when placement changes significantly.
 	/// </summary>
@@ -40,9 +40,8 @@ public:
 	/// <param name="newPlacement_">The new placement.</param>
 	virtual void whenPlacementChanges(ActorPlacement const& prevPlacement_, ActorPlacement const& newPlacement_) override;
 
-	std::vector<PerPlayerObject*> spawnedObjects; // List of per-player objects spawned.
 private:
-	Player * m_player; // The underlying player.
+	Checkpoint * m_checkpoint; // The underlying checkpoint.
 };
 
 }

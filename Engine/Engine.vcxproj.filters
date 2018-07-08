@@ -306,6 +306,12 @@
     <ClInclude Include="include\SAMP-EDGEngine\World\WI3DStreamableNode.hpp">
       <Filter>Header Files\World</Filter>
     </ClInclude>
+    <ClInclude Include="include\SAMP-EDGEngine\World\Streamer\CheckpointWrapper.hpp">
+      <Filter>Header Files\World\Streamer\Wrappers</Filter>
+    </ClInclude>
+    <ClInclude Include="include\SAMP-EDGEngine\World\Streamer\RaceCheckpointWrapper.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Dependencies\sampgdk\amxplugin.cpp">
@@ -427,6 +433,9 @@
     </ClCompile>
     <ClCompile Include="src\SAMP-EDGEngine\World\WI3DStreamableNode.cpp">
       <Filter>Source Files\World\Node</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SAMP-EDGEngine\World\Streamer\CheckpointWrapper.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -23,7 +23,7 @@ Vehicle& MapClass::finalizeConstruction(ActorPtrType< Vehicle > const& vehicle_)
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////
-Vehicle& MapClass::finalizeConstruction(ActorPtrType< StaticVehicle > const& staticVehicle_)
+StaticVehicle& MapClass::finalizeConstruction(ActorPtrType< StaticVehicle > const& staticVehicle_)
 {
 	m_staticVehicles.push_back(staticVehicle_);
 	GameMode->Streamer->whenStaticVehicleJoinsMap(*staticVehicle_);
@@ -55,6 +55,20 @@ GangZone& MapClass::finalizeConstruction(ActorPtrType< GangZone > const& gangZon
 {
 	m_gangZones.push_back(gangZone_);
 	return *gangZone_;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////
+Checkpoint& MapClass::finalizeConstruction(ActorPtrType< Checkpoint > const& checkpoint_)
+{
+	m_checkpoints.push_back(checkpoint_);
+	return *checkpoint_;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////
+RaceCheckpoint& MapClass::finalizeConstruction(ActorPtrType< RaceCheckpoint > const& raceCheckpoint_)
+{
+	m_raceCheckpoints.push_back(raceCheckpoint_);
+	return *raceCheckpoint_;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////
