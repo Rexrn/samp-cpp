@@ -301,10 +301,10 @@
       <Filter>Precompiled Header</Filter>
     </ClInclude>
     <ClInclude Include="include\SAMP-EDGEngine\World\RaceCheckpoint.hpp">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\World</Filter>
     </ClInclude>
     <ClInclude Include="include\SAMP-EDGEngine\World\WI3DStreamableNode.hpp">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\World</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -420,13 +420,13 @@
       <Filter>Precompiled Header</Filter>
     </ClCompile>
     <ClCompile Include="src\SAMP-EDGEngine\World\Checkpoint.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\World</Filter>
     </ClCompile>
     <ClCompile Include="src\SAMP-EDGEngine\World\RaceCheckpoint.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\World</Filter>
     </ClCompile>
     <ClCompile Include="src\SAMP-EDGEngine\World\WI3DStreamableNode.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\World\Node</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
