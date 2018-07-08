@@ -303,6 +303,9 @@
     <ClInclude Include="include\SAMP-EDGEngine\World\RaceCheckpoint.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\SAMP-EDGEngine\World\WI3DStreamableNode.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Dependencies\sampgdk\amxplugin.cpp">
@@ -420,6 +423,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\SAMP-EDGEngine\World\RaceCheckpoint.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SAMP-EDGEngine\World\WI3DStreamableNode.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

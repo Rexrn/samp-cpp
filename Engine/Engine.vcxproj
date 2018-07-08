@@ -250,6 +250,7 @@
     <ClInclude Include="include\SAMP-EDGEngine\World\UniversalObject.hpp" />
     <ClInclude Include="EnginePCH.hpp" />
     <ClInclude Include="include\SAMP-EDGEngine\World\WI3DNode.hpp" />
+    <ClInclude Include="include\SAMP-EDGEngine\World\WI3DStreamableNode.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Dependencies\sampgdk\amxplugin.cpp">
@@ -306,6 +307,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="src\SAMP-EDGEngine\World\WI3DNode.cpp" />
+    <ClCompile Include="src\SAMP-EDGEngine\World\WI3DStreamableNode.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\SAMP-EDGEngine\Core\BasicInterfacesInc.hpp">

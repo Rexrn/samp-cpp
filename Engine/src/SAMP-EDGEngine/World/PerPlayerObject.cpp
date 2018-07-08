@@ -12,8 +12,6 @@ namespace samp_edgengine
 ////////////////////////////////////////////////////////////////////////
 PerPlayerObject::PerPlayerObject()
 	:
-	m_worldMode{ VisibilityMode::Everywhere },
-	m_interiorMode{ VisibilityMode::Everywhere },
 	m_placementTracker{ nullptr }
 {
 }
@@ -46,41 +44,35 @@ ActorPlacement PerPlayerObject::getPlacement() const
 }
 
 ////////////////////////////////////////////////////////////////////////
-void PerPlayerObject::setWorldAndMode(std::int32_t const world_, VisibilityMode const visibilityMode_)
+void PerPlayerObject::setWorldAndMode(Int32 world_, VisibilityMode visibilityMode_)
 {
-	IWI3DNode::setWorld(world_);
-	m_worldMode = visibilityMode_;
+	IWI3DStreamableNode::setWorldAndMode(world_, visibilityMode_);
+
+	this->sendPlacementUpdate();
 }
 
 ////////////////////////////////////////////////////////////////////////
-void PerPlayerObject::setWorldMode(VisibilityMode const visibilityMode_)
+void PerPlayerObject::setWorldMode(VisibilityMode visibilityMode_)
 {
-	m_worldMode = visibilityMode_;
+	IWI3DStreamableNode::setWorldMode(visibilityMode_);
+
+	this->sendPlacementUpdate();
 }
 
 ////////////////////////////////////////////////////////////////////////
-void PerPlayerObject::setInteriorAndMode(std::int32_t const interior_, VisibilityMode const visibilityMode_)
+void PerPlayerObject::setInteriorAndMode(Int32 interior_, VisibilityMode visibilityMode_)
 {
-	IWI3DNode::setInterior(interior_);
-	m_interiorMode = visibilityMode_;
+	IWI3DStreamableNode::setInteriorAndMode(interior_, visibilityMode_);
+
+	this->sendPlacementUpdate();
 }
 
 ////////////////////////////////////////////////////////////////////////
-void PerPlayerObject::setInteriorMode(VisibilityMode const visibilityMode_)
+void PerPlayerObject::setInteriorMode(VisibilityMode visibilityMode_)
 {
-	m_interiorMode = visibilityMode_;
-}
+	IWI3DStreamableNode::setInteriorMode(visibilityMode_);
 
-////////////////////////////////////////////////////////////////////////
-bool PerPlayerObject::shouldBeVisibleIn(std::int32_t const world_, std::int32_t const interior_) const
-{
-	return ((	(m_worldMode		== VisibilityMode::Everywhere)									||
-				(m_worldMode		== VisibilityMode::Specified		&& m_world == world_)		||
-				(m_worldMode		== VisibilityMode::AllButSpecified	&& m_world != world_))		&&
-			(	(m_interiorMode	== VisibilityMode::Everywhere)									||
-				(m_interiorMode	== VisibilityMode::Specified		&& m_interior == interior_)	||
-				(m_interiorMode	== VisibilityMode::AllButSpecified	&& m_interior != interior_)));
+	this->sendPlacementUpdate();
 }
-
 
 }

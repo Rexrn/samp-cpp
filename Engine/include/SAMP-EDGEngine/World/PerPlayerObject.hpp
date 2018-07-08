@@ -5,7 +5,7 @@
 
 // Base class headers:
 #include <SAMP-EDGEngine/World/MapObject.hpp>
-#include <SAMP-EDGEngine/World/WI3DNode.hpp>
+#include <SAMP-EDGEngine/World/WI3DStreamableNode.hpp>
 
 // Other headers:
 #include <SAMP-EDGEngine/Core/BasicInterfaces/PlacementTracker.hpp>
@@ -22,18 +22,9 @@ class Player;
 class PerPlayerObject
 	:
 	public IMapObject,
-	public IWI3DNode
+	public IWI3DStreamableNode
 {
 public:
-	/// <summary>
-	/// Enumeration of all possible ways the object can be streamed.
-	/// </summary>
-	enum class VisibilityMode : std::int8_t
-	{
-		Everywhere = 0,		// Object will be seen everywhere
-		Specified,			// Object will be seen only on specified world/interior
-		AllButSpecified		// Object will be seen in every world/interior but specified
-	};
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="PerPlayerObject"/> class.
@@ -69,42 +60,32 @@ public:
 	/// </summary>
 	/// <param name="world_">The world.</param>
 	/// <param name="visibilityMode_">The visibility mode.</param>
-	virtual void setWorldAndMode(std::int32_t const world_, VisibilityMode const visibilityMode_);
+	virtual void setWorldAndMode(Int32 world_, VisibilityMode visibilityMode_) override;
 
 	/// <summary>
 	/// Sets the world visibility mode.
 	/// </summary>
 	/// <param name="visibilityMode_">The visibility mode.</param>
-	virtual void setWorldMode(VisibilityMode const visibilityMode_);
+	virtual void setWorldMode(VisibilityMode const visibilityMode_) override;
 
 	/// <summary>
 	/// Sets the object interior and changes the visibility mode.
 	/// </summary>
 	/// <param name="interior_">The interior.</param>
 	/// <param name="visibilityMode_">The visibility mode.</param>
-	virtual void setInteriorAndMode(std::int32_t const interior_, VisibilityMode const visibilityMode_);
+	virtual void setInteriorAndMode(Int32 interior_, VisibilityMode visibilityMode_) override;
 	
 	/// <summary>
 	/// Sets the interior visibility mode.
 	/// </summary>
 	/// <param name="visibilityMode_">The visibility mode.</param>
-	virtual void setInteriorMode(VisibilityMode const visibilityMode_);
+	virtual void setInteriorMode(VisibilityMode visibilityMode_) override;
 
 	/// <summary>
 	/// Returns the distance squared to specified player.
 	/// </summary>
 	/// <param name="player_">The player.</param>
 	virtual math::Meters getDistanceSquaredTo(Player const & player_) const = 0;
-	
-	/// <summary>
-	/// Returns whether object should be visible in specified world and interior.
-	/// </summary>
-	/// <param name="world_">The world.</param>
-	/// <param name="interior_">The interior.</param>
-	/// <returns>
-	///		<c>true</c> if object should be visible; otherwise, <c>false</c>.
-	/// </returns>
-	bool shouldBeVisibleIn(std::int32_t const world_, std::int32_t const interior_) const;
 
 	/// <summary>
 	/// Spawns the object to the specified player.
@@ -134,32 +115,8 @@ public:
 	/// <param name="player_">The player.</param>
 	/// <returns>The object rotation for specified player.</returns>
 	virtual math::Vector3f getRotationFor(Player const & player_) const = 0;
-	
-	/// <summary>
-	/// Returns the world visibility mode.
-	/// </summary>
-	/// <returns>
-	///		The world visibility mode.
-	/// </returns>
-	VisibilityMode getWorldMode() const
-	{
-		return m_worldMode;
-	}
-
-	/// <summary>
-	/// Returns the interior visibility mode.
-	/// </summary>
-	/// <returns>
-	///		The interior visibility mode.
-	/// </returns>
-	VisibilityMode getInteriorMode() const
-	{
-		return m_interiorMode;
-	}
 
 protected:
-	VisibilityMode				m_worldMode,
-								m_interiorMode;
 
 	I3DNodePlacementTracker*	m_placementTracker;
 };
