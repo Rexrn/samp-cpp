@@ -781,7 +781,7 @@ bool ServerClass::SampEventListType::onVehicleDeath(Int32 vehicleHandle_, Int32 
 /////////////////////////////////////////////////////////////////////////////////////////
 bool ServerClass::SampEventListType::onPlayerSendText(Int32 playerIndex_, std::string_view text_)
 {
-	auto& player = *GameMode->Players[static_cast<std::size_t>(playerIndex_)];
+	auto& player = *GameMode->Players[ playerIndex_ ];
 	Server->Events.onPlayerText.emit(player, std::string(text_));
 	return false;
 }
@@ -789,7 +789,7 @@ bool ServerClass::SampEventListType::onPlayerSendText(Int32 playerIndex_, std::s
 /////////////////////////////////////////////////////////////////////////////////////////
 bool ServerClass::SampEventListType::onPlayerSendCommand(Int32 playerIndex_, std::string_view command_)
 {
-	auto& player = *GameMode->Players[static_cast<std::size_t>(playerIndex_)];
+	auto& player = *GameMode->Players[ playerIndex_ ];
 
 	Server->Events.onPlayerCommandText.emit(player, command_);
 	return true;
@@ -798,6 +798,9 @@ bool ServerClass::SampEventListType::onPlayerSendCommand(Int32 playerIndex_, std
 /////////////////////////////////////////////////////////////////////////////////////////
 bool ServerClass::SampEventListType::onPlayerRequestClass(Int32 playerIndex_, Int32 classIndex_)
 {
+	auto& player = *GameMode->Players[ playerIndex_ ];
+
+	Server->Events.onPlayerRequestClass.emit(player, classIndex_);
 	return true;
 }
 
@@ -933,7 +936,7 @@ bool ServerClass::SampEventListType::onPlayerRequestSpawn(Int32 playerIndex_)
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
-bool ServerClass::SampEventListType::onObjectMoved(IMapObject::HandleType pbjectHandle_)
+bool ServerClass::SampEventListType::onObjectMoved(IMapObject::HandleType objectHandle_)
 {
 	return true;
 }
@@ -1012,12 +1015,17 @@ bool ServerClass::SampEventListType::onPlayerExitedMenu(Int32 playerIndex_)
 /////////////////////////////////////////////////////////////////////////////////////////
 bool ServerClass::SampEventListType::onPlayerInteriorChange(Int32 playerIndex_, Int32 newInterior_, Int32 oldInterior_)
 {
+	auto& player = *GameMode->Players[ playerIndex_ ];
+	player.syncInterior( newInterior_ );
+	Server->Events.onPlayerInteriorChange.emit( player, newInterior_, oldInterior_ );
 	return true;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 bool ServerClass::SampEventListType::onPlayerKeyboardStateChange(Int32 playerIndex_, Keyboard const & newState_, Keyboard const & oldState_)
 {
+	auto& player = *GameMode->Players[playerIndex_];
+	Server->Events.onPlayerKeyboardStateChange.emit(player, newState_, oldState_);
 	return true;
 }
 
@@ -1030,6 +1038,8 @@ bool ServerClass::SampEventListType::onRconLoginAttempt(std::string_view IP_, st
 /////////////////////////////////////////////////////////////////////////////////////////
 bool ServerClass::SampEventListType::onPlayerUpdate(Int32 playerIndex_)
 {
+	auto& player = *GameMode->Players[playerIndex_];
+	Server->Events.onPlayerUpdate.emit(player);
 	return true;
 }
 

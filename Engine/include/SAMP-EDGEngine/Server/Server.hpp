@@ -141,7 +141,9 @@ private:
 		EventDispatcher<>												onRconCommand;
 		EventDispatcher<Player &>										onPlayerConnect;
 		EventDispatcher<Player &>										onPlayerDisconnect;
+		EventDispatcher<Player &>										onPlayerUpdate;
 		EventDispatcher<Player &>										onPlayerSpawn;
+		EventDispatcher<Player &, Int32>								onPlayerRequestClass;
 		EventDispatcher<Player &, Player *, Weapon::Type>				onPlayerDeath;
 		EventDispatcher<Vehicle &>										onVehicleSpawn;
 		EventDispatcher<Vehicle &, Player *>							onVehicleDeath;
@@ -157,6 +159,9 @@ private:
 		EventDispatcher<Player &>										onPlayerLeaveCheckpoint;
 		EventDispatcher<Player &>										onPlayerEnterRaceCheckpoint;
 		EventDispatcher<Player &>										onPlayerLeaveRaceCheckpoint;
+
+		EventDispatcher<Player &, Int32, Int32>							onPlayerInteriorChange;
+		EventDispatcher<Player &, Keyboard const&, Keyboard const &>	onPlayerKeyboardStateChange;
 		/*void onUpdate();
 		bool onGameModeInit();
 		bool onGameModeExit();
