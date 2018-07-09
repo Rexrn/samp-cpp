@@ -18,7 +18,6 @@ Player::Player(IndexType const index_)
 	m_index{ index_ }, m_existingStatus{ ExistingStatus::Spawning },
 	m_score{ 0 }, m_cash{ 0 },
 	m_health{ 100 }, m_armour{ 0 },
-	m_lastWorld{ 0 }, m_lastInterior{ 0 },
 	m_placementTracker{ nullptr },
 	m_vehicle{ nullptr },
 	m_checkpointSet{ false }, m_raceCheckpointSet{ false },
@@ -276,9 +275,9 @@ bool Player::setName(std::string_view const name_, bool(*isNameValidProc_)(const
 }
 
 ///////////////////////////////////////////////////////////////////////////
-void Player::setLocation(math::Vector3f const location_)
+void Player::setLocation(math::Vector3f const &location_)
 {
-	m_lastLocation = location_;
+	IWI3DNode::setLocation(location_);
 
 	if (m_existingStatus != ExistingStatus::Dead)
 		sampgdk_SetPlayerPos(this->getIndex(), location_.x, location_.y, location_.z);
@@ -296,7 +295,7 @@ void Player::setFacingAngle(float const angle_)
 ///////////////////////////////////////////////////////////////////////////
 void Player::setWorld(std::int32_t const world_)
 {
-	m_lastWorld = world_;
+	IWI3DNode::setWorld(world_);
 
 	if (m_existingStatus != ExistingStatus::Dead)
 		sampgdk_SetPlayerVirtualWorld(this->getIndex(), world_);
@@ -307,10 +306,11 @@ void Player::setWorld(std::int32_t const world_)
 ///////////////////////////////////////////////////////////////////////////
 void Player::setInterior(std::int32_t const interior_)
 {
-	m_lastInterior = interior_;
+	IWI3DNode::setInterior(interior_);
 
 	if (m_existingStatus != ExistingStatus::Dead)
 		sampgdk_SetPlayerInterior(this->getIndex(), interior_);
+
 	this->sendPlacementUpdate();
 }
 
@@ -318,6 +318,7 @@ void Player::setInterior(std::int32_t const interior_)
 void Player::setHealth(float const health_)
 {
 	m_health = health_ + cxHealthBase;
+
 	if (m_existingStatus != ExistingStatus::Dead)
 		sampgdk_SetPlayerHealth(this->getIndex(), m_health);
 }
@@ -326,6 +327,7 @@ void Player::setHealth(float const health_)
 void Player::setArmour(float const armour_)
 {
 	m_armour = armour_;
+
 	if (m_existingStatus != ExistingStatus::Dead)
 		sampgdk_SetPlayerArmour(this->getIndex(), m_armour);
 }
@@ -400,19 +402,19 @@ std::string Player::getClientName() const
 ///////////////////////////////////////////////////////////////////////////
 math::Vector3f Player::getLocation() const
 {
-	return (this->isInWorld() ? this->getClientLocation() : m_lastLocation);
+	return (this->isInWorld() ? this->getClientLocation() : IWI3DNode::getLocation());
 }
 
 ///////////////////////////////////////////////////////////////////////////
 std::int32_t Player::getWorld() const
 {
-	return (this->isInWorld() ? this->getClientWorld() : m_lastWorld);
+	return (this->isInWorld() ? this->getClientWorld() : IWI3DNode::getWorld());
 }
 
 ///////////////////////////////////////////////////////////////////////////
 std::int32_t Player::getInterior() const
 {
-	return (this->isInWorld() ? this->getClientInterior() : m_lastInterior);
+	return (this->isInWorld() ? this->getClientInterior() : IWI3DNode::getInterior());
 }
 
 ///////////////////////////////////////////////////////////////////////////

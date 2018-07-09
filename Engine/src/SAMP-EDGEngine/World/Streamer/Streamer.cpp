@@ -24,7 +24,7 @@ namespace samp_edgengine::default_streamer
 Streamer::Streamer()
 	: m_worldGrid{ {} }
 {
-	Server->Events.ServerUpdates += { *this, &Streamer::whenServerUpdates };
+	Server->Events.onServerUpdate += { *this, &Streamer::whenServerUpdates };
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////

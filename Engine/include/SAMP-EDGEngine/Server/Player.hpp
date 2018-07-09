@@ -3,6 +3,10 @@
 // The precompiled header
 #include SAMP_EDGENGINE_PCH
 
+// Base classes:
+#include <SAMP-EDGEngine/World/WI3DNode.hpp>
+#include <SAMP-EDGEngine/Server/TextDrawOwner.hpp>
+
 // Custom includes:
 #include <SAMP-EDGEngine/Server/Weapon.hpp>
 #include <SAMP-EDGEngine/World/PersonalObject.hpp>
@@ -14,7 +18,7 @@
 #include <SAMP-EDGEngine/World/Checkpoint.hpp>
 #include <SAMP-EDGEngine/World/RaceCheckpoint.hpp>
 #include <SAMP-EDGEngine/Server/PlayerTextDraw.hpp>
-#include <SAMP-EDGEngine/Server/TextDrawOwner.hpp>
+
 
 
 namespace samp_edgengine
@@ -29,6 +33,7 @@ class Vehicle;
 class Player
 	:
 	public std::enable_shared_from_this<Player>,
+	public IWI3DNode,
 	public TextDrawOwner<PlayerTextDraw>
 {
 public:
@@ -267,7 +272,7 @@ public:
 	/// Sets the player's location.
 	/// </summary>
 	/// <param name="location_">The location.</param>
-	void setLocation(math::Vector3f const location_);
+	virtual void setLocation(math::Vector3f const &location_) override;
 		
 	/// <summary>
 	/// Sets player's facing angle.
@@ -279,13 +284,13 @@ public:
 	/// Sets the player's world.
 	/// </summary>
 	/// <param name="location_">The world.</param>
-	void setWorld(std::int32_t const world_);
+	virtual void setWorld(std::int32_t const world_) override;
 
 	/// <summary>
 	/// Sets the player's interior.
 	/// </summary>
 	/// <param name="location_">The interior.</param>
-	void setInterior(std::int32_t const interior_);
+	virtual void setInterior(std::int32_t const interior_) override;
 		
 	// Player condition.
 
@@ -382,19 +387,19 @@ public:
 	/// Returns the player location.
 	/// </summary>
 	/// <returns>Player location.</returns>
-	math::Vector3f getLocation() const;
+	virtual math::Vector3f getLocation() const override;
 
 	/// <summary>
 	/// Returns the player world.
 	/// </summary>
 	/// <returns>Player world.</returns>
-	std::int32_t getWorld() const;
+	virtual std::int32_t getWorld() const override;
 
 	/// <summary>
 	/// Returns the player interior.
 	/// </summary>
 	/// <returns>Player interior.</returns>
-	std::int32_t getInterior() const;
+	virtual std::int32_t getInterior() const override;
 
 	/// <summary>
 	/// Returns the distance to specified location.
@@ -591,9 +596,6 @@ private:
 	std::string			m_name;				/// Player in-game nickname.
 
 	ExistingStatus		m_existingStatus;	/// Determines whether player is spawned, dead or spectating.
-	math::Vector3f		m_lastLocation;		/// Last set location.
-	Int32				m_lastInterior;		/// Last set interior
-	Int32				m_lastWorld;		/// Last set world
 		
 	// Player statistics.
 		

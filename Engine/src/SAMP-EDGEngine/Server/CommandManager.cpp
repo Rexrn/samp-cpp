@@ -11,7 +11,7 @@ namespace samp_edgengine
 //////////////////////////////////////////////////////////////////////////////
 CommandManager::CommandManager()
 {
-	Server->Events.PlayerSendsCommandText += { *this, &CommandManager::whenPlayerSendsCommandText };
+	Server->Events.onPlayerCommandText += { *this, &CommandManager::whenPlayerSendsCommandText };
 }
 
 //////////////////////////////////////////////////////////////////////////////
