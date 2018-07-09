@@ -2,14 +2,16 @@
 
 #include SAMP_EDGENGINE_PCH
 
+#include <SAMP-EDGEngine/Core/TypesAndDefinitions.hpp>
+
 namespace samp_edgengine
 {
 
 struct ActorPlacement
 {
 	math::Vector3f	location;
-	std::int32_t	world;
-	std::int32_t	interior;
+	Int32			world;
+	Int32			interior;
 };
 
 using PlayerPlacement			= ActorPlacement;

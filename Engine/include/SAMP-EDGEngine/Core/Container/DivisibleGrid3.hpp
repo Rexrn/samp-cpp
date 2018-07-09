@@ -113,7 +113,7 @@ protected:
 /// <summary>
 /// Stores every non-zero level node grid inside.
 /// </summary>
-template <typename TElementType, typename TRatioType, std::uint32_t _numDivisions, std::uint32_t _levelsLeft>
+template <typename TElementType, typename TRatioType, Uint32 _numDivisions, Uint32 _levelsLeft>
 class DivisibleGrid3Node
 	: public IDivisibleGrid3Node<TRatioType>
 {
@@ -133,7 +133,7 @@ class DivisibleGrid3Node
 		return result;
 	}
 
-	static constexpr std::uint32_t cxLevel = _levelsLeft;
+	static constexpr Uint32 cxLevel = _levelsLeft;
 public:
 	// Parent class:
 	using Super = IDivisibleGrid3Node<TRatioType>;
@@ -346,7 +346,7 @@ public:
 	/// Returns node level.
 	/// </summary>
 	/// <returns>Node level.</returns>
-	constexpr static std::uint32_t getLevel() {
+	constexpr static Uint32 getLevel() {
 		return cxLevel;
 	}
 
@@ -390,13 +390,13 @@ private:
 /// <summary>
 /// Stores every zero-level node.
 /// </summary>
-template <typename TElementType, typename TRatioType, std::uint32_t _numDivisions>
+template <typename TElementType, typename TRatioType, Uint32 _numDivisions>
 class DivisibleGrid3Node<TElementType, TRatioType, _numDivisions, 0>
 	: public IDivisibleGrid3Node<TRatioType>
 {
 
 	// Level of the node.
-	static constexpr std::uint32_t cxLevel = 0;
+	static constexpr Uint32 cxLevel = 0;
 public:
 	using Super = IDivisibleGrid3Node<TRatioType>;
 
@@ -440,7 +440,7 @@ public:
 	/// Returns node level.
 	/// </summary>
 	/// <returns>Node level.</returns>
-	constexpr static std::uint32_t getLevel() {
+	constexpr static Uint32 getLevel() {
 		return cxLevel;
 	}
 private:

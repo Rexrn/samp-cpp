@@ -19,7 +19,7 @@ UniversalObject::~UniversalObject()
 }
 
 //////////////////////////////////////////////////////////////////////////
-void UniversalObject::setModel(std::int32_t const modelIndex_)
+void UniversalObject::setModel(Int32 const modelIndex_)
 {
 	IMapObject::setModel(modelIndex_);
 }
@@ -157,7 +157,7 @@ bool UniversalObject::spawn(Player const & player_)
 
 	if (it == m_playerHandles.end())
 	{
-		std::int32_t handle = sampgdk_CreatePlayerObject(static_cast<Int32>( player_.getIndex() ), m_modelIndex, m_storedLocation.x, m_storedLocation.y, m_storedLocation.z,
+		Int32 handle = sampgdk_CreatePlayerObject(static_cast<Int32>( player_.getIndex() ), m_modelIndex, m_storedLocation.x, m_storedLocation.y, m_storedLocation.z,
 			m_rotation.x, m_rotation.y, m_rotation.z, m_drawDistance);
 		if (handle != InvalidHandle) {
 

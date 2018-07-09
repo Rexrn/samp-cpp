@@ -46,7 +46,7 @@ IMapObject::IMapObject()
 }
 
 //////////////////////////////////////////////////////////////////////////
-void IMapObject::setModel(std::int32_t const modelIndex_)
+void IMapObject::setModel(Int32 const modelIndex_)
 {
 	m_modelIndex = modelIndex_;
 	// TODO: respawn?
@@ -107,7 +107,7 @@ void IMapObject::setDrawDistance(float const drawDistance_)
 }
 
 //////////////////////////////////////////////////////////////////////////
-std::int32_t IMapObject::getModel() const
+Int32 IMapObject::getModel() const
 {
 	return m_modelIndex;
 }

@@ -151,7 +151,7 @@ public:
 	/// </summary>
 	/// <param name="type">The type.</param>
 	/// <param name="ammo">The ammo.</param>
-	constexpr Weapon(Weapon::Type const type_, std::int32_t const ammo_ = 1)
+	constexpr Weapon(Weapon::Type const type_, Int32 const ammo_ = 1)
 		: m_type{ type_ }, m_ammo{ ammo_ }
 	{
 	}
@@ -238,7 +238,7 @@ public:
 	///	If you want to set player's weapon ammo use `Player::setWeaponAmmo`
 	/// </summary>
 	/// <param name="ammo_">The count of ammunition.</param>
-	constexpr void setAmmo(std::int32_t const ammo_) {
+	constexpr void setAmmo(Int32 ammo_) {
 		m_ammo = ammo_;
 	}
 
@@ -261,7 +261,7 @@ public:
 	/// Returns weapon ammunition count.
 	/// </summary>
 	/// <returns></returns>
-	constexpr std::int32_t getAmmo() const {
+	constexpr Int32 getAmmo() const {
 		return m_ammo;
 	}
 
@@ -269,15 +269,15 @@ public:
 	/// Returns type of a weapon converted to 32-bit integer.
 	/// </summary>
 	/// <returns></returns>
-	constexpr std::int32_t getTypeIndex() const {
-		return static_cast<std::int32_t>(m_type);
+	constexpr Int32 getTypeIndex() const {
+		return static_cast<Int32>(m_type);
 	}
 private:
 
 	//	Stores weapon type
 	Weapon::Type	m_type;
 	//	Stores weapon ammo
-	std::int32_t	m_ammo;
+	Int32			m_ammo;
 
 
 	/// <summary>
@@ -322,7 +322,7 @@ public:
 	/// </summary>
 	/// <param name="type_">The weapon type.</param>
 	/// <param name="ammo_">The count of ammunition.</param>
-	void remove(Weapon::Type const type_, std::int32_t const ammo_ = -1);
+	void remove(Weapon::Type const type_, Int32 const ammo_ = -1);
 
 	/// <summary>
 	/// Sets weapon ammo.
@@ -330,7 +330,7 @@ public:
 	/// </summary>
 	/// <param name="type_">The weapon type.</param>
 	/// <param name="ammo_">The count of ammunition.</param>
-	void setAmmo(Weapon::Type const type_, std::int32_t const ammo_);
+	void setAmmo(Weapon::Type const type_, Int32 const ammo_);
 	
 	/// <summary>
 	/// Returns ref to the weapons vector.

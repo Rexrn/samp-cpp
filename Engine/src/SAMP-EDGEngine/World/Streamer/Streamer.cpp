@@ -313,7 +313,7 @@ void Streamer::whenVehiclePlacementChanges(Vehicle & vehicle_, ActorPlacement co
 	auto chunksAround = this->getChunksInRadiusFrom(currentPlacement_.location, StreamerSettings.VisibilityDistance);
 
 	auto& wrapper = getWrapper(vehicle_);
-	std::uint16_t visibilityIndex = 0;
+	Uint16 visibilityIndex = 0;
 	for (auto chunk : chunksAround)
 	{
 		for (const_a& playerWrapper : chunk->getPlayers())
@@ -352,7 +352,7 @@ void Streamer::whenObjectPlacementChanges(GlobalObject & globalObject_, GlobalOb
 	auto chunksAround = this->getChunksInRadiusFrom(currentPlacement_.location, StreamerSettings.VisibilityDistance);
 
 	auto& wrapper = getWrapper(globalObject_);
-	std::uint16_t visibilityIndex = 0;
+	Uint16 visibilityIndex = 0;
 	for (auto chunk : chunksAround)
 	{
 		for (const_a& playerWrapper : chunk->getPlayers())

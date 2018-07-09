@@ -5,6 +5,8 @@
 // Precompiled header:
 #include SAMP_EDGENGINE_PCH
 
+#include <SAMP-EDGEngine/Core/TypesAndDefinitions.hpp>
+
 namespace samp_edgengine
 {	
 	/// <summary>
@@ -16,10 +18,10 @@ namespace samp_edgengine
 	class Color
 	{
 	public:
-		std::uint8_t r;		/// Red		color channel.
-		std::uint8_t g;		/// Green	color channel.
-		std::uint8_t b;		/// Blue	color channel.
-		std::uint8_t a;		/// Alpha	color channel.
+		Uint8 r;		/// Red		color channel.
+		Uint8 g;		/// Green	color channel.
+		Uint8 b;		/// Blue	color channel.
+		Uint8 a;		/// Alpha	color channel.
 		
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Color"/> class.
@@ -45,7 +47,7 @@ namespace samp_edgengine
 		/// <param name="green_">The green component.</param>
 		/// <param name="blue_">The blue component.</param>
 		/// <param name="alpha_">The alpha component.</param>
-		constexpr Color(const std::uint8_t red_, const std::uint8_t green_, const std::uint8_t blue_, const std::uint8_t alpha_ = 255)
+		constexpr Color(Uint8 red_, Uint8 green_, Uint8 blue_, Uint8 alpha_ = 255)
 			: r{ red_ }, g{ green_ }, b{ blue_ }, a{ alpha_ }
 		{
 		}
@@ -54,7 +56,7 @@ namespace samp_edgengine
 		/// Initializes a new instance of the <see cref="Color"/> class using RGBA color packed into 32 bit unsigned integer four 8-bit channels.
 		/// </summary>
 		/// <param name="color_">The RGBA 32-bit color.</param>
-		constexpr explicit Color(const std::uint32_t color_)
+		constexpr explicit Color(Uint32 color_)
 			:
 			r{ color_ >> (3 * 8) },					// Red   component	=	Binary shift right by 3 bytes.								0xAABBCCDD => 0x000000AA
 			g{ (color_ << (1 * 8)) >> (3 * 8) },	// Green component	=	Binary shift left by 1 byte  and then right by 3 bytes:		0xAABBCCDD => 0xBBCCDD00 => 0x000000BB
@@ -98,16 +100,16 @@ namespace samp_edgengine
 		/// Converts instance to RGBA 32-bit unsigned integer.
 		/// </summary>
 		/// <returns>RGBA 32-bit unsigned integer.</returns>
-		constexpr std::uint32_t toUint32() const {
-			return (std::uint32_t{ r } << 24) + (std::uint32_t{ g } << 16) + (std::uint32_t{ b } << 8) + std::uint32_t{ a };
+		constexpr Uint32 toUint32() const {
+			return (Uint32( r ) << 24) + (Uint32( g ) << 16) + (Uint32( b ) << 8) + Uint32( a );
 		}
 
 		/// <summary>
 		/// Converts instance to RGBA 32-bit integer.
 		/// </summary>
 		/// <returns>RGBA 32-bit integer.</returns>
-		constexpr std::int32_t toInt32() const {
-			return static_cast<std::int32_t>(this->toUint32());
+		constexpr Int32 toInt32() const {
+			return static_cast<Int32>(this->toUint32());
 		}
 		
 		/// <summary>
@@ -130,7 +132,7 @@ namespace samp_edgengine
 		/// Converts instance to RGBA 32-bit unsigned integer.
 		/// </summary>
 		/// <returns>RGBA 32-bit unsigned integer.</returns>
-		explicit constexpr operator std::uint32_t() const {
+		explicit constexpr operator Uint32() const {
 			return this->toUint32();
 		}
 
@@ -138,7 +140,7 @@ namespace samp_edgengine
 		/// Converts instance to RGBA 32-bit integer.
 		/// </summary>
 		/// <returns>RGBA 32-bit integer.</returns>
-		explicit constexpr operator std::int32_t() const {
+		explicit constexpr operator Int32() const {
 			return this->toInt32();
 		}
 

@@ -284,13 +284,13 @@ public:
 	/// Sets the player's world.
 	/// </summary>
 	/// <param name="location_">The world.</param>
-	virtual void setWorld(std::int32_t const world_) override;
+	virtual void setWorld(Int32 const world_) override;
 
 	/// <summary>
 	/// Sets the player's interior.
 	/// </summary>
 	/// <param name="location_">The interior.</param>
-	virtual void setInterior(std::int32_t const interior_) override;
+	virtual void setInterior(Int32 const interior_) override;
 		
 	// Player condition.
 
@@ -345,7 +345,7 @@ public:
 	/// Returns the player's (client) vehicle seat.
 	/// </summary>
 	/// <returns></returns>
-	std::int32_t getVehicleSeat() const;
+	Int32 getVehicleSeat() const;
 
 	/// <summary>
 	/// Returns the player's vehicle.
@@ -393,13 +393,13 @@ public:
 	/// Returns the player world.
 	/// </summary>
 	/// <returns>Player world.</returns>
-	virtual std::int32_t getWorld() const override;
+	virtual Int32 getWorld() const override;
 
 	/// <summary>
 	/// Returns the player interior.
 	/// </summary>
 	/// <returns>Player interior.</returns>
-	virtual std::int32_t getInterior() const override;
+	virtual Int32 getInterior() const override;
 
 	/// <summary>
 	/// Returns the distance to specified location.
@@ -426,13 +426,13 @@ public:
 	/// Returns player's score.
 	/// </summary>
 	/// <returns>Player's score.</returns>
-	std::int32_t getScore() const;
+	Int32 getScore() const;
 
 	/// <summary>
 	/// Returns player's cash.
 	/// </summary>
 	/// <returns>Player's cash.</returns>
-	std::int32_t getCash() const;
+	Int32 getCash() const;
 
 	// Player condition.
 
@@ -460,7 +460,7 @@ public:
 	/// Returns player language.
 	/// </summary>
 	/// <returns>Player's language</returns>
-	std::uint16_t getLanguage() const noexcept;
+	Uint16 getLanguage() const noexcept;
 
 	// Player status.
 
@@ -535,19 +535,19 @@ protected:
 	/// Returns the client world.
 	/// </summary>
 	/// <returns>Client world.</returns>
-	std::int32_t getClientWorld() const;
+	Int32 getClientWorld() const;
 
 	/// <summary>
 	/// Returns the client interior.
 	/// </summary>
 	/// <returns>Client interior.</returns>
-	std::int32_t getClientInterior() const;
+	Int32 getClientInterior() const;
 
 	/// <summary>
 	/// Returns the client vehicle.
 	/// </summary>
 	/// <returns></returns>
-	std::int32_t getClientVehicle() const;
+	Int32 getClientVehicle() const;
 
 private:
 
@@ -599,8 +599,8 @@ private:
 		
 	// Player statistics.
 		
-	std::int32_t		m_score;			/// Player's in-game score.
-	std::int32_t		m_cash;				/// Player's in-game cash.
+	Int32				m_score;			/// Player's in-game score.
+	Int32				m_cash;				/// Player's in-game cash.
 
 	// Player condition.
 	float				m_health;			/// Player's in-game health.
@@ -608,7 +608,7 @@ private:
 	Vehicle*			m_vehicle;			/// Vehicle player sits in.
 
 	// Player personal settings:
-	std::uint16_t		m_language;			/// Player's language.
+	Uint16				m_language;			/// Player's language.
 
 	// Tracking:
 	I3DNodePlacementTracker* m_placementTracker;

@@ -162,19 +162,19 @@ float Player::getClientArmour() const
 }
 
 ///////////////////////////////////////////////////////////////////////////
-std::int32_t Player::getClientWorld() const
+Int32 Player::getClientWorld() const
 {
 	return sampgdk_GetPlayerVirtualWorld(static_cast< int >(this->getIndex()));
 }
 
 ///////////////////////////////////////////////////////////////////////////
-std::int32_t Player::getClientInterior() const
+Int32 Player::getClientInterior() const
 {
 	return sampgdk_GetPlayerInterior(static_cast< int >(this->getIndex()));
 }
 
 ///////////////////////////////////////////////////////////////////////////
-std::int32_t Player::getClientVehicle() const
+Int32 Player::getClientVehicle() const
 {
 	return sampgdk_GetPlayerVehicleID(static_cast< int >(this->getIndex()));
 }
@@ -293,7 +293,7 @@ void Player::setFacingAngle(float const angle_)
 }
 
 ///////////////////////////////////////////////////////////////////////////
-void Player::setWorld(std::int32_t const world_)
+void Player::setWorld(Int32 const world_)
 {
 	IWI3DNode::setWorld(world_);
 
@@ -304,7 +304,7 @@ void Player::setWorld(std::int32_t const world_)
 }
 
 ///////////////////////////////////////////////////////////////////////////
-void Player::setInterior(std::int32_t const interior_)
+void Player::setInterior(Int32 const interior_)
 {
 	IWI3DNode::setInterior(interior_);
 
@@ -406,13 +406,13 @@ math::Vector3f Player::getLocation() const
 }
 
 ///////////////////////////////////////////////////////////////////////////
-std::int32_t Player::getWorld() const
+Int32 Player::getWorld() const
 {
 	return (this->isInWorld() ? this->getClientWorld() : IWI3DNode::getWorld());
 }
 
 ///////////////////////////////////////////////////////////////////////////
-std::int32_t Player::getInterior() const
+Int32 Player::getInterior() const
 {
 	return (this->isInWorld() ? this->getClientInterior() : IWI3DNode::getInterior());
 }
@@ -442,13 +442,13 @@ PlayerPlacement Player::getPlacement() const
 }
 
 ///////////////////////////////////////////////////////////////////////////
-std::int32_t Player::getScore() const
+Int32 Player::getScore() const
 {
 	return m_score;
 }
 
 ///////////////////////////////////////////////////////////////////////////
-std::int32_t Player::getCash() const
+Int32 Player::getCash() const
 {
 	return m_cash;
 }
@@ -468,11 +468,11 @@ float Player::getArmour() const
 ///////////////////////////////////////////////////////////////////////////
 Color Player::getColor() const
 {
-	return Color{ static_cast< std::uint32_t >(sampgdk_GetPlayerColor(static_cast< int >(this->getIndex()))) };
+	return Color{ static_cast< Uint32 >(sampgdk_GetPlayerColor(static_cast<Int32>(this->getIndex()))) };
 }
 
 ///////////////////////////////////////////////////////////////////////////
-std::int32_t Player::getVehicleSeat() const
+Int32 Player::getVehicleSeat() const
 {
 	return sampgdk_GetPlayerVehicleSeat(static_cast< int >(this->getIndex()));
 }
@@ -484,7 +484,7 @@ Vehicle* Player::getVehicle() const
 }
 
 ///////////////////////////////////////////////////////////////////////////
-std::uint16_t Player::getLanguage() const noexcept
+Uint16 Player::getLanguage() const noexcept
 {
 	return m_language;
 }

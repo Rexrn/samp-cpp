@@ -13,7 +13,7 @@ namespace samp_edgengine
 class Player;
 class ServerClass;
 
-enum class VehicleCategory : std::uint8_t
+enum class VehicleCategory : Uint8
 {
 	OffRoad = 0,
 	Saloons,
@@ -32,7 +32,7 @@ enum class VehicleCategory : std::uint8_t
 	Airplanes
 };
 
-enum class SpeedUnit : std::uint8_t
+enum class SpeedUnit : Uint8
 {
 	GameDefault,
 	KMPH,
@@ -46,7 +46,7 @@ enum class SpeedUnit : std::uint8_t
 // Vehicle category				<VehicleCategory>
 using TVehicleInfoT = std::tuple<std::string_view, std::string_view, std::string_view, float, VehicleCategory>;
 
-const std::map<std::uint32_t, TVehicleInfoT> g_vehiclesDataM = {
+const std::map<Uint32, TVehicleInfoT> g_vehiclesDataM = {
 	{ 400,{ "Landstalker", "Landstalker", "landstal", 157.f, VehicleCategory::OffRoad } },
 	{ 401,{ "Bravura", "Bravura", "bravura", 147.f, VehicleCategory::Saloons } },
 	{ 402,{ "Buffalo", "Buffalo", "buffalo", 186.f, VehicleCategory::SportVehicles } },
@@ -555,14 +555,14 @@ public:
 	/// <remarks>
 	/// <para>Vehicle is valid for "lazy spawn" if it can be spawned without any unexpected behaviour (like spawning trains makes invisible vehicles that crash game when trying to enter).</para>
 	/// </remarks>
-	static bool isValidForLazySpawn(std::int32_t const modelIndex_);
+	static bool isValidForLazySpawn(Int32 const modelIndex_);
 
 	/// <summary>
 	/// Returns the vehicle model category.
 	/// </summary>
 	/// <param name="modelIndex_">Index of the model.</param>
 	/// <returns>Vehicle model category.</returns>
-	static VehicleCategory getModelCategory(std::int32_t const modelIndex_);
+	static VehicleCategory getModelCategory(Int32 const modelIndex_);
 
 	/// <summary>
 	/// Finds the model index by finding best match.
@@ -570,14 +570,14 @@ public:
 	/// <param name="name_">The name.</param>
 	/// <param name="minimalScore_">The minimal score (min. number of characters matching in sequence).</param>
 	/// <returns>Model index or -1 if not found.</returns>
-	static std::int32_t findModelBestMatch(std::string const & name_, std::size_t const minimalScore_ = 3);
+	static Int32 findModelBestMatch(std::string const & name_, std::size_t const minimalScore_ = 3);
 
 	/// <summary>
 	/// Returns the 3D size of the vehicle model.
 	/// </summary>
 	/// <param name="modelIndex_">Index of the model.</param>
 	/// <returns>3D size of the vehicle model.</returns>
-	static math::Vector3f getModelSize(std::int32_t const modelIndex_);
+	static math::Vector3f getModelSize(Int32 const modelIndex_);
 
 
 	friend class MapClass;
@@ -589,7 +589,7 @@ protected:
 	/// </summary>
 	/// <param name="player_">The player.</param>
 	/// <param name="seatIndex_">The seat index (0 = driver).</param>
-	void whenPlayerEnters(Player & player_, std::int32_t const seatIndex_);
+	void whenPlayerEnters(Player & player_, Int32 const seatIndex_);
 	
 	/// <summary>
 	/// Called when player exits vehicle or player dies inside or falls off the bike.
@@ -598,11 +598,11 @@ protected:
 	void whenPlayerExits(Player & player_);
 
 	Int32								m_handle;			// Handle for SAMP object. `InvalidHandle` if not spawned
-	std::int32_t						m_modelIndex;		// Vehicle Model ID
+	Int32								m_modelIndex;		// Vehicle Model ID
 	math::Vector3f						m_location;			// Vehicle's location.			It is NOT updated at real time. Its used when vehicle is not spawned.
 	float								m_facingAngle;		// Vehicle's angle.				It is NOT updated at real time. Its used when vehicle is not spawned.
-	std::int32_t						m_firstColor;		// Vehicle's first color.		It is NOT updated at real time. Its used when vehicle is not spawned.
-	std::int32_t						m_secondColor;		// Vehicle's second color.		It is NOT updated at real time. Its used when vehicle is not spawned.
+	Int32								m_firstColor;		// Vehicle's first color.		It is NOT updated at real time. Its used when vehicle is not spawned.
+	Int32								m_secondColor;		// Vehicle's second color.		It is NOT updated at real time. Its used when vehicle is not spawned.
 
 	Clock::TimePoint					m_latestUsage;		// Absolute time vehicle was used last time.
 	std::array<Player*, 6>				m_passengers;
@@ -642,25 +642,25 @@ public:
 	/// Sets the vehicle spawn world.
 	/// </summary>
 	/// <param name="world_">The world.</param>
-	void setSpawnWorld(std::int32_t const world_);
+	void setSpawnWorld(Int32 const world_);
 	
 	/// <summary>
 	/// Sets the vehicle spawn interior.
 	/// </summary>
 	/// <param name="interior_">The interior.</param>
-	void setSpawnInterior(std::int32_t const interior_);
+	void setSpawnInterior(Int32 const interior_);
 
 	/// <summary>
 	/// Sets the vehicle spawn first color.
 	/// </summary>
 	/// <param name="firstColor_">The first color.</param>
-	void setSpawnFirstColor(std::int32_t const firstColor_);
+	void setSpawnFirstColor(Int32 const firstColor_);
 	
 	/// <summary>
 	/// Sets the vehicle spawn second color.
 	/// </summary>
 	/// <param name="secondColor_">The second color..</param>
-	void setSpawnSecondColor(std::int32_t const secondColor_);
+	void setSpawnSecondColor(Int32 const secondColor_);
 
 	/// <summary>
 	/// Restores to vehicle spawn.
@@ -683,35 +683,35 @@ public:
 	/// Returns the vehicle spawn world.
 	/// </summary>
 	/// <returns>Vehicle's spawn world.</returns>
-	std::int32_t getSpawnWorld() const;
+	Int32 getSpawnWorld() const;
 
 	/// <summary>
 	/// Returns the vehicle spawn interior.
 	/// </summary>
 	/// <returns>Vehicle's spawn interior.</returns>
-	std::int32_t getSpawnInterior() const;
+	Int32 getSpawnInterior() const;
 
 	/// <summary>
 	/// Returns the vehicle spawn first color.
 	/// </summary>
 	/// <returns>Vehicle's spawn first color.</returns>
-	std::int32_t getSpawnFirstColor() const;
+	Int32 getSpawnFirstColor() const;
 
 	/// <summary>
 	/// Returns the vehicle spawn second color.
 	/// </summary>
 	/// <returns>Vehicle's spawn second color.</returns>
-	std::int32_t getSpawnSecondColor() const;
+	Int32 getSpawnSecondColor() const;
 
 private:	
 
 	math::Vector3f		m_spawnLocation;			// Spawn location
 	float				m_spawnAngle;				// Spawn angle
-	std::int32_t		m_spawnWorld;				// Spawn world
-	std::int32_t		m_spawnInterior;			// Spawn interior
+	Int32				m_spawnWorld;				// Spawn world
+	Int32				m_spawnInterior;			// Spawn interior
 
-	std::int32_t		m_spawnFirstColor;			// Spawn first color
-	std::int32_t		m_spawnSecondColor;			// Spawn second color
+	Int32				m_spawnFirstColor;			// Spawn first color
+	Int32				m_spawnSecondColor;			// Spawn second color
 
 }; // class StaticVehicle
 

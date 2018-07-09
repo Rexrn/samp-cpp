@@ -130,7 +130,7 @@ public:
 	/// </summary>
 	/// <param name="handle_">The handle.</param>
 	/// <returns>Pointer to found vehicle or nullptr if vehicle with this handle does not exist.</returns>
-	Vehicle* findVehicleByHandle(std::int32_t const vehicleHandle_);
+	Vehicle* findVehicleByHandle(Int32 const vehicleHandle_);
 		
 	/// <summary>
 	/// Removes specified building (an original map object).

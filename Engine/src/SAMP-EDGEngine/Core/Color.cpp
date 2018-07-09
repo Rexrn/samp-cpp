@@ -51,7 +51,7 @@ namespace samp_edgengine
 				hexString += "ff";
 
 			// Convert it resulting hex string to 32bit unsigned integer.
-			std::uint32_t color = 0;
+			Uint32 color = 0;
 			color = std::stoul(hexString, nullptr, 16);
 
 			*this = Color{ color };
@@ -67,9 +67,9 @@ namespace samp_edgengine
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 	std::string Color::toRGBString() const
 	{
-		auto packWithPrefix = [](std::stringstream &stream_, const std::uint8_t color_)
+		auto packWithPrefix = [](std::stringstream &stream_, Uint8 color_)
 		{ 
-			stream_ << (color_ < 16 ? "0" : "") << std::hex << static_cast<int>(color_);
+			stream_ << (color_ < 16 ? "0" : "") << std::hex << static_cast<Int32>(color_);
 		};
 		std::stringstream stream;
 		packWithPrefix(stream, r);
@@ -81,9 +81,9 @@ namespace samp_edgengine
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 	std::string Color::toRGBAString() const
 	{
-		auto packWithPrefix = [](std::stringstream &stream_, std::uint8_t const color_)
+		auto packWithPrefix = [](std::stringstream &stream_, Uint8 color_)
 		{
-			stream_ << (color_ < 16 ? "0" : "") << std::hex << static_cast<int>(color_);
+			stream_ << (color_ < 16 ? "0" : "") << std::hex << static_cast<Int32>(color_);
 		};
 		std::stringstream stream;
 		packWithPrefix(stream, r);
@@ -102,10 +102,10 @@ namespace samp_edgengine
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 	Color Color::random(bool const randomAlpha_)
 	{
-		return Color(	math::random::generate<std::int32_t>(0, 255),							// The red channel
-						math::random::generate<std::int32_t>(0, 255),							// The green channel
-						math::random::generate<std::int32_t>(0, 255),							// The blue channel
-						(randomAlpha_ ? math::random::generate<std::int32_t>(0, 255) : 255)		// The alpha channel
+		return Color(	math::random::generate<Int32>(0, 255),							// The red channel
+						math::random::generate<Int32>(0, 255),							// The green channel
+						math::random::generate<Int32>(0, 255),							// The blue channel
+						(randomAlpha_ ? math::random::generate<Int32>(0, 255) : 255)		// The alpha channel
 					);
 	}
 

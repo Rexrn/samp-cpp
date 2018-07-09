@@ -338,9 +338,9 @@ protected:
 	// Stores text size.
 	math::Vector2f				m_textSize;
 	// Stores outline size.
-	uint16_t					m_outlineSize;
+	Uint16						m_outlineSize;
 	// Stores shadow size.
-	uint16_t					m_shadowSize;
+	Uint16						m_shadowSize;
 	// Flag used to determine whether textdraw uses box or not.
 	bool						m_useBox;
 	// Flag used to determine whether textdraw is proportional or not.

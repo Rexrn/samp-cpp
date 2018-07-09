@@ -27,13 +27,13 @@ void IGlobalActorWrapper::whenPlayerLeavesVisibilityZone()
 }
 
 /////////////////////////////////////////////////////////////////////////////////
-void IGlobalActorWrapper::setVisibilityIndex(std::uint16_t const visibilityIndex_)
+void IGlobalActorWrapper::setVisibilityIndex(Uint16 visibilityIndex_)
 {
 	m_visibilityIndex = visibilityIndex_;
 }
 
 /////////////////////////////////////////////////////////////////////////////////
-std::uint16_t IGlobalActorWrapper::getVisibilityIndex() const
+Uint16 IGlobalActorWrapper::getVisibilityIndex() const
 {
 	return m_visibilityIndex;
 }

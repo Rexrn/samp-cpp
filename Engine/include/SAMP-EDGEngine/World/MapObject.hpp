@@ -37,7 +37,7 @@ protected:
 	void applyMaterial(std::size_t const materialIndex_, IMaterial const & textureMaterial_, Player const * player_ = nullptr);
 
 public:
-	constexpr static std::uint8_t MaxMaterialCount = 16;
+	constexpr static Uint8 MaxMaterialCount = 16;
 
 	/// <summary>
 	/// A base class for Texture and Text materials.
@@ -161,7 +161,7 @@ public:
 	/// Sets the object model.
 	/// </summary>
 	/// <param name="modelIndex_">Index of the model.</param>
-	virtual void setModel(std::int32_t const modelIndex_);
+	virtual void setModel(Int32 const modelIndex_);
 	
 	/// <summary>
 	/// Sets the object material (text).
@@ -200,7 +200,7 @@ public:
 	/// Returns the object model.
 	/// </summary>
 	/// <returns>The object model.</returns>
-	virtual std::int32_t getModel() const;
+	virtual Int32 getModel() const;
 
 	/// <summary>
 	/// Returns the object rotation.

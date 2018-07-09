@@ -32,7 +32,7 @@ public:
 	/// Sets the object model.
 	/// </summary>
 	/// <param name="modelIndex_">Index of the model.</param>
-	virtual void setModel(std::int32_t const modelIndex_) override;
+	virtual void setModel(Int32 const modelIndex_) override;
 
 	/// <summary>
 	/// Sets the object location.
@@ -62,7 +62,7 @@ public:
 	/// Returns the object handle.
 	/// </summary>
 	/// <returns>The object handle.</returns>
-	std::int32_t getHandle() const;
+	Int32 getHandle() const;
 
 	/// <summary>
 	/// Returns the player the object belongs to.
@@ -146,7 +146,7 @@ private:
 	virtual math::Vector3f getRotationFor([[maybe_unused]] Player const & player_) const override;
 
 	Player const&	m_player;
-	std::int32_t	m_handle;
+	Int32			m_handle;
 };
 
 }

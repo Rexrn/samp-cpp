@@ -333,7 +333,7 @@ void Chunk::GZThingReleased()
 Color Chunk::GZCalculateColor()
 {
 	auto const				countOfObjects	= m_globalObjects.size() + m_universalObjects.size() + m_personalObjects.size() + m_vehicles.size();
-	auto const				colorValue		= std::uint8_t( std::min(std::size_t(255), countOfObjects) );
+	auto const				colorValue		= Uint8( std::min(std::size_t(255), countOfObjects) );
 	return Color{ colorValue, colorValue, 0, 128 };
 }
 

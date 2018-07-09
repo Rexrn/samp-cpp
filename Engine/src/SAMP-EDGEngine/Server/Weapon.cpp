@@ -19,7 +19,7 @@ namespace samp_edgengine
 		// We can't avoid creating copy of the string.
 		std::string cpName{ name_ };
 		cpName = text::ascii::toLower(cpName);
-		for (std::int32_t i = Fist; i <= Parachute; i++)
+		for (Int32 i = Fist; i <= Parachute; i++)
 		{
 			if ( cpName == text::ascii::toLower( Weapon::getNameFn(static_cast<Weapon::Type>(i)) ) )
 				return static_cast<Weapon::Type>(i);
@@ -36,7 +36,7 @@ namespace samp_edgengine
 			// We can't avoid creating copy of the string.
 			std::string cpName{ name_ };
 
-			std::int32_t weaponType = 0;
+			Int32 weaponType = 0;
 
 			if (std::istringstream istream{ cpName };
 			istream >> weaponType)
@@ -67,7 +67,7 @@ namespace samp_edgengine
 		std::string cpName{ name_ };
 
 		{
-			std::int32_t weaponType = 0;
+			Int32 weaponType = 0;
 
 			if (std::istringstream istream{ cpName };
 			istream >> weaponType)
@@ -89,7 +89,7 @@ namespace samp_edgengine
 				Weapon::Type mostScored	= Weapon::Invalid;
 				std::string compareName = text::ascii::toLower(cpName);
 
-				for (std::int32_t i = Fist; i <= Parachute; i++)
+				for (Int32 i = Fist; i <= Parachute; i++)
 				{
 					// Search for max sequence in the string.
 					auto const [itMin, itMax] = text::ascii::searchWithIncomplete<text::CaseInsensitive>(compareName,
@@ -210,7 +210,7 @@ namespace samp_edgengine
 	}
 
 	///////////////////////////////////////////////////////////////////////////////////
-	void WeaponSet::remove(Weapon::Type const type_, std::int32_t const ammo_)
+	void WeaponSet::remove(Weapon::Type const type_, Int32 const ammo_)
 	{
 		auto it = std::find_if(m_weapons.begin(), m_weapons.end(),
 			[type_](const Weapon &w_) {
@@ -230,7 +230,7 @@ namespace samp_edgengine
 	}
 
 	///////////////////////////////////////////////////////////////////////////////////
-	void WeaponSet::setAmmo(Weapon::Type const type_, const std::int32_t ammo_)
+	void WeaponSet::setAmmo(Weapon::Type const type_, Int32 const ammo_)
 	{
 		// Ammo must be at least 0 in this case, fix it.
 		assert(ammo_ >= 0);

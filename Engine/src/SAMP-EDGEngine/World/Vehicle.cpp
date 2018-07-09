@@ -70,7 +70,7 @@ void Vehicle::setWorld(Int32 world_)
 }
 
 /////////////////////////////////////////////////////////////////////////////////
-void Vehicle::setInterior(std::int32_t const interior_)
+void Vehicle::setInterior(Int32 const interior_)
 {
 	m_interior = interior_;
 	if (this->isSpawned())
@@ -113,7 +113,7 @@ void Vehicle::setVelocity(math::Vector3f const & velocity_)
 }
 
 /////////////////////////////////////////////////////////////////////////////////
-void Vehicle::setModel(std::int32_t const modelIndex_)
+void Vehicle::setModel(Int32 const modelIndex_)
 {
 	m_modelIndex = modelIndex_;
 	if (this->isSpawned())
@@ -121,7 +121,7 @@ void Vehicle::setModel(std::int32_t const modelIndex_)
 }
 
 /////////////////////////////////////////////////////////////////////////////////
-void Vehicle::setFirstColor(std::int32_t const color_)
+void Vehicle::setFirstColor(Int32 const color_)
 {
 	m_firstColor = color_;
 	if (this->isSpawned())
@@ -129,7 +129,7 @@ void Vehicle::setFirstColor(std::int32_t const color_)
 }
 
 /////////////////////////////////////////////////////////////////////////////////
-void Vehicle::setSecondColor(std::int32_t const color_)
+void Vehicle::setSecondColor(Int32 const color_)
 {
 	m_secondColor = color_;
 	if (this->isSpawned())
@@ -281,13 +281,13 @@ VehiclePlacement Vehicle::getPlacement() const
 }
 
 /////////////////////////////////////////////////////////////////////////////////
-std::int32_t Vehicle::getFirstColor() const
+Int32 Vehicle::getFirstColor() const
 {
 	return m_firstColor;
 }
 
 /////////////////////////////////////////////////////////////////////////////////
-std::int32_t Vehicle::getSecondColor() const
+Int32 Vehicle::getSecondColor() const
 {
 	return m_secondColor;
 }
@@ -385,7 +385,7 @@ void Vehicle::sendPlacementUpdate()
 }
 
 /////////////////////////////////////////////////////////////////////////////////
-void Vehicle::whenPlayerEnters(Player & player_, std::int32_t const seatIndex_)
+void Vehicle::whenPlayerEnters(Player & player_, Int32 const seatIndex_)
 {
 	// TODO: remove below.
 	//GameMode->sendDebug(String::format(Color::Red, "Player ", Color::White, player->getName(), Color::Red, " entered vehicle ", this->getHandle(), passenger ? " as a passenger." : " as a driver."));
@@ -417,7 +417,7 @@ bool Vehicle::isValidForLazySpawn(std::int32_t const modelIndex_)
 }
 
 /////////////////////////////////////////////////////////////////////////////////
-VehicleCategory Vehicle::getModelCategory(std::int32_t const modelIndex_)
+VehicleCategory Vehicle::getModelCategory(Int32 const modelIndex_)
 {
 	auto const it = std::find_if(g_vehiclesDataM.begin(), g_vehiclesDataM.end(),
 		[modelIndex_](std::pair<int, TVehicleInfoT> const & vehInfo)
@@ -432,9 +432,9 @@ VehicleCategory Vehicle::getModelCategory(std::int32_t const modelIndex_)
 }
 
 /////////////////////////////////////////////////////////////////////////////////
-std::int32_t Vehicle::findModelBestMatch(std::string const & name_, std::size_t const minimalScore_)
+Int32 Vehicle::findModelBestMatch(std::string const & name_, std::size_t const minimalScore_)
 {
-	std::int32_t modelIndex	= -1;
+	Int32 modelIndex	= -1;
 	std::size_t	maxScore	= 0;
 	for (auto const &it : g_vehiclesDataM)
 	{
@@ -451,7 +451,7 @@ std::int32_t Vehicle::findModelBestMatch(std::string const & name_, std::size_t 
 }
 
 /////////////////////////////////////////////////////////////////////////////////
-math::Vector3f Vehicle::getModelSize(std::int32_t const modelIndex_)
+math::Vector3f Vehicle::getModelSize(Int32 const modelIndex_)
 {
 	math::Vector3f size;
 	sampgdk_GetVehicleModelInfo(modelIndex_, VEHICLE_MODEL_INFO_SIZE, &size.x, &size.y, &size.z);
@@ -482,25 +482,25 @@ void StaticVehicle::setSpawnFacingAngle(float const angle_)
 }
 
 /////////////////////////////////////////////////////////////////////////////////
-void StaticVehicle::setSpawnWorld(std::int32_t const world_)
+void StaticVehicle::setSpawnWorld(Int32 const world_)
 {
 	m_spawnWorld = world_;
 }
 
 /////////////////////////////////////////////////////////////////////////////////
-void StaticVehicle::setSpawnInterior(std::int32_t const interior_)
+void StaticVehicle::setSpawnInterior(Int32 const interior_)
 {
 	m_spawnInterior = interior_;
 }
 
 /////////////////////////////////////////////////////////////////////////////////
-void StaticVehicle::setSpawnFirstColor(std::int32_t const firstColor_)
+void StaticVehicle::setSpawnFirstColor(Int32 const firstColor_)
 {
 	m_spawnFirstColor = firstColor_;
 }
 
 /////////////////////////////////////////////////////////////////////////////////
-void StaticVehicle::setSpawnSecondColor(std::int32_t const secondColor_)
+void StaticVehicle::setSpawnSecondColor(Int32 const secondColor_)
 {
 	m_spawnSecondColor = secondColor_;
 }
@@ -532,25 +532,25 @@ float StaticVehicle::getSpawnFacingAngle() const
 }
 
 /////////////////////////////////////////////////////////////////////////////////
-std::int32_t StaticVehicle::getSpawnWorld() const
+Int32 StaticVehicle::getSpawnWorld() const
 {
 	return m_spawnWorld;
 }
 
 /////////////////////////////////////////////////////////////////////////////////
-std::int32_t StaticVehicle::getSpawnInterior() const
+Int32 StaticVehicle::getSpawnInterior() const
 {
 	return m_spawnInterior;
 }
 
 /////////////////////////////////////////////////////////////////////////////////
-std::int32_t StaticVehicle::getSpawnFirstColor() const
+Int32 StaticVehicle::getSpawnFirstColor() const
 {
 	return m_spawnFirstColor;
 }
 
 /////////////////////////////////////////////////////////////////////////////////
-std::int32_t StaticVehicle::getSpawnSecondColor() const
+Int32 StaticVehicle::getSpawnSecondColor() const
 {
 	return m_spawnSecondColor;
 }

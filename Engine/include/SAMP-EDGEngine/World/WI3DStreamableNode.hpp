@@ -20,7 +20,7 @@ public:
 	/// <summary>
 	/// Enumeration of all possible ways the node can be streamed.
 	/// </summary>
-	enum class VisibilityMode : std::int8_t
+	enum class VisibilityMode : Uint8
 	{
 		Everywhere = 0,		// Node will be seen everywhere
 		Specified,			// Node will be seen only on specified world/interior

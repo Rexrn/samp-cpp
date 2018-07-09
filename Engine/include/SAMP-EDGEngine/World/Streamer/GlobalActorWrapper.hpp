@@ -39,13 +39,13 @@ public:
 	/// Sets the visibility index.
 	/// </summary>
 	/// <param name="visibilityIndex_">Visibility index.</param>
-	void setVisibilityIndex(std::uint16_t const visibilityIndex_);
+	void setVisibilityIndex(Uint16 visibilityIndex_);
 
 	/// <summary>
 	/// Returns the visibility index.
 	/// </summary>
 	/// <returns>Visibility index.</returns>
-	std::uint16_t getVisibilityIndex() const;
+	Uint16 getVisibilityIndex() const;
 
 	/// <summary>
 	/// Determines whether the specified player is in the visibility zone.
@@ -78,7 +78,7 @@ public:
 	}
 private:
 
-	std::uint16_t m_visibilityIndex; // Number of Players currently seeing the object.
+	Uint16 m_visibilityIndex; // Number of Players currently seeing the object.
 };
 
 } // namespace default_streamer

@@ -3,16 +3,18 @@
 // The precompiled header:
 #include SAMP_EDGENGINE_PCH
 
+#include <SAMP-EDGEngine/Core/TypesAndDefinitions.hpp>
+
 namespace samp_edgengine
 {
 	class Teleport
 	{
 	public:
-		constexpr static std::int32_t cxInvalid		= -1;
-		constexpr static std::int32_t cxNoChange		= -2;
+		constexpr static Int32 cxInvalid		= -1;
+		constexpr static Int32 cxNoChange		= -2;
 
-		constexpr static std::int32_t cxEvery			= -1;
-		constexpr static std::int32_t cxAllButDefault	= -2;
+		constexpr static Int32 cxEvery			= -1;
+		constexpr static Int32 cxAllButDefault	= -2;
 
 
 		/// <summary>
@@ -29,7 +31,7 @@ namespace samp_edgengine
 		/// </summary>
 		/// <param name="location_">The location.</param>
 		/// <param name="facingAngle_">The facing angle.</param>
-		constexpr Teleport(math::Vector3f const location_, float const facingAngle_)
+		constexpr Teleport(math::Vector3f const &location_, float const facingAngle_)
 			: location{ location_ }, facingAngle{ facingAngle_ }, world{ cxNoChange }, interior{ cxNoChange }
 		{
 		}
@@ -41,7 +43,7 @@ namespace samp_edgengine
 		/// <param name="facingAngle_">The facing angle.</param>
 		/// <param name="world_">The world.</param>
 		/// <param name="interior_">The interior.</param>
-		constexpr Teleport(math::Vector3f const location_, float const facingAngle_, std::int32_t const world_, std::int32_t const interior_)
+		constexpr Teleport(math::Vector3f const &location_, float const facingAngle_, Int32 const world_, Int32 const interior_)
 			: location{ location_ }, facingAngle{ facingAngle_ }, world{ world_ }, interior{ interior_ }
 		{
 		}
@@ -54,7 +56,7 @@ namespace samp_edgengine
 		/// <param name="world_">The world.</param>
 		/// <param name="interior_">The interior.</param>
 		/// <returns>Constructed teleport</returns>
-		constexpr static Teleport absolute(math::Vector3f const location_, float const facingAngle_, std::int32_t const world_, std::int32_t const interior_)
+		constexpr static Teleport absolute(math::Vector3f const &location_, float const facingAngle_, Int32 const world_, Int32 const interior_)
 		{
 			return Teleport(location_, facingAngle_, world_, interior_);
 		}
@@ -65,7 +67,7 @@ namespace samp_edgengine
 		/// <param name="location_">The location.</param>
 		/// <param name="facingAngle_">The facing angle.</param>
 		/// <returns>Constructed teleport</returns>
-		constexpr static Teleport relative(math::Vector3f const location_, float const facingAngle_)
+		constexpr static Teleport relative(math::Vector3f const &location_, float const facingAngle_)
 		{
 			return Teleport(location_, facingAngle_, cxNoChange, cxNoChange);
 		}
@@ -77,7 +79,7 @@ namespace samp_edgengine
 		/// <param name="facingAngle_">The facing angle.</param>
 		/// <param name="interior_">The interior.</param>
 		/// <returns>Constructed teleport</returns>
-		constexpr static Teleport relativeW(math::Vector3f const location_, float const facingAngle_, std::int32_t const interior_)
+		constexpr static Teleport relativeW(math::Vector3f const &location_, float const facingAngle_, Int32 const interior_)
 		{
 			return Teleport(location_, facingAngle_, cxNoChange, interior_);
 		}
@@ -89,7 +91,7 @@ namespace samp_edgengine
 		/// <param name="facingAngle_">The facing angle.</param>
 		/// <param name="world_">The world.</param>
 		/// <returns>Constructed teleport</returns>
-		constexpr static Teleport relativeI(math::Vector3f const location_, float const facingAngle_, std::int32_t const world_)
+		constexpr static Teleport relativeI(math::Vector3f const &location_, float const facingAngle_, Int32 const world_)
 		{
 			return Teleport(location_, facingAngle_, world_, cxNoChange);
 		}
@@ -101,10 +103,10 @@ namespace samp_edgengine
 		float			facingAngle;
 
 		// The world
-		std::int32_t	world;
+		Int32			world;
 
 		// The interior
-		std::int32_t	interior;
+		Int32			interior;
 	};
 
 	namespace teleports

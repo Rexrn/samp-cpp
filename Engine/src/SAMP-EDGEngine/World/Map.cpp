@@ -91,7 +91,7 @@ bool MapClass::remove(GangZone const & gangZone_)
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////
-Vehicle* MapClass::findVehicleByHandle(std::int32_t const vehicleHandle_)
+Vehicle* MapClass::findVehicleByHandle(Int32 const vehicleHandle_)
 {
 	// Do not allow for such "hacks" (getting first not-spawned vehicle).
 	if (vehicleHandle_ == Vehicle::InvalidHandle)

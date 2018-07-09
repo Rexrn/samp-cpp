@@ -3,6 +3,7 @@
 #include SAMP_EDGENGINE_PCH
 
 #include <SAMP-EDGEngine/Core/Pointers.hpp>
+#include <SAMP-EDGEngine/Core/TypesAndDefinitions.hpp>
 
 namespace samp_edgengine
 {
@@ -78,7 +79,7 @@ protected:
 /// <summary>
 /// Stores every non-zero level node grid inside.
 /// </summary>
-template <typename t_elementType, typename t_ratioType, std::uint32_t t_numDivisions, std::uint32_t t_levelsLeft>
+template <typename t_elementType, typename t_ratioType, Uint32 t_numDivisions, Uint32 t_levelsLeft>
 class DivisibleGrid2Node
 	: public IDivisibleGrid2Node<t_ratioType>
 {
@@ -90,15 +91,15 @@ class DivisibleGrid2Node
 	/// <returns>
 	/// base^exponent
 	/// </returns>
-	constexpr static std::intmax_t calculateRatioNumeratorPower(std::intmax_t base_, std::intmax_t exponent_)
+	constexpr static IntMax calculateRatioNumeratorPower(IntMax base_, IntMax exponent_)
 	{
-		std::intmax_t result = base_;
+		IntMax result = base_;
 		while (exponent_-- > 1)
 			result *= base_;
 		return result;
 	}
 
-	static constexpr std::uint32_t cxLevel = t_levelsLeft;
+	static constexpr Uint32 cxLevel = t_levelsLeft;
 public:
 	// Parent class:
 	using Super = IDivisibleGrid2Node<t_ratioType>;
@@ -311,7 +312,7 @@ public:
 	/// Returns node level.
 	/// </summary>
 	/// <returns>Node level.</returns>
-	constexpr static std::uint32_t getLevel() {
+	constexpr static Uint32 getLevel() {
 		return cxLevel;
 	}
 private:
@@ -355,13 +356,13 @@ private:
 /// <summary>
 /// Stores every zero-level node.
 /// </summary>
-template <typename t_elementType, typename t_ratioType, std::uint32_t t_numDivisions>
+template <typename t_elementType, typename t_ratioType, Uint32 t_numDivisions>
 class DivisibleGrid2Node<t_elementType, t_ratioType, t_numDivisions, 0>
 	: public IDivisibleGrid2Node<t_ratioType>
 {
 
 	// Level of the node.
-	static constexpr std::uint32_t cxLevel = 0;
+	static constexpr Uint32 cxLevel = 0;
 public:
 	using Super = IDivisibleGrid2Node<t_ratioType>;
 
@@ -402,7 +403,7 @@ public:
 	/// Returns node level.
 	/// </summary>
 	/// <returns>Node level.</returns>
-	constexpr static std::uint32_t getLevel() {
+	constexpr static Uint32 getLevel() {
 		return cxLevel;
 	}
 private:

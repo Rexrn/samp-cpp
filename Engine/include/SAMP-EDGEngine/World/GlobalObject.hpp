@@ -55,7 +55,7 @@ public:
 	/// Sets the object model.
 	/// </summary>
 	/// <param name="modelIndex_">Index of the model.</param>
-	virtual void setModel(std::int32_t const modelIndex_) override;
+	virtual void setModel(Int32 const modelIndex_) override;
 
 	/// <summary>
 	/// Sets the object location.
@@ -91,7 +91,7 @@ public:
 	/// Returns the object handle.
 	/// </summary>
 	/// <returns>The object handle.</returns>
-	std::int32_t getHandle() const;
+	Int32 getHandle() const;
 
 	/// <summary>
 	/// Determines whether this instance is spawned.

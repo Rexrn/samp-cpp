@@ -26,7 +26,7 @@ public:
 	/// Sets the object model.
 	/// </summary>
 	/// <param name="modelIndex_">Index of the model.</param>
-	virtual void setModel(std::int32_t const modelIndex_) override;
+	virtual void setModel(Int32 const modelIndex_) override;
 
 	/// <summary>
 	/// Sets the object location.

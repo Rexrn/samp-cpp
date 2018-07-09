@@ -22,7 +22,7 @@ PersonalObject::~PersonalObject()
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-void PersonalObject::setModel(std::int32_t const modelIndex_)
+void PersonalObject::setModel(Int32 const modelIndex_)
 {
 	IMapObject::setModel(modelIndex_);
 }
@@ -64,7 +64,7 @@ math::Vector3f PersonalObject::getRotation() const
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-std::int32_t PersonalObject::getHandle() const
+Int32 PersonalObject::getHandle() const
 {
 	return m_handle;
 }
@@ -90,7 +90,7 @@ void PersonalObject::applyText(std::size_t const materialIndex_, Text const & te
 			textMaterial_.text.c_str(), materialIndex_, textMaterial_.size,
 			textMaterial_.font.c_str(), textMaterial_.fontSize, textMaterial_.bold,
 			textMaterial_.fontColor.toARGB().toInt32(), textMaterial_.backColor.toARGB().toInt32(),
-			static_cast<std::int32_t>(textMaterial_.textAlign));
+			static_cast<Int32>(textMaterial_.textAlign));
 	}
 }
 
