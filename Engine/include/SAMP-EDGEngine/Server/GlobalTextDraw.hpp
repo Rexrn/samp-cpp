@@ -63,6 +63,15 @@ public:
 	/// Hides from everyone.
 	/// </summary>
 	void hideFromEveryone();
+
+	/// <summary>
+	/// Event reaction designed to be called when player clicks textdraw.
+	/// </summary>
+	/// <param name="player_">The player.</param>
+	virtual void whenPlayerClicks(Player & player_)
+	{
+		// Nothing by default.
+	}
 };
 
 }

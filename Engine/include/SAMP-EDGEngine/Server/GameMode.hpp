@@ -11,6 +11,8 @@
 #include <SAMP-EDGEngine/Server/Weapon.hpp>
 #include <SAMP-EDGEngine/Server/PlayerPool.hpp>
 #include <SAMP-EDGEngine/Server/CommandManager.hpp>
+#include <SAMP-EDGEngine/Server/GlobalTextDraw.hpp>
+#include <SAMP-EDGEngine/Server/TextDrawOwner.hpp>
 #include <SAMP-EDGEngine/World/Map.hpp>
 
 #include <SAMP-EDGEngine/Core/BasicInterfaces/Streamer.hpp>
@@ -25,7 +27,9 @@ namespace samp_edgengine
 /// Provides abstract interface for every gamemode.
 /// </summary>
 class IGameMode
-	: public IEventReceiver
+	:
+	public IEventReceiver,
+	public TextDrawOwner<GlobalTextDraw>
 {
 public:		
 	/// <summary>
@@ -57,8 +61,10 @@ public:
 	void addPlayerClass(std::size_t modelIndex_, math::Vector3f const location_, float const facingAngle_, std::array<Weapon, 3> weapons_ = {});
 
 	friend class ServerClass;
+
 protected:
-		
+	
+
 	/// <summary>
 	/// Setups the game mode.
 	/// </summary>
@@ -76,6 +82,7 @@ protected:
 	/// <para>It is executed directly after GameMode creation, USE IT to setup event receivers, that receive events from server!</para>
 	/// </remarks>
 	virtual void setupEvents() {}
+
 public:
 	PlayerPool					Players;
 	MapClass					Map;

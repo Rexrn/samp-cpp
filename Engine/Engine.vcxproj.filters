@@ -333,6 +333,9 @@
     <ClInclude Include="include\SAMP-EDGEngine\World\Streamer\RaceCheckpointWrapper.hpp">
       <Filter>Header Files\World\Streamer\Wrappers</Filter>
     </ClInclude>
+    <ClInclude Include="include\SAMP-EDGEngine\Server\TextDrawOwner.hpp">
+      <Filter>Header Files\Server\TextDraw</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Dependencies\sampgdk\amxplugin.cpp">
@@ -471,6 +474,9 @@
       <Filter>Source Files\Server\TextDraw</Filter>
     </ClCompile>
     <ClCompile Include="src\SAMP-EDGEngine\Server\TextDraw.cpp">
+      <Filter>Source Files\Server\TextDraw</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SAMP-EDGEngine\Server\TextDrawOwner.cpp">
       <Filter>Source Files\Server\TextDraw</Filter>
     </ClCompile>
   </ItemGroup>

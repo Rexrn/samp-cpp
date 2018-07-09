@@ -13,6 +13,8 @@
 #include <SAMP-EDGEngine/Core/TypesAndDefinitions.hpp>
 #include <SAMP-EDGEngine/World/Checkpoint.hpp>
 #include <SAMP-EDGEngine/World/RaceCheckpoint.hpp>
+#include <SAMP-EDGEngine/Server/PlayerTextDraw.hpp>
+#include <SAMP-EDGEngine/Server/TextDrawOwner.hpp>
 
 
 namespace samp_edgengine
@@ -26,7 +28,8 @@ class Vehicle;
 /// </summary>
 class Player
 	:
-	public std::enable_shared_from_this<Player>
+	public std::enable_shared_from_this<Player>,
+	public TextDrawOwner<PlayerTextDraw>
 {
 public:
 	// Types and aliases
@@ -508,6 +511,7 @@ public:
 	friend class ServerClass;
 	friend class MapClass;
 	friend class IStreamer;
+	friend class PlayerTextDraw;
 protected:
 				
 	/// <summary>
@@ -541,7 +545,7 @@ protected:
 	std::int32_t getClientVehicle() const;
 
 private:
-	
+
 	/// <summary>
 	/// Sets whether player is inside checkpoint.
 	/// </summary>

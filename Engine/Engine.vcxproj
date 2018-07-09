@@ -258,6 +258,7 @@
     <ClInclude Include="include\SAMP-EDGEngine\World\WI3DNode.hpp" />
     <ClInclude Include="include\SAMP-EDGEngine\World\WI3DStreamableNode.hpp" />
     <ClInclude Include="include\SAMP-EDGEngine\World\Streamer\CheckpointWrapper.hpp" />
+    <ClInclude Include="include\SAMP-EDGEngine\Server\TextDrawOwner.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Dependencies\sampgdk\amxplugin.cpp">
@@ -285,6 +286,7 @@
     <ClCompile Include="src\SAMP-EDGEngine\Server\PlayerTextDraw.cpp" />
     <ClCompile Include="src\SAMP-EDGEngine\Server\PlayerTextDrawPanel.cpp" />
     <ClCompile Include="src\SAMP-EDGEngine\Server\TextDraw.cpp" />
+    <ClCompile Include="src\SAMP-EDGEngine\Server\TextDrawOwner.cpp" />
     <ClCompile Include="src\SAMP-EDGEngine\Server\Weapon.cpp" />
     <ClCompile Include="src\SAMP-EDGEngine\World\3DNode.cpp" />
     <ClCompile Include="src\SAMP-EDGEngine\World\Checkpoint.cpp" />

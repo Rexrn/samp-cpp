@@ -135,22 +135,28 @@ private:
 
 	struct EventListType
 	{
-		EventDispatcher<Clock::TimePoint>								ServerUpdates;
-		EventDispatcher<>												GameModeInits;
-		EventDispatcher<>												GameModeExits;
-		EventDispatcher<Player &>										PlayerConnects;
-		EventDispatcher<Player &>										PlayerDisconnects;
-		EventDispatcher<Player &>										PlayerSpawns;
-		EventDispatcher<Player &, Player *, Weapon::Type>				PlayerDies;
-		EventDispatcher<Vehicle &>										VehicleSpawns;
-		EventDispatcher<Vehicle &, Player *>							VehicleDies;
-		EventDispatcher<Player &, std::string_view>						PlayerSendsText;
-		EventDispatcher<Player &, std::string_view>						PlayerSendsCommandText;
+		EventDispatcher<Clock::TimePoint>								onServerUpdate;
+		EventDispatcher<>												onGameModeInit;
+		EventDispatcher<>												onGameModeExit;
+		EventDispatcher<>												onRconCommand;
+		EventDispatcher<Player &>										onPlayerConnect;
+		EventDispatcher<Player &>										onPlayerDisconnect;
+		EventDispatcher<Player &>										onPlayerSpawn;
+		EventDispatcher<Player &, Player *, Weapon::Type>				onPlayerDeath;
+		EventDispatcher<Vehicle &>										onVehicleSpawn;
+		EventDispatcher<Vehicle &, Player *>							onVehicleDeath;
+		EventDispatcher<Player &, std::string_view>						onPlayerText;
+		EventDispatcher<Player &, std::string_view>						onPlayerCommandText;
 
-		EventDispatcher<Player &, Vehicle &, bool>						PlayerStartsToEnterVehicle;
-		EventDispatcher<Player &, Vehicle &>							PlayerStartsToExitVehicle;
-		EventDispatcher<Player &, Vehicle &, Int32>						PlayerEnteredVehicle;
-		EventDispatcher<Player &, Vehicle &>							PlayerExitedVehicle;
+		EventDispatcher<Player &, Vehicle &, bool>						onPlayerStartToEnterVehicle;
+		EventDispatcher<Player &, Vehicle &>							onPlayerStartToExitVehicle;
+		EventDispatcher<Player &, Vehicle &, Int32>						onPlayerEnteredVehicle;
+		EventDispatcher<Player &, Vehicle &>							onPlayerExitedVehicle;
+
+		EventDispatcher<Player &>										onPlayerEnterCheckpoint;
+		EventDispatcher<Player &>										onPlayerLeaveCheckpoint;
+		EventDispatcher<Player &>										onPlayerEnterRaceCheckpoint;
+		EventDispatcher<Player &>										onPlayerLeaveRaceCheckpoint;
 		/*void onUpdate();
 		bool onGameModeInit();
 		bool onGameModeExit();

@@ -685,20 +685,20 @@ void ServerClass::SampEventListType::onUpdate()
 		Server->updateCheckpoints();
 	}
 
-	Server->Events.ServerUpdates.emit(frameTime);
+	Server->Events.onServerUpdate.emit(frameTime);
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 bool ServerClass::SampEventListType::onGameModeInit()
 {
-	Server->Events.GameModeInits.emit();
+	Server->Events.onGameModeInit.emit();
 	return true;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 bool ServerClass::SampEventListType::onGameModeExit()
 {
-	Server->Events.GameModeExits.emit();
+	Server->Events.onGameModeExit.emit();
 	return true;
 }
 
@@ -709,7 +709,7 @@ bool ServerClass::SampEventListType::onPlayerConnect(Int32 playerIndex_)
 		GameMode->newPlayerInstance( static_cast<std::size_t>(playerIndex_) )
 	);
 	GameMode->Streamer->whenPlayerJoinsServer(player);
-	Server->Events.PlayerConnects.emit(player);
+	Server->Events.onPlayerConnect.emit(player);
 	return true;
 }
 
@@ -718,7 +718,7 @@ bool ServerClass::SampEventListType::onPlayerDisconnect(Int32 playerIndex_, Play
 {
 	auto& player = *GameMode->Players[static_cast<std::size_t>(playerIndex_)];
 
-	Server->Events.PlayerDisconnects.emit(player);
+	Server->Events.onPlayerDisconnect.emit(player);
 
 	// Note: this is very important to tell vehicle, that player is no longer inside
 	if (auto vehicle = player.getVehicle())
@@ -738,7 +738,7 @@ bool ServerClass::SampEventListType::onPlayerSpawn(Int32 playerIndex_)
 
 	player.setExistingStatus( Player::ExistingStatus::Spawning );
 	
-	Server->Events.PlayerSpawns.emit(player);
+	Server->Events.onPlayerSpawn.emit(player);
 
 	player.setExistingStatus( Player::ExistingStatus::Spawned );
 	return true;
@@ -754,7 +754,7 @@ bool ServerClass::SampEventListType::onPlayerDeath(Int32 playerIndex_, Int32 kil
 	// Killer may be null.
 	auto killer = (killerIndex_ == Player::InvalidIndex ? nullptr : GameMode->Players[static_cast<std::size_t>(killerIndex_)]);
 
-	Server->Events.PlayerDies.emit(player, killer, static_cast<Weapon::Type>(reason_));
+	Server->Events.onPlayerDeath.emit(player, killer, static_cast<Weapon::Type>(reason_));
 	return true;
 }
 
@@ -763,7 +763,7 @@ bool ServerClass::SampEventListType::onVehicleSpawn(Int32 vehicleHandle_)
 {
 	auto& vehicle = *GameMode->Map.findVehicleByHandle(vehicleHandle_);
 
-	Server->Events.VehicleSpawns.emit(vehicle);
+	Server->Events.onVehicleSpawn.emit(vehicle);
 	return true;
 }
 
@@ -774,7 +774,7 @@ bool ServerClass::SampEventListType::onVehicleDeath(Int32 vehicleHandle_, Int32 
 	// Killer may be null.
 	auto killer = (killerIndex_ == Player::InvalidIndex ? nullptr : GameMode->Players[static_cast<std::size_t>(killerIndex_)]);
 
-	Server->Events.VehicleDies.emit(vehicle, killer);
+	Server->Events.onVehicleDeath.emit(vehicle, killer);
 	return true;
 }
 
@@ -782,7 +782,7 @@ bool ServerClass::SampEventListType::onVehicleDeath(Int32 vehicleHandle_, Int32 
 bool ServerClass::SampEventListType::onPlayerSendText(Int32 playerIndex_, std::string_view text_)
 {
 	auto& player = *GameMode->Players[static_cast<std::size_t>(playerIndex_)];
-	Server->Events.PlayerSendsText.emit(player, std::string(text_));
+	Server->Events.onPlayerText.emit(player, std::string(text_));
 	return false;
 }
 
@@ -791,7 +791,7 @@ bool ServerClass::SampEventListType::onPlayerSendCommand(Int32 playerIndex_, std
 {
 	auto& player = *GameMode->Players[static_cast<std::size_t>(playerIndex_)];
 
-	Server->Events.PlayerSendsCommandText.emit(player, command_);
+	Server->Events.onPlayerCommandText.emit(player, command_);
 	return true;
 }
 
@@ -808,7 +808,7 @@ bool ServerClass::SampEventListType::onPlayerEnterVehicle(Int32 playerIndex_, In
 
 	if ( auto vehicle = GameMode->Map.findVehicleByHandle(static_cast<Int32>(vehicleHandle_)) )
 	{
-		Server->Events.PlayerStartsToEnterVehicle.emit(player, *vehicle, isPassenger_);
+		Server->Events.onPlayerStartToEnterVehicle.emit(player, *vehicle, isPassenger_);
 	}
 
 	return true;
@@ -821,7 +821,7 @@ bool ServerClass::SampEventListType::onPlayerExitVehicle(Int32 playerIndex_, Int
 
 	if (auto const vehicle = GameMode->Map.findVehicleByHandle(static_cast<Int32>(vehicleHandle_)))
 	{
-		Server->Events.PlayerStartsToExitVehicle.emit(player, *vehicle);
+		Server->Events.onPlayerStartToExitVehicle.emit(player, *vehicle);
 	}
 
 	return true;
@@ -838,7 +838,7 @@ bool ServerClass::SampEventListType::onPlayerStateChange(Int32 playerIndex_, Int
 		// For this single moment player have still saved pointer to the vehicle.
 		if (auto const vehicle = player.getVehicle())
 		{
-			Server->Events.PlayerExitedVehicle.emit(player, *vehicle);
+			Server->Events.onPlayerExitedVehicle.emit(player, *vehicle);
 
 			// Note: it is very important to tell vehicle, that it is no longer in use.
 			vehicle->whenPlayerExits(player);
@@ -850,7 +850,7 @@ bool ServerClass::SampEventListType::onPlayerStateChange(Int32 playerIndex_, Int
 		// For this single moment player have still saved pointer to the vehicle.
 		if (auto const vehicle = player.getVehicle())
 		{
-			Server->Events.PlayerExitedVehicle.emit(player, *vehicle);
+			Server->Events.onPlayerExitedVehicle.emit(player, *vehicle);
 			
 			// Note: it is very important to tell vehicle, that it is no longer in use.
 			vehicle->whenPlayerExits(player);
@@ -872,7 +872,7 @@ bool ServerClass::SampEventListType::onPlayerStateChange(Int32 playerIndex_, Int
 			// Note: it is very important to tell vehicle, that player entered the vehicle.
 			vehicle->whenPlayerEnters(player, 0);
 
-			Server->Events.PlayerEnteredVehicle.emit(player, *vehicle, 0);
+			Server->Events.onPlayerEnteredVehicle.emit(player, *vehicle, 0);
 		}
 	}
 	else if (oldState_ != PLAYER_STATE_DRIVER && newState_ == PLAYER_STATE_PASSENGER)
@@ -884,7 +884,7 @@ bool ServerClass::SampEventListType::onPlayerStateChange(Int32 playerIndex_, Int
 			// Note: it is very important to tell vehicle, that player entered the vehicle.
 			vehicle->whenPlayerEnters(player, player.getVehicleSeat());
 
-			Server->Events.PlayerEnteredVehicle.emit(player, *vehicle, player.getVehicleSeat());
+			Server->Events.onPlayerEnteredVehicle.emit(player, *vehicle, player.getVehicleSeat());
 		}
 	}
 	
@@ -894,24 +894,29 @@ bool ServerClass::SampEventListType::onPlayerStateChange(Int32 playerIndex_, Int
 /////////////////////////////////////////////////////////////////////////////////////////
 bool ServerClass::SampEventListType::onPlayerEnterCheckpoint(Int32 playerIndex_)
 {
+	Server->Events.onPlayerEnterCheckpoint.emit( *GameMode->Players[playerIndex_] );
+
 	return true;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 bool ServerClass::SampEventListType::onPlayerLeaveCheckpoint(Int32 playerIndex_)
 {
+	Server->Events.onPlayerLeaveCheckpoint.emit( *GameMode->Players[playerIndex_] );
 	return true;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 bool ServerClass::SampEventListType::onPlayerEnterRaceCheckpoint(Int32 playerIndex_)
 {
+	Server->Events.onPlayerEnterRaceCheckpoint.emit( *GameMode->Players[playerIndex_] );
 	return true;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 bool ServerClass::SampEventListType::onPlayerLeaveRaceCheckpoint(Int32 playerIndex_)
 {
+	Server->Events.onPlayerLeaveRaceCheckpoint.emit( *GameMode->Players[playerIndex_] );
 	return true;
 }
 
@@ -1097,12 +1102,21 @@ bool ServerClass::SampEventListType::onPlayerClickMap(Int32 playerIndex_, math::
 /////////////////////////////////////////////////////////////////////////////////////////
 bool ServerClass::SampEventListType::onPlayerClickTextDraw(Int32 playerIndex_, Int32 textDrawIndex_)
 {
+	if(auto textDraw = GameMode->getTextDraw(textDrawIndex_))
+	{
+		textDraw->whenPlayerClicks(*GameMode->Players[playerIndex_]);
+	}
 	return true;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 bool ServerClass::SampEventListType::onPlayerClickPlayerTextDraw(Int32 playerIndex_, Int32 textDrawIndex_)
 {
+	auto& player = *GameMode->Players[playerIndex_];
+	if (auto textDraw = player.getTextDraw(textDrawIndex_))
+	{
+		textDraw->whenPlayerClicks();
+	}
 	return true;
 }
 

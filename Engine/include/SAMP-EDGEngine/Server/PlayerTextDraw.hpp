@@ -68,6 +68,14 @@ public:
 	/// </summary>
 	/// <returns>Reference to owner.</returns>
 	Player& getOwner() const { return m_owner; }
+	
+	/// <summary>
+	/// Event reaction designed to be called when player clicks textdraw.
+	/// </summary>
+	virtual void whenPlayerClicks()
+	{
+		// Nothing by default.
+	}
 
 	friend class PlayerTextDrawPanel;
 private:
@@ -76,7 +84,7 @@ private:
 	Player & m_owner;
 
 	//	Determines whether textdraw is shown or not.
-	bool				m_shown;
+	bool m_shown;
 };
 
 }
