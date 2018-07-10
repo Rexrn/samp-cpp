@@ -18,7 +18,7 @@ IGameMode::~IGameMode()
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-SharedPtr<Player> IGameMode::newPlayerInstance(std::size_t const playerIndex_) const
+SharedPtr<Player> IGameMode::newPlayerInstance(Int32 playerIndex_) const
 {
 	return std::make_shared<Player>(playerIndex_);
 }

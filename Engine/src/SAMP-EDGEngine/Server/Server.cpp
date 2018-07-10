@@ -27,12 +27,12 @@ void ServerClass::setup(UniquePtr<IGameMode> &&gameMode_)
 {
 	// Drop previous game mode.
 	GameMode.reset();
+	::GameMode = gameMode_.get();
 	if (gameMode_)
 	{
 		GameMode = std::forward< UniquePtr<IGameMode> >(gameMode_);
 		GameMode->setup();
 	}
-	::GameMode = GameMode.get();
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////

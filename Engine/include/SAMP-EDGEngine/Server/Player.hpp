@@ -38,9 +38,9 @@ class Player
 {
 public:
 	// Types and aliases
-	using IndexType			= int;
-	using ClassIndexType	= int;
-	using StateType			= int;
+	using IndexType			= Int32;
+	using ClassIndexType	= Int32;
+	using StateType			= Int32;
 
 	enum class ExistingStatus
 	{
