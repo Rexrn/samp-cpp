@@ -10,7 +10,8 @@ Checkpoint::Checkpoint()
 	:
 	m_size{ 3 },
 	m_intersectionRadius{ 3 },// a default size is 3m radius
-	m_intersectionHeight{ 7 } // a default height is 7m radius
+	m_intersectionHeight{ 7 }, // a default height is 7m radius
+	m_placementTracker{ nullptr }
 {
 }
 
@@ -19,7 +20,8 @@ Checkpoint::Checkpoint(math::Vector3f const& location_, float size_, float inter
 	:
 	m_size{ size_ },
 	m_intersectionRadius{ (intersectionRadius_ <= 0 ? m_size : intersectionRadius_) },
-	m_intersectionHeight{ (intersectionHeight_ <= 0 ? 7.f : intersectionHeight_) }
+	m_intersectionHeight{ (intersectionHeight_ <= 0 ? 7.f : intersectionHeight_) },
+	m_placementTracker{ nullptr }
 {
 	// Note: statically resolved virtual method does not matter here.
 	this->setLocation(location_);
