@@ -38,6 +38,11 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ResourceConverter", "Extens
 		{72E297D6-3282-48D1-8C97-960E156858E1} = {72E297D6-3282-48D1-8C97-960E156858E1}
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ServerCore", "ServerCore\ServerCore.vcxproj", "{565C887E-7965-442D-BDED-1B861D133753}"
+	ProjectSection(ProjectDependencies) = postProject
+		{23AF71CA-C750-46E3-B59E-E4F439B7B122} = {23AF71CA-C750-46E3-B59E-E4F439B7B122}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -86,6 +91,14 @@ Global
 		{E060F103-7C58-4627-A5F2-0C9C91867D80}.Release|x64.Build.0 = Release|x64
 		{E060F103-7C58-4627-A5F2-0C9C91867D80}.Release|x86.ActiveCfg = Release|Win32
 		{E060F103-7C58-4627-A5F2-0C9C91867D80}.Release|x86.Build.0 = Release|Win32
+		{565C887E-7965-442D-BDED-1B861D133753}.Debug|x64.ActiveCfg = Debug|x64
+		{565C887E-7965-442D-BDED-1B861D133753}.Debug|x64.Build.0 = Debug|x64
+		{565C887E-7965-442D-BDED-1B861D133753}.Debug|x86.ActiveCfg = Debug|Win32
+		{565C887E-7965-442D-BDED-1B861D133753}.Debug|x86.Build.0 = Debug|Win32
+		{565C887E-7965-442D-BDED-1B861D133753}.Release|x64.ActiveCfg = Release|x64
+		{565C887E-7965-442D-BDED-1B861D133753}.Release|x64.Build.0 = Release|x64
+		{565C887E-7965-442D-BDED-1B861D133753}.Release|x86.ActiveCfg = Release|Win32
+		{565C887E-7965-442D-BDED-1B861D133753}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

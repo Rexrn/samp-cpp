@@ -92,8 +92,10 @@ public:
 	UniquePtr<IChat>			Chat;
 };
 
+using GameModeSetupResult = UniquePtr<IGameMode>;
+
 }
-extern samp_edgengine::UniquePtr<samp_edgengine::IGameMode> GameMode;
+extern samp_edgengine::IGameMode* GameMode;
 
 
 

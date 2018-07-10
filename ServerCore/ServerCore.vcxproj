@@ -20,33 +20,33 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
-    <ProjectGuid>{7BA9C7BA-7864-4553-8CCD-C535B7170664}</ProjectGuid>
+    <ProjectGuid>{565C887E-7965-442D-BDED-1B861D133753}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>TestGM</RootNamespace>
+    <RootNamespace>ServerCore</RootNamespace>
     <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v141</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v141</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v141</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v141</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
@@ -59,19 +59,19 @@
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="..\..\Configuration\Dependencies.props" />
+    <Import Project="..\Configuration\Dependencies.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="..\..\Configuration\Dependencies.props" />
+    <Import Project="..\Configuration\Dependencies.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="..\..\Configuration\Dependencies.props" />
+    <Import Project="..\Configuration\Dependencies.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="..\..\Configuration\Dependencies.props" />
+    <Import Project="..\Configuration\Dependencies.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -100,27 +100,16 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;_DEBUG;EXAMPLEGM_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)include;$(RapidXMLDirectory);$(QuickMaffsDirectory)include;$(SolutionDir)Engine\include;$(SolutionDir)Extensions\ResourceIO\include</AdditionalIncludeDirectories>
+      <PrecompiledHeaderFile>ServerCorePCH.hpp</PrecompiledHeaderFile>
+      <AdditionalIncludeDirectories>$(SolutionDir)Engine\include;$(QuickMaffsDirectory)include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <BrowseInformation>true</BrowseInformation>
-      <PrecompiledHeaderFile>TestGMPCH.hpp</PrecompiledHeaderFile>
     </ClCompile>
     <Link>
-      <SubSystem>Windows</SubSystem>
+      <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <ModuleDefinitionFile>SymbolsExportList.def</ModuleDefinitionFile>
-      <AdditionalLibraryDirectories>$(SolutionDir)ServerCore/output/$(Platform)/$(Configuration);$(SolutionDir)Engine/output/$(Platform)/$(Configuration);$(SolutionDir)Extensions/ResourceIO/output/$(Platform)/$(Configuration)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>ServerCore.lib;ResourceIO.lib;SAMP-EDGEngine.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <ForceSymbolReferences>%(ForceSymbolReferences)</ForceSymbolReferences>
     </Link>
-    <Bscmake>
-      <PreserveSbr>true</PreserveSbr>
-    </Bscmake>
-    <PostBuildEvent>
-      <Command>$(ProjectDir)CopyToServerPlugins "$(TargetPath)" "$(TargetName)"</Command>
-    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -128,22 +117,16 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;EXAMPLEGM_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <PrecompiledHeaderFile>TestGMPCH.hpp</PrecompiledHeaderFile>
+      <PrecompiledHeaderFile>ServerCorePCH.hpp</PrecompiledHeaderFile>
+      <AdditionalIncludeDirectories>$(SolutionDir)Engine\include;$(QuickMaffsDirectory)include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)include;$(RapidXMLDirectory);$(QuickMaffsDirectory)include;$(SolutionDir)Engine\include;$(SolutionDir)Extensions\ResourceIO\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <SubSystem>Windows</SubSystem>
+      <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)ServerCore/output/$(Platform)/$(Configuration);$(SolutionDir)Engine/output/$(Platform)/$(Configuration);$(SolutionDir)Extensions/ResourceIO/output/$(Platform)/$(Configuration)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>ServerCore.lib;ResourceIO.lib;SAMP-EDGEngine.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <ModuleDefinitionFile>SymbolsExportList.def</ModuleDefinitionFile>
     </Link>
-    <PostBuildEvent>
-      <Command>$(ProjectDir)CopyToServerPlugins "$(TargetPath)" "$(TargetName)"</Command>
-    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -153,24 +136,18 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;NDEBUG;EXAMPLEGM_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)include;$(RapidXMLDirectory);$(QuickMaffsDirectory)include;$(SolutionDir)Engine\include;$(SolutionDir)Extensions\ResourceIO\include</AdditionalIncludeDirectories>
+      <PrecompiledHeaderFile>ServerCorePCH.hpp</PrecompiledHeaderFile>
+      <AdditionalIncludeDirectories>$(SolutionDir)Engine\include;$(QuickMaffsDirectory)include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <PrecompiledHeaderFile>TestGMPCH.hpp</PrecompiledHeaderFile>
     </ClCompile>
     <Link>
-      <SubSystem>Windows</SubSystem>
+      <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <ModuleDefinitionFile>SymbolsExportList.def</ModuleDefinitionFile>
-      <AdditionalLibraryDirectories>$(SolutionDir)ServerCore/output/$(Platform)/$(Configuration);$(SolutionDir)Engine/output/$(Platform)/$(Configuration);$(SolutionDir)Extensions/ResourceIO/output/$(Platform)/$(Configuration)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>ServerCore.lib;ResourceIO.lib;SAMP-EDGEngine.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
-    <PostBuildEvent>
-      <Command>$(ProjectDir)CopyToServerPlugins "$(TargetPath)" "$(TargetName)"</Command>
-    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -180,36 +157,30 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>NDEBUG;EXAMPLEGM_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <PrecompiledHeaderFile>TestGMPCH.hpp</PrecompiledHeaderFile>
+      <PrecompiledHeaderFile>ServerCorePCH.hpp</PrecompiledHeaderFile>
+      <AdditionalIncludeDirectories>$(SolutionDir)Engine\include;$(QuickMaffsDirectory)include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)include;$(RapidXMLDirectory);$(QuickMaffsDirectory)include;$(SolutionDir)Engine\include;$(SolutionDir)Extensions\ResourceIO\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <SubSystem>Windows</SubSystem>
+      <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)ServerCore/output/$(Platform)/$(Configuration);$(SolutionDir)Engine/output/$(Platform)/$(Configuration);$(SolutionDir)Extensions/ResourceIO/output/$(Platform)/$(Configuration)</AdditionalLibraryDirectories>
-      <ModuleDefinitionFile>SymbolsExportList.def</ModuleDefinitionFile>
-      <AdditionalDependencies>ServerCore.lib;ResourceIO.lib;SAMP-EDGEngine.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
-    <PostBuildEvent>
-      <Command>$(ProjectDir)CopyToServerPlugins "$(TargetPath)" "$(TargetName)"</Command>
-    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="TestGMPCH.hpp" />
+    <ClInclude Include="ServerCorePCH.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Main.cpp" />
-    <ClCompile Include="TestGMPCH.cpp">
+    <ClCompile Include="ServerCorePCH.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="ServerCore.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

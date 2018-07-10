@@ -48,6 +48,10 @@
 /Engine/output
 /Engine/intermediate
 
+/ServerCore/.vs
+/ServerCore/output
+/ServerCore/intermediate
+
 /Examples/TestGM/.vs
 /Examples/TestGM/output
 /Examples/TestGM/intermediate
@@ -59,7 +63,5 @@
 /Extensions/ResourceConverter/.vs
 /Extensions/ResourceConverter/output
 /Extensions/ResourceConverter/intermediate
-
-
 
 *.TMP

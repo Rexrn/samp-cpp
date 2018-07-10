@@ -68,115 +68,98 @@ public:
 	/// <param name="desc">The description.</param>
 	void setDescription(const std::string_view desc_);
 		
-private:
-	struct SampEventListType {
-		void onUpdate();
-		bool onGameModeInit();
-		bool onGameModeExit();
-		bool onPlayerConnect(Int32 playerIndex_);
-		bool onPlayerDisconnect(Int32 playerIndex_, Player::DisconnectReason reason_);
-		bool onPlayerSpawn(Int32 playerIndex_);
-		bool onPlayerDeath(Int32 playerIndex_, Int32 killerIndex_, Weapon::Type reason_);
-		bool onVehicleSpawn(Int32 vehicleHandle_);
-		bool onVehicleDeath(Int32 vehicleHandle_, Int32 killerIndex_);
-		bool onPlayerSendText(Int32 playerIndex_, std::string_view text_);
-		bool onPlayerSendCommand(Int32 playerIndex_, std::string_view commandText_);
-		bool onPlayerRequestClass(Int32 playerIndex_, Player::ClassIndexType classIndex_);
-		bool onPlayerEnterVehicle(Int32 playerIndex_, Int32 vehicleHandle_, bool isPassenger_);
-		bool onPlayerExitVehicle(Int32 playerIndex_, Int32 vehicleHandle_);
-		bool onPlayerStateChange(Int32 playerIndex_, Int32 newState_, Int32 oldState_);
-		bool onPlayerEnterCheckpoint(Int32 playerIndex_);
-		bool onPlayerLeaveCheckpoint(Int32 playerIndex_);
-		bool onPlayerEnterRaceCheckpoint(Int32 playerIndex_);
-		bool onPlayerLeaveRaceCheckpoint(Int32 playerIndex_);
-		bool onRconCommand(std::string_view rconCommand_);
-		bool onPlayerRequestSpawn(Int32 playerIndex_);
-		bool onObjectMoved(Int32 objectHandle_);
-		bool onPlayerObjectMoved(Int32 playerIndex_, Int32 objectHandle_);
-		bool onPlayerPickUpPickup(Int32 playerIndex_, Int32 pickupHandle_);
-		bool onVehicleMod(Int32 playerIndex_, Int32 vehicleHandle_, Int32 componentIndex_);
-		bool onPlayerEnterModShop(Int32 playerIndex_, Int32 interiorIndex_);
-		bool onPlayerExitModShop(Int32 playerIndex_, Int32 interiorIndex_);
-		bool onVehiclePaintjob(Int32 playerIndex_, Int32 vehicleHandle_, Int32 paintjobIndex_);
-		bool onVehicleRespray(Int32 playerIndex_, Int32 vehicleHandle_, Vehicle::Colors colors_);
-		bool onVehicleDamageStatusUpdate(Int32 vehicleHandle_, Int32 playerIndex_);
-		bool onUnoccupiedVehicleUpdate(Int32 vehicleHandle_, Int32 playerIndex_, math::Vector3f location_, math::Vector3f velocity_);
-		bool onUnoccupiedVehicleUpdate(Int32 vehicleHandle_, Int32 playerIndex_, Int32 passengerSeat_, math::Vector3f location_, math::Vector3f velocity_);
-		bool onPlayerSelectedMenuRow(Int32 playerIndex_, Int32 row_);
-		bool onPlayerExitedMenu(Int32 playerIndex_);
-		bool onPlayerInteriorChange(Int32 playerIndex_, Int32 newInterior_, Int32 oldInterior);
-		bool onPlayerKeyboardStateChange(Int32 playerIndex_, Keyboard const & newState_, Keyboard const & oldState_);
-		bool onRconLoginAttempt(std::string_view IP_, std::string_view password_, bool success_);
-		bool onPlayerUpdate(Int32 playerIndex_);
-		bool onPlayerStreamIn(Int32 playerIndex_, Int32 forPlayerIndex_);
-		bool onPlayerStreamOut(Int32 playerIndex_, Int32 forPlayerIndex_);
-		bool onVehicleStreamIn(Int32 vehicleHandle_, Int32 forPlayerIndex_);
-		bool onVehicleStreamOut(Int32 vehicleHandle_, Int32 forPlayerIndex_);
-		bool onActorStreamIn(Int32 actorIndex_, Int32 forPlayerIndex_);
-		bool onActorStreamOut(Int32 actorIndex_, Int32 forPlayerIndex_);
-		bool onDialogResponse(Int32 playerIndex_, Int32 dialogIndex_, Dialog::Button response, Int32 listItem_, std::string_view inputText_);
-		bool onPlayerTakeDamage(Int32 playerIndex_, Int32 issuerIndex_, float amount_, Weapon::Type weapon_, Player::BodyPart bodyPart_);
-		bool onPlayerGiveDamage(Int32 playerIndex_, Int32 damagedIndex_, float amount_, Weapon::Type weapon_, Player::BodyPart bodyPart_);
-		bool onPlayerGiveDamageActor(Int32 playerIndex_, Int32 damagedActorIndex_, float amount_, Weapon::Type weapon_, Player::BodyPart bodyPart_);
-		bool onPlayerClickMap(Int32 playerIndex_, math::Vector3f location_);
-		bool onPlayerClickTextDraw(Int32 playerIndex_, Int32 textDrawIndex_);
-		bool onPlayerClickPlayerTextDraw(Int32 playerIndex_, Int32 textDrawIndex_);
-		bool onIncomingConnection(Int32 playerIndex_, std::string_view IPAddress_, Int32 port_);
-		bool onTrailerUpdate(Int32 playerIndex_, Int32 vehicleHandle_);
-		bool onVehicleSirenStateChange(Int32 playerIndex_, Int32 vehicleHandle_, bool turnedOn_);
-		bool onPlayerClickPlayer(Int32 playerIndex_, Int32 clickedPlayerIndex_, Int32 source_);
-		bool onPlayerEditObject(Int32 playerIndex_, Int32 objectHandle_, IMapObject::EditResponse response, math::Vector3f location_, math::Vector3f rotation_);
-		bool onPlayerEditPlayerObject(Int32 playerIndex_, Int32 objectHandle_, IMapObject::EditResponse response, math::Vector3f location_, math::Vector3f rotation_);
-		bool onPlayerEditAttachedObject(Int32 playerIndex_, bool applied_, Int32 slotIndex_, Int32 modelIndex_, Int32 boneIndex_, math::Vector3f offset_, math::Vector3f rotation_, math::Vector3f scale_);
-		bool onPlayerSelectObject(Int32 playerIndex_, Int32 objectHandle_, Int32 modelIndex_, math::Vector3f location_);
-		bool onPlayerSelectPlayerObject(Int32 playerIndex_, Int32 objectHandle_, Int32 modelIndex_, math::Vector3f location_);
-		bool onPlayerWeaponShot(Int32 playerIndex_, Weapon::Type weapon_, Weapon::HitResult hitResult_);
-	};
 
-	struct EventListType
-	{
-		EventDispatcher<Clock::TimePoint>								onServerUpdate;
-		EventDispatcher<>												onGameModeInit;
-		EventDispatcher<>												onGameModeExit;
-		EventDispatcher<>												onRconCommand;
-		EventDispatcher<Player &>										onPlayerConnect;
-		EventDispatcher<Player &>										onPlayerDisconnect;
-		EventDispatcher<Player &>										onPlayerUpdate;
-		EventDispatcher<Player &>										onPlayerSpawn;
-		EventDispatcher<Player &, Int32>								onPlayerRequestClass;
-		EventDispatcher<Player &, Player *, Weapon::Type>				onPlayerDeath;
-		EventDispatcher<Vehicle &>										onVehicleSpawn;
-		EventDispatcher<Vehicle &, Player *>							onVehicleDeath;
-		EventDispatcher<Player &, std::string_view>						onPlayerText;
-		EventDispatcher<Player &, std::string_view>						onPlayerCommandText;
+	// SAMP Events:
+	void sampEvent_OnUpdate();
+	bool sampEvent_OnGameModeInit();
+	bool sampEvent_OnGameModeExit();
+	bool sampEvent_OnPlayerConnect(Int32 playerIndex_);
+	bool sampEvent_OnPlayerDisconnect(Int32 playerIndex_, Player::DisconnectReason reason_);
+	bool sampEvent_OnPlayerSpawn(Int32 playerIndex_);
+	bool sampEvent_OnPlayerDeath(Int32 playerIndex_, Int32 killerIndex_, Weapon::Type reason_);
+	bool sampEvent_OnVehicleSpawn(Int32 vehicleHandle_);
+	bool sampEvent_OnVehicleDeath(Int32 vehicleHandle_, Int32 killerIndex_);
+	bool sampEvent_OnPlayerSendText(Int32 playerIndex_, std::string_view text_);
+	bool sampEvent_OnPlayerSendCommand(Int32 playerIndex_, std::string_view commandText_);
+	bool sampEvent_OnPlayerRequestClass(Int32 playerIndex_, Player::ClassIndexType classIndex_);
+	bool sampEvent_OnPlayerEnterVehicle(Int32 playerIndex_, Int32 vehicleHandle_, bool isPassenger_);
+	bool sampEvent_OnPlayerExitVehicle(Int32 playerIndex_, Int32 vehicleHandle_);
+	bool sampEvent_OnPlayerStateChange(Int32 playerIndex_, Int32 newState_, Int32 oldState_);
+	bool sampEvent_OnPlayerEnterCheckpoint(Int32 playerIndex_);
+	bool sampEvent_OnPlayerLeaveCheckpoint(Int32 playerIndex_);
+	bool sampEvent_OnPlayerEnterRaceCheckpoint(Int32 playerIndex_);
+	bool sampEvent_OnPlayerLeaveRaceCheckpoint(Int32 playerIndex_);
+	bool sampEvent_OnRconCommand(std::string_view rconCommand_);
+	bool sampEvent_OnPlayerRequestSpawn(Int32 playerIndex_);
+	bool sampEvent_OnObjectMoved(Int32 objectHandle_);
+	bool sampEvent_OnPlayerObjectMoved(Int32 playerIndex_, Int32 objectHandle_);
+	bool sampEvent_OnPlayerPickUpPickup(Int32 playerIndex_, Int32 pickupHandle_);
+	bool sampEvent_OnVehicleMod(Int32 playerIndex_, Int32 vehicleHandle_, Int32 componentIndex_);
+	bool sampEvent_OnPlayerEnterModShop(Int32 playerIndex_, Int32 interiorIndex_);
+	bool sampEvent_OnPlayerExitModShop(Int32 playerIndex_, Int32 interiorIndex_);
+	bool sampEvent_OnVehiclePaintjob(Int32 playerIndex_, Int32 vehicleHandle_, Int32 paintjobIndex_);
+	bool sampEvent_OnVehicleRespray(Int32 playerIndex_, Int32 vehicleHandle_, Vehicle::Colors colors_);
+	bool sampEvent_OnVehicleDamageStatusUpdate(Int32 vehicleHandle_, Int32 playerIndex_);
+	bool sampEvent_OnUnoccupiedVehicleUpdate(Int32 vehicleHandle_, Int32 playerIndex_, math::Vector3f location_, math::Vector3f velocity_);
+	bool sampEvent_OnUnoccupiedVehicleUpdate(Int32 vehicleHandle_, Int32 playerIndex_, Int32 passengerSeat_, math::Vector3f location_, math::Vector3f velocity_);
+	bool sampEvent_OnPlayerSelectedMenuRow(Int32 playerIndex_, Int32 row_);
+	bool sampEvent_OnPlayerExitedMenu(Int32 playerIndex_);
+	bool sampEvent_OnPlayerInteriorChange(Int32 playerIndex_, Int32 newInterior_, Int32 oldInterior);
+	bool sampEvent_OnPlayerKeyboardStateChange(Int32 playerIndex_, Keyboard const & newState_, Keyboard const & oldState_);
+	bool sampEvent_OnRconLoginAttempt(std::string_view IP_, std::string_view password_, bool success_);
+	bool sampEvent_OnPlayerUpdate(Int32 playerIndex_);
+	bool sampEvent_OnPlayerStreamIn(Int32 playerIndex_, Int32 forPlayerIndex_);
+	bool sampEvent_OnPlayerStreamOut(Int32 playerIndex_, Int32 forPlayerIndex_);
+	bool sampEvent_OnVehicleStreamIn(Int32 vehicleHandle_, Int32 forPlayerIndex_);
+	bool sampEvent_OnVehicleStreamOut(Int32 vehicleHandle_, Int32 forPlayerIndex_);
+	bool sampEvent_OnActorStreamIn(Int32 actorIndex_, Int32 forPlayerIndex_);
+	bool sampEvent_OnActorStreamOut(Int32 actorIndex_, Int32 forPlayerIndex_);
+	bool sampEvent_OnDialogResponse(Int32 playerIndex_, Int32 dialogIndex_, Dialog::Button response, Int32 listItem_, std::string_view inputText_);
+	bool sampEvent_OnPlayerTakeDamage(Int32 playerIndex_, Int32 issuerIndex_, float amount_, Weapon::Type weapon_, Player::BodyPart bodyPart_);
+	bool sampEvent_OnPlayerGiveDamage(Int32 playerIndex_, Int32 damagedIndex_, float amount_, Weapon::Type weapon_, Player::BodyPart bodyPart_);
+	bool sampEvent_OnPlayerGiveDamageActor(Int32 playerIndex_, Int32 damagedActorIndex_, float amount_, Weapon::Type weapon_, Player::BodyPart bodyPart_);
+	bool sampEvent_OnPlayerClickMap(Int32 playerIndex_, math::Vector3f location_);
+	bool sampEvent_OnPlayerClickTextDraw(Int32 playerIndex_, Int32 textDrawIndex_);
+	bool sampEvent_OnPlayerClickPlayerTextDraw(Int32 playerIndex_, Int32 textDrawIndex_);
+	bool sampEvent_OnIncomingConnection(Int32 playerIndex_, std::string_view IPAddress_, Int32 port_);
+	bool sampEvent_OnTrailerUpdate(Int32 playerIndex_, Int32 vehicleHandle_);
+	bool sampEvent_OnVehicleSirenStateChange(Int32 playerIndex_, Int32 vehicleHandle_, bool turnedOn_);
+	bool sampEvent_OnPlayerClickPlayer(Int32 playerIndex_, Int32 clickedPlayerIndex_, Int32 source_);
+	bool sampEvent_OnPlayerEditObject(Int32 playerIndex_, Int32 objectHandle_, IMapObject::EditResponse response, math::Vector3f location_, math::Vector3f rotation_);
+	bool sampEvent_OnPlayerEditPlayerObject(Int32 playerIndex_, Int32 objectHandle_, IMapObject::EditResponse response, math::Vector3f location_, math::Vector3f rotation_);
+	bool sampEvent_OnPlayerEditAttachedObject(Int32 playerIndex_, bool applied_, Int32 slotIndex_, Int32 modelIndex_, Int32 boneIndex_, math::Vector3f offset_, math::Vector3f rotation_, math::Vector3f scale_);
+	bool sampEvent_OnPlayerSelectObject(Int32 playerIndex_, Int32 objectHandle_, Int32 modelIndex_, math::Vector3f location_);
+	bool sampEvent_OnPlayerSelectPlayerObject(Int32 playerIndex_, Int32 objectHandle_, Int32 modelIndex_, math::Vector3f location_);
+	bool sampEvent_OnPlayerWeaponShot(Int32 playerIndex_, Weapon::Type weapon_, Weapon::HitResult hitResult_);
 
-		EventDispatcher<Player &, Vehicle &, bool>						onPlayerStartToEnterVehicle;
-		EventDispatcher<Player &, Vehicle &>							onPlayerStartToExitVehicle;
-		EventDispatcher<Player &, Vehicle &, Int32>						onPlayerEnteredVehicle;
-		EventDispatcher<Player &, Vehicle &>							onPlayerExitedVehicle;
+	EventDispatcher<Clock::TimePoint>								onServerUpdate;
+	EventDispatcher<>												onGameModeInit;
+	EventDispatcher<>												onGameModeExit;
+	EventDispatcher<>												onRconCommand;
+	EventDispatcher<Player &>										onPlayerConnect;
+	EventDispatcher<Player &>										onPlayerDisconnect;
+	EventDispatcher<Player &>										onPlayerUpdate;
+	EventDispatcher<Player &>										onPlayerSpawn;
+	EventDispatcher<Player &, Int32>								onPlayerRequestClass;
+	EventDispatcher<Player &, Player *, Weapon::Type>				onPlayerDeath;
+	EventDispatcher<Vehicle &>										onVehicleSpawn;
+	EventDispatcher<Vehicle &, Player *>							onVehicleDeath;
+	EventDispatcher<Player &, std::string_view>						onPlayerText;
+	EventDispatcher<Player &, std::string_view>						onPlayerCommandText;
 
-		EventDispatcher<Player &>										onPlayerEnterCheckpoint;
-		EventDispatcher<Player &>										onPlayerLeaveCheckpoint;
-		EventDispatcher<Player &>										onPlayerEnterRaceCheckpoint;
-		EventDispatcher<Player &>										onPlayerLeaveRaceCheckpoint;
+	EventDispatcher<Player &, Vehicle &, bool>						onPlayerStartToEnterVehicle;
+	EventDispatcher<Player &, Vehicle &>							onPlayerStartToExitVehicle;
+	EventDispatcher<Player &, Vehicle &, Int32>						onPlayerEnteredVehicle;
+	EventDispatcher<Player &, Vehicle &>							onPlayerExitedVehicle;
 
-		EventDispatcher<Player &, Int32, Int32>							onPlayerInteriorChange;
-		EventDispatcher<Player &, Keyboard const&, Keyboard const &>	onPlayerKeyboardStateChange;
-		/*void onUpdate();
-		bool onGameModeInit();
-		bool onGameModeExit();
-		bool onPlayerConnect(int playerid);
-		bool onPlayerDisconnect(int playerid, int reason);
-		bool onPlayerSpawn(int playerid);
-		bool onPlayerDeath(int playerid, int killerid, int reason);
-		bool onVehicleSpawn(int vehicleid);
-		bool onVehicleDeath(int vehicleid, int killerid);
-		bool onPlayerSendText(int playerid, const char * text);
-		bool onPlayerSendCommand(int playerid, const char * cmdtext);
-		*/
-	};
+	EventDispatcher<Player &>										onPlayerEnterCheckpoint;
+	EventDispatcher<Player &>										onPlayerLeaveCheckpoint;
+	EventDispatcher<Player &>										onPlayerEnterRaceCheckpoint;
+	EventDispatcher<Player &>										onPlayerLeaveRaceCheckpoint;
+
+	EventDispatcher<Player &, Int32, Int32>							onPlayerInteriorChange;
+	EventDispatcher<Player &, Keyboard const&, Keyboard const &>	onPlayerKeyboardStateChange;
 		
-public:
 	/////////////////////////////////////////////////////////////////////////////
 	class Default
 	{
@@ -193,9 +176,7 @@ public:
 		/// </remarks>
 		static bool	isPlayerNameValid(const std::string_view name_);
 	};
-
-	SampEventListType					SampEvents;
-	EventListType						Events;
+	UniquePtr<IGameMode>				GameMode;
 private:
 	
 	/// <summary>
