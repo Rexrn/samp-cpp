@@ -159,7 +159,7 @@ private:
 	/// <para>This is an exclusive function, called before any other and with different arguments.</para>
 	/// </remarks>
 	/// <returns>Reference to added player.</returns>
-	Player& whenPlayerConnectsEx(SharedPtr<Player> &&player_);
+	Player& whenPlayerConnectsEx(UniquePtr<Player> &&player_);
 		
 	/// <summary>
 	/// Called when player disconnects.

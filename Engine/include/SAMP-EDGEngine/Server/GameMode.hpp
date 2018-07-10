@@ -49,7 +49,7 @@ public:
 	/// <returns>
 	/// New player instance with specified index.
 	/// </returns>
-	virtual SharedPtr<Player> newPlayerInstance(Int32 playerIndex_) const;
+	virtual UniquePtr<Player> newPlayerInstance(Int32 playerIndex_) const;
 		
 	/// <summary>
 	/// Adds the player class.

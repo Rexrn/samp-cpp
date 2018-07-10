@@ -150,11 +150,11 @@ Player * PlayerPool::findBestMatch(std::string_view const nameOrIndex_, std::siz
 }
 
 //////////////////////////////////////////////////////////////////////////////
-Player& PlayerPool::whenPlayerConnectsEx(SharedPtr<Player>&& player_)
+Player& PlayerPool::whenPlayerConnectsEx(UniquePtr<Player>&& player_)
 {
-	auto index = player_->getIndex();
+	const_a index = player_->getIndex();
 
-	m_playerPool[index] = std::forward< SharedPtr<Player> >(player_);
+	m_playerPool[index] = std::forward< UniquePtr<Player> >(player_);
 	// Do not use player_ from now.
 	m_playerRawPool[index] = m_playerPool[index].get();
 		
@@ -167,7 +167,10 @@ void PlayerPool::whenPlayerDisconnectsEx(std::size_t const playerIndex_)
 	// Remove from connected Players.
 	{
 		auto it = std::find_if(m_connectedPlayers.begin(), m_connectedPlayers.end(),
-			[playerIndex_](Player *const element) { return element->getIndex() == playerIndex_; });
+			[playerIndex_](Player *const element)
+			{
+				return element->getIndex() == playerIndex_;
+			});
 		m_connectedPlayers.erase(it);
 	}
 
