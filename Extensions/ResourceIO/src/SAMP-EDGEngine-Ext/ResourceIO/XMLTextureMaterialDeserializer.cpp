@@ -71,7 +71,7 @@ bool XMLTextureMaterialDeserializer::deserialize() const
 		auto const tintStr = xml_helper::getAttribute(sourceNode, XMLNames::Attributes::Tint);
 		try
 		{
-			texture->color = Color{ static_cast< Uint32 >( std::stoul(tintStr) ) };
+			texture->color = Color{ static_cast<Uint32>( std::stoul(tintStr, nullptr, 16) ) };
 		}
 		catch (...)
 		{
