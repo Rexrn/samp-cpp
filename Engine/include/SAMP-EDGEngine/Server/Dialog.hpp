@@ -61,7 +61,7 @@ protected:
 	/// Shows the specified dialog. Dialog ID can be modified with custom hash.
 	/// </summary>
 	/// <param name="customHash">The custom hash.</param>
-	virtual void show(std::string_view customHash_ = "");
+	virtual void show(std::string_view customHash_ = "") = 0;
 
 	// Reference to player the dialog is shown to.
 	Player* m_player;
