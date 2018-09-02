@@ -193,7 +193,9 @@
     <ClInclude Include="include\SAMP-EDGEngine\Core\BasicInterfaces\PlacementTracker.hpp" />
     <ClInclude Include="include\SAMP-EDGEngine\Core\BasicInterfaces\Streamer.hpp" />
     <ClInclude Include="include\SAMP-EDGEngine\Core\BasicInterfaces\Updatable.hpp" />
+    <ClInclude Include="include\SAMP-EDGEngine\Core\Pointers.hpp" />
     <ClInclude Include="include\SAMP-EDGEngine\Core\TypesAndDefinitions.hpp" />
+    <ClInclude Include="include\SAMP-EDGEngine\Core\TypesAndDefinitions.inl" />
     <ClInclude Include="include\SAMP-EDGEngine\Core\Placement.hpp" />
     <ClInclude Include="include\SAMP-EDGEngine\Core\TextInc.hpp" />
     <ClInclude Include="include\SAMP-EDGEngine\Core\Text\ASCII.hpp" />
@@ -243,7 +245,7 @@
     <ClInclude Include="include\SAMP-EDGEngine\Core\Clock.hpp" />
     <ClInclude Include="include\SAMP-EDGEngine\Core\Color.hpp" />
     <ClInclude Include="include\SAMP-EDGEngine\Core\Exceptions.hpp" />
-    <ClInclude Include="include\SAMP-EDGEngine\Core\Pointers.hpp" />
+    <ClInclude Include="include\SAMP-EDGEngine\Core\Pointers.inl" />
     <ClInclude Include="include\SAMP-EDGEngine\Server\Player.hpp" />
     <ClInclude Include="include\SAMP-EDGEngine\Server\Server.hpp" />
     <ClInclude Include="include\SAMP-EDGEngine\Server\PlayerPool.hpp" />

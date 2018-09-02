@@ -1,15 +1,14 @@
-// File description:
-// Creates useful pointer aliases.
 #pragma once
 
 #include SAMP_EDGENGINE_PCH
 
-namespace samp_edgengine
-{
-	template <typename T>
-	using SharedPtr		= std::shared_ptr<T>;
-	template <typename T, typename V = std::default_delete<T> >
-	using UniquePtr		= std::unique_ptr<T, V>;
-	template <typename T>
-	using WeakPtr		= std::weak_ptr<T>;
-} // namespace agdk
+// Include pointers:
+
+// By default, include pointers also in global namespace:
+#ifndef SAMP_EDGENGINE_ONLY_IN_NAMESPACE
+	#define SAMP_EDGENGINE_SKIP_NAMESPACE
+		#include "Pointers.inl"
+	#undef SAMP_EDGENGINE_SKIP_NAMESPACE
+#endif
+
+#include "Pointers.inl"

@@ -177,13 +177,7 @@
     <ClInclude Include="include\SAMP-EDGEngine\Core\Placement.hpp">
       <Filter>Header Files\Core</Filter>
     </ClInclude>
-    <ClInclude Include="include\SAMP-EDGEngine\Core\Pointers.hpp">
-      <Filter>Header Files\Core</Filter>
-    </ClInclude>
     <ClInclude Include="include\SAMP-EDGEngine\Core\TextInc.hpp">
-      <Filter>Header Files\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="include\SAMP-EDGEngine\Core\TypesAndDefinitions.hpp">
       <Filter>Header Files\Core</Filter>
     </ClInclude>
     <ClInclude Include="include\SAMP-EDGEngine\Core\TypeTraits.hpp">
@@ -335,6 +329,18 @@
     </ClInclude>
     <ClInclude Include="include\SAMP-EDGEngine\Server\Dialog.hpp">
       <Filter>Header Files\Server\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="include\SAMP-EDGEngine\Core\TypesAndDefinitions.inl">
+      <Filter>Header Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="include\SAMP-EDGEngine\Core\TypesAndDefinitions.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\SAMP-EDGEngine\Core\Pointers.inl">
+      <Filter>Header Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="include\SAMP-EDGEngine\Core\Pointers.hpp">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
