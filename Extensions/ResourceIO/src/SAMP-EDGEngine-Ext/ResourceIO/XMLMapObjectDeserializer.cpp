@@ -190,12 +190,11 @@ void XMLMapObjectDeserializer::deserializeMaterials() const
 
 			if (deserializer.deserialize())
 			{
-				if (isMaterialOccupied[ materialIndex ] == 0)
+				if (isMaterialOccupied[materialIndex] == 0)
 				{
-					isMaterialOccupied[ materialIndex ] = 1;
+					isMaterialOccupied[materialIndex] = 1;
 					object.setMaterial(materialIndex, material);
 				}
-				// else: material was already taken, so lets skip this one.
 			}
 			
 		}
@@ -212,7 +211,6 @@ void XMLMapObjectDeserializer::deserializeMaterials() const
 					isMaterialOccupied[ materialIndex ] = 1;
 					object.setMaterial(materialIndex, material);
 				}
-				// else: material was already taken, so lets skip this one.
 			}
 		}
 	}
