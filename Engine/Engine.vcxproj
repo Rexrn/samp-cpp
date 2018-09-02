@@ -278,6 +278,7 @@
     <ClCompile Include="src\SAMP-EDGEngine\Core\Text\ASCII.cpp" />
     <ClCompile Include="src\SAMP-EDGEngine\Server\Command.cpp" />
     <ClCompile Include="src\SAMP-EDGEngine\Server\CommandManager.cpp" />
+    <ClCompile Include="src\SAMP-EDGEngine\Server\Dialog.cpp" />
     <ClCompile Include="src\SAMP-EDGEngine\Server\GlobalTextDraw.cpp" />
     <ClCompile Include="src\SAMP-EDGEngine\Server\GlobalTextDrawPanel.cpp" />
     <ClCompile Include="src\SAMP-EDGEngine\Server\Keyboard.cpp" />

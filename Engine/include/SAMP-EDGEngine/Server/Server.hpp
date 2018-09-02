@@ -114,7 +114,7 @@ public:
 	bool sampEvent_OnVehicleStreamOut(Int32 vehicleHandle_, Int32 forPlayerIndex_);
 	bool sampEvent_OnActorStreamIn(Int32 actorIndex_, Int32 forPlayerIndex_);
 	bool sampEvent_OnActorStreamOut(Int32 actorIndex_, Int32 forPlayerIndex_);
-	bool sampEvent_OnDialogResponse(Int32 playerIndex_, Int32 dialogIndex_, Dialog::Button response, Int32 listItem_, std::string_view inputText_);
+	bool sampEvent_OnDialogResponse(Int32 playerIndex_, Int32 dialogIndex_, DialogButton response, Int32 listItem_, std::string_view inputText_);
 	bool sampEvent_OnPlayerTakeDamage(Int32 playerIndex_, Int32 issuerIndex_, float amount_, Weapon::Type weapon_, Player::BodyPart bodyPart_);
 	bool sampEvent_OnPlayerGiveDamage(Int32 playerIndex_, Int32 damagedIndex_, float amount_, Weapon::Type weapon_, Player::BodyPart bodyPart_);
 	bool sampEvent_OnPlayerGiveDamageActor(Int32 playerIndex_, Int32 damagedActorIndex_, float amount_, Weapon::Type weapon_, Player::BodyPart bodyPart_);

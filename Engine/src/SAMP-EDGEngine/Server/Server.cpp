@@ -1087,7 +1087,7 @@ bool ServerClass::sampEvent_OnActorStreamOut(Int32 actorIndex_, Int32 forPlayerI
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
-bool ServerClass::sampEvent_OnDialogResponse(Int32 playerIndex_, Int32 dialogIndex_, Dialog::Button button_, Int32 listItem_, std::string_view inputText_)
+bool ServerClass::sampEvent_OnDialogResponse(Int32 playerIndex_, Int32 dialogIndex_, DialogButton button_, Int32 listItem_, std::string_view inputText_)
 {
 	return true;
 }

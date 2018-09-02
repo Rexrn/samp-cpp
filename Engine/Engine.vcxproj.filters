@@ -204,9 +204,6 @@
     <ClInclude Include="include\SAMP-EDGEngine\Server\CommandManager.hpp">
       <Filter>Header Files\Server\Command</Filter>
     </ClInclude>
-    <ClInclude Include="include\SAMP-EDGEngine\Server\Dialog.hpp">
-      <Filter>Header Files\Server</Filter>
-    </ClInclude>
     <ClInclude Include="include\SAMP-EDGEngine\Server\GameMode.hpp">
       <Filter>Header Files\Server</Filter>
     </ClInclude>
@@ -335,6 +332,9 @@
     </ClInclude>
     <ClInclude Include="include\SAMP-EDGEngine\Server\TextDrawOwner.hpp">
       <Filter>Header Files\Server\TextDraw</Filter>
+    </ClInclude>
+    <ClInclude Include="include\SAMP-EDGEngine\Server\Dialog.hpp">
+      <Filter>Header Files\Server\Player</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -478,6 +478,9 @@
     </ClCompile>
     <ClCompile Include="src\SAMP-EDGEngine\Server\TextDrawOwner.cpp">
       <Filter>Source Files\Server\TextDraw</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SAMP-EDGEngine\Server\Dialog.cpp">
+      <Filter>Source Files\Server\Player</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
