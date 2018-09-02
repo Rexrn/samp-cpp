@@ -10,12 +10,13 @@ namespace samp_edgengine
 
 class Player;
 
-/*	Class (interface) representing in-game textdraw.
-	Textdraw is 2D text/texture/model render or shape.
-	There are two types of textdraws - player td and global td.
-	Player textdraw is only created for specific player,
-	globals are created for everyone at once.
-*/
+/// <summary>
+/// Class (interface) representing in-game textdraw.
+/// Textdraw is 2D text / texture / model render or shape.
+/// There are two types of textdraws - player td and global td.
+/// Player textdraw is only created for specific player,
+/// globals are created for everyone at once.
+/// </summary>
 class ITextDraw
 {
 public:
