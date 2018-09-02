@@ -132,33 +132,34 @@ public:
 	bool sampEvent_OnPlayerSelectPlayerObject(Int32 playerIndex_, Int32 objectHandle_, Int32 modelIndex_, math::Vector3f location_);
 	bool sampEvent_OnPlayerWeaponShot(Int32 playerIndex_, Weapon::Type weapon_, Weapon::HitResult hitResult_);
 
-	EventDispatcher<Clock::TimePoint>								onServerUpdate;
-	EventDispatcher<>												onGameModeInit;
-	EventDispatcher<>												onGameModeExit;
-	EventDispatcher<>												onRconCommand;
-	EventDispatcher<Player &>										onPlayerConnect;
-	EventDispatcher<Player &>										onPlayerDisconnect;
-	EventDispatcher<Player &>										onPlayerUpdate;
-	EventDispatcher<Player &>										onPlayerSpawn;
-	EventDispatcher<Player &, Int32>								onPlayerRequestClass;
-	EventDispatcher<Player &, Player *, Weapon::Type>				onPlayerDeath;
-	EventDispatcher<Vehicle &>										onVehicleSpawn;
-	EventDispatcher<Vehicle &, Player *>							onVehicleDeath;
-	EventDispatcher<Player &, std::string_view>						onPlayerText;
-	EventDispatcher<Player &, std::string_view>						onPlayerCommandText;
+	EventDispatcher<Clock::TimePoint>									onServerUpdate;
+	EventDispatcher<>													onGameModeInit;
+	EventDispatcher<>													onGameModeExit;
+	EventDispatcher<>													onRconCommand;
+	EventDispatcher<Player &>											onPlayerConnect;
+	EventDispatcher<Player &>											onPlayerDisconnect;
+	EventDispatcher<Player &>											onPlayerUpdate;
+	EventDispatcher<Player &>											onPlayerSpawn;
+	EventDispatcher<Player &, Int32>									onPlayerRequestClass;
+	EventDispatcher<Player &, Player *, Weapon::Type>					onPlayerDeath;
+	EventDispatcher<Vehicle &>											onVehicleSpawn;
+	EventDispatcher<Vehicle &, Player *>								onVehicleDeath;
+	EventDispatcher<Player &, std::string_view>							onPlayerText;
+	EventDispatcher<Player &, std::string_view>							onPlayerCommandText;
 
-	EventDispatcher<Player &, Vehicle &, bool>						onPlayerStartToEnterVehicle;
-	EventDispatcher<Player &, Vehicle &>							onPlayerStartToExitVehicle;
-	EventDispatcher<Player &, Vehicle &, Int32>						onPlayerEnteredVehicle;
-	EventDispatcher<Player &, Vehicle &>							onPlayerExitedVehicle;
+	EventDispatcher<Player &, Vehicle &, bool>							onPlayerStartToEnterVehicle;
+	EventDispatcher<Player &, Vehicle &>								onPlayerStartToExitVehicle;
+	EventDispatcher<Player &, Vehicle &, Int32>							onPlayerEnteredVehicle;
+	EventDispatcher<Player &, Vehicle &>								onPlayerExitedVehicle;
 
-	EventDispatcher<Player &>										onPlayerEnterCheckpoint;
-	EventDispatcher<Player &>										onPlayerLeaveCheckpoint;
-	EventDispatcher<Player &>										onPlayerEnterRaceCheckpoint;
-	EventDispatcher<Player &>										onPlayerLeaveRaceCheckpoint;
+	EventDispatcher<Player &>											onPlayerEnterCheckpoint;
+	EventDispatcher<Player &>											onPlayerLeaveCheckpoint;
+	EventDispatcher<Player &>											onPlayerEnterRaceCheckpoint;
+	EventDispatcher<Player &>											onPlayerLeaveRaceCheckpoint;
 
-	EventDispatcher<Player &, Int32, Int32>							onPlayerInteriorChange;
-	EventDispatcher<Player &, Keyboard const&, Keyboard const &>	onPlayerKeyboardStateChange;
+	EventDispatcher<Player &, Int32, Int32>								onPlayerInteriorChange;
+	EventDispatcher<Player &, Keyboard const&, Keyboard const &>		onPlayerKeyboardStateChange;
+	EventDispatcher<Player &, DialogButton, Int32, std::string_view>	onDialogResponse;
 		
 	/////////////////////////////////////////////////////////////////////////////
 	class Default

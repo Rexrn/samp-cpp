@@ -14,20 +14,24 @@ std::map<std::string, Int32> IDialog::s_uniqueHashIndices;
 Int32 IDialog::s_uniqueHashIndexCounter = 0;
 
 ////////////////////////////////////////////////////////////////////////////////////
-IDialog::IDialog(Player& player_)
-	:
-	m_player{ player_ }
+IDialog::IDialog()
+	: m_player{ nullptr }
 {
 }
 
 ////////////////////////////////////////////////////////////////////////////////////
-IDialog::IDialog(Player& player_, std::string_view caption_, std::string_view message_, std::string_view button1_, std::string_view button2_)
+IDialog::IDialog(std::string_view caption_, std::string_view message_, std::string_view button1_, std::string_view button2_)
 	:
-	m_player{ player_ }, m_caption{ caption_ }, m_desc{ message_ },
+	m_caption{ caption_ }, m_desc{ message_ },
 	m_buttons{ std::string(button1_), std::string(button2_) }
 {
 }
 
+////////////////////////////////////////////////////////////////////////////////////
+void IDialog::setOwner(Player& player_)
+{
+	m_player = &player_;
+}
 
 ////////////////////////////////////////////////////////////////////////////////////
 Int32 IDialog::generateDialogHash(std::string_view customHash_)
@@ -61,75 +65,71 @@ Int32 IDialog::nextUniqueHashIndex()
 }
 
 ////////////////////////////////////////////////////////////////////////////////////
-IMessageBox::IMessageBox(Player& player_)
-	: IDialog{ player_ }
+IMessageBox::IMessageBox()
 {
 }
 
 ////////////////////////////////////////////////////////////////////////////////////
-IMessageBox::IMessageBox(Player& player_, std::string_view caption_, std::string_view message_, std::string_view button1_, std::string_view button2_)
-	: IDialog{ player_, caption_, message_, button1_, button2_ }
+IMessageBox::IMessageBox(std::string_view caption_, std::string_view message_, std::string_view button1_, std::string_view button2_)
+	: IDialog{ caption_, message_, button1_, button2_ }
 {
 }
 
 ////////////////////////////////////////////////////////////////////////////////////
 void IMessageBox::show(std::string_view customHash_)
 {
-	sampgdk::ShowPlayerDialog(m_player.getIndex(), this->generateDialogHash(customHash_), DIALOG_STYLE_MSGBOX, m_caption.c_str(), m_desc.c_str(), m_buttons[0].c_str(), m_buttons[1].c_str());
+	sampgdk::ShowPlayerDialog(m_player->getIndex(), this->generateDialogHash(customHash_), DIALOG_STYLE_MSGBOX, m_caption.c_str(), m_desc.c_str(), m_buttons[0].c_str(), m_buttons[1].c_str());
 }
 
 ////////////////////////////////////////////////////////////////////////////////////
-IInputBox::IInputBox(Player& player_)
-	: IDialog{ player_ }
+IInputBox::IInputBox()
 {
 }
 
 ////////////////////////////////////////////////////////////////////////////////////
-IInputBox::IInputBox(Player& player_, std::string_view caption_, std::string_view message_, std::string_view button1_, std::string_view button2_)
-	: IDialog{ player_, caption_, message_, button1_, button2_ }
+IInputBox::IInputBox(std::string_view caption_, std::string_view message_, std::string_view button1_, std::string_view button2_)
+	: IDialog{ caption_, message_, button1_, button2_ }
 {
 }
 
 ////////////////////////////////////////////////////////////////////////////////////
 void IInputBox::show(std::string_view customHash_)
 {
-	sampgdk::ShowPlayerDialog(m_player.getIndex(), this->generateDialogHash(customHash_), DIALOG_STYLE_INPUT, m_caption.c_str(), m_desc.c_str(), m_buttons[0].c_str(), m_buttons[1].c_str());
+	sampgdk::ShowPlayerDialog(m_player->getIndex(), this->generateDialogHash(customHash_), DIALOG_STYLE_INPUT, m_caption.c_str(), m_desc.c_str(), m_buttons[0].c_str(), m_buttons[1].c_str());
 }
 
 ////////////////////////////////////////////////////////////////////////////////////
-IPasswordBox::IPasswordBox(Player& player_)
-	: IDialog{ player_ }
+IPasswordBox::IPasswordBox()
 {
 }
 
 ////////////////////////////////////////////////////////////////////////////////////
-IPasswordBox::IPasswordBox(Player& player_, std::string_view caption_, std::string_view message_, std::string_view button1_, std::string_view button2_)
-	: IDialog{ player_, caption_, message_, button1_, button2_ }
+IPasswordBox::IPasswordBox(std::string_view caption_, std::string_view message_, std::string_view button1_, std::string_view button2_)
+	: IDialog{ caption_, message_, button1_, button2_ }
 {
 }
 
 ////////////////////////////////////////////////////////////////////////////////////
 void IPasswordBox::show(std::string_view customHash_)
 {
-	sampgdk::ShowPlayerDialog(m_player.getIndex(), this->generateDialogHash(customHash_), DIALOG_STYLE_PASSWORD, m_caption.c_str(), m_desc.c_str(), m_buttons[0].c_str(), m_buttons[1].c_str());
+	sampgdk::ShowPlayerDialog(m_player->getIndex(), this->generateDialogHash(customHash_), DIALOG_STYLE_PASSWORD, m_caption.c_str(), m_desc.c_str(), m_buttons[0].c_str(), m_buttons[1].c_str());
 }
 
 ////////////////////////////////////////////////////////////////////////////////////
 IListBox::IListBox(Player& player_)
-	: IDialog{ player_ }
 {
 }
 
 ////////////////////////////////////////////////////////////////////////////////////
-IListBox::IListBox(Player& player_, std::string_view caption_, std::string_view button1_, std::string_view button2_)
-	: IDialog{ player_, caption_, "", button1_, button2_ }
+IListBox::IListBox(std::string_view caption_, std::string_view button1_, std::string_view button2_)
+	: IDialog{ caption_, "", button1_, button2_ }
 {
 }
 
 ////////////////////////////////////////////////////////////////////////////////////
 void IListBox::show(std::string_view customHash_)
 {
-	sampgdk::ShowPlayerDialog(m_player.getIndex(), this->generateDialogHash(customHash_), DIALOG_STYLE_LIST, m_caption.c_str(), m_desc.c_str(), m_buttons[0].c_str(), m_buttons[1].c_str());
+	sampgdk::ShowPlayerDialog(m_player->getIndex(), this->generateDialogHash(customHash_), DIALOG_STYLE_LIST, m_caption.c_str(), m_desc.c_str(), m_buttons[0].c_str(), m_buttons[1].c_str());
 }
 
 ////////////////////////////////////////////////////////////////////////////////////
@@ -140,21 +140,20 @@ void IListBox::addItem(std::string_view item_)
 }
 
 ////////////////////////////////////////////////////////////////////////////////////
-ITabListBox::ITabListBox(Player& player_)
-	: IDialog{ player_ }
+ITabListBox::ITabListBox()
 {
 }
 
 ////////////////////////////////////////////////////////////////////////////////////
-ITabListBox::ITabListBox(Player& player_, std::string_view caption_, std::string_view button1_, std::string_view button2_)
-	: IDialog{ player_, caption_, "", button1_, button2_ }
+ITabListBox::ITabListBox(std::string_view caption_, std::string_view button1_, std::string_view button2_)
+	: IDialog{ caption_, "", button1_, button2_ }
 {
 }
 
 ////////////////////////////////////////////////////////////////////////////////////
 void ITabListBox::show(std::string_view customHash_)
 {
-	sampgdk::ShowPlayerDialog(m_player.getIndex(), this->generateDialogHash(customHash_), DIALOG_STYLE_TABLIST, m_caption.c_str(), m_desc.c_str(), m_buttons[0].c_str(), m_buttons[1].c_str());
+	sampgdk::ShowPlayerDialog(m_player->getIndex(), this->generateDialogHash(customHash_), DIALOG_STYLE_TABLIST, m_caption.c_str(), m_desc.c_str(), m_buttons[0].c_str(), m_buttons[1].c_str());
 }
 
 ////////////////////////////////////////////////////////////////////////////////////
@@ -165,21 +164,20 @@ void ITabListBox::addItem(std::string_view item_)
 }
 
 ////////////////////////////////////////////////////////////////////////////////////
-ITabListHeadersBox::ITabListHeadersBox(Player& player_)
-	: IDialog{ player_ }
+ITabListHeadersBox::ITabListHeadersBox()
 {
 }
 
 ////////////////////////////////////////////////////////////////////////////////////
-ITabListHeadersBox::ITabListHeadersBox(Player& player_, std::string_view caption_, std::string_view button1_, std::string_view button2_)
-	: IDialog{ player_, caption_, "", button1_, button2_ }
+ITabListHeadersBox::ITabListHeadersBox(std::string_view caption_, std::string_view button1_, std::string_view button2_)
+	: IDialog{ caption_, "", button1_, button2_ }
 {
 }
 
 ////////////////////////////////////////////////////////////////////////////////////
 void ITabListHeadersBox::show(std::string_view customHash_)
 {
-	sampgdk::ShowPlayerDialog(m_player.getIndex(), this->generateDialogHash(customHash_), DIALOG_STYLE_TABLIST, m_caption.c_str(), m_desc.c_str(), m_buttons[0].c_str(), m_buttons[1].c_str());
+	sampgdk::ShowPlayerDialog(m_player->getIndex(), this->generateDialogHash(customHash_), DIALOG_STYLE_TABLIST, m_caption.c_str(), m_desc.c_str(), m_buttons[0].c_str(), m_buttons[1].c_str());
 }
 
 ////////////////////////////////////////////////////////////////////////////////////

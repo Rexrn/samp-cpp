@@ -29,19 +29,17 @@ public:
 	/// <summary>
 	/// Initializes a new instance of the <see cref="IDialog"/> class.
 	/// </summary>
-	/// <param name="player_">The player.</param>
-	explicit IDialog(Player & player_);
+	IDialog();
 		
 	/// <summary>
 	/// Initializes a new instance of the <see cref="IDialog"/> class.
 	/// </summary>
-	/// <param name="player_">The player.</param>
 	/// <param name="caption_">The caption.</param>
 	/// <param name="message_">The message.</param>
 	/// <param name="button1_">The first button.</param>
 	/// <param name="button2_">The second button.</param>
-	IDialog(Player & player_, std::string_view caption_, std::string_view message_, std::string_view button1_, std::string_view button2_);
-	
+	IDialog(std::string_view caption_, std::string_view message_, std::string_view button1_, std::string_view button2_);
+
 	/// <summary>
 	/// Function called when player responds to the dialog.
 	/// </summary>
@@ -49,8 +47,16 @@ public:
 	/// <param name="listItem_">The list item.</param>
 	/// <param name="input_">The input.</param>
 	virtual void onResponse(DialogButton button_, Int32 listItem_, std::string_view input_) = 0;
+
+	friend class Player;
 protected:
-	
+
+	/// <summary>
+	/// Sets the owner player.
+	/// </summary>
+	/// <param name="player_">The player.</param>
+	void setOwner(Player & player_);
+
 	/// <summary>
 	/// Shows the specified dialog. Dialog ID can be modified with custom hash.
 	/// </summary>
@@ -58,7 +64,7 @@ protected:
 	virtual void show(std::string_view customHash_ = "");
 
 	// Reference to player the dialog is shown to.
-	Player& m_player;
+	Player* m_player;
 	//	Dialog caption.
 	std::string m_caption;
 	//	Dialog description.
@@ -108,18 +114,16 @@ public:
 	/// <summary>
 	/// Initializes a new instance of the <see cref="IMessageBox"/> class.
 	/// </summary>
-	/// <param name="player_">The player.</param>
-	explicit IMessageBox(Player & player_);
+	IMessageBox();
 
 	/// <summary>
 	/// Initializes a new instance of the <see cref="IMessageBox"/> class.
 	/// </summary>
-	/// <param name="player_">The player.</param>
 	/// <param name="caption_">The caption.</param>
 	/// <param name="message_">The message.</param>
 	/// <param name="button1_">The first button.</param>
 	/// <param name="button2_">The second button.</param>
-	IMessageBox(Player & player_, std::string_view caption_, std::string_view message_, std::string_view button1_, std::string_view button2_);
+	IMessageBox(std::string_view caption_, std::string_view message_, std::string_view button1_, std::string_view button2_);
 
 protected:
 
@@ -142,18 +146,16 @@ public:
 	/// <summary>
 	/// Initializes a new instance of the <see cref="IInputBox"/> class.
 	/// </summary>
-	/// <param name="player_">The player.</param>
-	explicit IInputBox(Player & player_);
+	IInputBox();
 
 	/// <summary>
 	/// Initializes a new instance of the <see cref="IInputBox"/> class.
 	/// </summary>
-	/// <param name="player_">The player.</param>
 	/// <param name="caption_">The caption.</param>
 	/// <param name="message_">The message.</param>
 	/// <param name="button1_">The first button.</param>
 	/// <param name="button2_">The second button.</param>
-	IInputBox(Player & player_, std::string_view caption_, std::string_view message_, std::string_view button1_, std::string_view button2_);
+	IInputBox(std::string_view caption_, std::string_view message_, std::string_view button1_, std::string_view button2_);
 
 protected:
 
@@ -176,18 +178,16 @@ public:
 	/// <summary>
 	/// Initializes a new instance of the <see cref="IPasswordBox"/> class.
 	/// </summary>
-	/// <param name="player_">The player.</param>
-	explicit IPasswordBox(Player & player_);
+	IPasswordBox();
 
 	/// <summary>
 	/// Initializes a new instance of the <see cref="IPasswordBox"/> class.
 	/// </summary>
-	/// <param name="player_">The player.</param>
 	/// <param name="caption_">The caption.</param>
 	/// <param name="message_">The message.</param>
 	/// <param name="button1_">The first button.</param>
 	/// <param name="button2_">The second button.</param>
-	IPasswordBox(Player & player_, std::string_view caption_, std::string_view message_, std::string_view button1_, std::string_view button2_);
+	IPasswordBox(std::string_view caption_, std::string_view message_, std::string_view button1_, std::string_view button2_);
 
 protected:
 
@@ -210,18 +210,16 @@ public:
 	/// <summary>
 	/// Initializes a new instance of the <see cref="IListBox"/> class.
 	/// </summary>
-	/// <param name="player_">The player.</param>
-	explicit IListBox(Player & player_);
+	IListBox(Player & player_);
 
 	/// <summary>
 	/// Initializes a new instance of the <see cref="IListBox"/> class.
 	/// </summary>
-	/// <param name="player_">The player.</param>
 	/// <param name="caption_">The caption.</param>
 	/// <param name="message_">The message.</param>
 	/// <param name="button1_">The first button.</param>
 	/// <param name="button2_">The second button.</param>
-	IListBox(Player & player_, std::string_view caption_, std::string_view button1_, std::string_view button2_);
+	IListBox(std::string_view caption_, std::string_view button1_, std::string_view button2_);
 
 protected:
 
@@ -251,18 +249,16 @@ public:
 	/// <summary>
 	/// Initializes a new instance of the <see cref="ITabListBox"/> class.
 	/// </summary>
-	/// <param name="player_">The player.</param>
-	explicit ITabListBox(Player & player_);
+	ITabListBox();
 
 	/// <summary>
 	/// Initializes a new instance of the <see cref="ITabListBox"/> class.
 	/// </summary>
-	/// <param name="player_">The player.</param>
 	/// <param name="caption_">The caption.</param>
 	/// <param name="message_">The message.</param>
 	/// <param name="button1_">The first button.</param>
 	/// <param name="button2_">The second button.</param>
-	ITabListBox(Player & player_, std::string_view caption_, std::string_view button1_, std::string_view button2_);
+	ITabListBox(std::string_view caption_, std::string_view button1_, std::string_view button2_);
 
 protected:
 
@@ -293,18 +289,16 @@ public:
 	/// <summary>
 	/// Initializes a new instance of the <see cref="ITabListHeadersBox"/> class.
 	/// </summary>
-	/// <param name="player_">The player.</param>
-	explicit ITabListHeadersBox(Player & player_);
+	ITabListHeadersBox();
 
 	/// <summary>
 	/// Initializes a new instance of the <see cref="ITabListHeadersBox"/> class.
 	/// </summary>
-	/// <param name="player_">The player.</param>
 	/// <param name="caption_">The caption.</param>
 	/// <param name="message_">The message.</param>
 	/// <param name="button1_">The first button.</param>
 	/// <param name="button2_">The second button.</param>
-	ITabListHeadersBox(Player & player_, std::string_view caption_, std::string_view button1_, std::string_view button2_);
+	ITabListHeadersBox(std::string_view caption_, std::string_view button1_, std::string_view button2_);
 
 protected:
 

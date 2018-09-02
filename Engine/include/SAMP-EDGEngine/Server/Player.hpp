@@ -18,7 +18,7 @@
 #include <SAMP-EDGEngine/World/Checkpoint.hpp>
 #include <SAMP-EDGEngine/World/RaceCheckpoint.hpp>
 #include <SAMP-EDGEngine/Server/PlayerTextDraw.hpp>
-
+#include <SAMP-EDGEngine/Server/Dialog.hpp>
 
 
 namespace samp_edgengine
@@ -112,6 +112,25 @@ public:
 	/// </summary>
 	/// <returns>Placement tracker</returns>
 	I3DNodePlacementTracker* getPlacementTracker() const;
+
+	// Dialogs:
+	
+	/// <summary>
+	/// Sets the dialog.
+	/// </summary>
+	/// <param name="dialog_">The dialog.</param>
+	void setDialog(UniquePtr<IDialog> && dialog_);
+	
+	/// <summary>
+	/// Clears the dialog.
+	/// </summary>
+	void clearDialog();
+
+	/// <summary>
+	/// Returns pointer to the dialog or nullptr if dialog is not set.
+	/// </summary>
+	/// <returns>Pointer to the dialog or nullptr if dialog is not set.</returns>
+	IDialog* getDialog() const;
 
 	// Checkpoints:
 	
@@ -612,6 +631,9 @@ private:
 
 	// Tracking:
 	I3DNodePlacementTracker* m_placementTracker;
+
+	// Dialog:
+	UniquePtr<IDialog>	m_dialog;
 
 	// Checkpoint:
 	Checkpoint			m_checkpoint;

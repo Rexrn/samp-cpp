@@ -49,6 +49,30 @@ I3DNodePlacementTracker* Player::getPlacementTracker() const
 }
 
 ///////////////////////////////////////////////////////////////////////////
+void Player::setDialog(UniquePtr<IDialog>&& dialog_)
+{
+	// # Assertion note:
+	// Use clearDialog() to remove player's dialog.
+	assert(dialog_ != nullptr);
+
+	m_dialog = std::forward< UniquePtr<IDialog> >(dialog_);
+	m_dialog->setOwner(*this);
+	m_dialog->show();
+}
+
+///////////////////////////////////////////////////////////////////////////
+void Player::clearDialog()
+{
+	m_dialog.reset();
+}
+
+///////////////////////////////////////////////////////////////////////////
+IDialog* Player::getDialog() const
+{
+	return m_dialog.get();
+}
+
+///////////////////////////////////////////////////////////////////////////
 void Player::setCheckpointStreaming(bool streamCheckpoints_)
 {
 	m_checkpointStreamingOn = streamCheckpoints_;
