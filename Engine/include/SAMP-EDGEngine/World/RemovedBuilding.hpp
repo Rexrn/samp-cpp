@@ -1,8 +1,5 @@
 #pragma once
 
-// Precompiled header:
-#include SAMP_EDGENGINE_PCH
-
 // Other headers:
 #include <SAMP-EDGEngine/Core/TypesAndDefinitions.hpp>
 

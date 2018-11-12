@@ -1,7 +1,5 @@
 #pragma once
 
-#include SAMP_EDGENGINE_PCH
-
 #include <SAMP-EDGEngine/World/Streamer/Chunk.hpp>
 #include <SAMP-EDGEngine/World/Streamer/StreamerSettings.hpp>
 #include <SAMP-EDGEngine/Core/Container/DivisibleGrid3.hpp>

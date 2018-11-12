@@ -1,7 +1,5 @@
 #pragma once
 
-#include SAMP_EDGENGINE_PCH
-
 #include <SAMP-EDGEngine/World/WI3DNode.hpp>
 
 namespace samp_edgengine

@@ -1,7 +1,5 @@
 #pragma once
 
-#include SAMP_EDGENGINE_PCH
-
 #include <SAMP-EDGEngine/Server/Command.hpp>
 
 #include <SAMP-EDGEngine/Core/BasicInterfaces/NonCopyable.hpp>

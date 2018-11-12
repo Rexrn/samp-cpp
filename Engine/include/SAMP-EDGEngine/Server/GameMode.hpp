@@ -2,10 +2,7 @@
 // Implements basic game mode interface.
 #pragma once
 
-// Precompiled header:
-#include SAMP_EDGENGINE_PCH
-
-// AGDK includes:
+// SAMP-EDGEngine includes:
 
 #include <SAMP-EDGEngine/Server/Chat.hpp>
 #include <SAMP-EDGEngine/Server/Weapon.hpp>

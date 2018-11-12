@@ -1,8 +1,5 @@
 #pragma once
 
-// The precompiled header:
-#include SAMP_EDGENGINE_PCH
-
 #include <SAMP-EDGEngine/Core/Events.hpp>
 
 namespace samp_edgengine

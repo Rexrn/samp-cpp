@@ -1,8 +1,5 @@
 #pragma once
 
-// Precompiled header:
-#include SAMP_EDGENGINE_PCH
-
 // Base class header:
 #include <SAMP-EDGEngine/World/PerPlayerObject.hpp>
 

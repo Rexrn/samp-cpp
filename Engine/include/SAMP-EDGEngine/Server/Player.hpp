@@ -1,8 +1,5 @@
 #pragma once
 
-// The precompiled header
-#include SAMP_EDGENGINE_PCH
-
 // Base classes:
 #include <SAMP-EDGEngine/World/WI3DNode.hpp>
 #include <SAMP-EDGEngine/Server/TextDrawOwner.hpp>

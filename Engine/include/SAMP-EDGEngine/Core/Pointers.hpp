@@ -1,7 +1,5 @@
 #pragma once
 
-#include SAMP_EDGENGINE_PCH
-
 // Include pointers:
 
 // By default, include pointers also in global namespace:

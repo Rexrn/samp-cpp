@@ -2,9 +2,6 @@
 // Implements class manipulating Players and agent used to process certain server events.
 #pragma once
 
-// Precompiled header:
-#include SAMP_EDGENGINE_PCH
-
 // Custom includes:
 #include <SAMP-EDGEngine/Server/Player.hpp>
 #include <SAMP-EDGEngine/Core/Pointers.hpp>

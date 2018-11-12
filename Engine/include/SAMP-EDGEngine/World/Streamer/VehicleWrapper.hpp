@@ -1,8 +1,5 @@
 #pragma once
 
-// PCH:
-#include SAMP_EDGENGINE_PCH
-
 // Base class:
 #include <SAMP-EDGEngine/World/Streamer/GlobalActorWrapper.hpp>
 #include <SAMP-EDGEngine/Core/BasicInterfaces/PlacementTracker.hpp>

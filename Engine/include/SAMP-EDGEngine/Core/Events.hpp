@@ -1,7 +1,5 @@
 #pragma once
 
-#include SAMP_EDGENGINE_PCH
-
 #include <SAMP-EDGEngine/Core/Pointers.hpp>
 
 #include <typeinfo>

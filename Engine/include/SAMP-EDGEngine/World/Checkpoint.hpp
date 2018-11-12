@@ -1,7 +1,5 @@
 #pragma once
 
-#include SAMP_EDGENGINE_PCH
-
 #include <SAMP-EDGEngine/Core/TypesAndDefinitions.hpp>
 #include <SAMP-EDGEngine/World/WI3DStreamableNode.hpp>
 #include <SAMP-EDGEngine/Core/Placement.hpp>

@@ -1,8 +1,5 @@
 #pragma once
 
-// Precompiled header:
-#include SAMP_EDGENGINE_PCH
-
 // Base class headers:
 #include <SAMP-EDGEngine/World/3DNode.hpp>
 #include <SAMP-EDGEngine/Core/BasicInterfaces/NonCopyable.hpp>

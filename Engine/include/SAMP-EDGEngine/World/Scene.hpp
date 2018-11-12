@@ -1,7 +1,5 @@
 #pragma once
 
-#include SAMP_EDGENGINE_PCH
-
 // Base class headers:
 #include <SAMP-EDGEngine/Core/BasicInterfaces/NonCopyable.hpp>
 

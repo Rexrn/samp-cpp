@@ -1,7 +1,5 @@
 #pragma once
 
-#include SAMP_EDGENGINE_PCH
-
 #ifndef const_a
 	#define const_a const auto
 #endif

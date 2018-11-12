@@ -1,7 +1,5 @@
 #pragma once
 
-#include SAMP_EDGENGINE_PCH
-
 // Wrappers:
 #include <SAMP-EDGEngine/World/Streamer/GlobalObjectWrapper.hpp>
 #include <SAMP-EDGEngine/World/Streamer/PersonalObjectWrapper.hpp>

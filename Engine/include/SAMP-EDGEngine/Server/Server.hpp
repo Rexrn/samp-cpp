@@ -4,9 +4,6 @@
 
 #pragma once
 
-// Precompiled header:
-#include SAMP_EDGENGINE_PCH
-
 // Custom includes:
 #include <SAMP-EDGEngine/Server/PlayerPool.hpp>
 #include <SAMP-EDGEngine/Server/Player.hpp>

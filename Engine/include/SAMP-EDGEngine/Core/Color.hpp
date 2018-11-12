@@ -2,9 +2,6 @@
 // Implements Color class and provides over 600 named colors (within agdk::colors) namespace.
 #pragma once
 
-// Precompiled header:
-#include SAMP_EDGENGINE_PCH
-
 #include <SAMP-EDGEngine/Core/TypesAndDefinitions.hpp>
 
 namespace samp_edgengine

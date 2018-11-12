@@ -1,7 +1,5 @@
 #pragma once
 
-#include SAMP_EDGENGINE_PCH
-
 #include <SAMP-EDGEngine/Server/TextDraw.hpp>
 
 namespace samp_edgengine
