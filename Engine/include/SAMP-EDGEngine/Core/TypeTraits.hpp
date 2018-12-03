@@ -1,5 +1,8 @@
 #pragma once
 
+#include <type_traits>
+#include <ratio>
+
 namespace samp_edgengine::type_traits
 {
 

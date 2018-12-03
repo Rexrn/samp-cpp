@@ -1,5 +1,7 @@
 #include <SAMP-EDGEngine/Core/Text/ASCII.hpp>
 
+#include <algorithm>
+
 namespace samp_edgengine::text::ascii
 {
 ///////////////////////////////////////////////////////////////////////

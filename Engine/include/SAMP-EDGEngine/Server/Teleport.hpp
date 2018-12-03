@@ -1,6 +1,7 @@
 #pragma once
 
 #include <SAMP-EDGEngine/Core/TypesAndDefinitions.hpp>
+#include <SAMP-EDGEngine/Dependencies/QuickMaffs.hpp>
 
 namespace samp_edgengine
 {

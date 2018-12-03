@@ -8,6 +8,8 @@
 #include <SAMP-EDGEngine/Core/Pointers.hpp>
 #include <SAMP-EDGEngine/Core/Color.hpp>
 
+#include <SAMP-EDGEngine/Dependencies/SampGDK.hpp>
+
 
 namespace samp_edgengine
 {

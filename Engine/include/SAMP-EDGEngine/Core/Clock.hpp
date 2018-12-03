@@ -2,6 +2,8 @@
 // Implements time measuring class and adds useful aliases to agdk namespace.
 #pragma once
 
+#include <chrono>
+
 namespace samp_edgengine
 {
 namespace chrono		= std::chrono;

@@ -2,6 +2,8 @@
 
 #include <SAMP-EDGEngine/Core/BasicInterfaces/Updatable.hpp>
 
+#include <functional>
+
 namespace samp_edgengine
 {
 

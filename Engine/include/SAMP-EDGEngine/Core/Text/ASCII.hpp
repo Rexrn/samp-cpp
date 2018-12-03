@@ -1,5 +1,9 @@
 #pragma once
 
+#include <optional>
+#include <string>
+#include <string_view>
+
 #include <SAMP-EDGEngine/Core/TypeTraits.hpp>
 #include <SAMP-EDGEngine/Core/Text/Essentials.hpp>
 

@@ -3,6 +3,10 @@
 #include <SAMP-EDGEngine/Server/GlobalTextDraw.hpp>
 #include <SAMP-EDGEngine/Core/Pointers.hpp>
 
+#include <map>
+#include <string>
+#include <vector>
+
 namespace samp_edgengine
 {
 

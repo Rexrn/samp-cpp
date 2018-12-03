@@ -2,6 +2,9 @@
 #include <SAMP-EDGEngine/Core/Color.hpp>			// Color header
 #include <SAMP-EDGEngine/Core/Text/ASCII.hpp>		// for string manipulation
 
+#include <SAMP-EDGEngine/Dependencies/QuickMaffs.hpp>
+
+#include <sstream>
 
 namespace samp_edgengine
 {

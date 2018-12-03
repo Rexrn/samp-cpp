@@ -4,6 +4,9 @@
 
 #include <SAMP-EDGEngine/Core/TypesAndDefinitions.hpp>
 
+#include <SAMP-EDGEngine/Dependencies/SampGDK.hpp>
+#include <SAMP-EDGEngine/Dependencies/QuickMaffs.hpp>
+
 namespace samp_edgengine
 {	
 /// <summary>

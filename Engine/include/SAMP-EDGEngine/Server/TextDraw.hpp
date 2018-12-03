@@ -3,6 +3,11 @@
 #include <SAMP-EDGEngine/Core/Color.hpp>
 #include <SAMP-EDGEngine/Core/TypesAndDefinitions.hpp>
 
+#include <SAMP-EDGEngine/Dependencies/QuickMaffs.hpp>
+
+#include <SAMP-EDGEngine/Dependencies/SampGDK.hpp>
+#include <array>
+
 namespace samp_edgengine
 {
 

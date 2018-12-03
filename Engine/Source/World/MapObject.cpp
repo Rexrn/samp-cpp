@@ -1,6 +1,8 @@
 #include <SAMP-EDGEngine/World/MapObject.hpp>
 #include <SAMP-EDGEngine/Server/Player.hpp>
 
+#include <cassert>
+
 namespace samp_edgengine
 {
 

@@ -2,6 +2,7 @@
 
 #include <SAMP-EDGEngine/Core/Pointers.hpp>
 
+#include <vector>
 #include <typeinfo>
 #include <typeindex>
 

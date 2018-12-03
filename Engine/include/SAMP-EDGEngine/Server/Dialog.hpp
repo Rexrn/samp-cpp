@@ -2,6 +2,11 @@
 
 #include <SAMP-EDGEngine/Core/TypesAndDefinitions.hpp>
 
+#include <optional>
+#include <string_view>
+#include <string>
+#include <map>
+
 namespace samp_edgengine
 {
 

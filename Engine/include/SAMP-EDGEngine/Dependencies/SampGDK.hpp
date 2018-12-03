@@ -7,5 +7,5 @@
 #if !defined(SAMPGDK_AMALGAMATION) || defined(SAMP_EDGENGINE_ACTIVE_PROJECT)
 #include <sampgdk/sampgdk.h>
 #else
-#include "../../../Dependencies/sampgdk/sampgdk.h"
+#include <sampgdk.h>
 #endif

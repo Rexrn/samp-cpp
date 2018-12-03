@@ -1,5 +1,7 @@
 #include <SAMP-EDGEngine/Core/Actions.hpp>
 
+#include <algorithm>
+
 namespace samp_edgengine
 {
 

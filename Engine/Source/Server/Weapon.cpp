@@ -2,6 +2,8 @@
 
 #include <SAMP-EDGEngine/Core/Text/ASCII.hpp>
 
+#include <cassert>
+
 namespace samp_edgengine
 {
 	// Initialize default Weapon variables

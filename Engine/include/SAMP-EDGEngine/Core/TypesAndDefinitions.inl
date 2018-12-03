@@ -1,3 +1,5 @@
+#include <cinttypes>
+
 #ifndef SAMP_EDGENGINE_SKIP_NAMESPACE
 namespace samp_edgengine
 {
