@@ -1,5 +1,6 @@
 .vs/
 .vscode/
+Build/
 Engine/Output/
 ServerCore/Output/
 Examples/TestGM/Output/
