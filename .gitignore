@@ -4,3 +4,5 @@ Build/
 Engine/Output/
 ServerCore/Output/
 Examples/TestGM/Output/
+
+BuildConfig.lua
