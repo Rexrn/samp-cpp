@@ -1,0 +1,17 @@
+-- This is configuration file for build environment generation.
+-- 
+-- To properly configure build:
+--  1) Copy BuildConfig.lua.template to new file and name it BuildConfig.lua
+--  2) Fill in essential information
+-- Use Lua syntax.
+
+-- Dependencies configuration:
+deps = {
+	-- [Required]
+	-- Please provide path to the root of the sampgdk library.
+	sampgdk = { root = os.realpath("Dependencies/sampgdk") }, 
+
+	-- [Required]
+	-- Please provide path to the root of the quickmaffs library.
+	quickmaffs = { root = "" }
+}
