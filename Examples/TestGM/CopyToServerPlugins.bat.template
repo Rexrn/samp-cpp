@@ -1,3 +1,11 @@
+:: This script template copies generated binary to the SAMP server plugins directory.
+:: 
+:: To properly configure this script:
+::  1) Copy CopyToServerPlugins.bat.template to new file and name it CopyToServerPlugins.user.bat
+::  2) Fill in essential information
+:: Use Batch syntax.
+
+
 @echo off
 
 :: [ Manual configuration ]
@@ -13,7 +21,7 @@
 :: SET "TargetDir=C:\Path\To\SAMPServer\plugins"
 ::
 :: Do not add slash or backslash at the end.
-SET "TargetDir=F:\SAMP\GTAOnlineSA-TestBed\plugins"
+SET ""
 
 :: [ Automatic configuration (parameters taken from Visual Studio) ]
 SET "SourceFile=%1"
