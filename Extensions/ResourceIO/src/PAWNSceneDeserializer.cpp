@@ -1,4 +1,8 @@
 #include <SAMP-EDGEngine/Ext/ResourceIO/PAWNSceneDeserializer.hpp>
+#include <SAMP-EDGEngine/Ext/ResourceIO/Logging.hpp>
+
+#include <iostream>
+#include <iomanip>
 
 namespace samp_edgengine::ext::resource_io
 {

@@ -4,6 +4,9 @@
 
 #include <SAMP-EDGEngine/Ext/ResourceIO/XMLTextMaterialDeserializer.hpp>
 #include <SAMP-EDGEngine/Ext/ResourceIO/XMLTextureMaterialDeserializer.hpp>
+#include <SAMP-EDGEngine/Ext/ResourceIO/Logging.hpp>
+
+#include <iostream>
 
 namespace samp_edgengine::ext::resource_io
 {

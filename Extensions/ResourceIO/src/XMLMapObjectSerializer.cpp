@@ -5,6 +5,9 @@
 #include <SAMP-EDGEngine/Ext/ResourceIO/XMLMapObjectMaterialSerializer.hpp>
 #include <SAMP-EDGEngine/Ext/ResourceIO/XMLTextureMaterialSerializer.hpp>
 #include <SAMP-EDGEngine/Ext/ResourceIO/XMLTextMaterialSerializer.hpp>
+#include <SAMP-EDGEngine/Ext/ResourceIO/Logging.hpp>
+
+#include <iostream>
 
 namespace samp_edgengine::ext::resource_io
 {

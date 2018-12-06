@@ -1,4 +1,7 @@
 #include <SAMP-EDGEngine/Ext/ResourceIO/XMLHelperFunctions.hpp>
+#include <SAMP-EDGEngine/Ext/ResourceIO/Logging.hpp>
+
+#include <iostream>
 
 namespace samp_edgengine::ext::resource_io::xml_helper
 {
