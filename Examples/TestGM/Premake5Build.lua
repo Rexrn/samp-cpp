@@ -5,8 +5,8 @@ else
 		kind "SharedLib"
 		language "C++"
 		cppdialect "C++17"
-		location (path.join(repoRoot, "Build/%{prj.name}"))
-		targetdir (path.join(repoRoot, "Bin/%{cfg.platform}/%{cfg.buildcfg}"))
+		location (path.join(repoRoot, "Build/Examples/%{prj.name}"))
+		targetdir (path.join(repoRoot, "Bin/%{cfg.platform}/%{cfg.buildcfg}/Examples"))
 
 		includedirs {
 			path.join(userConfig.deps.quickmaffs.root, "include"),
