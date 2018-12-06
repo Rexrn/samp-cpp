@@ -2,8 +2,8 @@ project "Ext_ResourceIO"
 	kind "StaticLib"
 	language "C++"
 	cppdialect "C++17"
-	location (path.join(repoRoot, "Build/%{prj.name}"))
-	targetdir (path.join(repoRoot, "Bin/%{cfg.platform}/%{cfg.buildcfg}"))
+	location (path.join(repoRoot, "Build/Extensions/%{prj.name}"))
+	targetdir (path.join(repoRoot, "Bin/%{cfg.platform}/%{cfg.buildcfg}/Extensions"))
 
 	includedirs {
 		path.join(userConfig.deps.quickmaffs.root, "include"),
