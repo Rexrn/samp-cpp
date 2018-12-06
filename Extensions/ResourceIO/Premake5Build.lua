@@ -1,9 +1,8 @@
-project "Ext::ResourceIO"
-	filename "Ext_ResourceIO"
+project "Ext_ResourceIO"
 	kind "StaticLib"
 	language "C++"
 	cppdialect "C++17"
-	location (path.join(repoRoot, "Build/Ext_ResourceIO"))
+	location (path.join(repoRoot, "Build/%{prj.name}"))
 	targetdir (path.join(repoRoot, "Bin/%{cfg.platform}/%{cfg.buildcfg}"))
 
 	includedirs {

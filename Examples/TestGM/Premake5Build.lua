@@ -18,7 +18,7 @@ else
 		links {
 			"Engine",
 			"ServerCore",
-			"Ext::ResourceIO"
+			"Ext_ResourceIO"
 		}
 
 		files {
