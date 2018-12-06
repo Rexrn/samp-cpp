@@ -3,10 +3,6 @@
 
 #pragma once
 
-#ifndef SAMP_EDGENGINE_PCH
-#define SAMP_EDGENGINE_PCH "SAMP-EDGEngine/../../EnginePCH.hpp"
-#endif
-
 #include <SAMP-EDGEngine/Dependencies/SampGDK.hpp>
 #include <SAMP-EDGEngine/Dependencies/QuickMaffs.hpp>
 
