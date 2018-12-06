@@ -9,6 +9,7 @@ project "Ext_ResourceIO"
 		path.join(userConfig.deps.quickmaffs.root, "include"),
 		userConfig.deps.rapidxml.root,
 		userConfig.deps.sampgdk.root,
+		path.join(repoRoot, "Engine/Include"),
 		"include"
 	}
 
