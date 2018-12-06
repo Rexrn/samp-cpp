@@ -3,7 +3,14 @@
 #include <SAMP-EDGEngine/Ext/ResourceIO/Everything.hpp>
 #include <iostream>
 #include <fstream>
-#include <filesystem>
+
+#if defined(__GNUC__) || defined(__MINGW32__)
+	#include <experimental/filesystem>
+	namespace fs = std::experimental::filesystem;
+#else
+	#include <filesystem>
+	namespace fs = std::filesystem;
+#endif
 
 namespace samp = samp_edgengine;
 namespace rcio = samp_edgengine::ext::resource_io;
@@ -71,8 +78,6 @@ public:
 
 	void loadObjects()
 	{
-		namespace fs = std::filesystem;
-
 		for (auto& file : fs::directory_iterator("data/objects"))
 		{
 			if (fs::is_regular_file(file))
@@ -80,7 +85,7 @@ public:
 				std::clog << "[i]: Reading file: " << file.path() << std::endl;
 
 				// Open file:
-				std::ifstream inputStream{ file };
+				std::ifstream inputStream{ file.path().string() };
 
 				auto scene = GameMode->Map.beginConstruction<samp::Scene>();
 
