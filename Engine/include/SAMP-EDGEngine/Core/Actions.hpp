@@ -92,7 +92,7 @@ private:
 		/// <returns>
 		///		<c>true</c> if LHS is lower than RHS; otherwise, <c>false</c>.
 		/// </returns>
-		friend static bool operator<(ActionRecord const & lhs_, ActionRecord const & rhs_) {
+		friend bool operator<(ActionRecord const & lhs_, ActionRecord const & rhs_) {
 			return lhs_.invokeTime < rhs_.invokeTime;
 		}
 
@@ -104,7 +104,7 @@ private:
 		/// <returns>
 		///		<c>true</c> if LHS is greater than RHS; otherwise, <c>false</c>.
 		/// </returns>
-		friend static bool operator>(ActionRecord const & lhs_, ActionRecord const & rhs_) {
+		friend bool operator>(ActionRecord const & lhs_, ActionRecord const & rhs_) {
 			return lhs_.invokeTime > rhs_.invokeTime;
 		}
 	};
