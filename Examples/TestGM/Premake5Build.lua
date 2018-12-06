@@ -10,7 +10,7 @@ else
 
 		includedirs {
 			path.join(userConfig.deps.quickmaffs.root, "include"),
-			userConfig.deps.sampgdk.root
+			userConfig.deps.sampgdk.root,
 			path.join(repoRoot, "Engine/Include")
 		}
 
