@@ -1,7 +1,7 @@
 -- This is configuration file for build environment generation.
 -- 
 -- To properly configure build:
---  1) Copy BuildConfig.lua.template to new file and name it BuildConfig.lua
+--  1) Copy BuildConfig.lua.template to new file and name it BuildConfig.user.lua
 --  2) Fill in essential information
 -- Use Lua syntax.
 
@@ -16,15 +16,15 @@ userConfig = {
 	-- Dependencies configuration:
 	deps = {
 		-- [Required]
-		-- Please provide path to the root of the sampgdk library.
+		-- Please provide path to the root of the SAMPGDK library.
 		sampgdk = { root = os.realpath("Dependencies/sampgdk") }, 
 	
 		-- [Required]
-		-- Please provide path to the root of the quickmaffs library.
+		-- Please provide path to the root of the QuickMaffs library.
 		quickmaffs = { root = "" },
 		
 		-- [Required]
-		-- Please provide path to the root of the rapidxml library.
+		-- Please provide path to the root of the RapidXML library.
 		rapidxml = { root = "" }
 	}
 }
