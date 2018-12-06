@@ -1,6 +1,8 @@
 
 #include <SAMP-EDGEngine/Everything.hpp>
-#include <SAMP-EDGEngine-Ext/ResourceIO/Everything.hpp>
+#include <SAMP-EDGEngine/Ext/ResourceIO/Everything.hpp>
+#include <iostream>
+#include <fstream>
 #include <filesystem>
 
 namespace samp = samp_edgengine;
