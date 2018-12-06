@@ -16,6 +16,7 @@ else
 
 		links {
 			"Engine",
+			"ServerCore",
 			"Ext::ResourceIO"
 		}
 
