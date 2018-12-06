@@ -57,10 +57,10 @@ namespace samp_edgengine
 		/// <param name="color_">The RGBA 32-bit color.</param>
 		constexpr explicit Color(Uint32 color_)
 			:
-			r{ color_ >> (3 * 8) },					// Red   component	=	Binary shift right by 3 bytes.								0xAABBCCDD => 0x000000AA
-			g{ (color_ << (1 * 8)) >> (3 * 8) },	// Green component	=	Binary shift left by 1 byte  and then right by 3 bytes:		0xAABBCCDD => 0xBBCCDD00 => 0x000000BB
-			b{ (color_ << (2 * 8)) >> (3 * 8) },	// Blue  component	=	Binary shift left by 2 bytes and then right by 3 bytes:		0xAABBCCDD => 0xCCDD0000 => 0x000000CC
-			a{ (color_ << (3 * 8)) >> (3 * 8) }
+			r( color_ >> (3 * 8) ),					// Red   component	=	Binary shift right by 3 bytes.								0xAABBCCDD => 0x000000AA
+			g( (color_ << (1 * 8)) >> (3 * 8) ),	// Green component	=	Binary shift left by 1 byte  and then right by 3 bytes:		0xAABBCCDD => 0xBBCCDD00 => 0x000000BB
+			b( (color_ << (2 * 8)) >> (3 * 8) ),	// Blue  component	=	Binary shift left by 2 bytes and then right by 3 bytes:		0xAABBCCDD => 0xCCDD0000 => 0x000000CC
+			a( (color_ << (3 * 8)) >> (3 * 8) )
 		{
 		}
 
