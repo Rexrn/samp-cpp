@@ -17,9 +17,10 @@ else
 		}
 
 		links {
-			"Engine",
+			"Ext_ResourceIO",
 			"ServerCore",
-			"Ext_ResourceIO"
+			"Engine",
+			"stdc++fs"
 		}
 
 		files {
