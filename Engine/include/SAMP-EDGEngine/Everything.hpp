@@ -64,3 +64,7 @@
 #include <SAMP-EDGEngine/Server/PlayerPool.hpp>
 #include <SAMP-EDGEngine/Server/Weapon.hpp>
 #include <SAMP-EDGEngine/Server/Teleport.hpp>
+
+#include <SAMP-EDGEngine/Server/Dialog.hpp>
+
+// TODO: sort and make sure everything is added here.
