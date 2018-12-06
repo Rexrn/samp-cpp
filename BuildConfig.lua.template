@@ -11,7 +11,7 @@ userConfig = {
 	build = {
 		extensions = true,
 		examples = true
-	}
+	},
 	
 	-- Dependencies configuration:
 	deps = {
