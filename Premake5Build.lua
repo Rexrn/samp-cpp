@@ -2,9 +2,6 @@ repoRoot = os.getcwd()
 
 include ("BuildConfig.user.lua")
 
--- TODO: remove this:
-printf("Repo root: %s", repoRoot)
-
 workspace "SAMPEDGEngine"
 	location "build"
 	platforms { "x86", "x64" }
