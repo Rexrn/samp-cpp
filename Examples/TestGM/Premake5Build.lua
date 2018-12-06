@@ -23,7 +23,7 @@ else
 		}
 
 		files {
-			"Main.cpp"
+			"src/Main.cpp"
 		}
 
 		if string.match(_ACTION, "vs%d%d%d%d") ~= nil then

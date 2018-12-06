@@ -4,13 +4,8 @@
 #include <iostream>
 #include <fstream>
 
-#if defined(__GNUC__) || defined(__MINGW32__)
-	#include <experimental/filesystem>
-	namespace fs = std::experimental::filesystem;
-#else
-	#include <filesystem>
-	namespace fs = std::filesystem;
-#endif
+#include <filesystem>
+namespace fs = std::filesystem;
 
 namespace samp = samp_edgengine;
 namespace rcio = samp_edgengine::ext::resource_io;
