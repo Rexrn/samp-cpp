@@ -12,5 +12,5 @@ project "ServerCore"
 	}
 
 	files {
-		"ServerCore.cpp"
+		"src/ServerCore.cpp"
 	}
