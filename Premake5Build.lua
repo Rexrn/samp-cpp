@@ -1,5 +1,8 @@
 repoRoot = os.getcwd()
 
+include ("BuildConfig.user.lua")
+
+-- TODO: remove this:
 printf("Repo root: %s", repoRoot)
 
 workspace "SAMPEDGEngine"
@@ -29,10 +32,20 @@ workspace "SAMPEDGEngine"
 		
 
 	-- Projects:
-
 	include ("Engine/Premake5Build.lua")
+	include ("ServerCore/Premake5Build.lua")
 
 	-- TODO: include other project files here
 
+	
+	-- Extensions:
+	if userConfig.build.extensions then
+		include("Extensions/Premake5Build.lua")
+	end
+	
+	-- Examples:
+	if userConfig.build.examples then
+		include("Examples/Premake5Build.lua")
+	end
 
 	

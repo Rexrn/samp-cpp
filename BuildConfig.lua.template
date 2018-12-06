@@ -5,13 +5,26 @@
 --  2) Fill in essential information
 -- Use Lua syntax.
 
--- Dependencies configuration:
-deps = {
-	-- [Required]
-	-- Please provide path to the root of the sampgdk library.
-	sampgdk = { root = os.realpath("Dependencies/sampgdk") }, 
-
-	-- [Required]
-	-- Please provide path to the root of the quickmaffs library.
-	quickmaffs = { root = "" }
+userConfig = {
+	
+	-- Build configuration:
+	build = {
+		extensions = true,
+		examples = true
+	}
+	
+	-- Dependencies configuration:
+	deps = {
+		-- [Required]
+		-- Please provide path to the root of the sampgdk library.
+		sampgdk = { root = os.realpath("Dependencies/sampgdk") }, 
+	
+		-- [Required]
+		-- Please provide path to the root of the quickmaffs library.
+		quickmaffs = { root = "" }
+		
+		-- [Required]
+		-- Please provide path to the root of the rapidxml library.
+		rapidxml = { root = "" }
+	}
 }

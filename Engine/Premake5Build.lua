@@ -1,6 +1,3 @@
--- BuildConfig contains dependency settings
-include ("../BuildConfig.lua")
-
 project "Engine"
 	kind "StaticLib"
 	language "C++"
