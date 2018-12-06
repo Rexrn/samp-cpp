@@ -2,15 +2,17 @@
 // TODO: Provides basic exception classes for common runtime errors.
 #pragma once
 
+#include <stdexcept>
+
 namespace samp_edgengine
 {
 // TODO: implement exception classes.
 
 class AlgorithmError
-	: public std::exception
+	: public std::logic_error
 {
 public:
-	using std::exception::exception;
+	using std::logic_error::logic_error;
 };
 
 class ReferenceCountingError
