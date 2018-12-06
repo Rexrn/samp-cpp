@@ -21,7 +21,7 @@ userConfig = {
 	
 		-- [Required]
 		-- Please provide path to the root of the quickmaffs library.
-		quickmaffs = { root = "" }
+		quickmaffs = { root = "" },
 		
 		-- [Required]
 		-- Please provide path to the root of the rapidxml library.
