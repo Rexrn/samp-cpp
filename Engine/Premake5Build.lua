@@ -6,15 +6,15 @@ project "Engine"
 	targetdir (path.join(repoRoot, "Bin/%{cfg.platform}/%{cfg.buildcfg}"))
 
 	includedirs {
-		path.join(deps.quickmaffs.root, "include"),
-		deps.sampgdk.root,
+		path.join(userConfig.deps.quickmaffs.root, "include"),
+		userConfig.deps.sampgdk.root,
 		"Include"
 	}
 
 	files {
 		-- SAMPGDK files
-		path.join(deps.sampgdk.root, "sampgdk.c"),
-		path.join(deps.sampgdk.root, "amxplugin.cpp"),
+		path.join(userConfig.deps.sampgdk.root, "sampgdk.c"),
+		path.join(userConfig.deps.sampgdk.root, "amxplugin.cpp"),
 
 		-- C++ files
 		"EnginePCH.hpp",

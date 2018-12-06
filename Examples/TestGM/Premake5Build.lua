@@ -9,8 +9,8 @@ else
 		targetdir (path.join(repoRoot, "Bin/%{cfg.platform}/%{cfg.buildcfg}"))
 
 		includedirs {
-			path.join(deps.quickmaffs.root, "include"),
-			deps.sampgdk.root
+			path.join(userConfig.deps.quickmaffs.root, "include"),
+			userConfig.deps.sampgdk.root
 			path.join(repoRoot, "Engine/Include")
 		}
 
