@@ -137,3 +137,6 @@ project "Engine"
 		"Source/World/Streamer/UniversalObjectWrapper.cpp",
 		"Source/World/Streamer/VehicleWrapper.cpp",
 	}
+
+	filter { "files:**.c" }
+		compileas "C"
