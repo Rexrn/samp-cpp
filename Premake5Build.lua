@@ -3,7 +3,7 @@ repoRoot = os.getcwd()
 include ("BuildConfig.user.lua")
 
 workspace "SAMPEDGEngine"
-	location "build"
+	location "Build"
 	platforms { "x86", "x64" }
 	configurations { "Debug", "Release" }
 
