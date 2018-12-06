@@ -12,8 +12,9 @@ namespace samp_edgengine
 {
 
 ///////////////////////////////////////////////////////////////////////////
-Player::Player(IndexType const index_)
+Player::Player(IGameMode& gameMode_, IndexType const index_)
 	:
+	m_gameMode{ gameMode_ },
 	m_index{ index_ }, m_existingStatus{ ExistingStatus::Spawning },
 	m_score{ 0 }, m_cash{ 0 },
 	m_health{ 100 }, m_armour{ 0 },

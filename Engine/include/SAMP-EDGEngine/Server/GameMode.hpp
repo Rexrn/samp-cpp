@@ -46,7 +46,7 @@ public:
 	/// <returns>
 	/// New player instance with specified index.
 	/// </returns>
-	virtual UniquePtr<Player> newPlayerInstance(Int32 playerIndex_) const;
+	virtual UniquePtr<Player> newPlayerInstance(Int32 playerIndex_);
 		
 	/// <summary>
 	/// Adds the player class.

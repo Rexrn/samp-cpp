@@ -23,6 +23,7 @@ namespace samp_edgengine
 class RaceCheckpoint;
 class Checkpoint;
 class Vehicle;
+class IGameMode;
 
 /// <summary>
 /// Wraps SAMP player data into class.
@@ -74,8 +75,9 @@ public:
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Player"/> class.
 	/// </summary>
-	/// <param name="index">Index of the player.</param>
-	explicit Player(IndexType const index_);
+	/// <param name="gameMode_">Reference to GameMode player is managed by.</param>
+	/// <param name="index_">Index of the player.</param>
+	Player(IGameMode& gameMode_, IndexType const index_);
 		
 	/// <summary>
 	/// Default constructor (deleted, use explicit index constructor instead).
@@ -380,6 +382,14 @@ public:
 	// Player data.
 
 	/// <summary>
+	/// Returns IGameMode player is managed by.
+	/// </summary>
+	/// <returns>IGameMode player is managed by.</returns>
+	IGameMode& getGameMode() const noexcept {
+		return m_gameMode;
+	}
+
+	/// <summary>
 	/// Returns player index.
 	/// </summary>
 	/// <returns>Player index (std::size_t).</returns>
@@ -533,6 +543,7 @@ public:
 	friend class MapClass;
 	friend class IStreamer;
 	friend class PlayerTextDraw;
+	friend class IGameMode;
 protected:
 				
 	/// <summary>
@@ -607,6 +618,8 @@ private:
 	/// <para>This function is not accurate when player is not spawned, therefore you are forced to use <see cref="Player::getLocation"/>.</para>
 	/// </remarks>
 	math::Vector3f getClientLocation() const;
+
+	IGameMode&			m_gameMode;			/// Reference to IGameMode the player is managed by.
 
 	const IndexType		m_index;			/// Player in-game index.
 	std::string			m_name;				/// Player in-game nickname.
