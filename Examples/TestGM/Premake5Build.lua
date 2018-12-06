@@ -19,11 +19,16 @@ else
 		links {
 			"Ext_ResourceIO",
 			"ServerCore",
-			"Engine",
-			"stdc++fs"
+			"Engine"
 		}
 
 		files {
 			"Main.cpp"
 		}
+
+		if string.match(_ACTION, "vs%d%d%d%d") ~= nil then
+			linkoptions { "/DEF:\"" .. path.join(repoRoot, "SymbolsExportList.def") .. "\""}
+		elseif string.match(_ACTION, "gmake(2)?") ~= nil then
+			links { "stdc++fs" }
+		end
 end
