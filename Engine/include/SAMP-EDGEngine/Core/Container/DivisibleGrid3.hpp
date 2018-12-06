@@ -220,7 +220,7 @@ public:
 			m_childCount++;
 
 			auto baseLocation		= this->getCenter() - halfExtent;
-			auto nodeBaseLocation	= baseLocation + (arrayIndices.convert<float>() * childHalfExtent * 2.f);
+			auto nodeBaseLocation	= baseLocation + (arrayIndices.template convert<float>() * childHalfExtent * 2.f);
 
 			node = std::make_unique<LowerLevelType>(nodeBaseLocation + childHalfExtent);
 
