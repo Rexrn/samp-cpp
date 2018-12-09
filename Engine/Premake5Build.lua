@@ -18,7 +18,7 @@ project "Engine"
 
 		-- C++ files
 		"include/SAMP-EDGEngine/Everything.hpp",
-		"include/SAMP-EDGEngine/Core/Actions.hpp",
+		"include/SAMP-EDGEngine/Core/TaskSystem.hpp",
 		"include/SAMP-EDGEngine/Core/BasicInterfacesInc.hpp",
 		"include/SAMP-EDGEngine/Core/Clock.hpp",
 		"include/SAMP-EDGEngine/Core/Color.hpp",
@@ -89,7 +89,7 @@ project "Engine"
 		"include/SAMP-EDGEngine/World/Streamer/UniversalObjectWrapper.hpp",
 		"include/SAMP-EDGEngine/World/Streamer/VehicleWrapper.hpp",
 
-		"src/Core/Actions.cpp",
+		"src/Core/TaskSystem.cpp",
 		"src/Core/Clock.cpp",
 		"src/Core/Color.cpp",
 		"src/Core/BasicInterfaces/PlacementTracker.cpp",

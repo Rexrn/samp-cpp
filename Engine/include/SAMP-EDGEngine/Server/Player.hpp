@@ -8,7 +8,7 @@
 #include <SAMP-EDGEngine/Server/Weapon.hpp>
 #include <SAMP-EDGEngine/World/PersonalObject.hpp>
 
-#include <SAMP-EDGEngine/Core/Actions.hpp>
+#include <SAMP-EDGEngine/Core/TaskSystem.hpp>
 #include <SAMP-EDGEngine/Core/Color.hpp>
 #include <SAMP-EDGEngine/Core/Clock.hpp>
 #include <SAMP-EDGEngine/Core/Pointers.hpp>
