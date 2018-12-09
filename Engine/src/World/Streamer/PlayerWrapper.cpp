@@ -16,7 +16,7 @@ PlayerWrapper::PlayerWrapper(Player & player_)
 /////////////////////////////////////////////////////////////
 void PlayerWrapper::whenPlacementChanges(ActorPlacement const& prevPlacement_, ActorPlacement const& newPlacement_)
 {
-	GameMode->Streamer->whenPlayerPlacementChanges(*m_player, prevPlacement_, newPlacement_);
+	GameMode->streamer->whenPlayerPlacementChanges(*m_player, prevPlacement_, newPlacement_);
 }
 
 }

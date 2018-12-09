@@ -111,7 +111,7 @@ namespace samp_edgengine
 	{
 		if (!text_.empty())
 		{
-			for (auto player : GameMode->Players.getPool())
+			for (auto player : GameMode->players.getPool())
 			{
 				this->messagePlayerML(*player, text_);
 			}

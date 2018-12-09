@@ -16,7 +16,7 @@ MapClass::MapClass()
 Vehicle& MapClass::finalizeConstruction(ActorPtrType< Vehicle > const& vehicle_)
 {
 	m_vehicles.push_back(vehicle_);
-	GameMode->Streamer->whenVehicleJoinsMap(*vehicle_);
+	GameMode->streamer->whenVehicleJoinsMap(*vehicle_);
 	return *vehicle_;
 }
 
@@ -24,7 +24,7 @@ Vehicle& MapClass::finalizeConstruction(ActorPtrType< Vehicle > const& vehicle_)
 StaticVehicle& MapClass::finalizeConstruction(ActorPtrType< StaticVehicle > const& staticVehicle_)
 {
 	m_staticVehicles.push_back(staticVehicle_);
-	GameMode->Streamer->whenStaticVehicleJoinsMap(*staticVehicle_);
+	GameMode->streamer->whenStaticVehicleJoinsMap(*staticVehicle_);
 	return *staticVehicle_;
 }
 
@@ -59,7 +59,7 @@ GangZone& MapClass::finalizeConstruction(ActorPtrType< GangZone > const& gangZon
 Checkpoint& MapClass::finalizeConstruction(ActorPtrType< Checkpoint > const& checkpoint_)
 {
 	m_checkpoints.push_back(checkpoint_);
-	GameMode->Streamer->whenCheckpointJoinsMap(*checkpoint_);
+	GameMode->streamer->whenCheckpointJoinsMap(*checkpoint_);
 	return *checkpoint_;
 }
 
@@ -67,7 +67,7 @@ Checkpoint& MapClass::finalizeConstruction(ActorPtrType< Checkpoint > const& che
 RaceCheckpoint& MapClass::finalizeConstruction(ActorPtrType< RaceCheckpoint > const& raceCheckpoint_)
 {
 	m_raceCheckpoints.push_back(raceCheckpoint_);
-	GameMode->Streamer->whenCheckpointJoinsMap(*raceCheckpoint_);
+	GameMode->streamer->whenCheckpointJoinsMap(*raceCheckpoint_);
 	return *raceCheckpoint_;
 }
 
@@ -136,7 +136,7 @@ void MapClass::removeBuilding(RemovedBuilding const& removedBuilding_)
 	{
 		m_removedBuildings.emplace_back(removedBuilding_);
 
-		for(auto & player : GameMode->Players.getPool())
+		for(auto & player : GameMode->players.getPool())
 		{
 			this->applyRemovedBuilding(*player, removedBuilding_);
 		}

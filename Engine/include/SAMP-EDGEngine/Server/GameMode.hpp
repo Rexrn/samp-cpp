@@ -13,8 +13,10 @@
 #include <SAMP-EDGEngine/World/Map.hpp>
 
 #include <SAMP-EDGEngine/Core/BasicInterfaces/Streamer.hpp>
+#include <SAMP-EDGEngine/Core/BasicInterfaces/Updatable.hpp>
 #include <SAMP-EDGEngine/Core/Pointers.hpp>
 #include <SAMP-EDGEngine/Core/Events.hpp>
+#include <SAMP-EDGEngine/Core/Actions.hpp>
 
 
 namespace samp_edgengine
@@ -80,13 +82,17 @@ protected:
 	/// </remarks>
 	virtual void setupEvents() {}
 
-public:
-	PlayerPool					Players;
-	MapClass					Map;
-	CommandManager				Commands;
+	virtual void onServerUpdate(double deltaTime_, IUpdatable::TimePoint timePoint_);
 
-	UniquePtr<IStreamer>		Streamer;
-	UniquePtr<IChat>			Chat;
+public:
+	PlayerPool					players;
+	MapClass					map;
+	CommandManager				commands;
+	TaskScheduler				tasks;
+
+
+	UniquePtr<IStreamer>		streamer;
+	UniquePtr<IChat>			chat;
 };
 
 using GameModeSetupResult = UniquePtr<IGameMode>;

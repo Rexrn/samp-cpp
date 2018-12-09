@@ -293,13 +293,13 @@ void Chunk::GZThingIntercepted()
 {
 	if (!this->isEmpty() && !m_gangZone)
 	{
-		auto gangZone = GameMode->Map.beginConstruction<samp_edgengine::GangZone>();
+		auto gangZone = GameMode->map.beginConstruction<samp_edgengine::GangZone>();
 
 		auto start = m_debugInfo.center - m_debugInfo.halfExtent;
 		auto end = start + (m_debugInfo.halfExtent * 2.f);
 		gangZone->create({ start.x, start.y }, { end.x, end.y });
 	
-		m_gangZone = &GameMode->Map.finalizeConstruction(gangZone);
+		m_gangZone = &GameMode->map.finalizeConstruction(gangZone);
 	}
 
 	m_gangZone->hide();
@@ -314,7 +314,7 @@ void Chunk::GZThingReleased()
 {
 	if (this->isEmpty() && m_gangZone)
 	{
-		GameMode->Map.remove(*m_gangZone);
+		GameMode->map.remove(*m_gangZone);
 		m_gangZone = nullptr;
 	}
 	else

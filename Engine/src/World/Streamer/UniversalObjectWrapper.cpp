@@ -28,7 +28,7 @@ void UniversalObjectWrapper::whenPlacementChanges(ActorPlacement const& prevPlac
 {
 	if(m_object)
 	{
-		GameMode->Streamer->whenObjectPlacementChanges(*m_object, prevPlacement_, newPlacement_);
+		GameMode->streamer->whenObjectPlacementChanges(*m_object, prevPlacement_, newPlacement_);
 	}
 }
 

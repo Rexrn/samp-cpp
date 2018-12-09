@@ -49,7 +49,7 @@ bool GlobalObjectWrapper::isPlayerInVisibilityZone(PlayerPlacement const& placem
 ////////////////////////////////////////////////////////////////////////
 void GlobalObjectWrapper::whenPlacementChanges(GlobalObjectPlacement const& prevPlacement_, GlobalObjectPlacement const& newPlacement_)
 {
-	GameMode->Streamer->whenObjectPlacementChanges(*m_object, prevPlacement_, newPlacement_);
+	GameMode->streamer->whenObjectPlacementChanges(*m_object, prevPlacement_, newPlacement_);
 }
 
 }

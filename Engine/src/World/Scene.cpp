@@ -21,7 +21,7 @@ GlobalObject& Scene::finalizeConstruction(ObjectPtrType< GlobalObject > const& g
 	this->applyNewObjectToOrigin(*globalObject_, m_objects.size());
 
 	if (m_insideMap)
-		GameMode->Streamer->whenObjectJoinsMap(*globalObject_);
+		GameMode->streamer->whenObjectJoinsMap(*globalObject_);
 
 	return *globalObject_;
 }
@@ -51,7 +51,7 @@ UniversalObject& Scene::finalizeConstruction(ObjectPtrType< UniversalObject > co
 	this->applyNewObjectToOrigin(*universalObject_, m_objects.size());
 
 	if (m_insideMap)
-		GameMode->Streamer->whenObjectJoinsMap(*universalObject_);
+		GameMode->streamer->whenObjectJoinsMap(*universalObject_);
 
 	return *universalObject_;
 }
@@ -111,10 +111,10 @@ void Scene::whenSceneIsAddedToMap()
 {
 	m_insideMap = true;
 	for (const_a &globalObject : m_globalObjects) {
-		GameMode->Streamer->whenObjectJoinsMap(*globalObject);
+		GameMode->streamer->whenObjectJoinsMap(*globalObject);
 	}
 	for (const_a &universalObject : m_universalObjects) {
-		GameMode->Streamer->whenObjectJoinsMap(*universalObject);
+		GameMode->streamer->whenObjectJoinsMap(*universalObject);
 	}
 }
 
@@ -123,10 +123,10 @@ void Scene::whenSceneIsRemovedFromMap()
 {
 	m_insideMap = false;
 	for(const_a &globalObject : m_globalObjects) {
-		GameMode->Streamer->whenObjectLeavesMap(*globalObject);
+		GameMode->streamer->whenObjectLeavesMap(*globalObject);
 	}
 	for (const_a &universalObject : m_universalObjects) {
-		GameMode->Streamer->whenObjectLeavesMap(*universalObject);
+		GameMode->streamer->whenObjectLeavesMap(*universalObject);
 	}
 }
 

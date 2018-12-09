@@ -16,6 +16,7 @@ Player::Player(IGameMode& gameMode_, IndexType const index_)
 	:
 	m_gameMode{ gameMode_ },
 	m_index{ index_ }, m_existingStatus{ ExistingStatus::Spawning },
+	m_language{ 0 },
 	m_score{ 0 }, m_cash{ 0 },
 	m_health{ 100 }, m_armour{ 0 },
 	m_placementTracker{ nullptr },
@@ -30,9 +31,11 @@ Player::Player(IGameMode& gameMode_, IndexType const index_)
 ///////////////////////////////////////////////////////////////////////////
 Player::~Player()
 {
+	this->unfreeze();
+
 	// Notify streamer to remove every personal object.
 	for (auto const & personalObject : m_personalObjects)
-		GameMode->Streamer->whenObjectLeavesMap(*personalObject);
+		GameMode->streamer->whenObjectLeavesMap(*personalObject);
 }
 
 ///////////////////////////////////////////////////////////////////////////
@@ -57,6 +60,7 @@ void Player::setDialog(UniquePtr<IDialog>&& dialog_)
 
 	m_dialog = std::forward< UniquePtr<IDialog> >(dialog_);
 	m_dialog->setOwner(*this);
+	m_dialog->run();
 	m_dialog->show();
 }
 
@@ -240,7 +244,7 @@ PersonalObject& Player::finalizePersonalObjectConstruction(UniquePtr<PersonalObj
 {
 	PersonalObject* objectPtr = personalObject_.get();
 	m_personalObjects.push_back(std::forward< UniquePtr<PersonalObject> >(personalObject_));
-	GameMode->Streamer->whenObjectJoinsMap(*objectPtr);
+	GameMode->streamer->whenObjectJoinsMap(*objectPtr);
 	return *objectPtr;
 }
 
@@ -257,7 +261,7 @@ bool Player::removePersonalObject(PersonalObject& personalObject_)
 	if (it != m_personalObjects.end())
 	{
 		// Notify streamer that object has left the map:
-		GameMode->Streamer->whenObjectLeavesMap(*it->get());
+		GameMode->streamer->whenObjectLeavesMap(*it->get());
 
 		// Erase the object from the pool.
 		m_personalObjects.erase(it);
@@ -296,6 +300,72 @@ bool Player::setName(std::string_view const name_, bool(*isNameValidProc_)(const
 		return true;
 	}
 	return false;
+}
+
+///////////////////////////////////////////////////////////////////////////
+void Player::teleport(Teleport const & teleport_, Clock::Duration freezeTime_)
+{
+	if(auto vehicle = this->getVehicle())
+	{
+		bool driver = vehicle->getDriver() == this;
+
+		this->setLocation(teleport_.location + math::Vector3f(0, 0, 0.3f)); // 30cm up to avoid falling through
+		this->setFacingAngle(teleport_.facingAngle);
+
+		if (teleport_.world != Teleport::cxNoChange)
+			this->setWorld(teleport_.world);
+		if (teleport_.interior != Teleport::cxNoChange)
+			this->setInterior(teleport_.interior);
+			
+		if(driver)
+		{
+			//g_gameMode->sendDebug(String::format(Color::Blue, "Player ", Color::White, this->getName(), Color::Blue, " teleported with vehicle as a driver."));
+
+			auto passengers = vehicle->getPassengers();
+			std::map<int, int> seatIds;
+			for (auto passenger : passengers)
+			{
+				seatIds[passenger->getIndex()] = sampgdk::GetPlayerVehicleSeat(passenger->getIndex());
+				passenger->setLocation(teleport_.location + math::Vector3f(0, 0, 0.3f)); // 30cm up to avoid falling through
+				passenger->setFacingAngle(teleport_.facingAngle);
+				if (teleport_.world != Teleport::cxNoChange)
+					passenger->setWorld(teleport_.world);
+				if (teleport_.interior != Teleport::cxNoChange)
+					passenger->setInterior(teleport_.interior);
+			}
+
+
+			vehicle->setLocation(teleport_.location + math::Vector3f(0, 0, 0.3f)); // 30cm up to avoid falling through
+			vehicle->setFacingAngle(teleport_.facingAngle);
+			if (teleport_.world != Teleport::cxNoChange)
+				vehicle->setWorld(teleport_.world);
+			if (teleport_.interior != Teleport::cxNoChange)
+				vehicle->setInterior(teleport_.interior);
+
+			for (auto passenger : passengers)
+			{
+				passenger->putInVehicle(*vehicle, seatIds[passenger->getIndex()]);
+			}
+			this->putInVehicle(*vehicle, 0);
+		}
+		else
+		{
+			//g_gameMode->sendDebug(String::format(Color::Blue, "Player ", Color::White, this->getName(), Color::Blue, " teleported without vehicle (was passenger)."));
+		}
+	}
+	else
+	{
+		this->setLocation(teleport_.location + math::Vector3f(0, 0, 0.3f)); // 30cm up to avoid falling through
+		this->setFacingAngle(teleport_.facingAngle);
+		if (teleport_.world != Teleport::cxNoChange)
+			this->setWorld(teleport_.world);
+		if (teleport_.interior != Teleport::cxNoChange)
+			this->setInterior(teleport_.interior);
+		//g_gameMode->sendDebug(String::format(Color::Blue, "Player ", Color::White, this->getName(), Color::Blue, " teleported without vehicle."));
+	}
+
+	if (freezeTime_ > chrono::seconds{0})
+		this->freeze(freezeTime_);
 }
 
 ///////////////////////////////////////////////////////////////////////////
@@ -357,6 +427,27 @@ void Player::setArmour(float const armour_)
 }
 
 ///////////////////////////////////////////////////////////////////////////
+void Player::freeze(Clock::Duration freezeTime_)
+{
+	if (m_unfreezeTask)
+	{
+		m_unfreezeTime = Clock::now() + freezeTime_;
+	}
+	else {
+		m_unfreezeTask = this->getGameMode().tasks.schedule(m_unfreezeTime - Clock::now(),
+				[this]() { this->unfreeze(); }
+			);
+	}
+}
+
+///////////////////////////////////////////////////////////////////////////
+void Player::unfreeze()
+{
+	m_unfreezeTask.reset();
+	m_unfreezeTime = Clock::now();
+}
+
+///////////////////////////////////////////////////////////////////////////
 bool Player::putInVehicle(Vehicle& vehicle_, Int32 seatIndex_)
 {
 	// TODO: confirm that no vehicle has seat index of 6.
@@ -395,6 +486,16 @@ bool Player::kickFromVehicle()
 bool Player::isInVehicle() const
 {
 	return m_vehicle != nullptr;
+}
+
+///////////////////////////////////////////////////////////////////////////
+void Player::setWeaponSet(WeaponSet const & weaponSet_)
+{
+	sampgdk::ResetPlayerWeapons(this->getIndex());
+	for (auto &weapon : weaponSet_.getWeapons())
+	{
+		this->addWeapon(weapon);
+	}
 }
 
 ///////////////////////////////////////////////////////////////////////////

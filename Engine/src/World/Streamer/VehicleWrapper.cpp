@@ -51,7 +51,7 @@ bool VehicleWrapper::isPlayerInVisibilityZone(PlayerPlacement const& placement_)
 ///////////////////////////////////////////////////////////////////////////
 void VehicleWrapper::whenPlacementChanges(ActorPlacement const& prevPlacement_, ActorPlacement const& newPlacement_)
 {
-	GameMode->Streamer->whenVehiclePlacementChanges(*m_vehicle, prevPlacement_, newPlacement_);
+	GameMode->streamer->whenVehiclePlacementChanges(*m_vehicle, prevPlacement_, newPlacement_);
 }
 
 }

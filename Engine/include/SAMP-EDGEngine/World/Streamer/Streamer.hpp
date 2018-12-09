@@ -4,6 +4,7 @@
 #include <SAMP-EDGEngine/World/Streamer/StreamerSettings.hpp>
 #include <SAMP-EDGEngine/Core/Container/DivisibleGrid3.hpp>
 #include <SAMP-EDGEngine/Core/BasicInterfaces/Streamer.hpp>
+#include <SAMP-EDGEngine/Core/BasicInterfaces/Updatable.hpp>
 #include <SAMP-EDGEngine/Core/Events.hpp>
 
 
@@ -12,7 +13,8 @@ namespace samp_edgengine::default_streamer
 class Streamer
 	:
 	public IStreamer,
-	public IEventReceiver
+	public IEventReceiver,
+	public IUpdatable
 {
 public:	
 	/// <summary>
@@ -187,7 +189,7 @@ private:
 	/// Event reaction designed to be called every update.
 	/// </summary>
 	/// <param name="frameTime_">The frame time.</param>
-	void whenServerUpdates(Clock::TimePoint frameTime_);
+	virtual void update(double deltaTime_, IUpdatable::TimePoint frameTime_) override;
 
 	/// <summary>
 	/// Determines whether specified location is outside boundaries.
@@ -273,11 +275,11 @@ private:
 	/// </remarks>
 	static UniversalObjectWrapper& getWrapper(UniversalObject const & universalObject_);
 
-	Clock::TimePoint	m_nextUpdate,
-						m_nextCheckpointRestream;
+	IUpdatable::TimePoint	m_nextUpdate,
+							m_nextCheckpointRestream;
 
-	GridType			m_worldGrid;	// Stores chunks in certain area (typically huge cube with center on {0, 0, 0}) as divisible grid. Searching through it is really fast.
-	Chunk				m_entireWorld;	// Contains every actor that does not fit outside m_worldGrid. Searching through this chunks is a lot slower since it is not divided into smaller ones.
+	GridType				m_worldGrid;	// Stores chunks in certain area (typically huge cube with center on {0, 0, 0}) as divisible grid. Searching through it is really fast.
+	Chunk					m_entireWorld;	// Contains every actor that does not fit outside m_worldGrid. Searching through this chunks is a lot slower since it is not divided into smaller ones.
 };
 
 }

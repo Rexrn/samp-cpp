@@ -22,7 +22,7 @@ namespace samp_edgengine::default_streamer
 Streamer::Streamer()
 	: m_worldGrid{ {} }
 {
-	Server->onServerUpdate += { *this, &Streamer::whenServerUpdates };
+	Server->onServerUpdate += { *this, &Streamer::update };
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -465,7 +465,7 @@ std::vector< Chunk* > Streamer::getChunksInRadiusFrom(math::Vector3f const& loca
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////
-void Streamer::whenServerUpdates(Clock::TimePoint frameTime_)
+void Streamer::update(double deltaTime_, IUpdatable::TimePoint frameTime_)
 {
 	if (frameTime_ > m_nextUpdate)
 	{
@@ -478,7 +478,7 @@ void Streamer::whenServerUpdates(Clock::TimePoint frameTime_)
 			m_nextCheckpointRestream = frameTime_ + StreamerSettings.CheckpointRestreamInterval;
 		}
 
-		for(auto player : GameMode->Players.getPool())
+		for(auto player : GameMode->players.getPool())
 		{
 			if (player) {
 
@@ -495,10 +495,10 @@ void Streamer::whenServerUpdates(Clock::TimePoint frameTime_)
 			}
 		}
 
-		for(auto vehicle : GameMode->Map.getVehicles()) {
+		for(auto vehicle : GameMode->map.getVehicles()) {
 			vehicle->sendPlacementUpdate();
 		}
-		for (auto vehicle : GameMode->Map.getStaticVehicles()) {
+		for (auto vehicle : GameMode->map.getStaticVehicles()) {
 			vehicle->sendPlacementUpdate();
 		}
 	}

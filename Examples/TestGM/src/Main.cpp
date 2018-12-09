@@ -35,13 +35,13 @@ void cmd_SpawnVehicle(samp::CommandInput input_)
 	auto params = input_.splitParams();
 	if (params.size() == 1)
 	{
-		auto pVeh = GameMode->Map.beginConstruction<samp::Vehicle>();
+		auto pVeh = GameMode->map.beginConstruction<samp::Vehicle>();
 		pVeh->setModel(samp::Vehicle::findModelBestMatch(params[0]));
 		pVeh->setLocation(input_.target.getLocation());
 		pVeh->setFacingAngle(input_.target.getFacingAngle());
 		pVeh->setInterior(input_.target.getInterior());
 		pVeh->setWorld(input_.target.getWorld());
-		auto &veh = GameMode->Map.finalizeConstruction(pVeh);
+		auto &veh = GameMode->map.finalizeConstruction(pVeh);
 		input_.target.putInVehicle(veh, 0);
 	}
 }
@@ -50,7 +50,7 @@ void cmd_ObjectCount(samp::CommandInput input_)
 {
 	namespace txt = samp::text::ascii;
 	auto tracker = static_cast<samp::default_streamer::PlayerWrapper*>(input_.target.getPlacementTracker());
-	GameMode->Chat->messagePlayer(input_.target, txt::compose("You have currently ", tracker->spawnedObjects.size(), " objects shown!"));
+	GameMode->chat->messagePlayer(input_.target, txt::compose("You have currently ", tracker->spawnedObjects.size(), " objects shown!"));
 }
 
 class MyGameMode
@@ -65,7 +65,7 @@ public:
 	{
 		samp::IGameMode::setup();
 
-		Chat = std::make_unique<samp::DefaultChat>();
+		chat = std::make_unique<samp::DefaultChat>();
 
 		this->setupCommands();
 		this->loadObjects();
@@ -82,7 +82,7 @@ public:
 				// Open file:
 				std::ifstream inputStream{ file.path().string() };
 
-				auto scene = GameMode->Map.beginConstruction<samp::Scene>();
+				auto scene = GameMode->map.beginConstruction<samp::Scene>();
 
 				// Create XML document:
 				rcio::xml::xml_document<> document;
@@ -106,7 +106,7 @@ public:
 					rcio::XMLSceneDeserializer deserializer{ *scene, *rootNode };
 					if (deserializer.deserialize())
 					{
-						GameMode->Map.finalizeConstruction(scene);
+						GameMode->map.finalizeConstruction(scene);
 						std::cout << "Read: " << scene->getObjects().size() << " objects!" << std::endl;
 					}
 				}
@@ -129,9 +129,9 @@ public:
 
 	void setupCommands()
 	{
-		Commands.construct<samp::ProcedureCommand>( samp::CmdInvocations{ "tpc" }, cmd_TeleportToLocation );
-		Commands.construct<samp::ProcedureCommand>( samp::CmdInvocations{ "v" }, cmd_SpawnVehicle );
-		Commands.construct<samp::ProcedureCommand>( samp::CmdInvocations{ "objc" }, cmd_ObjectCount);
+		commands.construct<samp::ProcedureCommand>( samp::CmdInvocations{ "tpc" }, cmd_TeleportToLocation );
+		commands.construct<samp::ProcedureCommand>( samp::CmdInvocations{ "v" }, cmd_SpawnVehicle );
+		commands.construct<samp::ProcedureCommand>( samp::CmdInvocations{ "objc" }, cmd_ObjectCount);
 	}
 };
 

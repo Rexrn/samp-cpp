@@ -8,7 +8,9 @@
 #include <SAMP-EDGEngine/Server/Weapon.hpp>
 #include <SAMP-EDGEngine/World/PersonalObject.hpp>
 
+#include <SAMP-EDGEngine/Core/Actions.hpp>
 #include <SAMP-EDGEngine/Core/Color.hpp>
+#include <SAMP-EDGEngine/Core/Clock.hpp>
 #include <SAMP-EDGEngine/Core/Pointers.hpp>
 #include <SAMP-EDGEngine/Core/BasicInterfaces/PlacementTracker.hpp>
 #include <SAMP-EDGEngine/Core/TypesAndDefinitions.hpp>
@@ -16,6 +18,7 @@
 #include <SAMP-EDGEngine/World/RaceCheckpoint.hpp>
 #include <SAMP-EDGEngine/Server/PlayerTextDraw.hpp>
 #include <SAMP-EDGEngine/Server/Dialog.hpp>
+#include <SAMP-EDGEngine/Server/Teleport.hpp>
 
 
 namespace samp_edgengine
@@ -287,6 +290,13 @@ public:
 	// Player world transform.
 
 	/// <summary>
+	/// Teleports player to another location.
+	/// </summary>
+	/// <param name="teleport_">The teleport.</param>
+	/// <param name="freezeTime_">Time to freeze the player.</param>
+	void teleport(Teleport const &teleport_, Clock::Duration freezeTime_ = {});
+
+	/// <summary>
 	/// Sets the player's location.
 	/// </summary>
 	/// <param name="location_">The location.</param>
@@ -333,6 +343,10 @@ public:
 	{	
 	}
 
+	void freeze(Clock::Duration freezeTime_);
+
+	void unfreeze();
+
 	/// <summary>
 	/// Puts player inside the vehicle.
 	/// </summary>
@@ -372,7 +386,13 @@ public:
 	Vehicle* getVehicle() const;
 
 	// Weapons:
-		
+	
+	/// <summary>
+	/// Sets weapon set,
+	/// </summary>
+	/// <param name="weaponSet_">The weapon set.</param>
+	void setWeaponSet(WeaponSet const & weaponSet_);
+
 	/// <summary>
 	/// Adds the weapon.
 	/// </summary>
@@ -635,6 +655,9 @@ private:
 	float				m_health;			/// Player's in-game health.
 	float				m_armour;			/// Player's in-game armour.
 	Vehicle*			m_vehicle;			/// Vehicle player sits in.
+
+	Clock::TimePoint 	m_unfreezeTime;
+	SharedPtr<Task>		m_unfreezeTask;
 
 	// Player personal settings:
 	Uint16				m_language;			/// Player's language.

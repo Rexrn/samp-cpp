@@ -19,6 +19,7 @@
 #include <SAMP-EDGEngine/Core/Pointers.hpp>
 #include <SAMP-EDGEngine/Core/Events.hpp>
 #include <SAMP-EDGEngine/Core/Clock.hpp>
+#include <SAMP-EDGEngine/Core/BasicInterfaces/Updatable.hpp>
 
 namespace samp_edgengine
 {
@@ -129,7 +130,7 @@ public:
 	bool sampEvent_OnPlayerSelectPlayerObject(Int32 playerIndex_, Int32 objectHandle_, Int32 modelIndex_, math::Vector3f location_);
 	bool sampEvent_OnPlayerWeaponShot(Int32 playerIndex_, Weapon::Type weapon_, Weapon::HitResult hitResult_);
 
-	EventDispatcher<Clock::TimePoint>									onServerUpdate;
+	EventDispatcher<double, IUpdatable::TimePoint>						onServerUpdate;
 	EventDispatcher<>													onGameModeInit;
 	EventDispatcher<>													onGameModeExit;
 	EventDispatcher<>													onRconCommand;
@@ -183,8 +184,8 @@ private:
 	/// <param name="frameTime_">The frame time.</param>
 	void updateCheckpoints();
 
-	Clock::TimePoint					m_nextCheckpointUpdate;
-	Clock::TimePoint					m_nextUpdate; /// Stores last server update call (used to determine deltaTime).
+	IUpdatable::TimePoint m_nextCheckpointUpdate;
+	IUpdatable::TimePoint m_lastUpdate; /// Stores last server update call (used to determine deltaTime).
 };
 
 } // namespace agdk
