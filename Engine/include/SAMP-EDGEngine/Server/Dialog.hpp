@@ -17,8 +17,8 @@ class Player;
 /// </summary>
 enum class DialogButton
 {
-	Left = 0,
-	Right = 1,
+	Right = 0,
+	Left = 1,
 	Default = 1
 };
 
@@ -61,6 +61,11 @@ protected:
 	void setOwner(Player & player_);
 
 	/// <summary>
+	/// Implements the logic of the dialog.
+	/// </summary>
+	virtual void run() {}
+
+	/// <summary>
 	/// Shows the specified dialog. Dialog ID can be modified with custom hash.
 	/// </summary>
 	/// <param name="customHash">The custom hash.</param>
@@ -74,6 +79,8 @@ protected:
 	std::string m_desc;
 	//	Dialog buttons.
 	std::string m_buttons[2];
+
+	std::string m_customHash;
 
 	/// <summary>
 	/// Generates unique dialog hash.
