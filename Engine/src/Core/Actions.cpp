@@ -6,29 +6,7 @@ namespace samp_edgengine
 {
 
 /////////////////////////////////////////////////////////////////////////////////////////////
-bool ActionScheduler::stop(HandleType const handle_)
-{
-	for (auto cont : { &m_actions, &m_pendingActions })
-	{
-		auto it = this->findAction(*cont, handle_);
-		if (it != cont->end())
-		{
-			it->repeatsRemaining = 0;
-			return true;
-		}
-	}
-	return false;
-}
-
-/////////////////////////////////////////////////////////////////////////////////////////////
-bool ActionScheduler::isRunning(HandleType const handle_) const
-{
-	return	this->findAction(m_actions, handle_) != m_actions.end()	||
-			this->findAction(m_pendingActions, handle_) != m_pendingActions.end();
-}
-
-/////////////////////////////////////////////////////////////////////////////////////////////
-void ActionScheduler::update(double const deltaTime_, IUpdatable::TimePointType const & timeMoment_)
+void TaskScheduler::update(double deltaTime_, IUpdatable::TimePoint timeMoment_)
 {
 	if (!m_actions.empty())
 	{
@@ -36,7 +14,7 @@ void ActionScheduler::update(double const deltaTime_, IUpdatable::TimePointType 
 		ContainerType::size_type numReady = 0;
 		for (auto const & action : m_actions)
 		{
-			if (action.invokeTime < timeMoment_)
+			if (action->getNextExecutionTime() < timeMoment_)
 				numReady++;
 			else
 				break;
@@ -53,17 +31,24 @@ void ActionScheduler::update(double const deltaTime_, IUpdatable::TimePointType 
 				m_performsInvocations = true;
 				for (auto it = m_actions.begin(); it != endIt; ++it)
 				{
-					if (it->repeatsRemaining > 0)
-						this->invoke(*it);
+					// *it is SharedPtr<Task>&
+					// *(*it) is Task&
+					if (it->use_count() > 1 && (*it)->getRepeatCount() > 0)
+						(*it)->execute();
 				}
 				m_performsInvocations = false;
 			}
 
 			// Erase actions that mustn't be fired again.
 			m_actions.erase(std::remove_if(m_actions.begin(), endIt,
-					[](ActionRecord const & action_)
+					[](SharedPtr<Task> & task_)
 					{
-						return action_.repeatsRemaining == 0;
+						if (task_.use_count() <= 1 || task_->getRepeatCount() == 0)
+						{
+							task_->m_running = false;
+							return true;
+						}
+						return false;
 					}
 				), endIt);
 
@@ -76,52 +61,36 @@ void ActionScheduler::update(double const deltaTime_, IUpdatable::TimePointType 
 			}
 
 			// Keep actions sorted.
-			std::sort(m_actions.begin(), m_actions.end());
+			std::sort(m_actions.begin(), m_actions.end(), 
+					[](SharedPtr<Task> const& left_, SharedPtr<Task> const& right_)
+					{
+						return left_->getNextExecutionTime() < right_->getNextExecutionTime();
+					}
+				);
 		}
 	}
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////
-ActionScheduler::HandleType ActionScheduler::internalSchedule(DurationType const & interval_, ActionType const & action_, std::uintmax_t const repeatCount_)
+SharedPtr<Task> TaskScheduler::internalSchedule(IUpdatable::Duration interval_, Task::FuncType function_, std::uintmax_t repeatCount_)
 {
-	ActionRecord record;
-	record.interval				= interval_;
-	record.invokeTime			= ClockType::now() + interval_;
-	record.repeatsRemaining		= repeatCount_;
-	record.action				= action_;
-
-	HandleType uniqueHandle		= this->makeUniqueHandle();
-
-	record.handle				= uniqueHandle;
-	
+	auto task = std::make_shared<Task>(interval_, function_, repeatCount_);
+	task->m_running = true;
 	if (m_performsInvocations) {
-		m_pendingActions.push_back(std::move(record));
+		m_pendingActions.push_back(task);
 	}
 	else {
-		m_actions.insert(std::upper_bound(m_actions.begin(), m_actions.end(), record), std::move(record));
+		m_actions.insert(
+				std::upper_bound(m_actions.begin(), m_actions.end(), task, 
+					[](SharedPtr<Task> const& left_, SharedPtr<Task> const& right_)
+					{
+						return left_->getNextExecutionTime() < right_->getNextExecutionTime();
+					}
+				),
+				task
+			);
 	}
 
-	return uniqueHandle;
+	return task;
 }
-
-/////////////////////////////////////////////////////////////////////////////////////////////
-ActionScheduler::ContainerType::const_iterator ActionScheduler::findAction(ContainerType const & container_, HandleType const handle_) const
-{
-	return std::find_if(container_.begin(), container_.end(),
-			[handle_](ActionRecord const & action_) {
-				return action_.handle == handle_;
-			}
-		);
-}
-
-/////////////////////////////////////////////////////////////////////////////////////////////
-ActionScheduler::ContainerType::iterator ActionScheduler::findAction(ContainerType & container_, HandleType const handle_)
-{
-	return std::find_if(container_.begin(), container_.end(),
-			[handle_](ActionRecord const & action_) {
-				return action_.handle == handle_;
-			}
-		);
-}
-
 }
