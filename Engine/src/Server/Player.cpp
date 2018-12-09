@@ -427,17 +427,19 @@ void Player::setArmour(float const armour_)
 }
 
 ///////////////////////////////////////////////////////////////////////////
-void Player::freeze(Clock::Duration freezeTime_)
+void Player::freeze(Clock::Duration freezeDuration_)
 {
 	if (m_unfreezeTask)
 	{
-		m_unfreezeTime = Clock::now() + freezeTime_;
+		m_unfreezeTime = Clock::now() + freezeDuration_;
 	}
 	else {
 		m_unfreezeTask = this->getGameMode().tasks.schedule(m_unfreezeTime - Clock::now(),
 				[this]() { this->unfreeze(); }
 			);
+		sampgdk_TogglePlayerControllable(this->getIndex(), false);
 	}
+	
 }
 
 ///////////////////////////////////////////////////////////////////////////
@@ -445,6 +447,7 @@ void Player::unfreeze()
 {
 	m_unfreezeTask.reset();
 	m_unfreezeTime = Clock::now();
+	sampgdk_TogglePlayerControllable(this->getIndex(), true);
 }
 
 ///////////////////////////////////////////////////////////////////////////
@@ -618,6 +621,12 @@ Uint16 Player::getLanguage() const noexcept
 bool Player::isSpawned() const noexcept
 {
 	return m_existingStatus == ExistingStatus::Spawned;
+}
+
+///////////////////////////////////////////////////////////////////////////
+bool Player::isFrozen() const noexcept
+{
+	return m_unfreezeTask != nullptr;
 }
 
 ///////////////////////////////////////////////////////////////////////////

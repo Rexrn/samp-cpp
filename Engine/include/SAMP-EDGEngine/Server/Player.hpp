@@ -339,12 +339,19 @@ public:
 	/// </summary>
 	/// <param name="damage_">The damage count.</param>
 	/// <param name="physical_">Indicates whether damage should be applied directly to health.</param>
-	void damage(const float damage_, bool const physical_ = false) // TODO: add proper implementation
+	void damage(float damage_, bool physical_ = false) // TODO: add proper implementation
 	{	
 	}
 
-	void freeze(Clock::Duration freezeTime_);
+	/// <summary>
+	/// Freezes the player for specified amount of time.
+	/// </summary>
+	/// <param name="freezeDuration_">The freeze duration.</param>
+	void freeze(Clock::Duration freezeDuration_);
 
+	/// <summary>
+	/// Unfreezes the player.
+	/// </summary>
 	void unfreeze();
 
 	/// <summary>
@@ -517,6 +524,14 @@ public:
 	///   <c>true</c> if this player is spawned; otherwise, <c>false</c>.
 	/// </returns>
 	bool isSpawned() const noexcept;
+
+	/// <summary>
+	/// Determines whether this player is frozen (uncontrollable).
+	/// </summary>
+	/// <returns>
+	///   <c>true</c> if this player is frozen; otherwise, <c>false</c>.
+	/// </returns>
+	bool isFrozen() const noexcept;
 
 	/// <summary>
 	/// Determines whether this player is in world (is spawned or is spectating).
