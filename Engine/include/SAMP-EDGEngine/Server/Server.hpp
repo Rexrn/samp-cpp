@@ -65,6 +65,11 @@ public:
 	/// </summary>
 	/// <param name="desc">The description.</param>
 	void setDescription(const std::string_view desc_);
+
+	/// <summary>
+	/// Turns on CJ animations for every player.
+	/// </summary>
+	void useCJAnimations();
 		
 
 	// SAMP Events:
@@ -184,6 +189,7 @@ private:
 	/// <param name="frameTime_">The frame time.</param>
 	void updateCheckpoints();
 
+	bool m_useCJAnimations = false;
 	IUpdatable::TimePoint m_nextCheckpointUpdate;
 	IUpdatable::TimePoint m_lastUpdate; /// Stores last server update call (used to determine deltaTime).
 };

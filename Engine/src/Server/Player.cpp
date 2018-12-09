@@ -216,7 +216,7 @@ void Player::setExistingStatus(ExistingStatus status_)
 ///////////////////////////////////////////////////////////////////////////
 void Player::sendPlacementUpdate()
 {
-	if (this->isSpawned() && m_placementTracker)
+	if ((this->isSpawned() || this->isSelectingClass()) && m_placementTracker)
 	{
 		m_placementTracker->whenPlacementUpdateReceived(this->getPlacement());
 	}
@@ -409,6 +409,18 @@ void Player::setInterior(Int32 const interior_)
 }
 
 ///////////////////////////////////////////////////////////////////////////
+void Player::setCameraLocation(math::Vector3f const & eyeLocation_)
+{
+	sampgdk_SetPlayerCameraPos(this->getIndex(), eyeLocation_.x, eyeLocation_.y, eyeLocation_.z);
+}
+
+///////////////////////////////////////////////////////////////////////////
+void Player::setCameraLookAtLocation(math::Vector3f const & lookAtLocation_)
+{
+	sampgdk_SetPlayerCameraLookAt(this->getIndex(), lookAtLocation_.x, lookAtLocation_.y, lookAtLocation_.z, CAMERA_CUT);
+}
+
+///////////////////////////////////////////////////////////////////////////
 void Player::setHealth(float const health_)
 {
 	m_health = health_ + cxHealthBase;
@@ -429,11 +441,9 @@ void Player::setArmour(float const armour_)
 ///////////////////////////////////////////////////////////////////////////
 void Player::freeze(Clock::Duration freezeDuration_)
 {
-	if (m_unfreezeTask)
-	{
-		m_unfreezeTime = Clock::now() + freezeDuration_;
-	}
-	else {
+	m_unfreezeTime = Clock::now() + freezeDuration_;
+	
+	if (!m_unfreezeTask) {
 		m_unfreezeTask = this->getGameMode().tasks.schedule(m_unfreezeTime - Clock::now(),
 				[this]() { this->unfreeze(); }
 			);
@@ -621,6 +631,12 @@ Uint16 Player::getLanguage() const noexcept
 bool Player::isSpawned() const noexcept
 {
 	return m_existingStatus == ExistingStatus::Spawned;
+}
+
+///////////////////////////////////////////////////////////////////////////
+bool Player::isSelectingClass() const noexcept
+{
+	return m_existingStatus == ExistingStatus::SelectingClass;
 }
 
 ///////////////////////////////////////////////////////////////////////////

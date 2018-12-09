@@ -673,6 +673,12 @@ bool ServerClass::_impl_OnPlayerLeaveRaceCheckpoint(int playerid)
 }*/
 
 /////////////////////////////////////////////////////////////////////////////////////////
+void ServerClass::useCJAnimations()
+{
+	m_useCJAnimations = true;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
 void ServerClass::sampEvent_OnUpdate()
 {
 	const_a frameTime = IUpdatable::Clock::now();
@@ -695,6 +701,9 @@ void ServerClass::sampEvent_OnUpdate()
 /////////////////////////////////////////////////////////////////////////////////////////
 bool ServerClass::sampEvent_OnGameModeInit()
 {
+	if (m_useCJAnimations)
+		sampgdk_UsePlayerPedAnims();
+
 	Server->onGameModeInit.emit();
 	return true;
 }
@@ -806,6 +815,8 @@ bool ServerClass::sampEvent_OnPlayerSendCommand(Int32 playerIndex_, std::string_
 bool ServerClass::sampEvent_OnPlayerRequestClass(Int32 playerIndex_, Int32 classIndex_)
 {
 	auto& player = *GameMode->players[ playerIndex_ ];
+
+	player.setExistingStatus(Player::ExistingStatus::SelectingClass);
 
 	Server->onPlayerRequestClass.emit(player, classIndex_);
 	return true;

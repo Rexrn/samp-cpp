@@ -48,6 +48,7 @@ public:
 		Spawning,
 		Spawned,
 		Dead,
+		SelectingClass,
 		Spectating
 	};
 
@@ -319,7 +320,10 @@ public:
 	/// </summary>
 	/// <param name="location_">The interior.</param>
 	virtual void setInterior(Int32 const interior_) override;
-		
+
+	void setCameraLocation(math::Vector3f const & eyeLocation_);
+	void setCameraLookAtLocation(math::Vector3f const & lookAtLocation_);
+
 	// Player condition.
 
 	/// <summary>
@@ -524,6 +528,14 @@ public:
 	///   <c>true</c> if this player is spawned; otherwise, <c>false</c>.
 	/// </returns>
 	bool isSpawned() const noexcept;
+
+	/// <summary>
+	/// Determines whether this player is selecting character.
+	/// </summary>
+	/// <returns>
+	///   <c>true</c> if this player is selecting character; otherwise, <c>false</c>.
+	/// </returns>
+	bool isSelectingClass() const noexcept;
 
 	/// <summary>
 	/// Determines whether this player is frozen (uncontrollable).
