@@ -215,6 +215,16 @@ std::string format(std::string_view format_, TArgs && ...args_)
 	std::int64_t resultOffset = 0;
 	for (std::size_t i = 0; i < format_.size(); i++)
 	{
+		// Skip escape character:
+		if (format_[i] == '\\' && i + 1 < format_.size())
+		{
+			i++;
+			resultOffset--;
+		}
+
+		if (i >= format_.size())
+			break;
+
 		result.push_back(format_[i]);
 
 		if (tokenStart == -1)

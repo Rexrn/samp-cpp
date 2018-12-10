@@ -11,7 +11,7 @@ namespace ascii = samp::text::ascii;
 TEST(TextAscii, Format)
 {
 	constexpr std::string_view fmt 		= "Hello {0}! It's your {1} visit on the server \\{9{0}!";
-	constexpr std::string_view expected = "Hello CrossX! It's your 30 visit on the server \\{9CrossX!";
+	constexpr std::string_view expected = "Hello CrossX! It's your 30 visit on the server {9CrossX!";
 	std::string const playerName = "CrossX";
 	Int32 const playerVisit = 30;
 
