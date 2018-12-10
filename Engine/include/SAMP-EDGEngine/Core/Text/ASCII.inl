@@ -1,8 +1,12 @@
 // Note: this file is not meant to be included on its own.
 // Include "ASCII.hpp" instead.
 
+#include "ASCII.hpp"
+
 #include <cctype>
 #include <sstream>
+#include <vector>
+
 
 namespace samp_edgengine::text::ascii
 {
@@ -183,6 +187,79 @@ inline std::string compose(TFirstArg && first_, TRestArgs &&... rest_)
 	stream << std::forward<TFirstArg>(first_);
 	(stream << ... << std::forward<TRestArgs>(rest_));
 	return stream.str();
+}
+
+namespace priv
+{
+
+template <typename... TArgs>
+std::vector<std::string> argsToStrings(TArgs&&... args_)
+{
+	return std::vector<std::string>{ compose(std::forward<TArgs>(args_))... };
+}
+
+}
+
+///////////////////////////////////////////////////////////////////////
+template<typename ...TArgs>
+std::string format(std::string_view format_, TArgs && ...args_)
+{
+	// .first = format point, .second = argument id
+	using FormatPoint = std::pair<std::size_t, std::size_t>;
+
+	std::string result;
+	result.reserve(result.size()*2);
+	std::vector<std::string> argStrs = priv::argsToStrings(std::forward<TArgs>(args_)...);
+
+	std::int64_t tokenStart = -1;
+	std::int64_t resultOffset = 0;
+	for (std::size_t i = 0; i < format_.size(); i++)
+	{
+		result.push_back(format_[i]);
+
+		if (tokenStart == -1)
+		{
+			if (format_[i] == '{' && (i == 0 || format_[i - 1] != '\\'))
+				tokenStart = i;
+		}
+		else
+		{
+			if (format_[i] != '}' && (format_[i] < '0' || format_[i] > '9'))
+			{
+				tokenStart = -1;
+			}
+			else if (format_[i] == '}')
+			{
+				// By this moment `result` can look like this:
+				// Some text {3}
+				// tokenStart: 10
+				// i: 12
+				// arg index: substr(tokenStart + 1, i - tokenStart - 1)
+				// So...
+				// We have to replace part <10; 12> with result.substr(tokenStart + 1, i - tokenStart - 1)
+				std::int64_t argIdStart = tokenStart + 1;
+				std::int64_t argLen = i - argIdStart;
+				std::size_t replaceLength = i - tokenStart + 1;
+				if (argLen > 0)
+				{
+					Int32 argId = convert<Int32>(result.substr(argIdStart+resultOffset, argLen)).value_or(-1);
+					if (argId == -1 || argStrs.size() <= argId)
+						result.erase(tokenStart+resultOffset, replaceLength);
+					else
+						result.replace(tokenStart+resultOffset, replaceLength, argStrs[argId]);
+				}
+				else
+				{
+					result.erase(tokenStart+resultOffset, replaceLength);
+				}
+				resultOffset = result.size() - i - 1;
+				tokenStart = -1;
+			}
+		}
+	}
+
+	result.shrink_to_fit();
+	return result;
 }
 
 }

@@ -255,6 +255,9 @@ std::pair<std::string::const_iterator, std::string::const_iterator> searchWithIn
 template <typename TFirstArg, typename... TRestArgs>
 std::string compose(TFirstArg && first_, TRestArgs &&... rest_);
 
+template <typename... TArgs>
+std::string format(std::string_view format_, TArgs &&... args_);
+
 } // namespace
 
 
