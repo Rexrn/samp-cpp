@@ -10,7 +10,8 @@ userConfig = {
 	-- Build configuration:
 	build = {
 		extensions = true,
-		examples = true
+		examples = true,
+		unitTests = true
 	},
 	
 	-- Dependencies configuration:
@@ -23,8 +24,12 @@ userConfig = {
 		-- Please provide path to the root of the QuickMaffs library.
 		quickmaffs = { root = "" },
 		
-		-- [Required]
+		-- [Required if building examples]
 		-- Please provide path to the root of the RapidXML library.
-		rapidxml = { root = "" }
+		rapidxml = { root = "" },
+
+		-- [Required if building unit tests]
+		-- Please provide path to the root of the googletest library.
+		gtest = { root = "" }
 	}
 }

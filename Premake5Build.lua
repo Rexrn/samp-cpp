@@ -37,12 +37,20 @@ workspace "SAMPEDGEngine"
 	
 	-- Extensions:
 	if userConfig.build.extensions then
+		group "Extensions"
 		include("Extensions/Premake5Build.lua")
 	end
 	
 	-- Examples:
 	if userConfig.build.examples then
+		group "Examples"
 		include("Examples/Premake5Build.lua")
+	end
+
+	-- UnitTests:
+	if userConfig.build.unitTests then
+		group "UnitTests"
+		include("UnitTests/Premake5Build.lua")
 	end
 
 	
