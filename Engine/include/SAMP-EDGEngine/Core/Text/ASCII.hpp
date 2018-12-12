@@ -89,6 +89,9 @@ bool equal(InputIt1 begin1_, InputIt1 end1_, InputIt2 begin2_, InputIt2 end2_);
 template <CaseSensitivity _caseSensitivity = CaseSensitive>
 bool equal(std::string_view const lhs_, std::string_view const rhs_);
 
+
+bool startsWith(std::string_view string_, std::string_view testedPrefix_);
+
 /// <summary>
 /// Trims std::string whitespaces from the front side.
 /// </summary>

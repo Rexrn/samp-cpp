@@ -21,6 +21,21 @@ std::string toUpper(std::string_view const string_)
 }
 
 ///////////////////////////////////////////////////////////////////////
+bool startsWith(std::string_view string_, std::string_view testedPrefix_)
+{
+	if (string_.length() < testedPrefix_.length())
+		return false;
+
+	for (std::size_t prefIndex = 0; prefIndex < testedPrefix_.length(); prefIndex++)
+	{
+		if (string_[prefIndex] != testedPrefix_[prefIndex])
+			return false;
+	}
+
+	return true;
+}
+
+///////////////////////////////////////////////////////////////////////
 std::string trimLeft(std::string_view const string_)
 {
 	auto it = std::find_if(string_.begin(), string_.end(),
