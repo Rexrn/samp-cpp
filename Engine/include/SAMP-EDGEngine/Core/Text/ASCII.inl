@@ -248,19 +248,43 @@ std::string format(std::string_view format_, TArgs && ...args_)
 				// So...
 				// We have to replace part <10; 12> with result.substr(tokenStart + 1, i - tokenStart - 1)
 				std::int64_t argIdStart = tokenStart + 1;
-				std::int64_t argLen = i - argIdStart;
-				std::size_t replaceLength = i - tokenStart + 1;
+				std::int64_t argLen = std::int64_t(i) - argIdStart;
+				std::size_t replaceLength = static_cast<std::size_t>(i - tokenStart + 1);
 				if (argLen > 0)
 				{
-					Int32 argId = convert<Int32>(result.substr(argIdStart+resultOffset, argLen)).value_or(-1);
-					if (argId == -1 || argStrs.size() <= argId)
-						result.erase(tokenStart+resultOffset, replaceLength);
+					Int32 argId = convert<Int32>(
+							result.substr(
+								std::size_t(argIdStart+resultOffset),
+								std::size_t(argLen)
+							)
+						).value_or(-1);
+
+					
+					if (argId == -1 || std::int64_t(argStrs.size()) <= argId)
+					{
+						// Token id is invalid, remove the token from string:
+						result.erase(
+								std::size_t(tokenStart + resultOffset),
+								replaceLength
+							);
+					}
 					else
-						result.replace(tokenStart+resultOffset, replaceLength, argStrs[argId]);
+					{
+						// Replace token template with token specified in arguments:
+						result.replace(
+								std::size_t(tokenStart + resultOffset),
+								replaceLength,
+								argStrs[argId]
+							);
+					}
 				}
 				else
 				{
-					result.erase(tokenStart+resultOffset, replaceLength);
+					// Remove invalid token, that looks like this: "{}", with no index in it.
+					result.erase(
+							std::size_t(tokenStart+resultOffset),
+							replaceLength
+						);
 				}
 				resultOffset = result.size() - i - 1;
 				tokenStart = -1;
