@@ -324,7 +324,63 @@ public:
 	void setCameraLocation(math::Vector3f const & eyeLocation_);
 	void setCameraLookAtLocation(math::Vector3f const & lookAtLocation_);
 
+	// Player statistics:
+
+	
+	/// <summary>
+	/// Adds cash to player.
+	/// </summary>
+	/// <param name="amount_">The amount of cash to add.</param>
+	void addCash(Int32 amount_)
+	{
+		this->setCash(this->getCash() + amount_);
+	}
+
+	/// <summary>
+	/// Subtracts cash from player.
+	/// </summary>
+	/// <param name="amount_">The amount of cash to subtract.</param>
+	void subtractCash(Int32 amount_)
+	{
+		this->setCash(this->getCash() - amount_);
+	}
+
+	/// <summary>
+	/// Sets player's cash.
+	/// </summary>
+	/// <param name="cash_">The amount of cash to set</param>
+	void setCash(Int32 cash_);
+	
+	/// <summary>
+	/// Adds score to player.
+	/// </summary>
+	/// <param name="amount_">The amount of score to add.</param>
+	void addScore(Int32 amount_)
+	{
+		this->setScore(this->getCash() + amount_);
+	}
+
+	/// <summary>
+	/// Subtracts score from player.
+	/// </summary>
+	/// <param name="amount_">The amount of score to subtract.</param>
+	void subtractScore(Int32 amount_)
+	{
+		this->setScore(this->getCash() - amount_);
+	}
+
+	/// <summary>
+	/// Sets player's score.
+	/// </summary>
+	/// <param name="score_">The amount of score to set</param>
+	void setScore(Int32 score_);
+
 	// Player condition.
+
+	/// <summary>
+	/// Kicks player from the server.
+	/// </summary>
+	void kick();
 
 	/// <summary>
 	/// Sets player's health.

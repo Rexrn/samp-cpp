@@ -421,6 +421,26 @@ void Player::setCameraLookAtLocation(math::Vector3f const & lookAtLocation_)
 }
 
 ///////////////////////////////////////////////////////////////////////////
+void Player::setCash(Int32 cash_)
+{
+	m_cash = cash_;
+	sampgdk_GivePlayerMoney(this->getIndex(), m_cash - sampgdk_GetPlayerMoney(this->getIndex()));
+}
+
+///////////////////////////////////////////////////////////////////////////
+void Player::setScore(Int32 score_)
+{
+	m_score = score_;
+	sampgdk_SetPlayerScore(this->getIndex(), m_score);
+}
+
+///////////////////////////////////////////////////////////////////////////
+void Player::kick()
+{
+	sampgdk_Kick(this->getIndex());
+}
+
+///////////////////////////////////////////////////////////////////////////
 void Player::setHealth(float const health_)
 {
 	m_health = health_ + cxHealthBase;
