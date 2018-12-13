@@ -5,6 +5,7 @@
 
 #include <cassert>
 #include <functional>
+#include <vector>
 
 namespace samp_edgengine
 {
@@ -76,6 +77,33 @@ private:
 	IUpdatable::TimePoint 	m_lastExecution;
 	std::uintmax_t 			m_repeatCount;
 	FuncType 				m_function;
+};
+
+/// <summary>
+///		Task owner. Bounds tasks` lifetime to its own.
+/// </summary>
+class ITaskOwner
+{
+public:
+	using ContainerType = std::vector< SharedPtr<Task> >;
+
+	/// <summary>
+	///		Inserts new task.
+	/// </summary>
+	void interceptTask(SharedPtr<Task> task_, bool cleanup_ = true);
+
+	/// <summary>
+	///		Removes every running task.
+	/// </summary>
+	void removeAllTasks();
+
+	/// <summary>
+	///		Removes ended or invalid tasks.
+	/// </summary>
+	void cleanupEndedTasks();
+
+private:
+	ContainerType m_tasks;
 };
 
 /// <summary>

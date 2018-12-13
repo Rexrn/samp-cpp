@@ -35,7 +35,8 @@ class Player
 	:
 	public std::enable_shared_from_this<Player>,
 	public IWI3DNode,
-	public TextDrawOwner<PlayerTextDraw>
+	public TextDrawOwner<PlayerTextDraw>,
+	public ITaskOwner
 {
 public:
 	// Types and aliases

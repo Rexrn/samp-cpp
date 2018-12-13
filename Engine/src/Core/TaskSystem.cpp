@@ -156,4 +156,30 @@ SharedPtr<Task> TaskScheduler::internalSchedule(IUpdatable::Duration interval_, 
 	return task;
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////////
+void ITaskOwner::interceptTask(SharedPtr<Task> task_, bool cleanup_)
+{
+	if (cleanup_)
+		cleanupEndedTasks();
+	m_tasks.push_back(task_);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////
+void ITaskOwner::removeAllTasks()
+{
+	m_tasks.clear();
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////
+void ITaskOwner::cleanupEndedTasks()
+{
+	m_tasks.erase(std::remove_if(m_tasks.begin(), m_tasks.end(),
+			[](auto const& t_)
+			{
+				return !t_ || t_.use_count() < 2 || !t_->isRunning();
+			}),
+			m_tasks.end()
+		);
+}
+
 }
