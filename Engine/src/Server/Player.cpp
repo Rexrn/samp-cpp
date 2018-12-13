@@ -450,12 +450,18 @@ void Player::setHealth(float const health_)
 }
 
 ///////////////////////////////////////////////////////////////////////////
-void Player::setArmour(float const armour_)
+void Player::setArmor(float const armour_)
 {
 	m_armour = armour_;
 
 	if (m_existingStatus != ExistingStatus::Dead)
 		sampgdk_SetPlayerArmour(this->getIndex(), m_armour);
+}
+
+///////////////////////////////////////////////////////////////////////////
+void Player::playSound(Int32 soundIndex_, math::Vector3f location_)
+{
+	sampgdk_PlayerPlaySound(this->getIndex(), soundIndex_, location_.x, location_.y, location_.z);
 }
 
 ///////////////////////////////////////////////////////////////////////////

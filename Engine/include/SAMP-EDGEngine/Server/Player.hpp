@@ -323,6 +323,7 @@ public:
 	virtual void setInterior(Int32 const interior_) override;
 
 	void setCameraLocation(math::Vector3f const & eyeLocation_);
+	void setCameraBehindPlayer();
 	void setCameraLookAtLocation(math::Vector3f const & lookAtLocation_);
 
 	// Player statistics:
@@ -390,10 +391,10 @@ public:
 	void setHealth(float const health_);
 
 	/// <summary>
-	/// Sets player's armour.
+	/// Sets player's armor.
 	/// </summary>
-	/// <param name="armour_">The armour.</param>
-	void setArmour(float const armour_);
+	/// <param name="armor_">The armor.</param>
+	void setArmor(float const armor_);
 		
 	/// <summary>
 	/// Damages the player.
@@ -403,6 +404,13 @@ public:
 	void damage(float damage_, bool physical_ = false) // TODO: add proper implementation
 	{	
 	}
+
+	/// <summary>
+	/// Plays game sound with specified index for player.
+	/// </summary>
+	/// <param name="soundIndex_">The sound index.</param>
+	/// <param name="location_">The sound location (relative??? TODO: check).</param>
+	void playSound(Int32 soundIndex_, math::Vector3f location_ = {});
 
 	/// <summary>
 	/// Freezes the player for specified amount of time.
