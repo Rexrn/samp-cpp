@@ -724,6 +724,7 @@ bool ServerClass::sampEvent_OnPlayerConnect(Int32 playerIndex_)
 	auto& player = GameMode->players.whenPlayerConnectsEx(
 			GameMode->newPlayerInstance( static_cast<std::size_t>(playerIndex_) )
 		);
+	player.setHealth(100);
 	GameMode->streamer->whenPlayerJoinsServer(player);
 	Server->onPlayerConnect.emit(player);
 	return true;
@@ -734,7 +735,7 @@ bool ServerClass::sampEvent_OnPlayerDisconnect(Int32 playerIndex_, Player::Disco
 {
 	auto& player = *GameMode->players[static_cast<std::size_t>(playerIndex_)];
 
-	Server->onPlayerDisconnect.emit(player);
+	Server->onPlayerDisconnect.emit(player, reason_);
 
 	// Note: this is very important to tell vehicle, that player is no longer inside
 	if (auto vehicle = player.getVehicle())
@@ -751,7 +752,7 @@ bool ServerClass::sampEvent_OnPlayerDisconnect(Int32 playerIndex_, Player::Disco
 bool ServerClass::sampEvent_OnPlayerSpawn(Int32 playerIndex_)
 {
 	auto& player = *GameMode->players[static_cast<std::size_t>(playerIndex_)];
-
+	player.setHealth(100);
 	player.setExistingStatus( Player::ExistingStatus::Spawning );
 	
 	Server->onPlayerSpawn.emit(player);
@@ -771,6 +772,7 @@ bool ServerClass::sampEvent_OnPlayerDeath(Int32 playerIndex_, Int32 killerIndex_
 	auto killer = (killerIndex_ == Player::InvalidIndex ? nullptr : GameMode->players[static_cast<std::size_t>(killerIndex_)]);
 
 	Server->onPlayerDeath.emit(player, killer, static_cast<Weapon::Type>(reason_));
+	player.setHealth(100);
 	return true;
 }
 
@@ -1112,6 +1114,8 @@ bool ServerClass::sampEvent_OnDialogResponse(Int32 playerIndex_, Int32 dialogInd
 /////////////////////////////////////////////////////////////////////////////////////////
 bool ServerClass::sampEvent_OnPlayerTakeDamage(Int32 playerIndex_, Int32 issuerIndex_, float amount_, Weapon::Type weaponIndex_, Player::BodyPart bodyPart_)
 {
+	auto& player = *GameMode->players[playerIndex_];
+	player.damage(amount_, samp_edgengine::Weapon::isDamageType(weaponIndex_));
 	return true;
 }
 

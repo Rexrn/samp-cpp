@@ -140,7 +140,7 @@ public:
 	EventDispatcher<>													onGameModeExit;
 	EventDispatcher<>													onRconCommand;
 	EventDispatcher<Player &>											onPlayerConnect;
-	EventDispatcher<Player &>											onPlayerDisconnect;
+	EventDispatcher<Player &, Player::DisconnectReason>					onPlayerDisconnect;
 	EventDispatcher<Player &>											onPlayerUpdate;
 	EventDispatcher<Player &>											onPlayerSpawn;
 	EventDispatcher<Player &, Int32>									onPlayerRequestClass;

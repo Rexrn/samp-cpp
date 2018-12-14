@@ -18,7 +18,7 @@ Player::Player(IGameMode& gameMode_, IndexType const index_)
 	m_index{ index_ }, m_existingStatus{ ExistingStatus::Spawning },
 	m_language{ 0 },
 	m_score{ 0 }, m_cash{ 0 },
-	m_health{ 100 }, m_armour{ 0 },
+	m_health{ 100 + cxHealthBase }, m_armour{ 0 },
 	m_placementTracker{ nullptr },
 	m_vehicle{ nullptr },
 	m_checkpointSet{ false }, m_raceCheckpointSet{ false },
@@ -415,6 +415,12 @@ void Player::setCameraLocation(math::Vector3f const & eyeLocation_)
 }
 
 ///////////////////////////////////////////////////////////////////////////
+void Player::setCameraBehindPlayer()
+{
+	sampgdk_SetCameraBehindPlayer(this->getIndex());
+}
+
+///////////////////////////////////////////////////////////////////////////
 void Player::setCameraLookAtLocation(math::Vector3f const & lookAtLocation_)
 {
 	sampgdk_SetPlayerCameraLookAt(this->getIndex(), lookAtLocation_.x, lookAtLocation_.y, lookAtLocation_.z, CAMERA_CUT);
@@ -446,7 +452,13 @@ void Player::setHealth(float const health_)
 	m_health = health_ + cxHealthBase;
 
 	if (m_existingStatus != ExistingStatus::Dead)
-		sampgdk_SetPlayerHealth(this->getIndex(), m_health);
+	{
+		// TODO: find better solution.
+		if (health_ < 0)
+			sampgdk_SetPlayerHealth(this->getIndex(), 0);
+		else
+			sampgdk_SetPlayerHealth(this->getIndex(), m_health);
+	}
 }
 
 ///////////////////////////////////////////////////////////////////////////
@@ -456,6 +468,24 @@ void Player::setArmor(float const armour_)
 
 	if (m_existingStatus != ExistingStatus::Dead)
 		sampgdk_SetPlayerArmour(this->getIndex(), m_armour);
+}
+
+///////////////////////////////////////////////////////////////////////////
+void Player::damage(float damage_, bool physical_) // TODO: add proper implementation
+{
+	if (physical_)
+	{
+		this->setHealth(this->getHealth() - damage_);
+	}
+	else
+	{
+		float takeFromAP = std::min(this->getArmour(), damage_);
+		this->setArmor(this->getArmour() - takeFromAP);
+		if (takeFromAP < damage_)
+		{
+			this->setHealth(this->getHealth() - (damage_ - takeFromAP));
+		}
+	}
 }
 
 ///////////////////////////////////////////////////////////////////////////

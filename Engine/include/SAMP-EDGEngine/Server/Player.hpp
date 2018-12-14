@@ -401,9 +401,7 @@ public:
 	/// </summary>
 	/// <param name="damage_">The damage count.</param>
 	/// <param name="physical_">Indicates whether damage should be applied directly to health.</param>
-	void damage(float damage_, bool physical_ = false) // TODO: add proper implementation
-	{	
-	}
+	void damage(float damage_, bool physical_ = false);
 
 	/// <summary>
 	/// Plays game sound with specified index for player.
