@@ -1115,13 +1115,19 @@ bool ServerClass::sampEvent_OnDialogResponse(Int32 playerIndex_, Int32 dialogInd
 bool ServerClass::sampEvent_OnPlayerTakeDamage(Int32 playerIndex_, Int32 issuerIndex_, float amount_, Weapon::Type weaponIndex_, Player::BodyPart bodyPart_)
 {
 	auto& player = *GameMode->players[playerIndex_];
-	player.damage(amount_, samp_edgengine::Weapon::isDamageType(weaponIndex_));
+	if (issuerIndex_ == -1)
+	{
+		player.damage(amount_, samp_edgengine::Weapon::isDamageType(weaponIndex_));
+	}
+		
 	return true;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
 bool ServerClass::sampEvent_OnPlayerGiveDamage(Int32 playerIndex_, Int32 damagedIndex_, float amount_, Weapon::Type weaponIndex_, Player::BodyPart bodyPart_)
 {
+	auto& damaged = *GameMode->players[damagedIndex_];
+	damaged.damage(amount_, samp_edgengine::Weapon::isDamageType(weaponIndex_));
 	return true;
 }
 
