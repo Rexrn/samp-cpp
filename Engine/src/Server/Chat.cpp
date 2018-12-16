@@ -1,3 +1,5 @@
+#include SAMPEDGENGINE_PCH
+
 #include <SAMP-EDGEngine/Server/Chat.hpp>
 #include <SAMP-EDGEngine/Server/PlayerPool.hpp>
 #include <SAMP-EDGEngine/Server/Player.hpp>

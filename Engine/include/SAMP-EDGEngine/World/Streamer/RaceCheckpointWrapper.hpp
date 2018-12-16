@@ -1,4 +1,7 @@
 #pragma once
+#include SAMPEDGENGINE_PCH
+
+
 
 // Base class:
 #include <SAMP-EDGEngine/World/Streamer/ChunkActor.hpp>

@@ -1,4 +1,7 @@
 #pragma once
+#include SAMPEDGENGINE_PCH
+
+
 
 namespace samp_edgengine::default_streamer
 {

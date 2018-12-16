@@ -1,4 +1,7 @@
 #pragma once
+#include SAMPEDGENGINE_PCH
+
+
 
 #include <SAMP-EDGEngine/Server/Command.hpp>
 

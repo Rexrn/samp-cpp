@@ -12,7 +12,7 @@ project "UnitTest_Engine"
 		path.join(repoRoot, "Engine/include"),
 
 		-- SAMPGDK
-		path.join(repoRoot, "Dependencies/sampgdk"),
+		path.join(userConfig.deps.sampgdk.root, "include"),
 
 		-- QuickMaffs
 		path.join(userConfig.deps.quickmaffs.root, "include"),
@@ -22,7 +22,8 @@ project "UnitTest_Engine"
 	}
 
 	links {
-		"Engine"
+		"Engine",
+		"SAMPGDK"
 	}
 
 	-- Link Google Test

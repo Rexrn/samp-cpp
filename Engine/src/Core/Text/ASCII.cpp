@@ -1,3 +1,5 @@
+#include SAMPEDGENGINE_PCH
+
 #include <SAMP-EDGEngine/Core/Text/ASCII.hpp>
 
 #include <algorithm>

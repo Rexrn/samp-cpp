@@ -1,3 +1,5 @@
+#include SAMPEDGENGINE_PCH
+
 #include <SAMP-EDGEngine/Core/BasicInterfaces/PlacementTracker.hpp>
 
 namespace samp_edgengine

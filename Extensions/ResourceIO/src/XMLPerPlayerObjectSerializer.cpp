@@ -1,3 +1,5 @@
+#include SAMPEDGENGINE_EXT_RESOURCEIO_PCH
+
 #include <SAMP-EDGEngine/Ext/ResourceIO/XMLPerPlayerObjectSerializer.hpp>
 #include <SAMP-EDGEngine/Ext/ResourceIO/XMLHelperFunctions.hpp>
 #include <SAMP-EDGEngine/Ext/ResourceIO/XMLNames.hpp>

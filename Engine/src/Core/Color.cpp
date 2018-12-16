@@ -1,3 +1,5 @@
+#include SAMPEDGENGINE_PCH
+
 // Custom headers:
 #include <SAMP-EDGEngine/Core/Color.hpp>			// Color header
 #include <SAMP-EDGEngine/Core/Text/ASCII.hpp>		// for string manipulation

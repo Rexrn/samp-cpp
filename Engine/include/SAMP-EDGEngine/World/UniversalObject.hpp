@@ -1,4 +1,7 @@
 #pragma once
+#include SAMPEDGENGINE_PCH
+
+
 
 // Base class header:
 #include <SAMP-EDGEngine/World/PerPlayerObject.hpp>

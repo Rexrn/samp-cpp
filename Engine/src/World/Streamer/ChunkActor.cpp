@@ -1,3 +1,5 @@
+#include SAMPEDGENGINE_PCH
+
 #include <SAMP-EDGEngine/World/Streamer/ChunkActor.hpp>
 
 namespace samp_edgengine::default_streamer

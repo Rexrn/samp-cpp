@@ -1,3 +1,5 @@
+#include SAMPEDGENGINE_PCH
+
 #include <SAMP-EDGEngine/World/PerPlayerObject.hpp>
 #include <SAMP-EDGEngine/World/Streamer/Chunk.hpp>
 

@@ -1,3 +1,5 @@
+#include SAMPEDGENGINE_PCH
+
 #include <SAMP-EDGEngine/World/RaceCheckpoint.hpp>
 
 namespace samp_edgengine

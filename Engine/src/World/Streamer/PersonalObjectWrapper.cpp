@@ -1,3 +1,5 @@
+#include SAMPEDGENGINE_PCH
+
 #include <SAMP-EDGEngine/World/Streamer/PersonalObjectWrapper.hpp>
 #include <SAMP-EDGEngine/Server/GameMode.hpp>
 

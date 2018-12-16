@@ -1,6 +1,9 @@
 // File description:
 // Implements C++-way Weapon management and traits.
 #pragma once
+#include SAMPEDGENGINE_PCH
+
+
 
 #include <SAMP-EDGEngine/Core/TypesAndDefinitions.hpp>
 

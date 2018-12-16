@@ -1,3 +1,5 @@
+#include SAMPEDGENGINE_EXT_RESOURCEIO_PCH
+
 #include <SAMP-EDGEngine/Ext/ResourceIO/XMLSceneSerializer.hpp>
 #include <SAMP-EDGEngine/Ext/ResourceIO/XMLNames.hpp>
 

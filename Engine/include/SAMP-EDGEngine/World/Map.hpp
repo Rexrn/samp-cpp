@@ -1,4 +1,7 @@
 #pragma once
+#include SAMPEDGENGINE_PCH
+
+
 
 #include <SAMP-EDGEngine/World/Vehicle.hpp>
 #include <SAMP-EDGEngine/World/Scene.hpp>

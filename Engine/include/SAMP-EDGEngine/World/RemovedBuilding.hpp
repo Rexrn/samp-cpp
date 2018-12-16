@@ -1,4 +1,7 @@
 #pragma once
+#include SAMPEDGENGINE_PCH
+
+
 
 // Other headers:
 #include <SAMP-EDGEngine/Core/TypesAndDefinitions.hpp>

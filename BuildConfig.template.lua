@@ -9,6 +9,7 @@ userConfig = {
 	
 	-- Build configuration:
 	build = {
+		thirdParty = true,
 		extensions = true,
 		examples = true,
 		unitTests = true
@@ -18,7 +19,7 @@ userConfig = {
 	deps = {
 		-- [Required]
 		-- Please provide path to the root of the SAMPGDK library.
-		sampgdk = { root = os.realpath("Dependencies/sampgdk") }, 
+		sampgdk = { root = os.realpath("ThirdParty/SAMPGDK") }, 
 	
 		-- [Required]
 		-- Please provide path to the root of the QuickMaffs library.

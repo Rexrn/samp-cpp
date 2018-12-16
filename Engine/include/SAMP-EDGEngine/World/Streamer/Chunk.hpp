@@ -1,4 +1,7 @@
 #pragma once
+#include SAMPEDGENGINE_PCH
+
+
 
 // Wrappers:
 #include <SAMP-EDGEngine/World/Streamer/GlobalObjectWrapper.hpp>

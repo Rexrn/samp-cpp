@@ -11,7 +11,7 @@ else
 		includedirs {
 			path.join(userConfig.deps.quickmaffs.root, "include"),
 			userConfig.deps.rapidxml.root,
-			userConfig.deps.sampgdk.root,
+			path.join(userConfig.deps.sampgdk.root, "include"),
 			path.join(repoRoot, "Engine/include"),
 			path.join(repoRoot, "Extensions/ResourceIO/include")
 		}
@@ -19,7 +19,8 @@ else
 		links {
 			"Ext_ResourceIO",
 			"ServerCore",
-			"Engine"
+			"Engine",
+			"SAMPGDK"
 		}
 
 		files {

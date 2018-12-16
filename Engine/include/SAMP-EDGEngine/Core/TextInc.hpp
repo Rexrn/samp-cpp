@@ -1,4 +1,7 @@
 #pragma once
+#include SAMPEDGENGINE_PCH
+
+
 
 #include "Text/ASCII.hpp"
 #include "Text/Essentials.hpp"

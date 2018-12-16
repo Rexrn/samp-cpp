@@ -1,3 +1,5 @@
+#include SAMPEDGENGINE_PCH
+
 #include <SAMP-EDGEngine/Server/Server.hpp>
 
 namespace samp_edgengine

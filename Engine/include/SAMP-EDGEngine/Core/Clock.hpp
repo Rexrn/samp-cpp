@@ -1,6 +1,9 @@
 // File description:
 // Implements time measuring class and adds useful aliases to agdk namespace.
 #pragma once
+#include SAMPEDGENGINE_PCH
+
+
 
 #include <chrono>
 

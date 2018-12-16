@@ -1,4 +1,7 @@
 #pragma once
+#include SAMPEDGENGINE_PCH
+
+
 
 // Base classes:
 #include <SAMP-EDGEngine/World/WI3DNode.hpp>

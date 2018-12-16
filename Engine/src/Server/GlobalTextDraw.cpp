@@ -1,3 +1,5 @@
+#include SAMPEDGENGINE_PCH
+
 #include <SAMP-EDGEngine/Server/GlobalTextDraw.hpp>
 
 #include <SAMP-EDGEngine/Server/Player.hpp>

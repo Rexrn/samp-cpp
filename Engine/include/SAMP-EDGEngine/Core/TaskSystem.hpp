@@ -1,4 +1,7 @@
 #pragma once
+#include SAMPEDGENGINE_PCH
+
+
 
 #include <SAMP-EDGEngine/Core/BasicInterfaces/Updatable.hpp>
 #include <SAMP-EDGEngine/Core/Pointers.hpp>

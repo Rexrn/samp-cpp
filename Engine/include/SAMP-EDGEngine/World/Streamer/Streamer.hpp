@@ -1,4 +1,7 @@
 #pragma once
+#include SAMPEDGENGINE_PCH
+
+
 
 #include <SAMP-EDGEngine/World/Streamer/Chunk.hpp>
 #include <SAMP-EDGEngine/World/Streamer/StreamerSettings.hpp>

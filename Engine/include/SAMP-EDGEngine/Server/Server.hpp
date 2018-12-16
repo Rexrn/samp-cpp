@@ -3,6 +3,9 @@
 
 
 #pragma once
+#include SAMPEDGENGINE_PCH
+
+
 
 // Custom includes:
 #include <SAMP-EDGEngine/Server/PlayerPool.hpp>

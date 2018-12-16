@@ -1,3 +1,5 @@
+#include SAMPEDGENGINE_PCH
+
 #include <SAMP-EDGEngine/World/Scene.hpp>
 #include <SAMP-EDGEngine/Server/GameMode.hpp>
 #include <SAMP-EDGEngine/Core/TypesAndDefinitions.hpp>

@@ -1,6 +1,9 @@
 // File description:
 // Implements Color class and provides over 600 named colors (within agdk::colors) namespace.
 #pragma once
+#include SAMPEDGENGINE_PCH
+
+
 
 #include <ostream>
 

@@ -1,4 +1,5 @@
 #pragma once
+#include SAMPEDGENGINE_PCH
 
 #include <SAMP-EDGEngine/Server/GlobalTextDraw.hpp>
 #include <SAMP-EDGEngine/Core/Pointers.hpp>

@@ -1,3 +1,5 @@
+#include SAMPEDGENGINE_PCH
+
 #include <SAMP-EDGEngine/World/MapObject.hpp>
 #include <SAMP-EDGEngine/Server/Player.hpp>
 

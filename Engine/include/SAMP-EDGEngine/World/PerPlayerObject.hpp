@@ -1,4 +1,7 @@
 #pragma once
+#include SAMPEDGENGINE_PCH
+
+
 
 // Base class headers:
 #include <SAMP-EDGEngine/World/MapObject.hpp>

@@ -1,3 +1,5 @@
+#include SAMPEDGENGINE_PCH
+
 #include <SAMP-EDGEngine/Server/CommandManager.hpp>
 #include <SAMP-EDGEngine/Core/Text/ASCII.hpp>
 

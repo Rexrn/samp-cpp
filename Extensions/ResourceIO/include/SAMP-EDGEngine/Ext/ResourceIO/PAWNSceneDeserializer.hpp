@@ -1,4 +1,7 @@
 #pragma once
+#include SAMPEDGENGINE_EXT_RESOURCEIO_PCH
+
+
 
 #include "PAWNDeserializer.hpp"
 #include "SceneDeserializer.hpp"

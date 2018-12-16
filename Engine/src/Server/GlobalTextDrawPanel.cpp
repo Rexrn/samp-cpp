@@ -1,3 +1,5 @@
+#include SAMPEDGENGINE_PCH
+
 #include <SAMP-EDGEngine/Server/GlobalTextDrawPanel.hpp>
 
 namespace samp_edgengine

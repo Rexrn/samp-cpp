@@ -1,6 +1,9 @@
 // File description:
 // Implements basic game mode interface.
 #pragma once
+#include SAMPEDGENGINE_PCH
+
+
 
 // SAMP-EDGEngine includes:
 

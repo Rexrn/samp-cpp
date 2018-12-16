@@ -1,3 +1,5 @@
+#include SAMPEDGENGINE_PCH
+
 #include <SAMP-EDGEngine/Core/Clock.hpp>
 
 namespace samp_edgengine

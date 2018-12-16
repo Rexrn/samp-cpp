@@ -1,3 +1,5 @@
+#include SAMPEDGENGINE_EXT_RESOURCEIO_PCH
+
 #include <SAMP-EDGEngine/Ext/ResourceIO/PAWNSceneDeserializer.hpp>
 #include <SAMP-EDGEngine/Ext/ResourceIO/Logging.hpp>
 

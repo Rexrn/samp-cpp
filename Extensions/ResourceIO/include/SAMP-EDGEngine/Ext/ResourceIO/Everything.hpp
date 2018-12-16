@@ -1,5 +1,10 @@
 #pragma once
 
+#ifndef SAMPEDGENGINE_EXT_RESOURCEIO_PCH
+#define SAMPEDGENGINE_EXT_RESOURCEIO_PCH <SAMP-EDGEngine/Ext/ResourceIO/ResourceIOPCH.hpp>
+#endif
+#include SAMPEDGENGINE_EXT_RESOURCEIO_PCH
+
 #include "XMLHelperFunctions.hpp"
 #include "XMLNames.hpp"
 

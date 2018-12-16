@@ -1,4 +1,7 @@
 #pragma once
+#include SAMPEDGENGINE_PCH
+
+
 
 // Header with base class:
 #include <SAMP-EDGEngine/World/3DNode.hpp>

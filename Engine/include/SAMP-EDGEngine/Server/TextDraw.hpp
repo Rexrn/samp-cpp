@@ -1,4 +1,7 @@
 #pragma once
+#include SAMPEDGENGINE_PCH
+
+
 
 #include <SAMP-EDGEngine/Core/Color.hpp>
 #include <SAMP-EDGEngine/Core/TypesAndDefinitions.hpp>

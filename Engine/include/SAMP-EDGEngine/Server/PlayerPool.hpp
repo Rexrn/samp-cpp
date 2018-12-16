@@ -1,6 +1,9 @@
 // File description:
 // Implements class manipulating Players and agent used to process certain server events.
 #pragma once
+#include SAMPEDGENGINE_PCH
+
+
 
 // Custom includes:
 #include <SAMP-EDGEngine/Server/Player.hpp>

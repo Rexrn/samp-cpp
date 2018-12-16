@@ -1,3 +1,5 @@
+#include SAMPEDGENGINE_PCH
+
 // Custom includes:
 #include <SAMP-EDGEngine/Server/Player.hpp>
 #include <SAMP-EDGEngine/Server/Server.hpp>

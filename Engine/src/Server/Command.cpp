@@ -1,3 +1,5 @@
+#include SAMPEDGENGINE_PCH
+
 #include <SAMP-EDGEngine/Server/Command.hpp>
 #include <SAMP-EDGEngine/Server/Server.hpp>
 

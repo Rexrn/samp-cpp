@@ -1,3 +1,5 @@
+#include SAMPEDGENGINE_PCH
+
 #include <SAMP-EDGEngine/Core/TaskSystem.hpp>
 
 #include <algorithm>

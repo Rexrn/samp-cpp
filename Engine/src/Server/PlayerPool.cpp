@@ -1,3 +1,5 @@
+#include SAMPEDGENGINE_PCH
+
 // Custom headers:
 #include <SAMP-EDGEngine/Server/PlayerPool.hpp>
 #include <SAMP-EDGEngine/Core/Text/ASCII.hpp>

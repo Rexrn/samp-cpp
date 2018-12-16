@@ -1,3 +1,5 @@
+#include SAMPEDGENGINE_PCH
+
 // Custom includes:
 #include <SAMP-EDGEngine/Server/GameMode.hpp>
 #include <SAMP-EDGEngine/World/Streamer/Streamer.hpp>

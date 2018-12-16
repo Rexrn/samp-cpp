@@ -1,6 +1,9 @@
 // File description:
 // TODO: Provides basic exception classes for common runtime errors.
 #pragma once
+#include SAMPEDGENGINE_PCH
+
+
 
 #include <stdexcept>
 

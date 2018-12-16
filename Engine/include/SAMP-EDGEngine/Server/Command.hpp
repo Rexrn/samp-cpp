@@ -1,4 +1,7 @@
 #pragma once
+#include SAMPEDGENGINE_PCH
+
+
 
 #include <SAMP-EDGEngine/Core/Text/ASCII.hpp>
 #include <SAMP-EDGEngine/Server/Teleport.hpp>

@@ -2,23 +2,33 @@ repoRoot = os.getcwd()
 
 include ("BuildConfig.user.lua")
 
+-- Custom library:
+include ("Premake/Library.lua")
+
 workspace "SAMPEDGEngine"
 	location "Build"
 	platforms { "x86", "x64" }
 	configurations { "Debug", "Release" }
 
+	-- Mac OS X does not support x86 (??? - confirm this).
 	if os.host() == "macosx" then
 		removeplatforms { "x86" }
 	end
 
+	-- MSBuild specific configuration
+	filter {"system:windows", "action:vs*"}
+    	systemversion(edge.getWindowsSDKVersion() .. ".0")
+
+	-- Setup platforms:
 	filter "platforms:*32"
 		architecture "x86"
 
 	filter "platforms:*64"
 		architecture "x86_64"
 
+	-- Setup configurations:
 	filter "configurations:Debug"
-		defines { "DEBUG" }
+		defines { "DEBUG", "_DEBUG" }
 		symbols "On"
 
 	filter "configurations:Release"
@@ -34,7 +44,6 @@ workspace "SAMPEDGEngine"
 
 	-- TODO: include other project files here
 
-	
 	-- Extensions:
 	if userConfig.build.extensions then
 		group "Extensions"
@@ -51,6 +60,12 @@ workspace "SAMPEDGEngine"
 	if userConfig.build.unitTests then
 		group "UnitTests"
 		include("UnitTests/Premake5Build.lua")
+	end
+
+	-- ThirdParty:
+	if userConfig.build.thirdParty then
+		group "ThirdParty"
+		include("ThirdParty/Premake5Build.lua")
 	end
 
 	

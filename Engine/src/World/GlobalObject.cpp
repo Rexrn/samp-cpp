@@ -1,3 +1,5 @@
+#include SAMPEDGENGINE_PCH
+
 // The header of this class:
 #include <SAMP-EDGEngine/World/GlobalObject.hpp>
 

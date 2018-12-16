@@ -1,7 +1,11 @@
 // File description:
 // Includes the entire SAMP-EDGEngine.
-
 #pragma once
+
+#ifndef SAMPEDGENGINE_PCH
+#define SAMPEDGENGINE_PCH <SAMP-EDGEngine/EnginePCH.hpp>
+#endif
+#include SAMPEDGENGINE_PCH
 
 #include <SAMP-EDGEngine/Dependencies/SampGDK.hpp>
 #include <SAMP-EDGEngine/Dependencies/QuickMaffs.hpp>
