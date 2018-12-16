@@ -1,11 +1,7 @@
 #pragma once
 #include SAMPEDGENGINE_EXT_RESOURCEIO_PCH
 
-
-
 #include "XMLMapObjectMaterialSerializer.hpp"
-
-#include <string_view>
 
 namespace samp_edgengine::ext::resource_io
 {

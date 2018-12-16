@@ -1,10 +1,6 @@
 #pragma once
 #include SAMPEDGENGINE_EXT_RESOURCEIO_PCH
 
-
-
-#include <SAMP-EDGEngine/Everything.hpp>
-
 namespace samp_edgengine::ext::resource_io
 {
 

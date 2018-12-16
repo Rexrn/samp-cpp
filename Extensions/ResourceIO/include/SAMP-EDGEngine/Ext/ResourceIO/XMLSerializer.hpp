@@ -1,11 +1,7 @@
 #pragma once
 #include SAMPEDGENGINE_EXT_RESOURCEIO_PCH
 
-
-
 #include "Serializer.hpp"
-
-#include "Dependencies/RapidXML.hpp"
 
 namespace samp_edgengine::ext::resource_io
 {

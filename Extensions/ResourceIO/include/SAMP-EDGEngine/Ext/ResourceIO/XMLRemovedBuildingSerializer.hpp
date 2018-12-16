@@ -1,8 +1,6 @@
 #pragma once
 #include SAMPEDGENGINE_EXT_RESOURCEIO_PCH
 
-
-
 #include "XMLSerializer.hpp"
 #include "RemovedBuildingSerializer.hpp"
 

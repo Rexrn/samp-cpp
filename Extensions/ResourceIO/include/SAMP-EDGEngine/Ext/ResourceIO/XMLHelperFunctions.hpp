@@ -2,12 +2,6 @@
 #include SAMPEDGENGINE_EXT_RESOURCEIO_PCH
 
 
-
-#include "Dependencies/RapidXML.hpp"
-
-#include <string>
-#include <string_view>
-
 namespace samp_edgengine::ext::resource_io::xml_helper
 {
 

@@ -1,8 +1,6 @@
 #pragma once
 #include SAMPEDGENGINE_EXT_RESOURCEIO_PCH
 
-
-
 #include "XMLMapObjectDeserializer.hpp"
 
 namespace samp_edgengine::ext::resource_io
