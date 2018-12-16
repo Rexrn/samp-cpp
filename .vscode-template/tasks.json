@@ -27,26 +27,7 @@
 		// # Project building: 
 		/////////////////////////////////////////////
 
-		// ## GCC:
-		{			
-			"label": "Build (GCC)",
-			"type": "shell",
-			"group": "build",
-			"command": "mingw32-make",
-			"args": [
-				"config=${input:buildConfigGMake}"
-			],
-			"options": {
-				"cwd": "${workspaceFolder}/Build"
-			},
-			"problemMatcher": [
-				{
-					"base": "$gcc",
-					"fileLocation": ["relative", "${workspaceRoot}/build/whatever"]
-				}
-			]
-		},
-		// ## GCC (update build files)
+		// ## GCC
 		{
 			// Generate build files first:
 			"dependsOn": [
@@ -54,7 +35,7 @@
 			],
 
 			
-			"label": "Build (GCC, update build files)",
+			"label": "Build (GCC)",
 			"type": "shell",
 			"group": "build",
 			"command": "mingw32-make",
@@ -73,38 +54,16 @@
 		},
 		// ## VS2017
 		{
-			"label": "Build (VS2017)",
-			"type": "shell",
-			"command": "msbuild SAMPEDGEngine.sln",
-			"args": [
-				"/property:Configuration=${input:buildConfigVS2017}",
-				"/property:Platform=${input:buildPlatformVS2017}",
-				// Ask msbuild to generate full paths for file names.
-				"/property:GenerateFullPaths=true",
-				"/t:build"
-			],
-			"options": {
-				"cwd": "${workspaceFolder}/Build"
-			},
-			"group": "build",
-			"presentation": {
-				// Reveal the output only if unrecognized errors occur.
-				"reveal": "silent"
-			},
-			// Use the standard MS compiler pattern to detect errors, warnings and infos
-			"problemMatcher": "$msCompile"
-		},
-		// ## VS2017 (update build files)
-		{
 			// Generate build files first:
 			"dependsOn": [
 				"Generate build files (VS2017)"
 			],
 
-			"label": "Build (VS2017, update build files)",
+			"label": "Build (VS2017)",
 			"type": "shell",
 			"command": "msbuild SAMPEDGEngine.sln",
 			"args": [
+				"/m",
 				"/property:Configuration=${input:buildConfigVS2017}",
 				"/property:Platform=${input:buildPlatformVS2017}",
 				// Ask msbuild to generate full paths for file names.
@@ -156,7 +115,7 @@
 		{
 			"dependsOn": [
 				"Clean BUILD folder",
-				"Build (GCC, update build files)"
+				"Build (GCC)"
 			],
 
 			"label": "Rebuild (GCC)",
@@ -168,7 +127,7 @@
 		{
 			"dependsOn": [
 				"Clean BUILD folder",
-				"Build (VS2017, update build files)"
+				"Build (VS2017)"
 			],
 
 			"label": "Rebuild (VS2017)",
