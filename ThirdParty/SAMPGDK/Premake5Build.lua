@@ -3,7 +3,7 @@ project "SAMPGDK"
 	language "C++"
 	cppdialect "C++17"
 	location (path.join(repoRoot, "Build/ThirdParty/%{prj.name}"))
-	targetdir (path.join(repoRoot, "Bin/ThirdParty/%{cfg.platform}/%{cfg.buildcfg}"))
+	targetdir (path.join(repoRoot, "Bin/%{cfg.platform}/%{cfg.buildcfg}/ThirdParty"))
 
 	includedirs {
 		"include"
