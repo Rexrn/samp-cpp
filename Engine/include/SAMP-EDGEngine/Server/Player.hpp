@@ -316,22 +316,35 @@ public:
 	/// <summary>
 	/// Sets the player's world.
 	/// </summary>
-	/// <param name="location_">The world.</param>
+	/// <param name="world_">The world.</param>
 	virtual void setWorld(Int32 const world_) override;
 
 	/// <summary>
 	/// Sets the player's interior.
 	/// </summary>
-	/// <param name="location_">The interior.</param>
+	/// <param name="interior_">The interior.</param>
 	virtual void setInterior(Int32 const interior_) override;
 
+	/// <summary>
+	/// Sets the player's camera location.
+	/// </summary>
+	/// <param name="eyeLocation_">The eye location.</param>
 	void setCameraLocation(math::Vector3f const & eyeLocation_);
+	
+	/// <summary>
+	/// Moves camera behind the player.
+	/// </summary>
 	void setCameraBehindPlayer();
+	
+	/// <summary>
+	/// Sets the player's camera look at location.
+	/// </summary>
+	/// <param name="lookAtLocation_">The look at location.</param>
 	void setCameraLookAtLocation(math::Vector3f const & lookAtLocation_);
 
 	// Player statistics:
 
-	
+
 	/// <summary>
 	/// Adds cash to player.
 	/// </summary>
