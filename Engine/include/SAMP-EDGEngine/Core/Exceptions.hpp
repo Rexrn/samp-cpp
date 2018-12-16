@@ -5,7 +5,6 @@
 
 
 
-#include <stdexcept>
 
 namespace samp_edgengine
 {

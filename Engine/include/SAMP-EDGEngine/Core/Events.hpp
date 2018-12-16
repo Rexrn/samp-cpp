@@ -5,10 +5,8 @@
 
 #include <SAMP-EDGEngine/Core/Pointers.hpp>
 
-#include <vector>
 #include <typeinfo>
 #include <typeindex>
-#include <algorithm>
 
 namespace samp_edgengine
 {

@@ -6,7 +6,6 @@
 
 #include <SAMP-EDGEngine/Dependencies/QuickMaffs.hpp>
 
-#include <sstream>
 
 namespace samp_edgengine
 {

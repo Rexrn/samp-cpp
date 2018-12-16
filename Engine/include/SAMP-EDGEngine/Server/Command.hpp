@@ -6,9 +6,6 @@
 #include <SAMP-EDGEngine/Core/Text/ASCII.hpp>
 #include <SAMP-EDGEngine/Server/Teleport.hpp>
 
-#include <vector>
-#include <functional>
-#include <string>
 
 namespace samp_edgengine
 {

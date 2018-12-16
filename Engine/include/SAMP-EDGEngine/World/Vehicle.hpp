@@ -10,8 +10,6 @@
 #include <SAMP-EDGEngine/World/WI3DNode.hpp>
 #include <SAMP-EDGEngine/Dependencies/SampGDK.hpp>
 
-#include <array>
-#include <map>
 
 namespace samp_edgengine
 {

@@ -6,7 +6,6 @@
 #include <SAMP-EDGEngine/Server/PlayerTextDraw.hpp>
 #include <SAMP-EDGEngine/Core/Pointers.hpp>
 
-#include <map>
 
 namespace samp_edgengine
 {

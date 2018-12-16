@@ -3,9 +3,6 @@
 
 #include "ASCII.hpp"
 
-#include <cctype>
-#include <sstream>
-#include <vector>
 
 
 namespace samp_edgengine::text::ascii

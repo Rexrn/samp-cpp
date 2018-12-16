@@ -6,8 +6,6 @@
 #include <SAMP-EDGEngine/Core/Pointers.hpp>
 #include <SAMP-EDGEngine/Core/TypesAndDefinitions.hpp>
 
-#include <array>
-#include <cassert>
 
 namespace samp_edgengine
 {

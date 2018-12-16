@@ -3,7 +3,6 @@
 #include <SAMP-EDGEngine/Server/Command.hpp>
 #include <SAMP-EDGEngine/Server/Server.hpp>
 
-#include <iterator>
 #include <istream>
 
 namespace samp_edgengine

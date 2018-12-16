@@ -9,7 +9,6 @@
 #include <SAMP-EDGEngine/Dependencies/QuickMaffs.hpp>
 
 #include <SAMP-EDGEngine/Dependencies/SampGDK.hpp>
-#include <array>
 
 namespace samp_edgengine
 {

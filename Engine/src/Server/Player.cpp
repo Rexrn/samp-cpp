@@ -8,7 +8,6 @@
 
 #include <SAMP-EDGEngine/World/Vehicle.hpp>
 
-#include <cassert>
 
 namespace samp_edgengine
 {

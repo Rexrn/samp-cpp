@@ -2,7 +2,6 @@
 
 #include <SAMP-EDGEngine/Core/TaskSystem.hpp>
 
-#include <algorithm>
 
 namespace samp_edgengine
 {

@@ -2,7 +2,6 @@
 
 #include <SAMP-EDGEngine/Server/TextDrawOwner.hpp>
 
-#include <cassert>
 
 namespace samp_edgengine
 {

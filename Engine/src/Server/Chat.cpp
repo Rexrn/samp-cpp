@@ -10,7 +10,6 @@
 #include <SAMP-EDGEngine/Server/GameMode.hpp>
 #include <SAMP-EDGEngine/Server/Server.hpp>
 
-#include <cassert>
 
 namespace samp_edgengine
 {
