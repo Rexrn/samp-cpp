@@ -21,6 +21,9 @@
 #include <SAMP-EDGEngine/Core/Events.hpp>
 #include <SAMP-EDGEngine/Core/TaskSystem.hpp>
 
+#include <SAMP-EDGEngine/Core/Log.hpp>
+#include <SAMP-EDGEngine/Server/ServerDebugLogOutput.hpp>
+
 
 namespace samp_edgengine
 {	
@@ -88,14 +91,23 @@ protected:
 	virtual void onServerUpdate(double deltaTime_, IUpdatable::TimePoint timePoint_);
 
 public:
-	PlayerPool					players;
-	MapClass					map;
-	CommandManager				commands;
-	TaskScheduler				tasks;
+	PlayerPool				players;
+	MapClass				map;
+	CommandManager			commands;
+	TaskScheduler			tasks;
+
+#ifdef DEBUG
+	Log						debugLog;
+#endif
+
+	UniquePtr<IStreamer>	streamer;
+	UniquePtr<IChat>		chat;
 
 
-	UniquePtr<IStreamer>		streamer;
-	UniquePtr<IChat>			chat;
+private:
+#ifdef DEBUG
+	ServerDebugLogOutput	m_debugLogOutput;
+#endif
 };
 
 using GameModeSetupResult = UniquePtr<IGameMode>;

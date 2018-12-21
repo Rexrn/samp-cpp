@@ -1,5 +1,5 @@
 // File description:
-// Implements Color class and provides over 600 named colors (within agdk::colors) namespace.
+// Implements Color class and provides over 600 named colors (within samp_edgengine::colors) namespace.
 #pragma once
 #include SAMPEDGENGINE_PCH
 

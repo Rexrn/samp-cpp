@@ -61,6 +61,8 @@
 #include <SAMP-EDGEngine/Server/PlayerTextDrawPanel.hpp>
 #include <SAMP-EDGEngine/Server/GlobalTextDrawPanel.hpp>
 
+#include <SAMP-EDGEngine/Server/ServerDebugLog.hpp>
+
 
 // --> Server/Command/:
 #include <SAMP-EDGEngine/Server/Command.hpp>

@@ -11,7 +11,14 @@ namespace samp_edgengine
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 IGameMode::IGameMode()
+#ifdef DEBUG
+	: m_debugLogOutput{ *this }
+#endif
 {
+	#ifdef DEBUG
+		debugLog.setOutput(&m_debugLogOutput);
+	#endif
+
 	Server->onServerUpdate += { *this, &IGameMode::onServerUpdate };
 }
 

@@ -23,6 +23,7 @@
 #include <SAMP-EDGEngine/Server/Dialog.hpp>
 #include <SAMP-EDGEngine/Server/Teleport.hpp>
 
+#include <SAMP-EDGEngine/Server/Interfaces/ServerDebugLogReceiver.hpp>
 
 namespace samp_edgengine
 {
@@ -40,6 +41,9 @@ class Player
 	public IWI3DNode,
 	public TextDrawOwner<PlayerTextDraw>,
 	public ITaskOwner
+#ifdef DEBUG
+	, public IServerDebugLogReceiver
+#endif
 {
 public:
 	// Types and aliases

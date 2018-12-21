@@ -127,8 +127,6 @@ public:
 	/// <param name="raceCheckpoint_">The race checkpoint.</param>
 	virtual void whenRaceCheckpointLeavesMap(RaceCheckpoint& raceCheckpoint_) override;
 
-
-
 	/// <summary>
 	/// Event reaction designed to be called when the player changes location significantly.
 	/// </summary>

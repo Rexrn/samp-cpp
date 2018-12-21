@@ -2,7 +2,6 @@
 #include SAMPEDGENGINE_PCH
 
 
-
 #include <SAMP-EDGEngine/Core/BasicInterfaces/PlacementTracker.hpp>
 
 namespace samp_edgengine
@@ -13,6 +12,8 @@ class StaticVehicle;
 class GlobalObject;
 class PersonalObject;
 class UniversalObject;
+class Checkpoint;
+class RaceCheckpoint;
 
 class IStreamer
 {
