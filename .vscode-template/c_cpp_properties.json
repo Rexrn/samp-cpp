@@ -4,11 +4,14 @@
             "includePath": [
                 "${workspaceFolder}/",
                 "${workspaceFolder}/**",
-                "${workspaceFolder}/**/include"
+                "${workspaceFolder}/Engine/include",
+                "${workspaceFolder}/Extensions/ResourceIO/include",
+                "${workspaceFolder}/ThirdParty/SAMPGDK/include"
             ],
             "defines": [
                 "DEBUG",
-                "_DEBUG"
+                "_DEBUG",
+                "SAMPEDGENGINE_PCH=\"Engine/include/SAMP-EDGEngine/EnginePCH.hpp\""
             ]
         }
     ]
