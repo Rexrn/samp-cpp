@@ -18,6 +18,8 @@
 #include <SAMP-EDGEngine/Core/Exceptions.hpp>
 #include <SAMP-EDGEngine/Core/Pointers.hpp>
 #include <SAMP-EDGEngine/Core/TypeTraits.hpp>
+#include <SAMP-EDGEngine/Core/Log.hpp>
+
 
 #include <SAMP-EDGEngine/Core/TextInc.hpp>
 #include <SAMP-EDGEngine/Core/ContainerInc.hpp>
@@ -51,6 +53,7 @@
 // Server/:
 #include <SAMP-EDGEngine/Server/Chat.hpp>
 #include <SAMP-EDGEngine/Server/GameMode.hpp>
+#include <SAMP-EDGEngine/Server/GameModeChild.hpp>
 #include <SAMP-EDGEngine/Server/Server.hpp>
 #include <SAMP-EDGEngine/Server/TextDraw.hpp>
 #include <SAMP-EDGEngine/Server/PlayerTextDraw.hpp>
