@@ -1,8 +1,6 @@
 #pragma once
 #include SAMPEDGENGINE_PCH
 
-
-
 #include <SAMP-EDGEngine/Core/TypesAndDefinitions.hpp>
 
 
