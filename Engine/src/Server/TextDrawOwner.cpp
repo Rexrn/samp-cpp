@@ -21,7 +21,7 @@ void TextDrawOwner<TTextDraw>::bindTextDraw(Int32 handle_, TTextDraw& textDraw_)
 {
 	assert(handle_ >= 0);
 
-	if (static_cast<std::size_t>(handle_) > m_textDraws.size())
+	if (static_cast<std::size_t>(handle_) >= m_textDraws.size())
 	{
 		m_textDraws.resize(((static_cast<std::size_t>(handle_) / MemoryManagementChunk) + 1) * MemoryManagementChunk, nullptr);
 	}
