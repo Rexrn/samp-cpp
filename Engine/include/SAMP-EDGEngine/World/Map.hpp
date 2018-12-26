@@ -100,6 +100,24 @@ public:
 	RaceCheckpoint& finalizeConstruction(ActorPtrType< RaceCheckpoint > const& raceCheckpoint_);
 
 	/// <summary>
+	/// Removes the specified vehicle.
+	/// </summary>
+	/// <param name="vehicle_">The vehicle.</param>
+	/// <returns>
+	///		<c>true</c> if vehicle existed and was removed; otherwise, <c>false</c>.
+	/// </returns>
+	bool remove(Vehicle & vehicle_);
+
+	/// <summary>
+	/// Removes the specified static vehicle.
+	/// </summary>
+	/// <param name="vehicle_">The static vehicle.</param>
+	/// <returns>
+	///		<c>true</c> if static vehicle existed and was removed; otherwise, <c>false</c>.
+	/// </returns>
+	bool remove(StaticVehicle & vehicle_);
+
+	/// <summary>
 	/// Removes the specified gang zone.
 	/// </summary>
 	/// <param name="gangZone_">The gang zone.</param>

@@ -74,6 +74,42 @@ RaceCheckpoint& MapClass::finalizeConstruction(ActorPtrType< RaceCheckpoint > co
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////
+bool MapClass::remove(Vehicle & vehicle_)
+{
+	auto it = std::find_if(m_vehicles.begin(), m_vehicles.end(),
+			[&vehicle_](auto const& vehPtr_) {
+				return vehPtr_.get() == &vehicle_;
+			}
+		);
+	
+	if (it != m_vehicles.end())
+	{
+		GameMode->streamer->whenVehicleLeavesMap(vehicle_);
+		m_vehicles.erase(it);
+		return true;
+	}
+	return this->remove(dynamic_cast<StaticVehicle&>(vehicle_));
+}
+
+///////////////////////////////////////////////////////////////////////////////////////
+bool MapClass::remove(StaticVehicle & vehicle_)
+{
+	auto it = std::find_if(m_staticVehicles.begin(), m_staticVehicles.end(),
+			[&vehicle_](auto const& vehPtr_) {
+				return vehPtr_.get() == &vehicle_;
+			}
+		);
+	
+	if (it != m_staticVehicles.end())
+	{
+		GameMode->streamer->whenStaticVehicleLeavesMap(vehicle_);
+		m_staticVehicles.erase(it);
+		return true;
+	}
+	return false;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////
 bool MapClass::remove(GangZone const & gangZone_)
 {
 	const_a it = std::find_if(m_gangZones.begin(), m_gangZones.end(),
