@@ -90,6 +90,9 @@ template <CaseSensitivity _caseSensitivity = CaseSensitive>
 bool equal(std::string_view const lhs_, std::string_view const rhs_);
 
 
+template <typename TOutputIt>
+void split(TOutputIt outputIt_, std::string_view string_, std::string_view separator_);
+
 bool startsWith(std::string_view string_, std::string_view testedPrefix_);
 
 /// <summary>

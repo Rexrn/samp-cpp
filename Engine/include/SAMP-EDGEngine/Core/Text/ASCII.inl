@@ -57,6 +57,26 @@ inline bool equal(std::string_view const lhs_, std::string_view const rhs_)
 }
 
 ///////////////////////////////////////////////////////////////////////
+template <typename TOutputIt>
+void split(TOutputIt outputIt_, std::string_view string_, std::string_view separator_)
+{
+    std::string_view::size_type prev_pos = 0, pos = 0;
+
+    while((pos = string_.find(separator_, pos)) != std::string_view::npos)
+    {
+        std::string substring( string_.substr(prev_pos, pos-prev_pos) );
+
+        *outputIt_ = substring;
+		++outputIt_;
+
+		pos += separator_.length();
+        prev_pos = pos;
+    }
+
+    *outputIt_ = std::string(string_.substr(prev_pos, pos-prev_pos)); // Last word
+}
+
+///////////////////////////////////////////////////////////////////////
 template <typename TTestType>
 inline bool stores(std::string_view const string_) {
 	// Prepare stream:
