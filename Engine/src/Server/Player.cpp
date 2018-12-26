@@ -326,13 +326,16 @@ void Player::teleport(Teleport const & teleport_, Clock::Duration freezeTime_)
 			std::map<int, int> seatIds;
 			for (auto passenger : passengers)
 			{
-				seatIds[passenger->getIndex()] = sampgdk::GetPlayerVehicleSeat(passenger->getIndex());
-				passenger->setLocation(teleport_.location + math::Vector3f(0, 0, 0.3f)); // 30cm up to avoid falling through
-				passenger->setFacingAngle(teleport_.facingAngle);
-				if (teleport_.world != Teleport::cxNoChange)
-					passenger->setWorld(teleport_.world);
-				if (teleport_.interior != Teleport::cxNoChange)
-					passenger->setInterior(teleport_.interior);
+				if (passenger)
+				{
+					seatIds[passenger->getIndex()] = sampgdk::GetPlayerVehicleSeat(passenger->getIndex());
+					passenger->setLocation(teleport_.location + math::Vector3f(0, 0, 0.3f)); // 30cm up to avoid falling through
+					passenger->setFacingAngle(teleport_.facingAngle);
+					if (teleport_.world != Teleport::cxNoChange)
+						passenger->setWorld(teleport_.world);
+					if (teleport_.interior != Teleport::cxNoChange)
+						passenger->setInterior(teleport_.interior);
+				}
 			}
 
 
@@ -455,7 +458,7 @@ void Player::setHealth(float const health_)
 	if (m_existingStatus != ExistingStatus::Dead)
 	{
 		// TODO: find better solution.
-		if (health_ < 0)
+		if (health_ <= 0.01f)
 			sampgdk_SetPlayerHealth(this->getIndex(), 0);
 		else
 			sampgdk_SetPlayerHealth(this->getIndex(), m_health);
@@ -556,6 +559,58 @@ bool Player::kickFromVehicle()
 bool Player::isInVehicle() const
 {
 	return m_vehicle != nullptr;
+}
+
+///////////////////////////////////////////////////////////////////////////
+void Player::showMarker()
+{
+	for(Int32 i = 0; i < sampgdk_GetPlayerPoolSize(); ++i)
+		sampgdk_SetPlayerMarkerForPlayer(i, this->getIndex(), this->getColor().toUint32());
+}
+
+///////////////////////////////////////////////////////////////////////////
+void Player::hideMarker()
+{
+	for(Int32  i = 0; i < sampgdk_GetPlayerPoolSize(); ++i)
+		sampgdk_SetPlayerMarkerForPlayer(i, this->getIndex(), this->getColor().toUint32() & 0xFFFFFF00);
+}
+
+///////////////////////////////////////////////////////////////////////////
+bool Player::isMarkerVisible() const
+{
+	return true; // TODO: implement this:
+}
+
+///////////////////////////////////////////////////////////////////////////
+void Player::showNameTagFor(Player const & player_)
+{
+	sampgdk::ShowPlayerNameTagForPlayer(player_.getIndex(), this->getIndex(), true);
+}
+
+///////////////////////////////////////////////////////////////////////////
+void Player::showNameTag()
+{
+	for(Int32 i = 0; i < sampgdk_GetPlayerPoolSize(); ++i)
+		sampgdk::ShowPlayerNameTagForPlayer(i, this->getIndex(), true);
+}
+
+///////////////////////////////////////////////////////////////////////////
+void Player::hideNameTagFor(Player const & player_)
+{
+	sampgdk::ShowPlayerNameTagForPlayer(player_.getIndex(), this->getIndex(), false);
+}
+
+///////////////////////////////////////////////////////////////////////////
+void Player::hideNameTag()
+{
+	for(Int32 i = 0; i < sampgdk_GetPlayerPoolSize(); ++i)
+		sampgdk::ShowPlayerNameTagForPlayer(i, this->getIndex(), true);
+}
+
+///////////////////////////////////////////////////////////////////////////
+bool Player::hasNameTagShownFor(Player const& player_) const
+{
+	return true; // TODO: implement this.
 }
 
 ///////////////////////////////////////////////////////////////////////////

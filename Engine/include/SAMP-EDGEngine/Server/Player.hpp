@@ -479,6 +479,26 @@ public:
 	/// <returns>Player's vehicle.</returns>
 	Vehicle* getVehicle() const;
 
+	// Marker:
+
+	void showMarker();
+	
+	void hideMarker();
+
+	bool isMarkerVisible() const;
+
+	// Name tag:
+
+	void showNameTagFor(Player const & player_);
+
+	void showNameTag();
+
+	void hideNameTagFor(Player const & player_);
+
+	void hideNameTag();
+
+	bool hasNameTagShownFor(Player const& player_) const;
+
 	// Weapons:
 	
 	/// <summary>
