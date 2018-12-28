@@ -415,6 +415,12 @@ public:
 	/// </summary>
 	/// <param name="armor_">The armor.</param>
 	void setArmor(float const armor_);
+	
+	/// <summary>
+	/// Sets player's color.
+	/// </summary>
+	/// <param name="color_">The color.</param>
+	void setColor(Color const & color_);
 		
 	/// <summary>
 	/// Damages the player.
@@ -609,7 +615,7 @@ public:
 	float getArmour() const;
 
 	/// <summary>
-	/// Returns player's (client) color.
+	/// Returns player's color.
 	/// </summary>
 	/// <returns>Player's color</returns>
 	Color getColor() const;

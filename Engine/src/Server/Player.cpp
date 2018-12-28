@@ -475,6 +475,12 @@ void Player::setArmor(float const armour_)
 }
 
 ///////////////////////////////////////////////////////////////////////////
+void Player::setColor(Color const & color_)
+{
+	sampgdk_SetPlayerColor(this->getIndex(), color_.toInt32());
+}
+
+///////////////////////////////////////////////////////////////////////////
 void Player::damage(float damage_, bool physical_) // TODO: add proper implementation
 {
 	if (physical_)
