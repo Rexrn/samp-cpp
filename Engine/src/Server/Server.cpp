@@ -727,6 +727,7 @@ bool ServerClass::sampEvent_OnPlayerConnect(Int32 playerIndex_)
 			GameMode->newPlayerInstance( static_cast<std::size_t>(playerIndex_) )
 		);
 	player.setHealth(100);
+	player.setColor(Color::random());
 	GameMode->streamer->whenPlayerJoinsServer(player);
 	Server->onPlayerConnect.emit(player);
 	return true;
