@@ -65,7 +65,7 @@ public:
 	{
 		samp::IGameMode::setup();
 
-		chat = std::make_unique<samp::DefaultChat>();
+		chat = std::make_unique<samp::DefaultChat>(*this);
 
 		this->setupCommands();
 		this->loadObjects();
