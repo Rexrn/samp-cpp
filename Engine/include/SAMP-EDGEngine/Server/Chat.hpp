@@ -1,9 +1,9 @@
 #pragma once
+
 #include SAMPEDGENGINE_PCH
 
-
-
 #include <SAMP-EDGEngine/Core/Events.hpp>
+#include <SAMP-EDGEngine/Server/GameModeChild.hpp>
 
 namespace samp_edgengine
 {
@@ -13,14 +13,17 @@ namespace samp_edgengine
 	/// Class (interface) that manages game mode chat.
 	/// </summary>
 	class IChat
-		: public IEventReceiver
+		:
+		public IEventReceiver,
+		public IGameModeChild
 	{
 	public:
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="IChat"/> class.
 		/// </summary>
-		IChat();
+		/// <param name="gameMode_">The game mode owner.</param>
+		IChat(IGameMode & gameMode_);
 		
 		/// <summary>
 		/// Sends simple message to player.
@@ -76,8 +79,10 @@ namespace samp_edgengine
 		: public IChat
 	{
 	public:
-		// Nothing special.
+		using IChat::IChat;
+
 	protected:
+
 		/// <summary>
 		/// Callback called when some player sends text message.
 		/// </summary>

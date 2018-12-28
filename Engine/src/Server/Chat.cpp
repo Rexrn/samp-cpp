@@ -14,7 +14,8 @@
 namespace samp_edgengine
 {
 	//////////////////////////////////////////////////////////////////////////////////////////////////////
-	IChat::IChat()
+	IChat::IChat(IGameMode & gameMode_)
+		: IGameModeChild(gameMode_)
 	{
 		Server->onPlayerText += { *this, &IChat::whenPlayerSendsText };
 	}
