@@ -1,6 +1,6 @@
 repoRoot = os.getcwd()
 
-include ("BuildConfig.user.lua")
+include ("BuildConfig.lua")
 
 -- Custom library:
 include ("Premake/Library.lua")
@@ -15,9 +15,23 @@ workspace "SAMPEDGEngine"
 		removeplatforms { "x86" }
 	end
 
+	-- Linux specific configuration.
+	if os.host() == "linux" then
+		defines { "LINUX" }
+	end
+
 	-- MSBuild specific configuration
-	filter {"system:windows", "action:vs*"}
-    	systemversion(edge.getWindowsSDKVersion() .. ".0")
+	if string.match(_ACTION, "vs%d%d%d%d") ~= nil then
+		filter {"system:windows"}
+    		systemversion(edge.getWindowsSDKVersion() .. ".0")
+	end
+
+	-- gmake specific configuration
+	if _ACTION == "gmake" then
+		links { "stdc++fs", "dl", "pthread" }
+		buildoptions { "-fPIC" }
+	end	
+		
 
 	-- Setup platforms:
 	filter "platforms:*32"
@@ -36,7 +50,6 @@ workspace "SAMPEDGEngine"
 		optimize "On"
 
 	filter {}
-		
 
 	-- Projects:
 	include ("Engine/Premake5Build.lua")
