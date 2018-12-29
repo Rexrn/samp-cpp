@@ -14,8 +14,8 @@ project "Ext_ResourceConverter"
 	}
 
 	links {
-		"Engine",
 		"Ext_ResourceIO",
+		"Engine",
 		"SAMPGDK"
 	}
 
