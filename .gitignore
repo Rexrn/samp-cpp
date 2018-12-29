@@ -4,3 +4,4 @@ Build/
 Bin/
 
 *.user*
+BuildConfig.lua
