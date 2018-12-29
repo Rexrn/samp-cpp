@@ -269,7 +269,7 @@ std::string format(std::string_view format_, TArgs && ...args_)
 				std::size_t replaceLength = static_cast<std::size_t>(i - tokenStart + 1);
 				if (argLen > 0)
 				{
-					Int32 argId = convert<Int32>(
+					auto argId = convert<std::int32_t>(
 							result.substr(
 								std::size_t(argIdStart+resultOffset),
 								std::size_t(argLen)
