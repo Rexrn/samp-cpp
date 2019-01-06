@@ -6,18 +6,50 @@ project "Ext_ResourceConverter"
 	targetdir (path.join(repoRoot, "Bin/%{cfg.platform}/%{cfg.buildcfg}/Extensions"))
 
 	includedirs {
-		path.join(userConfig.deps.quickmaffs.root, "include"),
-		userConfig.deps.rapidxml.root,
-		path.join(userConfig.deps.sampgdk.root, "include"),
+		-- Ext_ResourceIO:
+		path.join(repoRoot, "Extensions/ResourceIO/include"),
+
+		-- SAMP-EDGEngine:
 		path.join(repoRoot, "Engine/include"),
-		path.join(repoRoot, "Extensions/ResourceIO/include")
+
+		-- SAMPGDK:
+		path.join(userConfig.deps.sampgdk.root, "include"),
+		
+		-- SAMP Plugin SDK:
+		userConfig.deps.samp_plugin_sdk.root,
+		path.join(userConfig.deps.samp_plugin_sdk.root, "amx"),
+		
+		-- QuickMaffs:
+		path.join(userConfig.deps.quickmaffs.root, "include"),
+
+		-- RapidXML:
+		userConfig.deps.rapidxml.root
 	}
 
-	links {
-		"Ext_ResourceIO",
-		"Engine",
-		"SAMPGDK"
-	}
+	-- gmake adds ServerCore.cpp directly (TODO: change this.)
+	if _ACTION == "gmake" then
+		files { path.join(repoRoot, "ServerCore/src/ServerCore.cpp") }
+		links {
+			"Ext_ResourceIO",
+			"Engine",
+			-- SAMPGDK:
+			path.join(userConfig.deps.sampgdk.root, "lib/%{cfg.platform}/%{cfg.buildcfg}/sampgdk")
+		}
+		buildoptions { "-Wno-attributes" }
+	else
+		links {
+			"Ext_ResourceIO",
+			"ServerCore",
+			"Engine",
+			-- SAMPGDK:
+			path.join(userConfig.deps.sampgdk.root, "lib/%{cfg.platform}/%{cfg.buildcfg}/sampgdk")
+		}
+	end
+
+	-- gmake (Linux) specific configuration
+	if os.host() == "linux" and _ACTION == "gmake" then
+		links { "dl" }
+	end	
 
 	files {
 		"src/Main.cpp"

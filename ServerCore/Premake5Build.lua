@@ -6,11 +6,20 @@ project "ServerCore"
 	targetdir (path.join(repoRoot, "Bin/%{cfg.platform}/%{cfg.buildcfg}"))
 
 	includedirs {
-		path.join(userConfig.deps.quickmaffs.root, "include"),
-		path.join(userConfig.deps.sampgdk.root, "include"),
-		path.join(repoRoot, "Engine/include")
-	}
+		-- SAMP-EDGEngine
+		path.join(repoRoot, "Engine/include"),
 
+		-- SAMPGDK
+		path.join(userConfig.deps.sampgdk.root, "include"),
+		
+		-- SAMP Plugin SDK
+		userConfig.deps.samp_plugin_sdk.root,
+		path.join(userConfig.deps.samp_plugin_sdk.root, "amx"),
+		
+		-- QuickMaffs
+		path.join(userConfig.deps.quickmaffs.root, "include")
+	}
+	
 	files {
 		"src/ServerCore.cpp"
 	}

@@ -10,11 +10,6 @@ workspace "SAMPEDGEngine"
 	platforms { "x86", "x64" }
 	configurations { "Debug", "Release" }
 
-	-- Mac OS X does not support x86 (??? - confirm this).
-	if os.host() == "macosx" then
-		removeplatforms { "x86" }
-	end
-
 	-- Linux specific configuration.
 	if os.host() == "linux" then
 		defines { "LINUX" }
@@ -25,13 +20,13 @@ workspace "SAMPEDGEngine"
 		filter {"system:windows"}
     		systemversion(edge.getWindowsSDKVersion() .. ".0")
 	end
-
+		
 	-- gmake specific configuration
 	if _ACTION == "gmake" then
-		links { "stdc++fs", "dl", "pthread" }
-		buildoptions { "-fPIC" }
+		links {
+			"stdc++fs"
+		}
 	end	
-		
 
 	-- Setup platforms:
 	filter "platforms:*32"
@@ -73,12 +68,6 @@ workspace "SAMPEDGEngine"
 	if userConfig.build.unitTests then
 		group "UnitTests"
 		include("UnitTests/Premake5Build.lua")
-	end
-
-	-- ThirdParty:
-	if userConfig.build.thirdParty then
-		group "ThirdParty"
-		include("ThirdParty/Premake5Build.lua")
 	end
 
 	

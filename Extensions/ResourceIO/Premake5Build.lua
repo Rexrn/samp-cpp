@@ -13,12 +13,24 @@ project "Ext_ResourceIO"
 
 	includedirs {
 		"include",
-		path.join(userConfig.deps.quickmaffs.root, "include"),
-		userConfig.deps.rapidxml.root,
-		path.join(userConfig.deps.sampgdk.root, "include"),
-		path.join(repoRoot, "Engine/include")
-	}
+		
+		-- SAMP-EDGEngine:
+		path.join(repoRoot, "Engine/include"),
 
+		-- SAMPGDK:
+		path.join(userConfig.deps.sampgdk.root, "include"),
+		
+		-- SAMP Plugin SDK:
+		userConfig.deps.samp_plugin_sdk.root,
+		path.join(userConfig.deps.samp_plugin_sdk.root, "amx"),
+		
+		-- QuickMaffs:
+		path.join(userConfig.deps.quickmaffs.root, "include"),
+
+		-- RapidXML:
+		userConfig.deps.rapidxml.root
+	}
+	
 	files {
 		"include/SAMP-EDGEngine/Ext/**.hpp",
 		"src/**.cpp"

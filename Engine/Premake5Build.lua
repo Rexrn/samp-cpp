@@ -10,10 +10,18 @@ project "Engine"
 			"src/EnginePCH.cpp",
 			"SAMPEDGENGINE_PCH"
 		)
-
+		
 	includedirs {
 		"include",
+
+		-- SAMPGDK
 		path.join(userConfig.deps.sampgdk.root, "include"),
+
+		-- SAMP Plugin SDK
+		userConfig.deps.samp_plugin_sdk.root,
+		path.join(userConfig.deps.samp_plugin_sdk.root, "amx"),
+
+		-- QuickMaffs
 		path.join(userConfig.deps.quickmaffs.root, "include")
 	}
 

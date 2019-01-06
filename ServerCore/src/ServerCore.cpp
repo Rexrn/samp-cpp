@@ -209,9 +209,9 @@ PLUGIN_EXPORT bool PLUGIN_CALL OnVehicleMod(int playerid, int vehicleid, int com
 /////////////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////////////////
-PLUGIN_EXPORT bool PLUGIN_CALL OnEnterExitModShop(int playerid, int enterexit, int interiorid)
+PLUGIN_EXPORT bool PLUGIN_CALL OnEnterExitModShop(int playerid, bool enterexit, int interiorid)
 {
-	if (enterexit == 1)
+	if (enterexit)
 		return Server->sampEvent_OnPlayerEnterModShop(playerid, interiorid);
 	else
 		return Server->sampEvent_OnPlayerExitModShop(playerid, interiorid);
