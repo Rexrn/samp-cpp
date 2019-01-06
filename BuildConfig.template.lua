@@ -9,7 +9,6 @@ userConfig = {
 	
 	-- Build configuration:
 	build = {
-		thirdParty = true,
 		extensions = true,
 		examples = true,
 		unitTests = true
@@ -18,8 +17,12 @@ userConfig = {
 	-- Dependencies configuration:
 	deps = {
 		-- [Required]
+		-- Please provide path to the root of the SAMP Plugin SDK library.
+		samp_plugin_sdk = { root = "" }, 
+	
+		-- [Required]
 		-- Please provide path to the root of the SAMPGDK library.
-		sampgdk = { root = os.realpath("ThirdParty/SAMPGDK") }, 
+		sampgdk = { root = "" }, 
 	
 		-- [Required]
 		-- Please provide path to the root of the QuickMaffs library.
