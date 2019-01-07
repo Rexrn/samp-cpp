@@ -71,7 +71,7 @@ function relocate
 	cp -r "$srcPath/." "$targetPath"
 }
 
-cp -r "$targetInstallPath/Debug/include/." "$targetInstallPath"
+cp -r "$targetInstallPath/x86/Debug/include/." "$targetInstallPath/include"
 
 relocate "lib" x86 Debug
 relocate "lib" x86 MinSizeRel
@@ -81,7 +81,6 @@ relocate "lib" x64 Debug
 relocate "lib" x64 MinSizeRel
 relocate "lib" x64 Release
 relocate "lib" x64 RelWithDebInfo
-relocate "lib" x86 Debug
 
 rm -rf "$targetInstallPath/x86"
 rm -rf "$targetInstallPath/x64"
