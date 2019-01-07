@@ -28,7 +28,7 @@ project "Ext_ResourceConverter"
 
 	-- gmake adds ServerCore.cpp directly (TODO: change this.)
 	if _ACTION == "gmake" then
-		files { path.join(repoRoot, "ServerCore/src/ServerCore.cpp") }
+		--files { path.join(repoRoot, "ServerCore/src/ServerCore.cpp") }
 		links {
 			"Ext_ResourceIO",
 			"Engine",
