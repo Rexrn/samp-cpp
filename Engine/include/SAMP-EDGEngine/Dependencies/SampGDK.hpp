@@ -2,7 +2,7 @@
 #pragma once
 
 #define SAMPGDK_CPP_WRAPPERS
-
+#define SAMPGDK_STATIC
 #include <sampgdk/a_actor.h>
 #include <sampgdk/a_http.h>
 #include <sampgdk/a_objects.h>
