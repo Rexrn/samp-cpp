@@ -6,7 +6,12 @@
                 "${workspaceFolder}/**",
                 "${workspaceFolder}/Engine/include",
                 "${workspaceFolder}/Extensions/ResourceIO/include",
-                "${workspaceFolder}/ThirdParty/SAMPGDK/include"
+
+                "path/to/samp-plugin-sdk/**", 
+                "path/to/sampgdk/include", 
+                "path/to/QuickMaffs/include",
+                "path/to/rapidxml",
+                "path/to/googletest/include"
             ],
             "defines": [
                 "DEBUG",
