@@ -6,6 +6,8 @@
 #include <SAMP-EDGEngine/Core/Text/ASCII.hpp>
 #include <SAMP-EDGEngine/Core/Clock.hpp>
 
+#include <SAMP-EDGEngine/Server/ServerDebugLog.hpp>
+
 namespace samp_edgengine
 {
 
@@ -327,6 +329,8 @@ bool Vehicle::spawn()
 	if (!this->isSpawned() && m_modelIndex != -1)
 	{
 		m_handle = sampgdk_CreateVehicle(m_modelIndex, m_location.x, m_location.y, m_location.z, m_facingAngle, m_firstColor, m_secondColor, -1, false);
+		//EDGE_LOG_DEBUG(Info, "Spawned vehicle with handle {0}", m_handle);
+		
 		// Respawn delay set to -1
 		// This is because streamer will take advantage of vehicle respawning.
 		// TODO: verify if this works ^^^.
@@ -353,12 +357,14 @@ void Vehicle::despawn()
 
 		for (auto &passenger : m_passengers)
 		{
-			if (passenger) {
-				sampgdk_RemovePlayerFromVehicle(passenger->getIndex());
+			if (passenger && sampgdk_GetPlayerVehicleID(passenger->getIndex()) == m_handle) {
+				//sampgdk_RemovePlayerFromVehicle(passenger->getIndex());
+				passenger->kickFromVehicle();
+				passenger->setVehicle(nullptr);
 				passenger = nullptr;
 			}
 		}
-
+		// EDGE_LOG_DEBUG(Info, "Despawning vehicle with handle {0}", m_handle);
 		sampgdk_DestroyVehicle(m_handle);
 	}
 	m_handle = InvalidHandle;

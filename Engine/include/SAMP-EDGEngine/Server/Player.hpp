@@ -22,6 +22,7 @@
 #include <SAMP-EDGEngine/Server/PlayerTextDraw.hpp>
 #include <SAMP-EDGEngine/Server/Dialog.hpp>
 #include <SAMP-EDGEngine/Server/Teleport.hpp>
+#include <SAMP-EDGEngine/Server/PlayerEnums.hpp>
 
 #include <SAMP-EDGEngine/Server/Interfaces/ServerDebugLogReceiver.hpp>
 
@@ -312,6 +313,12 @@ public:
 	virtual void setLocation(math::Vector3f const &location_) override;
 		
 	/// <summary>
+	/// Sets the player's velocity.
+	/// </summary>
+	/// <param name="velocity_">The velocity.</param>
+	void setVelocity(math::Vector3f const &velocity_);
+
+	/// <summary>
 	/// Sets player's facing angle.
 	/// </summary>
 	/// <param name="angle_">The angle.</param>
@@ -421,6 +428,12 @@ public:
 	/// </summary>
 	/// <param name="color_">The color.</param>
 	void setColor(Color const & color_);
+
+	/// <summary>
+	/// Sets player's skin.
+	/// </summary>
+	/// <param name="skin_">The skin.</param>
+	void setSkin(Int32 skin_);
 		
 	/// <summary>
 	/// Damages the player.
@@ -556,6 +569,12 @@ public:
 	virtual math::Vector3f getLocation() const override;
 
 	/// <summary>
+	/// Returns the player velocity.
+	/// </summary>
+	/// <returns>Player velocity.</returns>
+	math::Vector3f getVelocity() const;
+
+	/// <summary>
 	/// Returns the player world.
 	/// </summary>
 	/// <returns>Player world.</returns>
@@ -579,6 +598,18 @@ public:
 	/// </summary>
 	/// <returns>Player facing angle.</returns>
 	float getFacingAngle() const;
+
+	/// <summary>
+	/// Returns player in game status.
+	/// </summary>
+	/// <returns>Player in game status.<returns>
+	PlayerStatus getInGameStatus() const;
+
+	/// <summary>
+	/// Returns player camera mode.
+	/// </summary>
+	/// <returns>Player camera mode.<returns>
+	CameraMode getCameraMode() const;
 
 	/// <summary>
 	/// Returns player's placement.
@@ -613,6 +644,12 @@ public:
 	/// </summary>
 	/// <returns>Player's armour</returns>
 	float getArmour() const;
+
+	/// <summary>
+	/// Returns player's skin.
+	/// </summary>
+	/// <returns>Player's skin</returns>
+	Int32 getSkin() const;
 
 	/// <summary>
 	/// Returns player's color.
@@ -700,6 +737,7 @@ public:
 	friend class IStreamer;
 	friend class PlayerTextDraw;
 	friend class IGameMode;
+	friend class Vehicle;
 protected:
 				
 	/// <summary>
@@ -762,9 +800,7 @@ private:
 	/// Sets the player vehicle. It just sets pointer to it.
 	/// </summary>
 	/// <param name="vehicle_">The vehicle.</param>
-	void setVehicle(Vehicle * const vehicle_) {
-		m_vehicle = vehicle_;
-	}
+	void setVehicle(Vehicle * const vehicle_);
 
 	/// <summary>
 	/// Returns the client location.
@@ -782,6 +818,8 @@ private:
 
 	ExistingStatus		m_existingStatus;	/// Determines whether player is spawned, dead or spectating.
 		
+	Int32				m_skin = 0;			/// Index of the last set skin.
+
 	// Player statistics.
 		
 	Int32				m_score;			/// Player's in-game score.

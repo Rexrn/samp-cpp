@@ -5,6 +5,7 @@
 #include <SAMP-EDGEngine/Server/Server.hpp>
 #include <SAMP-EDGEngine/Core/Text/ASCII.hpp>
 #include <SAMP-EDGEngine/Server/GameMode.hpp>
+#include <SAMP-EDGEngine/Server/ServerDebugLog.hpp>
 
 #include <SAMP-EDGEngine/World/Vehicle.hpp>
 
@@ -215,6 +216,12 @@ void Player::setExistingStatus(ExistingStatus status_)
 }
 
 ///////////////////////////////////////////////////////////////////////////
+void Player::setVehicle(Vehicle * const vehicle_) {
+	//EDGE_LOG_DEBUG(Info, "Player {0} has vehicle set to {1}", this->getName(), vehicle_ ? vehicle_->getHandle() : Vehicle::InvalidHandle);
+	m_vehicle = vehicle_;
+}
+
+///////////////////////////////////////////////////////////////////////////
 void Player::sendPlacementUpdate()
 {
 	if ((this->isSpawned() || this->isSelectingClass()) && m_placementTracker)
@@ -384,6 +391,12 @@ void Player::setLocation(math::Vector3f const &location_)
 }
 
 ///////////////////////////////////////////////////////////////////////////
+void Player::setVelocity(math::Vector3f const &velocity_)
+{
+	sampgdk_SetPlayerVelocity(this->getIndex(), velocity_.x, velocity_.y, velocity_.z);
+}
+
+///////////////////////////////////////////////////////////////////////////
 void Player::setFacingAngle(float const angle_)
 {
 	if (m_existingStatus != ExistingStatus::Dead)
@@ -481,6 +494,15 @@ void Player::setColor(Color const & color_)
 }
 
 ///////////////////////////////////////////////////////////////////////////
+void Player::setSkin(Int32 skin_)
+{
+	m_skin = skin_;
+	if (this->isSpawned()) {
+		sampgdk_SetPlayerSkin(this->getIndex(), skin_);
+	}
+}
+
+///////////////////////////////////////////////////////////////////////////
 void Player::damage(float damage_, bool physical_) // TODO: add proper implementation
 {
 	if (physical_)
@@ -543,6 +565,8 @@ bool Player::putInVehicle(Vehicle& vehicle_, Int32 seatIndex_)
 
 	if (sampgdk_PutPlayerInVehicle(this->getIndex(), vehicle_.getHandle(), seatIndex_))
 	{
+		this->setVehicle(&vehicle_);
+		vehicle_.whenPlayerEnters(*this, seatIndex_);
 		return true;
 	}
 	return false;
@@ -551,11 +575,14 @@ bool Player::putInVehicle(Vehicle& vehicle_, Int32 seatIndex_)
 ///////////////////////////////////////////////////////////////////////////
 bool Player::kickFromVehicle()
 {
-	if (this->isInVehicle())
+	if (m_vehicle)
 	{
 		// TODO: It won't work when player is in RC Vehicle.
 		// Try using sampgdk_SetPlayerPos instead.
-		sampgdk_RemovePlayerFromVehicle(this->getIndex());
+		this->setLocation(this->getClientLocation());
+		// sampgdk_RemovePlayerFromVehicle(this->getIndex());
+		m_vehicle->whenPlayerExits(*this);
+		this->setVehicle(nullptr);
 		return true;
 	}
 	return false;
@@ -662,6 +689,14 @@ math::Vector3f Player::getLocation() const
 }
 
 ///////////////////////////////////////////////////////////////////////////
+math::Vector3f Player::getVelocity() const
+{
+	math::Vector3f vel;
+	sampgdk_GetPlayerVelocity(this->getIndex(), &vel.x, &vel.y, &vel.z);
+	return vel;
+}
+
+///////////////////////////////////////////////////////////////////////////
 Int32 Player::getWorld() const
 {
 	return (this->isInWorld() ? this->getClientWorld() : IWI3DNode::getWorld());
@@ -689,6 +724,18 @@ float Player::getFacingAngle() const
 			return angle;
 	}
 	return 0.f;
+}
+
+///////////////////////////////////////////////////////////////////////////
+PlayerStatus Player::getInGameStatus() const
+{
+	return static_cast<PlayerStatus>( sampgdk_GetPlayerState(this->getIndex()) );
+}
+
+///////////////////////////////////////////////////////////////////////////
+CameraMode Player::getCameraMode() const
+{
+	return static_cast<CameraMode>( sampgdk_GetPlayerCameraMode(this->getIndex()) );
 }
 
 ///////////////////////////////////////////////////////////////////////////
@@ -725,6 +772,15 @@ float Player::getArmour() const
 Color Player::getColor() const
 {
 	return Color{ static_cast< Uint32 >(sampgdk_GetPlayerColor(static_cast<Int32>(this->getIndex()))) };
+}
+
+///////////////////////////////////////////////////////////////////////////
+Int32 Player::getSkin() const
+{
+	if (this->isSpawned())
+		return sampgdk_GetPlayerSkin(this->getIndex());
+	else
+		return m_skin;
 }
 
 ///////////////////////////////////////////////////////////////////////////

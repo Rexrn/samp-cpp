@@ -498,6 +498,14 @@ public:
 	}
 
 	/// <summary>
+	/// Returns count of passengers currently sitting in the vehicle.
+	/// </summary>
+	/// <returns>Count of passengers currently sitting in the vehicle.</returns>
+	std::size_t getPassengersCount() const {
+		return std::count_if(m_passengers.begin(), m_passengers.end(), [](Player* p) { return p != nullptr; });
+	}
+
+	/// <summary>
 	/// Determines whether this vehicle is spawned.
 	/// </summary>
 	/// <returns>
@@ -585,6 +593,7 @@ public:
 
 	friend class MapClass;
 	friend class ServerClass;
+	friend class Player;
 protected:
 
 	/// <summary>

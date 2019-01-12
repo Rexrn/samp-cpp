@@ -756,11 +756,13 @@ bool ServerClass::sampEvent_OnPlayerSpawn(Int32 playerIndex_)
 {
 	auto& player = *GameMode->players[static_cast<std::size_t>(playerIndex_)];
 	player.setHealth(100);
+	auto skin = player.getSkin();
 	player.setExistingStatus( Player::ExistingStatus::Spawning );
 	
 	Server->onPlayerSpawn.emit(player);
 
 	player.setExistingStatus( Player::ExistingStatus::Spawned );
+	player.setSkin(skin);
 	return true;
 }
 
