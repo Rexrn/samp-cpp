@@ -1,0 +1,1 @@
+include ("SampPluginSdk/Premake5Build.lua")

@@ -70,4 +70,10 @@ workspace "SAMPEDGEngine"
 		include("UnitTests/Premake5Build.lua")
 	end
 
+	-- ThirdParty:
+	if userConfig.build.thirdParty then
+		group "ThirdParty"
+		include("ThirdParty/Premake5Build.lua")
+	end
+
 	

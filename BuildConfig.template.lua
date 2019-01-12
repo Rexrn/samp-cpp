@@ -11,7 +11,8 @@ userConfig = {
 	build = {
 		extensions = true,
 		examples = true,
-		unitTests = true
+		unitTests = true,
+		thirdParty = true
 	},
 	
 	-- Dependencies configuration:

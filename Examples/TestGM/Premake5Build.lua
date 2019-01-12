@@ -8,9 +8,9 @@ else
 		location (path.join(repoRoot, "Build/Examples/%{prj.name}"))
 		targetdir (path.join(repoRoot, "Bin/%{cfg.platform}/%{cfg.buildcfg}/Examples"))
 
-		-- gmake specific configuration:
-		if _ACTION == "gmake" then
-			
+		-- Use .def file with Visual Studio compiler.
+		if string.match(_ACTION, "vs%d%d%d%d") ~= nil then
+			linkoptions { "/DEF:\"" .. path.join(repoRoot, "SymbolsExportList.def") .. "\""}
 		end
 
 		includedirs {
@@ -23,23 +23,11 @@ else
 			-- SAMPGDK:
 			path.join(userConfig.deps.sampgdk.root, "include"),
 			
-			-- SAMP Plugin SDK:
-			userConfig.deps.samp_plugin_sdk.root,
-			path.join(userConfig.deps.samp_plugin_sdk.root, "amx"),
-			
 			-- QuickMaffs:
 			path.join(userConfig.deps.quickmaffs.root, "include"),
 
 			-- RapidXML:
 			userConfig.deps.rapidxml.root
-		}
-
-		
-		files {
-			"src/Main.cpp",
-
-			-- SAMP Plugin SDK:
-			path.join(userConfig.deps.samp_plugin_sdk.root, "amxplugin.cpp")
 		}
 
 		-- gmake adds ServerCore.cpp directly (TODO: change this.)
@@ -62,8 +50,9 @@ else
 			}
 		end
 
-		-- Use .def file with Visual Studio compiler.
-		if string.match(_ACTION, "vs%d%d%d%d") ~= nil then
-			linkoptions { "/DEF:\"" .. path.join(repoRoot, "SymbolsExportList.def") .. "\""}
-		end
+		edge.useSampPluginSdk(userConfig.deps.samp_plugin_sdk.root)
+
+		files {
+			"src/Main.cpp",
+		}
 end
