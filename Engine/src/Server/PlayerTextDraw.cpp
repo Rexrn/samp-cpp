@@ -4,6 +4,9 @@
 
 #include <SAMP-EDGEngine/Server/Player.hpp>
 
+#include <SAMP-EDGEngine/Server/ServerDebugLog.hpp>
+#include <SAMP-EDGEngine/Server/GameMode.hpp>
+
 namespace samp_edgengine
 {
 
@@ -101,6 +104,195 @@ void PlayerTextDraw::hide()
 		m_shown = false;
 	}
 }
+
+////////////////////////////////////////////////////////////////////////////////////
+void PlayerTextDraw::setText(std::string_view text_, bool update_)
+{
+	ITextDraw::setText(text_, update_);
+
+	if (update_ && this->isCreated()) {
+		sampgdk_PlayerTextDrawSetString(m_owner.getIndex(), this->getHandle(), std::string(text_).c_str()); // TODO: optimize?
+	}
+}
+
+////////////////////////////////////////////////////////////////////////////////////
+void PlayerTextDraw::setFont(Font font_, bool update_)
+{
+	ITextDraw::setFont(font_, update_);
+
+	if (update_ && this->isCreated()) {
+		sampgdk_PlayerTextDrawFont(m_owner.getIndex(), this->getHandle(), static_cast<Int32>(font_));
+	}
+}
+
+////////////////////////////////////////////////////////////////////////////////////
+void PlayerTextDraw::setLocation(math::Vector2f const &location_)
+{
+	ITextDraw::setLocation(location_);
+}
+
+////////////////////////////////////////////////////////////////////////////////////
+void PlayerTextDraw::setTextColor(Color const &textColor_, bool update_)
+{
+	ITextDraw::setTextColor(textColor_, update_);
+
+	if (update_ && this->isCreated()) {
+		sampgdk_PlayerTextDrawColor(m_owner.getIndex(), this->getHandle(), textColor_.toInt32());
+	}
+}
+
+////////////////////////////////////////////////////////////////////////////////////
+void PlayerTextDraw::setBoxColor(Color const &boxColor_, bool update_)
+{
+	ITextDraw::setBoxColor(boxColor_, update_);
+
+	if (update_ && this->isCreated()) {
+		sampgdk_PlayerTextDrawBoxColor(m_owner.getIndex(), this->getHandle(), boxColor_.toInt32());
+	}
+}
+
+////////////////////////////////////////////////////////////////////////////////////
+void PlayerTextDraw::setBackgroundColor(Color const &bgColor_, bool update_)
+{
+	ITextDraw::setBackgroundColor(bgColor_, update_);
+
+	if (update_ && this->isCreated()) {
+		sampgdk_PlayerTextDrawBackgroundColor(m_owner.getIndex(), this->getHandle(), bgColor_.toInt32());
+	}
+}
+
+////////////////////////////////////////////////////////////////////////////////////
+void PlayerTextDraw::setTextAlign(TextAlign align_, bool update_)
+{
+	ITextDraw::setTextAlign(align_, update_);
+
+	if (update_ && this->isCreated()) {
+		sampgdk_PlayerTextDrawAlignment(m_owner.getIndex(), this->getHandle(), static_cast<Int32>(align_));
+	}
+}
+
+////////////////////////////////////////////////////////////////////////////////////
+void PlayerTextDraw::setLetterSize(math::Vector2f const &letterSize_, bool update_)
+{
+	ITextDraw::setLetterSize(letterSize_, update_);
+
+	if (update_ && this->isCreated()) {
+		sampgdk_PlayerTextDrawLetterSize(m_owner.getIndex(), this->getHandle(), letterSize_.x, letterSize_.y);
+	}
+}
+
+////////////////////////////////////////////////////////////////////////////////////
+void PlayerTextDraw::setTextSize(math::Vector2f const &textSize_, bool update_)
+{
+	ITextDraw::setTextSize(textSize_, update_);
+
+	if (update_ && this->isCreated()) {
+		sampgdk_PlayerTextDrawTextSize(m_owner.getIndex(), this->getHandle(), textSize_.x, textSize_.y);
+	}
+}
+
+////////////////////////////////////////////////////////////////////////////////////
+void PlayerTextDraw::setOutlineSize(Int32 outlineSize_, bool update_)
+{
+	ITextDraw::setOutlineSize(outlineSize_, update_);
+
+	if (update_ && this->isCreated()) {
+		sampgdk_PlayerTextDrawSetOutline(m_owner.getIndex(), this->getHandle(), outlineSize_);
+	}
+}
+
+////////////////////////////////////////////////////////////////////////////////////
+void PlayerTextDraw::setShadowSize(Int32 shadowSize_, bool update_)
+{
+	ITextDraw::setShadowSize(shadowSize_, update_);
+
+	if (update_ && this->isCreated()) {
+		sampgdk_PlayerTextDrawSetShadow(m_owner.getIndex(), this->getHandle(), shadowSize_);
+	}
+}
+
+////////////////////////////////////////////////////////////////////////////////////
+void PlayerTextDraw::setUseBox(bool useBox_, bool update_)
+{
+	ITextDraw::setUseBox(useBox_, update_);
+
+	if (update_ && this->isCreated()) {
+		sampgdk_PlayerTextDrawUseBox(m_owner.getIndex(), this->getHandle(), useBox_);
+	}
+}
+
+////////////////////////////////////////////////////////////////////////////////////
+void PlayerTextDraw::setProportional(bool proportional_, bool update_)
+{
+	ITextDraw::setProportional(proportional_, update_);
+
+	if (update_ && this->isCreated()) {
+		sampgdk_PlayerTextDrawSetProportional(m_owner.getIndex(), this->getHandle(), proportional_);
+	}
+}
+
+////////////////////////////////////////////////////////////////////////////////////
+void PlayerTextDraw::setSelectable(bool selectable_, bool update_)
+{
+	ITextDraw::setSelectable(selectable_, update_);
+
+	if (update_ && this->isCreated()) {
+		sampgdk_PlayerTextDrawSetSelectable(m_owner.getIndex(), this->getHandle(), selectable_);
+	}
+}
+
+////////////////////////////////////////////////////////////////////////////////////
+void PlayerTextDraw::setPreview(Int32 modelIndex_, math::Vector3f const &rotation_, float zoom_, std::array<Int32, 2> vehColors_, bool update_)
+{
+	ITextDraw::setPreview(modelIndex_, rotation_, zoom_, vehColors_, update_);
+
+	if (update_ && this->isCreated()) {
+		sampgdk_PlayerTextDrawSetPreviewModel(m_owner.getIndex(), this->getHandle(), modelIndex_);
+		sampgdk_PlayerTextDrawSetPreviewRot(m_owner.getIndex(), this->getHandle(), rotation_.x, rotation_.y, rotation_.z, zoom_);
+		sampgdk_PlayerTextDrawSetPreviewVehCol(m_owner.getIndex(), this->getHandle(), vehColors_[0], vehColors_[1]);
+	}
+}
+
+////////////////////////////////////////////////////////////////////////////////////
+void PlayerTextDraw::setPreviewModel(Int32 modelIndex_, bool update_)
+{
+	ITextDraw::setPreviewModel(modelIndex_, update_);
+
+	if (update_ && this->isCreated()) {
+		sampgdk_PlayerTextDrawSetPreviewModel(m_owner.getIndex(), this->getHandle(), modelIndex_);
+	}
+}
+
+////////////////////////////////////////////////////////////////////////////////////
+void PlayerTextDraw::setPreviewRotation(math::Vector3f const &rotation_, bool update_)
+{
+	ITextDraw::setPreviewRotation(rotation_, update_);
+
+	if (update_ && this->isCreated()) {
+		sampgdk_PlayerTextDrawSetPreviewRot(m_owner.getIndex(), this->getHandle(), rotation_.x, rotation_.y, rotation_.z, m_previewZoom);
+	}
+}
+
+////////////////////////////////////////////////////////////////////////////////////
+void PlayerTextDraw::setPreviewZoom(float zoom_, bool update_)
+{
+	ITextDraw::setPreviewZoom(zoom_, update_);
+
+	if (update_ && this->isCreated()) {
+		sampgdk_PlayerTextDrawSetPreviewRot(m_owner.getIndex(), this->getHandle(), m_previewRotation.x, m_previewRotation.y, m_previewRotation.z, zoom_);
+	}
+}
+
+////////////////////////////////////////////////////////////////////////////////////
+void PlayerTextDraw::setPreviewVehicleColors(std::array<Int32, 2> vehColors_, bool update_)
+{
+	ITextDraw::setPreviewVehicleColors(vehColors_, update_);
+
+	if (update_ && this->isCreated()) {
+		sampgdk_PlayerTextDrawSetPreviewVehCol(m_owner.getIndex(), this->getHandle(), vehColors_[0], vehColors_[1]);
+	}
+}
+
 
 ////////////////////////////////////////////////////////////////////////////////////
 bool PlayerTextDraw::isShown() const

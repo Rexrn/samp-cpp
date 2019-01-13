@@ -2,11 +2,14 @@
 
 #include <SAMP-EDGEngine/Server/GlobalTextDrawPanel.hpp>
 
+#include <SAMP-EDGEngine/Server/GameMode.hpp>
+
 namespace samp_edgengine
 {
 
 ////////////////////////////////////////////////////////////////////////
-GlobalTextDrawPanel::GlobalTextDrawPanel()
+GlobalTextDrawPanel::GlobalTextDrawPanel(IGameMode& gameMode_)
+	: m_gameMode{ gameMode_ }
 {
 }
 

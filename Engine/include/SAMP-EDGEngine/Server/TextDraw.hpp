@@ -55,85 +55,85 @@ public:
 	/// Sets the text.
 	/// </summary>
 	/// <param name="text_">The text.</param>
-	void setText(std::string_view text_);
+	virtual void setText(std::string_view text_, bool update_ = true);
 	
 	/// <summary>
 	/// Sets the font.
 	/// </summary>
 	/// <param name="font_">The font.</param>
-	void setFont(Font font_);
+	virtual void setFont(Font font_, bool update_ = true);
 	
 	/// <summary>
 	/// Sets the location.
 	/// </summary>
 	/// <param name="location_">The location.</param>
-	void setLocation(math::Vector2f const &location_);
+	virtual void setLocation(math::Vector2f const &location_);
 	
 	/// <summary>
 	/// Sets the color of the text.
 	/// </summary>
 	/// <param name="textColor_">Color of the text.</param>
-	void setTextColor(Color const &textColor_);
+	virtual void setTextColor(Color const &textColor_, bool update_ = true);
 	
 	/// <summary>
 	/// Sets the color of the box.
 	/// </summary>
 	/// <param name="boxColor_">Color of the box.</param>
-	void setBoxColor(Color const &boxColor_);
+	virtual void setBoxColor(Color const &boxColor_, bool update_ = true);
 	
 	/// <summary>
 	/// Sets the color of the background.
 	/// </summary>
 	/// <param name="bgColor_">Color of the bg.</param>
-	void setBackgroundColor(Color const &bgColor_);
+	virtual void setBackgroundColor(Color const &bgColor_, bool update_ = true);
 	
 	/// <summary>
 	/// Sets the text align.
 	/// </summary>
 	/// <param name="align_">The align.</param>
-	void setTextAlign(TextAlign align_);
+	virtual void setTextAlign(TextAlign align_, bool update_ = true);
 	
 	/// <summary>
 	/// Sets the size of the letter.
 	/// </summary>
 	/// <param name="letterSize_">Size of the letter.</param>
-	void setLetterSize(math::Vector2f const &letterSize_);
+	virtual void setLetterSize(math::Vector2f const &letterSize_, bool update_ = true);
 	
 	/// <summary>
 	/// Sets the size of the text.
 	/// </summary>
 	/// <param name="textSize_">Size of the text.</param>
-	void setTextSize(math::Vector2f const &textSize_);
+	virtual void setTextSize(math::Vector2f const &textSize_, bool update_ = true);
 	
 	/// <summary>
 	/// Sets the size of the outline.
 	/// </summary>
 	/// <param name="outlineSize_">Size of the outline.</param>
-	void setOutlineSize(Uint16 outlineSize_);
+	virtual void setOutlineSize(Int32 outlineSize_, bool update_ = true);
 	
 	/// <summary>
 	/// Sets the size of the shadow.
 	/// </summary>
 	/// <param name="shadowSize_">Size of the shadow.</param>
-	void setShadowSize(Uint16 shadowSize_);
+	virtual void setShadowSize(Int32 shadowSize_, bool update_ = true);
 	
 	/// <summary>
 	/// Sets whether the textdraw uses box.
 	/// </summary>
 	/// <param name="useBox_">if set to <c>true</c> [use box].</param>
-	void setUseBox(bool useBox_);
+	virtual void setUseBox(bool useBox_, bool update_ = true);
 	
 	/// <summary>
 	/// Sets whether the textdraw is proportional or not.
 	/// </summary>
 	/// <param name="proportional_">if set to <c>true</c> [proportional].</param>
-	void setProportional(bool proportional_);
+	virtual void setProportional(bool proportional_, bool update_ = true);
 	
 	/// <summary>
 	/// Sets whether textdraw is selectable.
 	/// </summary>
 	/// <param name="selectable_">if set to <c>true</c> [selectable].</param>
-	void setSelectable(bool selectable_);
+	virtual void setSelectable(bool selectable_, bool update_ = true);
 	
 	/// <summary>
 	/// Sets the preview.
@@ -142,37 +142,37 @@ public:
 	/// <param name="rotation_">The rotation.</param>
 	/// <param name="zoom_">The zoom.</param>
 	/// <param name="vehColors_">The veh colors.</param>
-	void setPreview(Int32 modelIndex_, math::Vector3f const &rotation_, float zoom_ = 1.0f, std::array<Int32, 2> vehColors_ = { -1, -1 });
+	virtual void setPreview(Int32 modelIndex_, math::Vector3f const &rotation_, float zoom_ = 1.0f, std::array<Int32, 2> vehColors_ = { -1, -1 }, bool update_ = true);
 	
 	/// <summary>
 	/// Sets the preview model.
 	/// </summary>
 	/// <param name="modelIndex_">Index of the model.</param>
-	void setPreviewModel(Int32 modelIndex_);
+	virtual void setPreviewModel(Int32 modelIndex_, bool update_ = true);
 	
 	/// <summary>
 	/// Sets the preview rotation.
 	/// </summary>
 	/// <param name="rotation_">The rotation.</param>
-	void setPreviewRotation(math::Vector3f const &rotation_);
+	virtual void setPreviewRotation(math::Vector3f const &rotation_, bool update_ = true);
 	
 	/// <summary>
 	/// Sets the preview zoom.
 	/// </summary>
 	/// <param name="zoom_">The zoom.</param>
-	void setPreviewZoom(float zoom_);
+	virtual void setPreviewZoom(float zoom_, bool update_ = true);
 	
 	/// <summary>
 	/// Sets the preview vehicle colors.
 	/// </summary>
 	/// <param name="vehColors_">The veh colors.</param>
-	void setPreviewVehicleColors(std::array<Int32, 2> vehColors_);
+	virtual void setPreviewVehicleColors(std::array<Int32, 2> vehColors_, bool update_ = true);
 	
 	/// <summary>
 	/// Sets the layer.
 	/// </summary>
 	/// <param name="layer_">The layer.</param>
-	void setLayer(Int32 layer_);
+	virtual void setLayer(Int32 layer_);
 
 	
 	/// <summary>
@@ -247,13 +247,13 @@ public:
 	/// Returns the size of the outline.
 	/// </summary>
 	/// <returns>The size of the outline.</returns>
-	Uint16 getOutlineSize() const;
+	Int32 getOutlineSize() const;
 
 	/// <summary>
 	/// Returns the size of the shadow.
 	/// </summary>
 	/// <returns>The size of the shadow.</returns>
-	Uint16 getShadowSize() const;
+	Int32 getShadowSize() const;
 
 	/// <summary>
 	/// Determines whether textdraw is using box.
@@ -344,9 +344,9 @@ protected:
 	// Stores text size.
 	math::Vector2f				m_textSize;
 	// Stores outline size.
-	Uint16						m_outlineSize;
+	Int32						m_outlineSize;
 	// Stores shadow size.
-	Uint16						m_shadowSize;
+	Int32						m_shadowSize;
 	// Flag used to determine whether textdraw uses box or not.
 	bool						m_useBox;
 	// Flag used to determine whether textdraw is proportional or not.

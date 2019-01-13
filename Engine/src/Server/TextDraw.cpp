@@ -24,13 +24,13 @@ ITextDraw::~ITextDraw()
 }
 
 ////////////////////////////////////////////////////////////////////////////////////
-void ITextDraw::setText(std::string_view text_)
+void ITextDraw::setText(std::string_view text_, bool update_)
 {
 	m_text = text_;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////
-void ITextDraw::setFont(Font font_)
+void ITextDraw::setFont(Font font_, bool update_)
 {
 	m_font = font_;
 }
@@ -42,87 +42,102 @@ void ITextDraw::setLocation(math::Vector2f const& location_)
 }
 
 ////////////////////////////////////////////////////////////////////////////////////
-void ITextDraw::setTextColor(Color const& textColor_)
+void ITextDraw::setTextColor(Color const& textColor_, bool update_)
 {
 	m_textColor = textColor_;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////
-void ITextDraw::setBoxColor(Color const& boxColor_)
+void ITextDraw::setBoxColor(Color const& boxColor_, bool update_)
 {
 	m_boxColor = boxColor_;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////
-void ITextDraw::setBackgroundColor(Color const& bgColor_)
+void ITextDraw::setBackgroundColor(Color const& bgColor_, bool update_)
 {
 	m_bgColor = bgColor_;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////
-void ITextDraw::setTextAlign(TextAlign align_)
+void ITextDraw::setTextAlign(TextAlign align_, bool update_)
 {
 	m_textAlign = align_;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////
-void ITextDraw::setLetterSize(math::Vector2f const& letterSize_)
+void ITextDraw::setLetterSize(math::Vector2f const& letterSize_, bool update_)
 {
 	m_letterSize = letterSize_;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////
-void ITextDraw::setTextSize(math::Vector2f const& textSize_)
+void ITextDraw::setTextSize(math::Vector2f const& textSize_, bool update_)
 {
 	m_textSize = textSize_;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////
-void ITextDraw::setOutlineSize(Uint16 outlineSize_)
+void ITextDraw::setOutlineSize(Int32 outlineSize_, bool update_)
 {
 	m_outlineSize = outlineSize_;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////
-void ITextDraw::setShadowSize(Uint16 shadowSize_)
+void ITextDraw::setShadowSize(Int32 shadowSize_, bool update_)
 {
 	m_shadowSize = shadowSize_;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////
-void ITextDraw::setUseBox(bool useBox_)
+void ITextDraw::setUseBox(bool useBox_, bool update_)
 {
 	m_useBox = useBox_;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////
-void ITextDraw::setProportional(bool proportional_)
+void ITextDraw::setProportional(bool proportional_, bool update_)
 {
 	m_proportional = proportional_;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////
-void ITextDraw::setSelectable(bool selectable_)
+void ITextDraw::setSelectable(bool selectable_, bool update_)
 {
 	m_selectable = selectable_;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////
-void ITextDraw::setPreviewModel(Int32 modelIndex_)
+void ITextDraw::setPreview(Int32 modelIndex_, math::Vector3f const &rotation_, float zoom_, std::array<Int32, 2> vehColors_, bool update_)
+{
+	m_previewModelIndex 	= modelIndex_;
+	m_previewRotation 		= rotation_;
+	m_previewZoom 			= zoom_;
+	m_previewVehicleColors 	= vehColors_;
+}
+
+////////////////////////////////////////////////////////////////////////////////////
+void ITextDraw::setPreviewModel(Int32 modelIndex_, bool update_)
 {
 	m_previewModelIndex = modelIndex_;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////
-void ITextDraw::setPreviewRotation(math::Vector3f const& rotation_)
+void ITextDraw::setPreviewRotation(math::Vector3f const& rotation_, bool update_)
 {
 	m_previewRotation = rotation_;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////
-void ITextDraw::setPreviewZoom(float zoom_)
+void ITextDraw::setPreviewZoom(float zoom_, bool update_)
 {
 	m_previewZoom = zoom_;
+}
+
+////////////////////////////////////////////////////////////////////////////////////
+void ITextDraw::setPreviewVehicleColors(std::array<Int32, 2> vehColors_, bool update_)
+{
+	m_previewVehicleColors = vehColors_;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////
@@ -192,13 +207,13 @@ math::Vector2f ITextDraw::getTextSize() const
 }
 
 ////////////////////////////////////////////////////////////////////////////////////
-Uint16 ITextDraw::getOutlineSize() const
+Int32 ITextDraw::getOutlineSize() const
 {
 	return m_outlineSize;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////
-Uint16 ITextDraw::getShadowSize() const
+Int32 ITextDraw::getShadowSize() const
 {
 	return m_shadowSize;
 }

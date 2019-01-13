@@ -20,7 +20,7 @@ public:
 	/// <summary>
 	/// Initializes a new instance of the <see cref="GlobalTextDrawPanel"/> class.
 	/// </summary>
-	GlobalTextDrawPanel();
+	GlobalTextDrawPanel(class IGameMode& gameMode_);
 	
 	/// <summary>
 	/// Finalizes an instance of the <see cref="GlobalTextDrawPanel"/> class.
@@ -47,7 +47,7 @@ public:
 	template <typename TType, typename... TArgTypes>
 	ObjectPtrType<TType> beginConstruction(TArgTypes&&...args_)
 	{
-		return std::make_shared<TType>(std::forward<TArgTypes>(args_)...);
+		return std::make_shared<TType>(m_gameMode, std::forward<TArgTypes>(args_)...);
 	}
 
 	/// <summary>
@@ -118,6 +118,8 @@ public:
 	/// </summary>
 	void rearrange();
 protected:
+
+	IGameMode& m_gameMode;
 
 	//	Contains all textdraws.
 	ObjectContainerType<GlobalTextDraw> m_textdraws;
