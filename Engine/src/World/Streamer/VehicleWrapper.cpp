@@ -45,9 +45,11 @@ void VehicleWrapper::applyVisibility()
 ///////////////////////////////////////////////////////////////////////////
 bool VehicleWrapper::isPlayerInVisibilityZone(PlayerPlacement const& placement_) const
 {
-	return	placement_.world == m_vehicle->getWorld() &&
-			placement_.interior == m_vehicle->getInterior() &&
-			placement_.location.distanceSquared(m_vehicle->getLocation()) <= StreamerSettings.getVisibilityDistanceSquared().value;
+	auto lp = this->getLastPlacement();
+
+	return	placement_.world == lp.world &&
+			placement_.interior == lp.interior &&
+			placement_.location.distanceSquared(lp.location) <= StreamerSettings.getVisibilityDistanceSquared().value;
 }
 
 ///////////////////////////////////////////////////////////////////////////

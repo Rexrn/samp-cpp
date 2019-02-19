@@ -32,6 +32,13 @@ void Streamer::whenPlayerJoinsServer(Player & player_)
 {
 	auto& chunk = this->selectChunk(player_.getLocation());
 	chunk.intercept(std::make_unique<PlayerWrapper>(player_));
+	
+	auto& wrapper = this->getWrapper(player_);
+	const_a placement = wrapper.getLastPlacement();
+	auto affectedChunks = this->getChunksInRadiusFrom(placement.location, StreamerSettings.VisibilityDistance);
+
+	for (auto chunk : affectedChunks)
+		chunk->addScoreAroundPlayer(placement);
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -87,13 +94,13 @@ void Streamer::whenCheckpointJoinsMap(RaceCheckpoint& raceCheckpoint_)
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 void Streamer::whenPlayerLeavesServer(Player & player_)
 {
-	const_a placement = player_.getPlacement();
+	auto& wrapper = getWrapper(player_);
+	const_a placement = wrapper.getLastPlacement();
+
 	auto affectedChunks = this->getChunksInRadiusFrom(placement.location, StreamerSettings.VisibilityDistance);
 
 	for (auto chunk : affectedChunks)
 		chunk->subtractScoreAroundPlayer(placement);
-
-	auto& wrapper = getWrapper(player_);
 
 
 	// Remove spawned objects:
@@ -416,7 +423,7 @@ std::vector< Chunk* > Streamer::getChunksInRadiusFrom(math::Vector3f const& loca
 
 	constexpr math::Meters	cxNodeHalfExtent	= GridType::ZeroLevelRatio::num / static_cast< double >(GridType::ZeroLevelRatio::den);
 	constexpr float			cxNodeHalfExtentF	= static_cast<float>(cxNodeHalfExtent.value);
-	auto const				numChunks			= std::size_t( std::ceil((radius_ * 2.0 / cxNodeHalfExtent.value).value) + 2 );
+	auto const				numChunks			= std::size_t( std::ceil((radius_ * 2.0 / cxNodeHalfExtent.value).value) + 4 );
 
 	std::vector< Chunk* > chunks;
 	chunks.reserve(numChunks * numChunks * numChunks + 1); // + 1 because we might need to add m_entireWorld

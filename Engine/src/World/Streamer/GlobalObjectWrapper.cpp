@@ -45,7 +45,7 @@ void GlobalObjectWrapper::applyVisibility()
 ////////////////////////////////////////////////////////////////////////
 bool GlobalObjectWrapper::isPlayerInVisibilityZone(PlayerPlacement const& placement_) const
 {
-	return (m_object->getLocation().distanceSquared(placement_.location) <= StreamerSettings.getVisibilityDistanceSquared().value);
+	return (this->getLastPlacement().location.distanceSquared(placement_.location) <= StreamerSettings.getVisibilityDistanceSquared().value);
 }
 
 ////////////////////////////////////////////////////////////////////////
