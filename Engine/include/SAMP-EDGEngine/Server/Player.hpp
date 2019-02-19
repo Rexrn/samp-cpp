@@ -439,8 +439,9 @@ public:
 	/// Damages the player.
 	/// </summary>
 	/// <param name="damage_">The damage count.</param>
-	/// <param name="physical_">Indicates whether damage should be applied directly to health.</param>
-	void damage(float damage_, bool physical_ = false);
+	/// <param name="weapon_">The weapon used to damage this player instance.</param>
+	/// <param name="issuer_">The player which damaged this player instance.</param>
+	void damage(float damage_, Weapon::Type weapon_, Player * issuer_ = nullptr);
 
 	/// <summary>
 	/// Plays game sound with specified index for player.
@@ -665,6 +666,30 @@ public:
 	/// <returns>Player's language</returns>
 	Uint16 getLanguage() const noexcept;
 
+	/// <summary>
+	/// Returns latest player to damage this player.
+	/// </summary>
+	/// <returns>Latest player to damage this player.</returns>
+	Player* getLatestAttacker() const;
+
+	/// <summary>
+	/// Returns last point in time when the player was wounded.
+	/// </summary>
+	/// <returns>Last point in time when the player was wounded.</returns>
+	std::chrono::steady_clock::time_point getLatestWoundedTime() const;
+
+	/// <summary>
+	/// Returns last weapon player was attacked with.
+	/// </summary>
+	/// <returns>Last weapon player was attacked with.</returns>
+	Weapon::Type getLatestAttackerWeapon() const;
+
+	/// <summary>
+	/// Returns player's weapon set.
+	/// </summary>
+	/// <returns>Player's weapon set.</returns>
+	WeaponSet getWeaponSet() const;
+
 	// Player status.
 
 	/// <summary>
@@ -829,6 +854,10 @@ private:
 	float				m_health;			/// Player's in-game health.
 	float				m_armour;			/// Player's in-game armour.
 	Vehicle*			m_vehicle;			/// Vehicle player sits in.
+
+	Player* 			m_latestAttacker 		= nullptr;
+	Weapon::Type		m_latestAttackerWeapon 	= Weapon::Fist;
+	std::chrono::steady_clock::time_point m_latestWoundedTime;
 
 	Clock::TimePoint 	m_unfreezeTime;
 	SharedPtr<Task>		m_unfreezeTask;

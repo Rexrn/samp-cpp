@@ -75,6 +75,9 @@ public:
 	void useCJAnimations();
 		
 
+	void simulatePlayerSendText(Int32 playerIndex_, std::string_view text_);
+	void simulatePlayerSendCommand(Int32 playerIndex_, std::string_view command_);
+
 	// SAMP Events:
 	void sampEvent_OnUpdate();
 	bool sampEvent_OnGameModeInit();

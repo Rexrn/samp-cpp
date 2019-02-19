@@ -20,7 +20,7 @@ Player::Player(IGameMode& gameMode_, IndexType const index_)
 	m_index{ index_ }, m_existingStatus{ ExistingStatus::Spawning },
 	m_language{ 0 },
 	m_score{ 0 }, m_cash{ 0 },
-	m_health{ 100 + cxHealthBase }, m_armour{ 0 },
+	m_health{ 100 }, m_armour{ 0 },
 	m_placementTracker{ nullptr },
 	m_vehicle{ nullptr },
 	m_checkpointSet{ false }, m_raceCheckpointSet{ false },
@@ -355,7 +355,8 @@ void Player::teleport(Teleport const & teleport_, Clock::Duration freezeTime_)
 
 			for (auto passenger : passengers)
 			{
-				passenger->putInVehicle(*vehicle, seatIds[passenger->getIndex()]);
+				if (passenger)
+					passenger->putInVehicle(*vehicle, seatIds[passenger->getIndex()]);
 			}
 			this->putInVehicle(*vehicle, 0);
 		}
@@ -466,7 +467,7 @@ void Player::kick()
 ///////////////////////////////////////////////////////////////////////////
 void Player::setHealth(float const health_)
 {
-	m_health = health_ + cxHealthBase;
+	m_health = health_;
 
 	if (m_existingStatus != ExistingStatus::Dead)
 	{
@@ -503,10 +504,13 @@ void Player::setSkin(Int32 skin_)
 }
 
 ///////////////////////////////////////////////////////////////////////////
-void Player::damage(float damage_, bool physical_) // TODO: add proper implementation
+void Player::damage(float damage_, Weapon::Type weapon_, Player * issuer_) // TODO: add proper implementation
 {
-	if (physical_)
-	{
+	m_latestAttacker 		= issuer_;
+	m_latestWoundedTime 	= std::chrono::steady_clock::now();
+	m_latestAttackerWeapon 	= weapon_;
+
+	if (Weapon::isDamageType(weapon_)) {
 		this->setHealth(this->getHealth() - damage_);
 	}
 	else
@@ -759,7 +763,7 @@ Int32 Player::getCash() const
 ///////////////////////////////////////////////////////////////////////////
 float Player::getHealth() const
 {
-	return m_health - cxHealthBase;
+	return m_health;
 }
 
 ///////////////////////////////////////////////////////////////////////////
@@ -802,6 +806,40 @@ Uint16 Player::getLanguage() const noexcept
 }
 
 ///////////////////////////////////////////////////////////////////////////
+Player* Player::getLatestAttacker() const
+{
+	return m_latestAttacker;
+}
+
+///////////////////////////////////////////////////////////////////////////
+std::chrono::steady_clock::time_point Player::getLatestWoundedTime() const
+{
+	return m_latestWoundedTime;
+}
+
+///////////////////////////////////////////////////////////////////////////
+Weapon::Type Player::getLatestAttackerWeapon() const
+{
+	return m_latestAttackerWeapon;
+}
+
+///////////////////////////////////////////////////////////////////////////
+WeaponSet Player::getWeaponSet() const
+{
+	WeaponSet result;
+	for (std::size_t i = 0; i <= 12; i++)
+	{
+		Int32 weaponIndex = 0;
+		Int32 ammo = 0;
+		if (sampgdk::GetPlayerWeaponData(this->getIndex(), i, &weaponIndex, &ammo) && ammo > 0)
+		{
+			result.add(Weapon(static_cast<Weapon::Type>(weaponIndex), ammo));
+		}
+	}
+	return result;
+}
+
+///////////////////////////////////////////////////////////////////////////
 bool Player::isSpawned() const noexcept
 {
 	return m_existingStatus == ExistingStatus::Spawned;
@@ -835,7 +873,7 @@ Player::ExistingStatus Player::getExistingStatus() const noexcept
 ///////////////////////////////////////////////////////////////////////////
 bool Player::shouldBeDead() const noexcept
 {
-	return m_health <= cxHealthBase;
+	return m_health <= 0.01f;
 }
 
 ///////////////////////////////////////////////////////////////////////////

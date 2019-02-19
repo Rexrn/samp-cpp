@@ -681,6 +681,18 @@ void ServerClass::useCJAnimations()
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
+void ServerClass::simulatePlayerSendText(Int32 playerIndex_, std::string_view text_)
+{
+	this->sampEvent_OnPlayerSendText(playerIndex_, text_);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+void ServerClass::simulatePlayerSendCommand(Int32 playerIndex_, std::string_view command_)
+{
+	this->sampEvent_OnPlayerSendCommand(playerIndex_, command_);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
 void ServerClass::sampEvent_OnUpdate()
 {
 	const_a frameTime = IUpdatable::Clock::now();
@@ -775,6 +787,17 @@ bool ServerClass::sampEvent_OnPlayerDeath(Int32 playerIndex_, Int32 killerIndex_
 
 	// Killer may be null.
 	auto killer = (killerIndex_ == Player::InvalidIndex ? nullptr : GameMode->players[static_cast<std::size_t>(killerIndex_)]);
+
+	if (!killer) {
+		namespace ch = std::chrono;
+		auto latestAttacker = player.getLatestAttacker();
+		auto latestWoundedTime = player.getLatestWoundedTime();
+		if (latestAttacker && latestWoundedTime - ch::steady_clock::now() < ch::seconds{1})
+		{
+			killer 	= latestAttacker;
+			reason_ = player.getLatestAttackerWeapon();
+		}
+	}
 
 	Server->onPlayerDeath.emit(player, killer, static_cast<Weapon::Type>(reason_));
 	player.setHealth(100);
@@ -1120,9 +1143,8 @@ bool ServerClass::sampEvent_OnDialogResponse(Int32 playerIndex_, Int32 dialogInd
 bool ServerClass::sampEvent_OnPlayerTakeDamage(Int32 playerIndex_, Int32 issuerIndex_, float amount_, Weapon::Type weaponIndex_, Player::BodyPart bodyPart_)
 {
 	auto& player = *GameMode->players[playerIndex_];
-	if (issuerIndex_ == -1)
-	{
-		player.damage(amount_, samp_edgengine::Weapon::isDamageType(weaponIndex_));
+	if (issuerIndex_ == -1) {
+		player.damage(amount_, weaponIndex_);
 	}
 		
 	return true;
@@ -1131,8 +1153,9 @@ bool ServerClass::sampEvent_OnPlayerTakeDamage(Int32 playerIndex_, Int32 issuerI
 /////////////////////////////////////////////////////////////////////////////////////////
 bool ServerClass::sampEvent_OnPlayerGiveDamage(Int32 playerIndex_, Int32 damagedIndex_, float amount_, Weapon::Type weaponIndex_, Player::BodyPart bodyPart_)
 {
+	auto& player = *GameMode->players[playerIndex_];
 	auto& damaged = *GameMode->players[damagedIndex_];
-	damaged.damage(amount_, samp_edgengine::Weapon::isDamageType(weaponIndex_));
+	damaged.damage(amount_, weaponIndex_, &player);
 	return true;
 }
 
