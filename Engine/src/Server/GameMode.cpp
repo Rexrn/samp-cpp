@@ -43,6 +43,16 @@ void IGameMode::addPlayerClass(std::size_t modelIndex_, math::Vector3f const loc
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+void IGameMode::sendDeathMessage(Player const* left_, Player const * right_, Weapon::Type weapon_)
+{
+	sampgdk_SendDeathMessage(
+			left_ ? left_->getIndex() : -1,
+			right_ ? right_->getIndex() : -1,
+			static_cast<Int32>(weapon_)
+		);
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 void IGameMode::setup()
 {
 	this->setupStreamer();

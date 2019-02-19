@@ -65,6 +65,8 @@ public:
 	/// <param name="weapons_">The weapons.</param>
 	void addPlayerClass(std::size_t modelIndex_, math::Vector3f const location_, float const facingAngle_, std::array<Weapon, 3> weapons_ = {});
 
+	void sendDeathMessage(Player const* left_, Player const * right_, Weapon::Type weapon_);
+
 	friend class ServerClass;
 
 protected:
