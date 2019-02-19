@@ -355,14 +355,16 @@ void Vehicle::despawn()
 		m_location = this->getLocation();
 		m_facingAngle = this->getFacingAngle();
 
-		for (auto &passenger : m_passengers)
+		
+		for (std::size_t i = 0; i < m_passengers.size(); ++i)
 		{
+			auto passenger = m_passengers[i];
 			if (passenger && sampgdk_GetPlayerVehicleID(passenger->getIndex()) == m_handle) {
 				//sampgdk_RemovePlayerFromVehicle(passenger->getIndex());
 				passenger->kickFromVehicle();
 				passenger->setVehicle(nullptr);
-				passenger = nullptr;
 			}
+			m_passengers[i] = nullptr;
 		}
 		// EDGE_LOG_DEBUG(Info, "Despawning vehicle with handle {0}", m_handle);
 		sampgdk_DestroyVehicle(m_handle);
