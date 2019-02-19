@@ -26,6 +26,9 @@ PlayerPool::~PlayerPool()
 //////////////////////////////////////////////////////////////////////////////
 Player * PlayerPool::get(std::size_t const playerIndex_) const
 {
+	if (playerIndex_ >= m_playerRawPool.size())
+		return nullptr;
+		
 	return m_playerRawPool[playerIndex_];
 }
 
