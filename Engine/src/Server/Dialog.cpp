@@ -177,7 +177,7 @@ ITabListHeadersBox::ITabListHeadersBox(std::string_view caption_, std::string_vi
 ////////////////////////////////////////////////////////////////////////////////////
 void ITabListHeadersBox::show(std::string_view customHash_)
 {
-	sampgdk::ShowPlayerDialog(m_player->getIndex(), this->generateDialogHash(customHash_), DIALOG_STYLE_TABLIST, m_caption.c_str(), m_desc.c_str(), m_buttons[0].c_str(), m_buttons[1].c_str());
+	sampgdk::ShowPlayerDialog(m_player->getIndex(), this->generateDialogHash(customHash_), DIALOG_STYLE_TABLIST_HEADERS, m_caption.c_str(), m_desc.c_str(), m_buttons[0].c_str(), m_buttons[1].c_str());
 }
 
 ////////////////////////////////////////////////////////////////////////////////////
