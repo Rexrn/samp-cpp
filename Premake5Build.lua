@@ -37,7 +37,7 @@ workspace "SAMPEDGEngine"
 
 	-- Setup configurations:
 	filter "configurations:Debug"
-		defines { "DEBUG", "_DEBUG" }
+		defines { "DEBUG", "_DEBUG", "SAMP_EDGENGINE_DEBUG" }
 		symbols "On"
 
 	filter "configurations:Release"
