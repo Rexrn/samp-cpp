@@ -3,6 +3,8 @@
 #include <SAMP-EDGEngine/World/Streamer/Chunk.hpp>
 #include <SAMP-EDGEngine/Server/GameMode.hpp>
 
+constexpr bool DebugConfig_VisualizeStreamerWithGangZones = false;
+
 namespace samp_edgengine::default_streamer
 {
 
@@ -13,7 +15,8 @@ void Chunk::intercept(UniquePtr<PlayerWrapper> && player_)
 	m_players.push_back( std::forward< UniquePtr<PlayerWrapper> >( player_ ) );
 
 #ifdef SAMP_EDGENGINE_DEBUG
-	this->GZThingIntercepted();
+	if constexpr (DebugConfig_VisualizeStreamerWithGangZones)
+		this->GZThingIntercepted();
 #endif
 }
 
@@ -24,7 +27,8 @@ void Chunk::intercept(UniquePtr<VehicleWrapper> && vehicle_)
 	m_vehicles.push_back( std::forward< UniquePtr<VehicleWrapper> >( vehicle_ ) );
 
 #ifdef SAMP_EDGENGINE_DEBUG
-	this->GZThingIntercepted();
+	if constexpr (DebugConfig_VisualizeStreamerWithGangZones)
+		this->GZThingIntercepted();
 #endif
 }
 
@@ -35,7 +39,8 @@ void Chunk::intercept(UniquePtr<GlobalObjectWrapper> && globalObject_)
 	m_globalObjects.push_back( std::forward< UniquePtr<GlobalObjectWrapper> >( globalObject_ ) );
 
 #ifdef SAMP_EDGENGINE_DEBUG
-	this->GZThingIntercepted();
+	if constexpr (DebugConfig_VisualizeStreamerWithGangZones)
+		this->GZThingIntercepted();
 #endif
 }
 
@@ -46,7 +51,8 @@ void Chunk::intercept(UniquePtr<UniversalObjectWrapper>&& universalObject_)
 	m_universalObjects.push_back(std::forward< UniquePtr<UniversalObjectWrapper> >(universalObject_));
 	
 #ifdef SAMP_EDGENGINE_DEBUG
-	this->GZThingIntercepted();
+	if constexpr (DebugConfig_VisualizeStreamerWithGangZones)
+		this->GZThingIntercepted();
 #endif
 }
 
@@ -57,7 +63,8 @@ void Chunk::intercept(UniquePtr<PersonalObjectWrapper>&& personalObject_)
 	m_personalObjects.push_back(std::forward< UniquePtr<PersonalObjectWrapper> >(personalObject_));
 
 #ifdef SAMP_EDGENGINE_DEBUG
-	this->GZThingIntercepted();
+	if constexpr (DebugConfig_VisualizeStreamerWithGangZones)
+		this->GZThingIntercepted();
 #endif
 }
 
@@ -95,7 +102,8 @@ UniquePtr<PlayerWrapper> Chunk::release(Player const& player_)
 	m_players.erase(it);
 
 #ifdef SAMP_EDGENGINE_DEBUG
-	this->GZThingReleased();
+	if constexpr (DebugConfig_VisualizeStreamerWithGangZones)
+		this->GZThingReleased();
 #endif
 
 	return result;
@@ -121,7 +129,8 @@ UniquePtr<VehicleWrapper> Chunk::release(Vehicle const & vehicle_)
 	m_vehicles.erase(it);
 
 #ifdef SAMP_EDGENGINE_DEBUG
-	this->GZThingReleased();
+	if constexpr (DebugConfig_VisualizeStreamerWithGangZones)
+		this->GZThingReleased();
 #endif
 
 	return result;
@@ -147,7 +156,8 @@ UniquePtr<GlobalObjectWrapper> Chunk::release(GlobalObject const & globalObject_
 	m_globalObjects.erase(it);
 
 #ifdef SAMP_EDGENGINE_DEBUG
-	this->GZThingReleased();
+	if constexpr (DebugConfig_VisualizeStreamerWithGangZones)
+		this->GZThingReleased();
 #endif
 
 	return result;
@@ -173,7 +183,8 @@ UniquePtr<UniversalObjectWrapper> Chunk::release(UniversalObject const & univers
 	m_universalObjects.erase(it);
 
 #ifdef SAMP_EDGENGINE_DEBUG
-	this->GZThingReleased();
+	if constexpr (DebugConfig_VisualizeStreamerWithGangZones)
+		this->GZThingReleased();
 #endif
 
 	return result;
@@ -199,7 +210,8 @@ UniquePtr<PersonalObjectWrapper> Chunk::release(PersonalObject const & personalO
 	m_personalObjects.erase(it);
 
 #ifdef SAMP_EDGENGINE_DEBUG
-	this->GZThingReleased();
+	if constexpr (DebugConfig_VisualizeStreamerWithGangZones)
+		this->GZThingReleased();
 #endif
 
 	return result;
