@@ -164,6 +164,22 @@ public:
 	auto const& getVehicles() const {
 		return m_vehicles;
 	}
+
+	/// <summary>
+	/// Returns ref to vehicle pool.
+	/// </summary>
+	/// <returns>ref to vehicle pool.</returns>
+	auto & getVehicles() {
+		return m_vehicles;
+	}
+
+	/// <summary>
+	/// Returns ref to static vehicle pool.
+	/// </summary>
+	/// <returns>ref to static vehicle pool.</returns>
+	auto & getStaticVehicles() {
+		return m_staticVehicles;
+	}
 	
 	/// <summary>
 	/// Returns cref to static vehicle pool.
