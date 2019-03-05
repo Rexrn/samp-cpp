@@ -752,6 +752,13 @@ bool ServerClass::sampEvent_OnPlayerDisconnect(Int32 playerIndex_, Player::Disco
 
 	Server->onPlayerDisconnect.emit(player, reason_);
 
+	for (auto textDraw : GameMode->getTextDrawsAllowNull())
+	{
+		if (textDraw) {
+			textDraw->notifyPlayerDisconnected(player);
+		}
+	}
+
 	// Note: this is very important to tell vehicle, that player is no longer inside
 	if (auto vehicle = player.getVehicle())
 	{

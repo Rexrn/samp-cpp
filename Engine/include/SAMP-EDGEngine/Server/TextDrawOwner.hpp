@@ -23,9 +23,19 @@ public:
 	/// <returns>Pointer to the textdraw, or nullptr if textdraw with this id is not bound.</returns>
 	TTextDraw * getTextDraw(Int32 handle_) const;
 
+
+
+	/// <summary>
+	/// Returns vector of pointers to textdraws. Some may be nullptr.
+	/// </summary>
+	/// <returns>vector of pointers to textdraws.</returns>
+	std::vector<TTextDraw*> getTextDrawsAllowNull() const {
+		return m_textDraws;
+	}
+
 	friend TTextDraw;
 private:
-	constexpr static std::size_t MemoryManagementChunk = 200; // Store chunks of this amount when storing text draws. It optimizes performance.
+	constexpr static std::size_t MemoryManagementChunk = 64; // Store chunks of this amount when storing text draws. It optimizes performance.
 
 	/// <summary>
 	/// Binds the textdraw to specified handle.

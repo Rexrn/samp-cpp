@@ -25,31 +25,31 @@ void GlobalTextDraw::create(bool show_)
 {
 	if (!(this->isCreated()))
 	{
-		m_handle = sampgdk::TextDrawCreate(m_location.x, m_location.y, m_text.c_str());
+		m_handle = sampgdk_TextDrawCreate(m_location.x, m_location.y, m_text.c_str());
 
 		if (m_handle != InvalidHandle)
 		{
 			m_gameMode.bindTextDraw(m_handle, *this);
 
-			sampgdk::TextDrawFont				(m_handle, static_cast<Int32>(m_font));
-			sampgdk::TextDrawColor				(m_handle, m_textColor.toInt32());
-			sampgdk::TextDrawBoxColor			(m_handle, m_boxColor.toInt32());
-			sampgdk::TextDrawBackgroundColor	(m_handle, m_bgColor.toInt32());
-			sampgdk::TextDrawAlignment			(m_handle, static_cast<Int32>(m_textAlign));
-			sampgdk::TextDrawLetterSize			(m_handle, m_letterSize.x, m_letterSize.y);
-			sampgdk::TextDrawTextSize			(m_handle, m_textSize.x, m_textSize.y);
-			sampgdk::TextDrawSetOutline			(m_handle, static_cast<Int32>(m_outlineSize));
-			sampgdk::TextDrawSetShadow			(m_handle, static_cast<Int32>(m_shadowSize));
-			sampgdk::TextDrawUseBox				(m_handle, m_useBox);
-			sampgdk::TextDrawSetProportional	(m_handle, m_proportional);
-			sampgdk::TextDrawSetSelectable		(m_handle, m_selectable);
+			sampgdk_TextDrawFont				(m_handle, static_cast<Int32>(m_font));
+			sampgdk_TextDrawColor				(m_handle, m_textColor.toInt32());
+			sampgdk_TextDrawBoxColor			(m_handle, m_boxColor.toInt32());
+			sampgdk_TextDrawBackgroundColor	(m_handle, m_bgColor.toInt32());
+			sampgdk_TextDrawAlignment			(m_handle, static_cast<Int32>(m_textAlign));
+			sampgdk_TextDrawLetterSize			(m_handle, m_letterSize.x, m_letterSize.y);
+			sampgdk_TextDrawTextSize			(m_handle, m_textSize.x, m_textSize.y);
+			sampgdk_TextDrawSetOutline			(m_handle, static_cast<Int32>(m_outlineSize));
+			sampgdk_TextDrawSetShadow			(m_handle, static_cast<Int32>(m_shadowSize));
+			sampgdk_TextDrawUseBox				(m_handle, m_useBox);
+			sampgdk_TextDrawSetProportional	(m_handle, m_proportional);
+			sampgdk_TextDrawSetSelectable		(m_handle, m_selectable);
 
 			if (m_previewModelIndex != -1)
 			{
-				sampgdk::TextDrawSetPreviewModel(m_handle, m_previewModelIndex);
-				sampgdk::TextDrawSetPreviewRot(m_handle, m_previewRotation.x, m_previewRotation.y, m_previewRotation.z, m_previewZoom);
+				sampgdk_TextDrawSetPreviewModel(m_handle, m_previewModelIndex);
+				sampgdk_TextDrawSetPreviewRot(m_handle, m_previewRotation.x, m_previewRotation.y, m_previewRotation.z, m_previewZoom);
 				if (m_previewVehicleColors[0] != -1)
-					sampgdk::TextDrawSetPreviewVehCol(m_handle, m_previewVehicleColors[0], m_previewVehicleColors[1]);
+					sampgdk_TextDrawSetPreviewVehCol(m_handle, m_previewVehicleColors[0], m_previewVehicleColors[1]);
 			}
 
 			if (show_)
@@ -67,7 +67,7 @@ void GlobalTextDraw::destroy()
 	if (this->isCreated())
 	{
 		m_gameMode.unbindTextDraw(m_handle);
-		sampgdk::TextDrawDestroy(m_handle);
+		sampgdk_TextDrawDestroy(m_handle);
 		m_handle = InvalidHandle;
 	}
 }
@@ -84,7 +84,8 @@ void GlobalTextDraw::show(Player& player_)
 {
 	if (this->isCreated())
 	{
-		sampgdk::TextDrawShowForPlayer(player_.getIndex(), m_handle);
+		sampgdk_TextDrawShowForPlayer(player_.getIndex(), m_handle);
+		_visibility.add(player_.getIndex());
 	}
 }
 
@@ -93,7 +94,8 @@ void GlobalTextDraw::hide(Player& player_)
 {
 	if (this->isCreated())
 	{
-		sampgdk::TextDrawHideForPlayer(player_.getIndex(), m_handle);
+		sampgdk_TextDrawHideForPlayer(player_.getIndex(), m_handle);
+		_visibility.remove(player_.getIndex());
 	}
 }
 
@@ -102,7 +104,9 @@ void GlobalTextDraw::showToEveryone()
 {
 	if (this->isCreated())
 	{
-		sampgdk::TextDrawShowForAll(m_handle);
+		sampgdk_TextDrawShowForAll(m_handle);
+
+		_visibility.addAll();
 	}
 }
 
@@ -111,7 +115,25 @@ void GlobalTextDraw::hideFromEveryone()
 {
 	if (this->isCreated())
 	{
-		sampgdk::TextDrawHideForAll(m_handle);
+		sampgdk_TextDrawHideForAll(m_handle);
+
+		_visibility.removeAll();
+	}
+}
+
+////////////////////////////////////////////////////////////////////////////////////
+void GlobalTextDraw::reapplyVisibility()
+{
+	if (this->isCreated())
+	{
+		for(std::size_t i = 0; i < _visibility.ctr.size(); ++i)
+		{
+			if (_visibility.ctr[i] == 1)
+			{
+				sampgdk_TextDrawHideForPlayer(i, m_handle);
+				sampgdk_TextDrawShowForPlayer(i, m_handle);
+			}
+		}
 	}
 }
 
@@ -148,6 +170,7 @@ void GlobalTextDraw::setTextColor(Color const &textColor_, bool update_)
 
 	if (update_ && this->isCreated()) {
 		sampgdk_TextDrawColor(this->getHandle(), textColor_.toInt32());
+		this->reapplyVisibility();
 	}
 }
 
@@ -158,6 +181,7 @@ void GlobalTextDraw::setBoxColor(Color const &boxColor_, bool update_)
 
 	if (update_ && this->isCreated()) {
 		sampgdk_TextDrawBoxColor(this->getHandle(), boxColor_.toInt32());
+		this->reapplyVisibility();
 	}
 }
 
@@ -168,6 +192,7 @@ void GlobalTextDraw::setBackgroundColor(Color const &bgColor_, bool update_)
 
 	if (update_ && this->isCreated()) {
 		sampgdk_TextDrawBackgroundColor(this->getHandle(), bgColor_.toInt32());
+		this->reapplyVisibility();
 	}
 }
 
@@ -300,6 +325,104 @@ void GlobalTextDraw::setPreviewVehicleColors(std::array<Int32, 2> vehColors_, bo
 
 	if (update_ && this->isCreated()) {
 		sampgdk_TextDrawSetPreviewVehCol(this->getHandle(), vehColors_[0], vehColors_[1]);
+	}
+}
+
+
+////////////////////////////////////////////////////////////////////////////////////
+void GlobalTextDraw::notifyPlayerDisconnected(Player const & player_)
+{
+	_visibility.remove(player_.getIndex());
+}
+
+////////////////////////////////////////////////////////////////////////////////////
+bool GlobalTextDraw::isShownForPlayer(Player const & player_) const
+{
+	return this->isShownForPlayer(player_.getIndex());
+}
+
+////////////////////////////////////////////////////////////////////////////////////
+bool GlobalTextDraw::isShownForPlayer(Int32 playerIndex_) const
+{
+	return _visibility.contains(playerIndex_);
+}
+
+////////////////////////////////////////////////////////////////////////////////////
+bool GlobalTextDraw::Visibility::contains(Int32 playerIndex_) const
+{
+	return ctr.size() > playerIndex_ && ctr[playerIndex_] == 1;
+}
+
+////////////////////////////////////////////////////////////////////////////////////
+void GlobalTextDraw::Visibility::add(std::size_t playerIndex_)
+{
+	this->resizeToFit(playerIndex_);
+
+	ctr[playerIndex_] = 1;
+
+	if (maxIndex < playerIndex_)
+	{
+		maxIndex = playerIndex_;
+	}
+}
+
+////////////////////////////////////////////////////////////////////////////////////
+void GlobalTextDraw::Visibility::remove(std::size_t playerIndex_)
+{
+	if (playerIndex_ < ctr.size())
+	{
+		ctr[playerIndex_] = 0;
+
+		if (maxIndex == playerIndex_)
+		{
+			auto it = std::find(ctr.rbegin(), ctr.rend(), 1);
+			if (it != ctr.rend())
+			{
+				maxIndex = std::distance(ctr.begin(), it.base()) - 1;
+
+				this->resizeToFit(maxIndex);
+			}
+			else
+			{
+				ctr.clear();
+				maxIndex = 0;
+			}
+		}
+	}
+}
+
+////////////////////////////////////////////////////////////////////////////////////
+void GlobalTextDraw::Visibility::addAll()
+{
+	ctr.clear();
+	maxIndex = sampgdk_GetPlayerPoolSize();
+
+	if (maxIndex > 0 || sampgdk_IsPlayerConnected(0))
+	{
+		this->resizeToFit(maxIndex);
+
+		for(std::size_t i = 0; i <= maxIndex; ++i)
+		{
+			if (sampgdk_IsPlayerConnected(i))
+				ctr[i] = 1;
+		}
+	}
+}
+
+////////////////////////////////////////////////////////////////////////////////////
+void GlobalTextDraw::Visibility::removeAll()
+{
+	ctr.clear();
+	maxIndex = 0;
+}
+
+////////////////////////////////////////////////////////////////////////////////////
+void GlobalTextDraw::Visibility::resizeToFit(std::size_t index_)
+{
+	if (ctr.size() <= index_)
+	{
+		std::size_t newSize = (maxIndex / GrowRate + 1) * GrowRate;
+		ctr.resize(newSize, 0);
 	}
 }
 

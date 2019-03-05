@@ -3,6 +3,7 @@
 #include <SAMP-EDGEngine/Server/GlobalTextDrawPanel.hpp>
 
 #include <SAMP-EDGEngine/Server/GameMode.hpp>
+#include <SAMP-EDGEngine/Server/Server.hpp>
 
 namespace samp_edgengine
 {
