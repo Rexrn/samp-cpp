@@ -65,6 +65,10 @@ public:
 	/// </summary>
 	void hideFromEveryone();
 
+	/// <summary>
+	/// Hides and shows again textdraw to every player that had the textdraw visible before.
+	/// </summary>
+	void reapplyVisibility();
 
 	/// <summary>
 	/// Sets the text.
@@ -193,7 +197,38 @@ public:
 		// Nothing by default.
 	}
 
+	/// <summary>
+	/// Event reaction designed to be called when player disconnects.
+	/// </summary>
+	/// <param name="player_">The player.</param>
+	void notifyPlayerDisconnected(Player const & player_);
+
+	bool isShownForPlayer(Player const & player_) const;
+
+	bool isShownForPlayer(Int32 playerIndex_) const;
+
 private:
+
+	class Visibility
+	{
+	public:
+		constexpr static int GrowRate = 32;
+
+		void add(std::size_t playerIndex_);
+		void remove(std::size_t playerIndex_);
+
+		void addAll();
+		void removeAll();
+
+		bool contains(Int32 playerIndex_) const;
+
+		std::vector<char> 	ctr;
+		std::size_t 		maxIndex = 0;
+
+	private:
+		void resizeToFit(std::size_t index_);
+	} _visibility;
+
 	IGameMode& m_gameMode;
 };
 
