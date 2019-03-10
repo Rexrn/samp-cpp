@@ -44,7 +44,7 @@ bool PAWNSceneDeserializer::deserialize() const
 		lineNumber++;
 
 		// Check if the line isn't a comment.
-		if (auto trimmed = text::ascii::trimLeft(line); trimmed.length() >= 2 && trimmed.substr(0, 2) == "//")
+		if (auto trimmed = text::trimLeft(line); trimmed.length() >= 2 && trimmed.substr(0, 2) == "//")
 			continue;
 
 		// Handle line contents:
@@ -231,7 +231,7 @@ bool PAWNSceneDeserializer::deserialize() const
 					// It either writes it or not.
 					if (lineStream >> text::skipIf<','> && std::getline(lineStream, fontColor, ','))
 					{
-						fontColor = text::ascii::trimLeft(fontColor);
+						fontColor = text::trimLeft(fontColor);
 
 						if (auto fontColorOpt = colorFromARGBString(fontColor); fontColorOpt.has_value()) {
 							material.fontColor = Color{ fontColorOpt.value() }.fromARGB();
@@ -242,7 +242,7 @@ bool PAWNSceneDeserializer::deserialize() const
 
 						if (std::getline(lineStream, backColor, ','))
 						{
-							backColor = text::ascii::trimLeft(backColor);
+							backColor = text::trimLeft(backColor);
 
 							if (auto backColorOpt = colorFromARGBString(backColor); backColorOpt.has_value()) {
 								material.backColor = Color{ backColorOpt.value() }.fromARGB();

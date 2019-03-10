@@ -290,7 +290,7 @@ bool Player::setName(std::string_view const name_, bool(*isNameValidProc_)(const
 	{
 		// Store requested name (we are forced to copy the string, since SAMPGDK requires null terminated C-string).
 		std::string newName{ name_ };
-		if (text::ascii::equal<text::CaseInsensitive>(name_, this->getName()))
+		if (text::equal<text::CaseInsensitive>(name_, this->getName()))
 		{
 			// Store temporarily modified name.
 			std::string tempName{ name_ };

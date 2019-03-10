@@ -14,14 +14,12 @@ namespace samp_edgengine
 ///////////////////////////////////////////////////////////
 ServerDebugLogOutput::ServerDebugLogOutput(IGameMode & gameMode_)
 	: IGameModeChild(gameMode_)
-{
+{		
 }
 
 ///////////////////////////////////////////////////////////
 void ServerDebugLogOutput::push(LogMessage messageType_, std::string message_)
 {
-	namespace ascii = text::ascii;
-
 	auto& gameMode = this->getGameMode();
 	if (auto chat = gameMode.chat.get())
 	{
@@ -34,7 +32,7 @@ void ServerDebugLogOutput::push(LogMessage messageType_, std::string message_)
 			case LogMessage::FatalError: prefix = "FATAL ERROR"; break;
 		}
 
-		message_ = ascii::format("{2}[DEBUG LOG | {0}]: {3}{1}", prefix, message_, colors::Lightslategray, colors::Lightgray);
+		message_ = text::format("{2}[DEBUG LOG | {0}]: {3}{1}", prefix, message_, colors::Lightslategray, colors::Lightgray);
 
 		auto const& playerPool = this->getGameMode().players.getPool();
 		for(auto p : playerPool)

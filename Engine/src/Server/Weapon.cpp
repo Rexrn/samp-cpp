@@ -19,10 +19,10 @@ namespace samp_edgengine
 
 		// We can't avoid creating copy of the string.
 		std::string cpName{ name_ };
-		cpName = text::ascii::toLower(cpName);
+		cpName = text::toLower(cpName);
 		for (Int32 i = Fist; i <= Parachute; i++)
 		{
-			if ( cpName == text::ascii::toLower( Weapon::getNameFn(static_cast<Weapon::Type>(i)) ) )
+			if ( cpName == text::toLower( Weapon::getNameFn(static_cast<Weapon::Type>(i)) ) )
 				return static_cast<Weapon::Type>(i);
 		}
 		return Weapon::Invalid;
@@ -88,13 +88,13 @@ namespace samp_edgengine
 			{
 				std::size_t	score		= 0;
 				Weapon::Type mostScored	= Weapon::Invalid;
-				std::string compareName = text::ascii::toLower(cpName);
+				std::string compareName = text::toLower(cpName);
 
 				for (Int32 i = Fist; i <= Parachute; i++)
 				{
 					// Search for max sequence in the string.
-					auto const [itMin, itMax] = text::ascii::searchWithIncomplete<text::CaseInsensitive>(compareName,
-						text::ascii::toLower(
+					auto const [itMin, itMax] = text::searchWithIncomplete<text::CaseInsensitive>(compareName,
+						text::toLower(
 							Weapon::getNameFn( static_cast<Weapon::Type>(i) )
 						));
 

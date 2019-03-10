@@ -2,12 +2,10 @@
 #include SAMPEDGENGINE_PCH
 
 
-
-
 #include <SAMP-EDGEngine/Core/TypeTraits.hpp>
 #include <SAMP-EDGEngine/Core/Text/Essentials.hpp>
 
-namespace samp_edgengine::text::ascii
+namespace samp_edgengine::text
 {
 
 /// <summary>

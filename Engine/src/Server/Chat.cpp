@@ -123,7 +123,7 @@ namespace samp_edgengine
 	//////////////////////////////////////////////////////////////////////////////////////////////////////
 	void DefaultChat::whenPlayerSendsText(Player & player_, std::string_view text_)
 	{
-		auto text = text::ascii::compose(player_.getColor(), player_.getName(), colors::White, " (", player_.getIndex(), "): ", text_);
+		auto text = text::compose(player_.getColor(), player_.getName(), colors::White, " (", player_.getIndex(), "): ", text_);
 		this->messageAll(text);
 	}
 }

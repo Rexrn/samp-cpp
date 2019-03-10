@@ -447,7 +447,7 @@ Int32 Vehicle::findModelBestMatch(std::string const & name_, std::size_t const m
 	for (auto const &it : g_vehiclesDataM)
 	{
 		const TVehicleInfoT &info = it.second;
-		auto const[itMin, itMax] = text::ascii::searchWithIncomplete<text::CaseInsensitive>(text::ascii::toLower(name_), text::ascii::toLower(std::string{ std::get<1>(info) }));
+		auto const[itMin, itMax] = text::searchWithIncomplete<text::CaseInsensitive>(text::toLower(name_), text::toLower(std::string{ std::get<1>(info) }));
 		std::size_t const score = itMax - itMin;
 		if (score > maxScore)
 		{

@@ -88,7 +88,7 @@ bool performConversion()
 
 	char option = 'f';
 	std::cin >> option;
-	option = samp::text::ascii::toLower(option);
+	option = samp::text::toLower(option);
 
 	fs::path inputPath, outputPath;
 
@@ -120,7 +120,7 @@ bool performConversion()
 					<< ">";
 		char recursively = 'y';
 		std::cin >> recursively;
-		recursively = samp::text::ascii::toLower(recursively);
+		recursively = samp::text::toLower(recursively);
 
 		if (recursively == 'y')
 		{

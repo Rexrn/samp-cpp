@@ -38,7 +38,7 @@ Int32 IDialog::generateDialogHash(std::string_view customHash_)
 {
 	const std::type_info &type = typeid(*this);
 
-	auto hashIndex = getHashIndex(text::ascii::compose(type.hash_code(), (customHash_ != "" ? std::string("::") + std::string(customHash_) : "")));
+	auto hashIndex = getHashIndex(text::compose(type.hash_code(), (customHash_ != "" ? std::string("::") + std::string(customHash_) : "")));
 	
 	if (hashIndex != std::nullopt) {
 		return hashIndex.value();

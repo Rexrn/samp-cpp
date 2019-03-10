@@ -6,7 +6,7 @@
 #include <string_view>
 
 namespace samp = samp_edgengine;
-namespace ascii = samp::text::ascii;
+namespace text = samp::text;
 
 TEST(TextAscii, Format)
 {
@@ -15,6 +15,6 @@ TEST(TextAscii, Format)
 	std::string const playerName = "CrossX";
 	Int32 const playerVisit = 30;
 
-	std::string const result = ascii::format(fmt, playerName, playerVisit);
+	std::string const result = text::format(fmt, playerName, playerVisit);
 	EXPECT_EQ(result, expected);
 }

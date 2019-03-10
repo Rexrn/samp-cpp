@@ -3,7 +3,7 @@
 #include <SAMP-EDGEngine/Core/Text/ASCII.hpp>
 
 
-namespace samp_edgengine::text::ascii
+namespace samp_edgengine::text
 {
 ///////////////////////////////////////////////////////////////////////
 std::string toLower(std::string_view const string_)

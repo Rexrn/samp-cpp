@@ -11,7 +11,7 @@ extern class samp_edgengine::IGameMode* GameMode;
 #ifdef DEBUG
 	#define EDGE_LOG_DEBUG(messageType_, ...) \
 		if (GameMode) \
-			GameMode->debugLog.push( samp_edgengine::LogMessage:: messageType_, samp_edgengine::text::ascii::format( __VA_ARGS__ ) );
+			GameMode->debugLog.push( samp_edgengine::LogMessage:: messageType_, samp_edgengine::text::format( __VA_ARGS__ ) );
 #else
 	#define EDGE_LOG_DEBUG(...)
 #endif

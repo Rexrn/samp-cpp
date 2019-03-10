@@ -16,14 +16,14 @@ void cmd_TeleportToLocation(samp::CommandInput input_)
 	if (params.size() >= 3)
 	{
 		samp::math::Vector3f location;
-		location.x = samp::text::ascii::convert<float>(params[0]).value();
-		location.y = samp::text::ascii::convert<float>(params[1]).value();
-		location.z = samp::text::ascii::convert<float>(params[2]).value();
+		location.x = samp::text::convert<float>(params[0]).value();
+		location.y = samp::text::convert<float>(params[1]).value();
+		location.z = samp::text::convert<float>(params[2]).value();
 		input_.target.setLocation(location);
 		if (params.size() >= 5)
 		{
-			std::int32_t world		= samp::text::ascii::convert<std::int32_t>(params[3]).value();
-			std::int32_t interior	= samp::text::ascii::convert<std::int32_t>(params[4]).value();
+			std::int32_t world		= samp::text::convert<std::int32_t>(params[3]).value();
+			std::int32_t interior	= samp::text::convert<std::int32_t>(params[4]).value();
 			input_.target.setWorld(world);
 			input_.target.setInterior(interior);
 		}
@@ -48,7 +48,7 @@ void cmd_SpawnVehicle(samp::CommandInput input_)
 
 void cmd_ObjectCount(samp::CommandInput input_)
 {
-	namespace txt = samp::text::ascii;
+	namespace txt = samp::text;
 	auto tracker = static_cast<samp::default_streamer::PlayerWrapper*>(input_.target.getPlacementTracker());
 	GameMode->chat->messagePlayer(input_.target, txt::compose("You have currently ", tracker->spawnedObjects.size(), " objects shown!"));
 }

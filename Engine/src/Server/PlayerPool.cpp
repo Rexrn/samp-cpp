@@ -105,9 +105,9 @@ Player * PlayerPool::findByName(std::string_view const name_, bool const caseSen
 		[&name_, &caseSensitive_](Player *const player_)
 		{
 			if(caseSensitive_)
-				return text::ascii::equal(name_, player_->getName());
+				return text::equal(name_, player_->getName());
 			else
-				return text::ascii::equal<text::CaseInsensitive>(name_, player_->getName());
+				return text::equal<text::CaseInsensitive>(name_, player_->getName());
 		});
 }
 
@@ -117,7 +117,7 @@ Player * PlayerPool::findByNameOrIndex(std::string_view const nameOrIndex_, bool
 	Player *result = nullptr;
 
 	// At first we want to examine player index.
-	if (auto index = text::ascii::convert<std::size_t>(nameOrIndex_);
+	if (auto index = text::convert<std::size_t>(nameOrIndex_);
 		index.has_value())
 	{
 		result = this->get(index.value());
@@ -140,7 +140,7 @@ Player * PlayerPool::findBestMatch(std::string_view const nameOrIndex_, std::siz
 		std::size_t maxScore = 0;
 		for (const auto &player : m_connectedPlayers)
 		{
-			auto const [itMin, itMax] = text::ascii::searchWithIncomplete<text::CaseInsensitive>(player->getName(), nameOrIndex_);
+			auto const [itMin, itMax] = text::searchWithIncomplete<text::CaseInsensitive>(player->getName(), nameOrIndex_);
 			auto const score = itMax - itMin;
 			if (score > maxScore && score >= minimalScore_)
 			{

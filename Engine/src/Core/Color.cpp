@@ -24,9 +24,9 @@ namespace samp_edgengine
 
 			// Check for 0xAABBCC[DD] format
 			if (strColor_.length() != 6 &&
-				text::ascii::equal<text::CaseInsensitive>(strColor_.substr(0, 2), "0x") )
+				text::equal<text::CaseInsensitive>(strColor_.substr(0, 2), "0x") )
 			{
-				hexString = text::ascii::toLower(				// make result lowercase
+				hexString = text::toLower(				// make result lowercase
 					strColor_.substr(2,							// cut string: begin after 2nd character [0x]
 						(strColor_.length() == 8 ? 6 : 8)		// cut string: end based on its length (three bytes - 6 chars, or four bytes - 8 chars)
 					));
@@ -77,7 +77,7 @@ namespace samp_edgengine
 		packWithPrefix(stream, r);
 		packWithPrefix(stream, g);
 		packWithPrefix(stream, b);
-		return text::ascii::toUpper(stream.str());
+		return text::toUpper(stream.str());
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -92,7 +92,7 @@ namespace samp_edgengine
 		packWithPrefix(stream, g);
 		packWithPrefix(stream, b);
 		packWithPrefix(stream, a);
-		return text::ascii::toUpper(stream.str());
+		return text::toUpper(stream.str());
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////

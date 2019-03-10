@@ -25,7 +25,7 @@ Command& CommandManager::add(UniquePtr<Command>&& command_)
 //////////////////////////////////////////////////////////////////////////////
 bool CommandManager::exists(std::string_view const input_) const
 {
-	auto lowerCaseInput = text::ascii::toLower(std::string{ input_ });
+	auto lowerCaseInput = text::toLower(std::string{ input_ });
 
 	auto it = std::find_if(m_commands.begin(), m_commands.end(),
 		[&lowerCaseInput](UniquePtr<Command> const & cmd_)
@@ -39,7 +39,7 @@ bool CommandManager::exists(std::string_view const input_) const
 //////////////////////////////////////////////////////////////////////////////
 Command* CommandManager::find(std::string_view const input_)
 {
-	auto lowerCaseInput = text::ascii::toLower(std::string{ input_ });
+	auto lowerCaseInput = text::toLower(std::string{ input_ });
 
 	auto it = std::find_if(m_commands.begin(), m_commands.end(),
 		[&lowerCaseInput](UniquePtr<Command> const & cmd_)
