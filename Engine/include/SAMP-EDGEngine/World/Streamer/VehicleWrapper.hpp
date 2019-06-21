@@ -65,6 +65,9 @@ public:
 	/// <param name="newPlacement_">The new placement.</param>
 	virtual void whenPlacementChanges(ActorPlacement const& prevPlacement_, ActorPlacement const& newPlacement_) override;
 
+	/// <summary>Returns the location.</summary>
+	/// <returns>math::Vector3f</returns>
+	virtual math::Vector3f getLocation() const override;
 private:
 	Vehicle* m_vehicle; // The underlying vehicle.
 };

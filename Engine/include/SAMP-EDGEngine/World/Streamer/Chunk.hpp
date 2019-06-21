@@ -137,7 +137,8 @@ public:
 	/// Subtracts the score around player.
 	/// </summary>
 	/// <param name="player_">The player's placement.</param>
-	void subtractScoreAroundPlayer(PlayerPlacement const & placement_);
+	/// <param name="toRecalculate_">Storage for every vehicle that streamer is unsure is properly shown.</param>
+	void subtractScoreAroundPlayer(PlayerPlacement const & placement_, std::vector<IGlobalActorWrapper*> *toRecalculate_ = nullptr);
 	
 	/// <summary>
 	/// Applies the global actors visibility.

@@ -277,17 +277,36 @@ void Chunk::addScoreAroundPlayer(PlayerPlacement const & placement_)
 }
 
 //////////////////////////////////////////////////////////////////////////////
-void Chunk::subtractScoreAroundPlayer(PlayerPlacement const & placement_)
+void Chunk::subtractScoreAroundPlayer(PlayerPlacement const & placement_, std::vector<IGlobalActorWrapper*> *toRecalculate_)
 {
+	// Algorithm settings.
+	constexpr bool cfgCheckGlobalObjects 	= false;
+	constexpr bool cfgCheckVehicles 		= true;
+
+	// Algorithm
 	for (auto &globalObject : m_globalObjects)
 	{
 		if (globalObject->isPlayerInVisibilityZone(placement_))
+		{
 			globalObject->whenPlayerLeavesVisibilityZone();
+
+			if constexpr (cfgCheckGlobalObjects) {
+				if (globalObject->getVisibilityIndex() <= 0 && toRecalculate_)
+					toRecalculate_->push_back(globalObject.get());
+			}
+		}
 	}
 	for (auto &vehicle : m_vehicles)
 	{
 		if (vehicle->isPlayerInVisibilityZone(placement_))
+		{
 			vehicle->whenPlayerLeavesVisibilityZone();
+
+			if constexpr (cfgCheckVehicles) {
+				if (vehicle->getVisibilityIndex() <= 0 && toRecalculate_)
+					toRecalculate_->push_back(vehicle.get());
+			}
+		}
 	}
 }
 

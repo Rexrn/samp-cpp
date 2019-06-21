@@ -54,4 +54,10 @@ void GlobalObjectWrapper::whenPlacementChanges(GlobalObjectPlacement const& prev
 	GameMode->streamer->whenObjectPlacementChanges(*m_object, prevPlacement_, newPlacement_);
 }
 
+///////////////////////////////////////////////////////////////////////////
+math::Vector3f GlobalObjectWrapper::getLocation() const
+{
+	return this->getLastPlacement().location;
+}
+
 }

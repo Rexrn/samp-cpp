@@ -193,6 +193,13 @@ private:
 	virtual void update(double deltaTime_, IUpdatable::TimePoint frameTime_) override;
 
 	/// <summary>
+	/// Recalculates actor visibility.
+	/// </summary>
+	/// <param name="wrapper_">Actor wrapper to update.</param>
+	/// <param name="location_">Custom location of the object, because last placement is not always the case.</param>
+	void recalculateVisibility(IGlobalActorWrapper &wrapper_, math::Vector3f location_);
+
+	/// <summary>
 	/// Determines whether specified location is outside boundaries.
 	/// </summary>
 	/// <param name="location_">The location.</param>

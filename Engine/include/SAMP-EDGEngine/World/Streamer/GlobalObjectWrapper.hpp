@@ -66,6 +66,9 @@ public:
 	/// <param name="newPlacement_">The new placement.</param>
 	virtual void whenPlacementChanges(GlobalObjectPlacement const& prevPlacement_, GlobalObjectPlacement const& newPlacement_) override;
 
+	/// <summary>Returns the location.</summary>
+	/// <returns>math::Vector3f</returns>
+	virtual math::Vector3f getLocation() const override;
 private:
 
 	GlobalObject * m_object; // The underlying object.

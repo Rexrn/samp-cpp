@@ -42,13 +42,13 @@ public:
 	/// Sets the visibility index.
 	/// </summary>
 	/// <param name="visibilityIndex_">Visibility index.</param>
-	void setVisibilityIndex(Uint16 visibilityIndex_);
+	void setVisibilityIndex(Int16 visibilityIndex_);
 
 	/// <summary>
 	/// Returns the visibility index.
 	/// </summary>
 	/// <returns>Visibility index.</returns>
-	Uint16 getVisibilityIndex() const;
+	Int16 getVisibilityIndex() const;
 
 	/// <summary>
 	/// Determines whether the specified player is in the visibility zone.
@@ -79,9 +79,11 @@ public:
 	bool shouldBeVisible() const {
 		return m_visibilityIndex > 0;
 	}
+
+	virtual math::Vector3f getLocation() const = 0;
 private:
 
-	Uint16 m_visibilityIndex; // Number of Players currently seeing the object.
+	Int16 m_visibilityIndex; // Number of Players currently seeing the object.
 };
 
 } // namespace default_streamer

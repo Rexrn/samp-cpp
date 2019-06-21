@@ -20,20 +20,22 @@ void IGlobalActorWrapper::whenPlayerEntersVisibilityZone()
 /////////////////////////////////////////////////////////////////////////////////
 void IGlobalActorWrapper::whenPlayerLeavesVisibilityZone()
 {
-	if (m_visibilityIndex > 0)
-		m_visibilityIndex--;
-	else
-		throw ReferenceCountingError("More players exited area than entered - counting mismatch.");
+	//if (m_visibilityIndex > 0)
+	
+	m_visibilityIndex--;
+	
+	// else
+	// 		throw ReferenceCountingError("More players exited area than entered - counting mismatch.");
 }
 
 /////////////////////////////////////////////////////////////////////////////////
-void IGlobalActorWrapper::setVisibilityIndex(Uint16 visibilityIndex_)
+void IGlobalActorWrapper::setVisibilityIndex(Int16 visibilityIndex_)
 {
 	m_visibilityIndex = visibilityIndex_;
 }
 
 /////////////////////////////////////////////////////////////////////////////////
-Uint16 IGlobalActorWrapper::getVisibilityIndex() const
+Int16 IGlobalActorWrapper::getVisibilityIndex() const
 {
 	return m_visibilityIndex;
 }

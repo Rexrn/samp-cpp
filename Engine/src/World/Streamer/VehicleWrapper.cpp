@@ -58,4 +58,10 @@ void VehicleWrapper::whenPlacementChanges(ActorPlacement const& prevPlacement_, 
 	GameMode->streamer->whenVehiclePlacementChanges(*m_vehicle, prevPlacement_, newPlacement_);
 }
 
+///////////////////////////////////////////////////////////////////////////
+math::Vector3f VehicleWrapper::getLocation() const
+{
+	return this->getLastPlacement().location;
+}
+
 }

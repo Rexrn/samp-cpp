@@ -17,6 +17,8 @@
 #include <SAMP-EDGEngine/World/Streamer/CheckpointWrapper.hpp>
 #include <SAMP-EDGEngine/World/Streamer/RaceCheckpointWrapper.hpp>
 
+#include <SAMP-EDGEngine/Server/ServerDebugLog.hpp>
+
 namespace samp_edgengine::default_streamer
 {
 
@@ -213,8 +215,17 @@ void Streamer::whenPlayerPlacementChanges(Player & player_, PlayerPlacement cons
 	for (auto chunk : affectedChunksCurr)
 		chunk->addScoreAroundPlayer(currentPlacement_);
 
+	std::vector<IGlobalActorWrapper*> invalidScoreWrappers;
+	invalidScoreWrappers.reserve(1 * 1024);
+
 	for (auto chunk : affectedChunksPrev)
-		chunk->subtractScoreAroundPlayer(previousPlacement_);
+		chunk->subtractScoreAroundPlayer(previousPlacement_, &invalidScoreWrappers);
+
+	invalidScoreWrappers.shrink_to_fit();
+	for(auto *invWrapper : invalidScoreWrappers)
+		this->recalculateVisibility(*invWrapper, invWrapper->getLocation());
+
+	// EDGE_LOG_DEBUG(Info, "Player {0} has moved, updated {1} invalid objects.", player_.getName(), invalidScoreWrappers.size());
 
 	// Finally apply visibility.
 	for (auto chunkList : { &affectedChunksPrev, &affectedChunksCurr })
@@ -317,22 +328,8 @@ void Streamer::whenPlayerPlacementChanges(Player & player_, PlayerPlacement cons
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 void Streamer::whenVehiclePlacementChanges(Vehicle & vehicle_, ActorPlacement const& previousPlacement_, ActorPlacement const& currentPlacement_)
 {
-	auto chunksAround = this->getChunksInRadiusFrom(currentPlacement_.location, StreamerSettings.VisibilityDistance);
-
 	auto& wrapper = getWrapper(vehicle_);
-	Uint16 visibilityIndex = 0;
-	for (auto chunk : chunksAround)
-	{
-		for (const_a& playerWrapper : chunk->getPlayers())
-		{
-			if ( wrapper.isPlayerInVisibilityZone(playerWrapper->getLastPlacement() ) )
-			{
-				visibilityIndex++;
-			}
-		}
-	}
-	wrapper.setVisibilityIndex(visibilityIndex);
-	wrapper.applyVisibility();
+	this->recalculateVisibility(wrapper, currentPlacement_.location);
 
 	// Check whether we should relocate vehicle to new chunk.
 	auto& prevChunk = this->selectChunk(previousPlacement_.location);
@@ -356,22 +353,8 @@ void Streamer::whenStaticVehiclePlacementChanges(StaticVehicle & staticVehicle_,
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 void Streamer::whenObjectPlacementChanges(GlobalObject & globalObject_, GlobalObjectPlacement const& previousPlacement_, GlobalObjectPlacement const& currentPlacement_)
 {
-	auto chunksAround = this->getChunksInRadiusFrom(currentPlacement_.location, StreamerSettings.VisibilityDistance);
-
 	auto& wrapper = getWrapper(globalObject_);
-	Uint16 visibilityIndex = 0;
-	for (auto chunk : chunksAround)
-	{
-		for (const_a& playerWrapper : chunk->getPlayers())
-		{
-			if (wrapper.isPlayerInVisibilityZone(playerWrapper->getLastPlacement()))
-			{
-				visibilityIndex++;
-			}
-		}
-	}
-	wrapper.setVisibilityIndex(visibilityIndex);
-	wrapper.applyVisibility();
+	this->recalculateVisibility(wrapper, currentPlacement_.location);
 
 	// Check whether we should relocate object to new chunk.
 	auto& prevChunk = this->selectChunk(previousPlacement_.location);
@@ -511,6 +494,26 @@ void Streamer::update(double deltaTime_, IUpdatable::TimePoint frameTime_)
 			vehicle->sendPlacementUpdate();
 		}
 	}
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+void Streamer::recalculateVisibility(IGlobalActorWrapper &wrapper_, math::Vector3f location_)
+{
+	auto chunksAround = this->getChunksInRadiusFrom(location_, StreamerSettings.VisibilityDistance);
+
+	Int16 visibilityIndex = 0;
+	for (auto chunk : chunksAround)
+	{
+		for (const_a& playerWrapper : chunk->getPlayers())
+		{
+			if (wrapper_.isPlayerInVisibilityZone(playerWrapper->getLastPlacement()))
+			{
+				visibilityIndex++;
+			}
+		}
+	}
+	wrapper_.setVisibilityIndex(visibilityIndex);
+	wrapper_.applyVisibility();
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////
