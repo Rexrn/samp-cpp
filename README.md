@@ -55,7 +55,7 @@ int main()
 To set server host name shown in SAMP client, we will use `ServerClass::setHostName` method:
 ```cpp
 // `samp::Server` is a pointer to global object of type `ServerClass`.
-samp::Server->setHostName(".•°.•°.•°[     GTA Online SA (ßeta)     ]°•.°•.°•.");
+samp::Server->setHostName(".â€¢Â°.â€¢Â°.â€¢Â°[     GTA Online SA (ÃŸeta)     ]Â°â€¢.Â°â€¢.Â°â€¢.");
 ```
 
 The result:
