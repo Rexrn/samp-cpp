@@ -386,7 +386,7 @@ public:
 	/// <param name="amount_">The amount of score to add.</param>
 	void addScore(Int32 amount_)
 	{
-		this->setScore(this->getCash() + amount_);
+		this->setScore(this->getScore() + amount_);
 	}
 
 	/// <summary>
@@ -395,7 +395,7 @@ public:
 	/// <param name="amount_">The amount of score to subtract.</param>
 	void subtractScore(Int32 amount_)
 	{
-		this->setScore(this->getCash() - amount_);
+		this->setScore(this->getScore() - amount_);
 	}
 
 	/// <summary>
