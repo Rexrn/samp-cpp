@@ -10,7 +10,7 @@
 #include <SAMP-EDGEngine/Server/Chat.hpp>
 #include <SAMP-EDGEngine/Server/Weapon.hpp>
 #include <SAMP-EDGEngine/Server/PlayerPool.hpp>
-#include <SAMP-EDGEngine/Server/CommandManager.hpp>
+#include <SAMP-EDGEngine/Server/CommandHandler.hpp>
 #include <SAMP-EDGEngine/Server/GlobalTextDraw.hpp>
 #include <SAMP-EDGEngine/Server/TextDrawOwner.hpp>
 #include <SAMP-EDGEngine/World/Map.hpp>
@@ -95,7 +95,7 @@ protected:
 public:
 	PlayerPool				players;
 	MapClass				map;
-	CommandManager			commands;
+	CommandHandler			commands;
 	TaskScheduler			tasks;
 
 #ifdef DEBUG

@@ -66,7 +66,7 @@
 
 // --> Server/Command/:
 #include <SAMP-EDGEngine/Server/Command.hpp>
-#include <SAMP-EDGEngine/Server/CommandManager.hpp>
+#include <SAMP-EDGEngine/Server/CommandHandler.hpp>
 
 // --> Server/Player:
 #include <SAMP-EDGEngine/Server/Player.hpp>

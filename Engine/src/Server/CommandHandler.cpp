@@ -1,6 +1,6 @@
 #include SAMPEDGENGINE_PCH
 
-#include <SAMP-EDGEngine/Server/CommandManager.hpp>
+#include <SAMP-EDGEngine/Server/CommandHandler.hpp>
 #include <SAMP-EDGEngine/Core/Text/ASCII.hpp>
 
 #include <SAMP-EDGEngine/Server/Server.hpp>
@@ -9,13 +9,13 @@
 namespace samp_edgengine
 {
 //////////////////////////////////////////////////////////////////////////////
-CommandManager::CommandManager()
+CommandHandler::CommandHandler()
 {
-	Server->onPlayerCommandText += { *this, &CommandManager::whenPlayerSendsCommandText };
+	Server->onPlayerCommandText += { *this, &CommandHandler::whenPlayerSendsCommandText };
 }
 
 //////////////////////////////////////////////////////////////////////////////
-Command& CommandManager::add(UniquePtr<Command>&& command_)
+Command& CommandHandler::add(UniquePtr<Command>&& command_)
 {
 	Command& ref = *command_;
 	m_commands.push_back( std::forward< UniquePtr<Command> >(command_) );
@@ -23,7 +23,7 @@ Command& CommandManager::add(UniquePtr<Command>&& command_)
 }
 
 //////////////////////////////////////////////////////////////////////////////
-bool CommandManager::exists(std::string_view const input_) const
+bool CommandHandler::exists(std::string_view const input_) const
 {
 	auto lowerCaseInput = text::toLower(std::string{ input_ });
 
@@ -37,7 +37,7 @@ bool CommandManager::exists(std::string_view const input_) const
 }
 
 //////////////////////////////////////////////////////////////////////////////
-Command* CommandManager::find(std::string_view const input_)
+Command* CommandHandler::find(std::string_view const input_)
 {
 	auto lowerCaseInput = text::toLower(std::string{ input_ });
 
@@ -54,7 +54,7 @@ Command* CommandManager::find(std::string_view const input_)
 }
 
 //////////////////////////////////////////////////////////////////////////////
-bool CommandManager::remove(Command & command_)
+bool CommandHandler::remove(Command & command_)
 {
 	auto it = std::find_if(m_commands.begin(), m_commands.end(),
 		[&command_](UniquePtr<Command> const & cmd_)
@@ -71,7 +71,7 @@ bool CommandManager::remove(Command & command_)
 }
 
 //////////////////////////////////////////////////////////////////////////////
-void CommandManager::whenPlayerSendsCommandText(Player & player_, std::string_view commandText_)
+void CommandHandler::whenPlayerSendsCommandText(Player & player_, std::string_view commandText_)
 {
 	std::istringstream stream{ std::string{commandText_} };
 	if (stream >> text::skipIf<char, '/'>)

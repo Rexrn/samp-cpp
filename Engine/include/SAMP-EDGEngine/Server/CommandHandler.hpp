@@ -14,7 +14,7 @@ namespace samp_edgengine
 /// <summary>
 /// Class used to manage commands.
 /// </summary>
-class CommandManager final
+class CommandHandler final
 	: public INonCopyable, public IEventReceiver
 {
 public:
@@ -72,9 +72,9 @@ public:
 	friend class IGameMode;
 private:
 	/// <summary>
-	/// Initializes new instance of a <see cref="CommandManager"/> class.
+	/// Initializes new instance of a <see cref="CommandHandler"/> class.
 	/// </summary>
-	CommandManager();
+	CommandHandler();
 	
 	/// <summary>
 	/// Called when player sends command. Invokes specified command.

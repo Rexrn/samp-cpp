@@ -71,7 +71,7 @@ struct Command
 		return m_possibleInputs;
 	}
 
-	friend class CommandManager;
+	friend class CommandHandler;
 protected:
 	/// <summary>
 	/// Invokes command.
@@ -103,7 +103,7 @@ public:
 	{
 	}
 
-	friend class CommandManager;
+	friend class CommandHandler;
 protected:
 	/// <summary>
 	/// Invokes command.
@@ -135,7 +135,7 @@ public:
 	{
 	}
 
-	friend class CommandManager;
+	friend class CommandHandler;
 protected:
 	/// <summary>
 	/// Invokes command.
