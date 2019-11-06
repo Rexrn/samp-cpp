@@ -61,7 +61,7 @@ public:
 	/// Setups the specified gamemode
 	/// </summary>
 	/// <param name="gameMode_">The gamemode.</param>
-	void setup(UniquePtr<IGameMode> &&gameMode_);
+	void setup(UniquePtr<IGameMode> gameMode_);
 		
 	/// <summary>
 	/// Sets the server description in SAMP client.

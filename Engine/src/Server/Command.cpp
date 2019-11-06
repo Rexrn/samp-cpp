@@ -25,18 +25,18 @@ std::vector<std::string> CommandInput::splitParams() const
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 bool Command::matchesInput(std::string_view const input_) const
 {
-	return std::find_if(m_possibleInputs.begin(), m_possibleInputs.end(),
+	return std::find_if(_possibleInputs.begin(), _possibleInputs.end(),
 		[&input_](std::string const &e_)
 		{
 			return input_ == e_;
-		}) != m_possibleInputs.end();
+		}) != _possibleInputs.end();
 }
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 void ProcedureCommand::invoke(CommandInput input_)
 {
-	m_function(input_);
+	_function(input_);
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -57,7 +57,11 @@ class MyGameMode
 	: public samp::IGameMode
 {
 public:
-	MyGameMode() {	
+	using Super = samp::IGameMode;
+
+	MyGameMode(samp::ServerClass &server_ )
+		: Super{ server_ }
+	{	
 		this->addPlayerClass(0, { 280, 180, 1010 }, 0, { samp::Weapon(samp::Weapon::Deagle, 999) });
 	}
 	
@@ -65,7 +69,12 @@ public:
 	{
 		samp::IGameMode::setup();
 
+		// Setup chat:
 		chat = std::make_unique<samp::DefaultChat>(*this);
+		
+		// Setup command handler:
+		commands = std::make_unique<samp::DefaultCommandHandler>(*this);
+		server.onPlayerCommandText += { *commands, &samp::ICommandHandler::whenPlayerSendsCommandText };
 
 		this->setupCommands();
 		this->loadObjects();
@@ -95,8 +104,9 @@ public:
 						inputContent.append(buffer, sizeof(buffer));
 					inputContent.append(buffer, inputStream.gcount());
 				}
-				// Make sure string is null-terminated:
-				inputContent.c_str();
+				
+				// Make sure string is null terminated:
+				inputContent.push_back(0);
 				// Parse the document:
 				document.parse<0>(inputContent.data());
 
@@ -129,13 +139,14 @@ public:
 
 	void setupCommands()
 	{
-		commands.construct<samp::ProcedureCommand>( samp::CmdInvocations{ "tpc" }, cmd_TeleportToLocation );
-		commands.construct<samp::ProcedureCommand>( samp::CmdInvocations{ "v" }, cmd_SpawnVehicle );
-		commands.construct<samp::ProcedureCommand>( samp::CmdInvocations{ "objc" }, cmd_ObjectCount);
+		auto& cmds = static_cast<samp::DefaultCommandHandler&>(*commands);
+		cmds.add( samp::ProcedureCommand( { "tpc" }, cmd_TeleportToLocation ) );
+		cmds.add( samp::ProcedureCommand( { "v" }, cmd_SpawnVehicle ) );
+		cmds.add( samp::ProcedureCommand( { "objc" }, cmd_ObjectCount) );
 	}
 };
 
 samp::GameModeSetupResult SAMPGameModeSetup()
 {
-	return std::make_unique<MyGameMode>();
+	return std::make_unique<MyGameMode>(*Server);
 }

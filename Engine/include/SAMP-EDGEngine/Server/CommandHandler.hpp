@@ -6,24 +6,50 @@
 #include <SAMP-EDGEngine/Server/Command.hpp>
 
 #include <SAMP-EDGEngine/Core/BasicInterfaces/NonCopyable.hpp>
+#include <SAMP-EDGEngine/Server/GameModeChild.hpp>
 #include <SAMP-EDGEngine/Core/Events.hpp>
 #include <SAMP-EDGEngine/Core/Pointers.hpp>
 
 namespace samp_edgengine
 {
+
 /// <summary>
 /// Class used to manage commands.
 /// </summary>
-class CommandHandler final
-	: public INonCopyable, public IEventReceiver
+class ICommandHandler
+	: public IGameModeChild, public INonCopyable, public IEventReceiver
 {
 public:
+	using IGameModeChild::IGameModeChild;
+
+	/// <summary>
+	/// Called when player sends command.
+	/// </summary>
+	/// <param name="player_">The player.</param>
+	/// <param name="commandText_">The command text.</param>
+	virtual void whenPlayerSendsCommandText(Player & player_, std::string_view commandText_) = 0;
+};
+
+/// <summary>
+/// Default implementation of the command handler.
+/// </summary>
+class DefaultCommandHandler
+	: public ICommandHandler
+{
+public:
+	using ICommandHandler::ICommandHandler;
 
 	/// <summary>
 	/// Adds the specified command to the pool.
 	/// </summary>
 	/// <param name="command_">The command.</param>
-	Command& add(UniquePtr<Command> &&command_);
+	template <typename TCommandType,
+		typename = std::enable_if_t< std::is_base_of_v<Command, TCommandType> > >
+	TCommandType& add(TCommandType&& command_)
+	{
+		_commandPool.push_back( std::make_unique<TCommandType>( std::forward<TCommandType>(command_) ) );
+		return static_cast<TCommandType&>(*_commandPool.back());
+	}
 
 	/// <summary>
 	/// Adds the specified command to the pool (constructs it from given parameters).
@@ -32,7 +58,7 @@ public:
 	template <typename TCommandType, typename... TArgs>
 	TCommandType& construct(TArgs&&... args_)
 	{
-		return static_cast<TCommandType&>( this->add(std::make_unique<TCommandType>(std::forward<TArgs>(args_)...)) );
+		return this->add<TCommandType>( TCommandType(std::forward<TArgs>(args_)...) );
 	}
 
 	/// <summary>
@@ -64,26 +90,18 @@ public:
 	/// Returns cref to command pool.
 	/// </summary>
 	/// <returns>cref to command pool</returns>
-	auto const & getAll() const {
-		return m_commands;
+	auto const & getCommandPool() const {
+		return _commandPool;
 	}
 
-	//	Declare friendship with ServerLogic class.
-	friend class IGameMode;
-private:
-	/// <summary>
-	/// Initializes new instance of a <see cref="CommandHandler"/> class.
-	/// </summary>
-	CommandHandler();
-	
 	/// <summary>
 	/// Called when player sends command. Invokes specified command.
 	/// </summary>
 	/// <param name="player_">The player.</param>
 	/// <param name="commandText_">The command text.</param>
-	void whenPlayerSendsCommandText(Player & player_, std::string_view commandText_);
-
+	void whenPlayerSendsCommandText(Player & player_, std::string_view commandText_) override;
+private:
 	///	Vector of all commands.
-	std::vector<UniquePtr<Command>> m_commands;
+	std::vector<UniquePtr<Command>> _commandPool;
 };
 }

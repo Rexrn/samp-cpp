@@ -28,6 +28,8 @@
 namespace samp_edgengine
 {	
 
+class ServerClass;
+
 /// <summary>
 /// Provides abstract interface for every gamemode.
 /// </summary>
@@ -40,7 +42,7 @@ public:
 	/// <summary>
 	/// Initializes a new instance of the <see cref="IGameMode"/> class.
 	/// </summary>
-	IGameMode();
+	IGameMode(ServerClass & server_);
 		
 	/// <summary>
 	/// Finalizes an instance of the <see cref="IGameMode"/> class.
@@ -67,8 +69,10 @@ public:
 
 	void sendDeathMessage(Player const* left_, Player const * right_, Weapon::Type weapon_);
 
-	friend class ServerClass;
 
+	ServerClass& server;
+
+	friend class ServerClass;
 protected:
 	
 
@@ -95,16 +99,15 @@ protected:
 public:
 	PlayerPool				players;
 	MapClass				map;
-	CommandHandler			commands;
 	TaskScheduler			tasks;
 
 #ifdef DEBUG
 	Log						debugLog;
 #endif
 
-	UniquePtr<IStreamer>	streamer;
-	UniquePtr<IChat>		chat;
-
+	UniquePtr<ICommandHandler> 	commands;
+	UniquePtr<IStreamer>		streamer;
+	UniquePtr<IChat>			chat;
 
 private:
 #ifdef DEBUG

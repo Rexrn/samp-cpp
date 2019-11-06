@@ -6,7 +6,6 @@
 #include <SAMP-EDGEngine/Server/PlayerPool.hpp>
 #include <SAMP-EDGEngine/Core/Text/ASCII.hpp>
 
-
 samp_edgengine::UniquePtr<samp_edgengine::ServerClass>			Server;				// Initialize Server instance.
 samp_edgengine::IGameMode*										GameMode = nullptr;	// Initialize GameMode instance.
 
@@ -23,14 +22,14 @@ ServerClass::~ServerClass()
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
-void ServerClass::setup(UniquePtr<IGameMode> &&gameMode_)
+void ServerClass::setup(UniquePtr<IGameMode> gameMode_)
 {
 	// Drop previous game mode.
 	GameMode.reset();
 	::GameMode = gameMode_.get();
 	if (gameMode_)
 	{
-		GameMode = std::forward< UniquePtr<IGameMode> >(gameMode_);
+		GameMode = std::move(gameMode_);
 		GameMode->setup();
 	}
 }
@@ -835,7 +834,7 @@ bool ServerClass::sampEvent_OnVehicleDeath(Int32 vehicleHandle_, Int32 killerInd
 bool ServerClass::sampEvent_OnPlayerSendText(Int32 playerIndex_, std::string_view text_)
 {
 	auto& player = *GameMode->players[ playerIndex_ ];
-	Server->onPlayerText.emit(player, std::string(text_));
+	onPlayerText.emit(player, std::string(text_));
 	return false;
 }
 
@@ -844,7 +843,7 @@ bool ServerClass::sampEvent_OnPlayerSendCommand(Int32 playerIndex_, std::string_
 {
 	auto& player = *GameMode->players[ playerIndex_ ];
 
-	Server->onPlayerCommandText.emit(player, command_);
+	onPlayerCommandText.emit(player, command_);
 	return true;
 }
 

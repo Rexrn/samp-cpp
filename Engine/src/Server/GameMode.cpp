@@ -10,16 +10,18 @@ namespace samp_edgengine
 {
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-IGameMode::IGameMode()
+IGameMode::IGameMode(ServerClass & server_)
+	:
+	server{ server_ }
 #ifdef DEBUG
-	: m_debugLogOutput{ *this }
+	, m_debugLogOutput{ *this }
 #endif
 {
 	#ifdef DEBUG
 		debugLog.setOutput(&m_debugLogOutput);
 	#endif
 
-	Server->onServerUpdate += { *this, &IGameMode::onServerUpdate };
+	server.onServerUpdate += { *this, &IGameMode::onServerUpdate };
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

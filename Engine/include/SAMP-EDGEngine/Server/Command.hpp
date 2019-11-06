@@ -1,11 +1,8 @@
 #pragma once
 #include SAMPEDGENGINE_PCH
 
-
-
 #include <SAMP-EDGEngine/Core/Text/ASCII.hpp>
 #include <SAMP-EDGEngine/Server/Teleport.hpp>
-
 
 namespace samp_edgengine
 {
@@ -52,7 +49,7 @@ struct Command
 	/// </summary>
 	/// <param name="possibleInputs_">The possible inputs.</param>
 	Command(std::vector<std::string> const & possibleInputs_)
-		: m_possibleInputs{ possibleInputs_ }
+		: _possibleInputs{ possibleInputs_ }
 	{
 	}
 
@@ -68,19 +65,17 @@ struct Command
 	/// </summary>
 	/// <returns>cref to possible inputs vector</returns>
 	auto const& getPossibleInputs() const {
-		return m_possibleInputs;
+		return _possibleInputs;
 	}
 
-	friend class CommandHandler;
-protected:
 	/// <summary>
 	/// Invokes command.
 	/// </summary>
 	/// <param name="input_">The input.</param>
 	virtual void invoke(CommandInput input_) = 0;
-
+protected:
 	///	Vector of possible inputs.
-	std::vector<std::string> m_possibleInputs;
+	std::vector<std::string> _possibleInputs;
 };
 
 /// <summary>
@@ -99,12 +94,10 @@ public:
 	/// <param name="teleport_">The teleport.</param>
 	template <typename _Func>
 	ProcedureCommand(std::vector<std::string> inputs_, _Func function_)
-		: Command{ inputs_ }, m_function{ function_ }
+		: Command{ inputs_ }, _function{ function_ }
 	{
 	}
 
-	friend class CommandHandler;
-protected:
 	/// <summary>
 	/// Invokes command.
 	/// </summary>
@@ -112,9 +105,10 @@ protected:
 	/// <param name="input">The input.</param>
 	/// <param name="paramsString">The parameters string.</param>
 	virtual void invoke(CommandInput input_) override;
+protected:
 
 	///	Pointer to command function.
-	std::function<void(CommandInput)>	m_function;
+	std::function<void(CommandInput)> _function;
 };
 
 /// <summary>
@@ -131,12 +125,10 @@ public:
 	/// <param name="inputs_">The inputs.</param>
 	/// <param name="teleport_">The teleport.</param>
 	TeleportCommand(std::vector<std::string> inputs_, Teleport const & teleport_)
-		: Command{ inputs_ }, m_teleport{ teleport_ }
+		: Command{ inputs_ }, _teleport{ teleport_ }
 	{
 	}
 
-	friend class CommandHandler;
-protected:
 	/// <summary>
 	/// Invokes command.
 	/// </summary>
@@ -144,7 +136,7 @@ protected:
 	/// <param name="input">The input.</param>
 	/// <param name="paramsString">The parameters string.</param>
 	virtual void invoke(CommandInput input_) override;
-
-	Teleport m_teleport;
+protected:
+	Teleport _teleport;
 };
 }

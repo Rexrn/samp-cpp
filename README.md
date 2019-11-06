@@ -10,8 +10,8 @@ The main goal of *SAMP EDGEngine* is to make game mode creation process a real p
 
 - [x] Complete basic game mode interface: `IGameMode`
   - [x] Default "plug-and-play" game mode: `DefaultGameMode`
-- [ ] Easy to use command system interface: `ICommandSystem`
-  - [x] Default "plug-and-play" command system: ~~*(deprecated: `CommandManager`)*~~ `DefaultCommandSystem`
+- [ ] Easy to use command handler interface: `ICommandHandler`
+  - [x] Default "plug-and-play" command system: `DefaultCommandHandler`
 - [x] Easy to use chat interface: `IChat`
   - [x] Default "plug-and-play" chat: `DefaultChat`
 - [x] World management system
