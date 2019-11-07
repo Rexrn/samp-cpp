@@ -1,6 +1,6 @@
 repoRoot = os.getcwd()
 
-include ("BuildConfig.lua")
+include ("BuildConfig.user.lua")
 
 -- Custom library:
 include ("Premake/Library.lua")

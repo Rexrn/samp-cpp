@@ -1,7 +1,7 @@
 -- This is configuration file for build environment generation.
 -- 
 -- To properly configure build:
---  1) Copy BuildConfig.lua.template to new file and name it BuildConfig.user.lua
+--  1) Copy BuildConfig.template.lua to new file and name it BuildConfig.user.lua
 --  2) Fill in essential information
 -- Use Lua syntax.
 
