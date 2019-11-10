@@ -72,9 +72,9 @@ void DefaultCommandHandler::whenPlayerSendsCommandText(Player & player_, std::st
 			std::getline(stream, params);
 
 			if (auto command = this->find(input))
-			{
 				command->invoke(CommandInput{ player_, input, params });
-			}
+			else if (onInvalidCommand)
+				onInvalidCommand(player_, commandText_);
 		}
 	}
 }

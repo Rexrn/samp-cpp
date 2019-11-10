@@ -100,6 +100,11 @@ public:
 	/// <param name="player_">The player.</param>
 	/// <param name="commandText_">The command text.</param>
 	void whenPlayerSendsCommandText(Player & player_, std::string_view commandText_) override;
+
+	using OnInvalidCommandSignature = void(Player& player_, std::string_view commandText_);
+
+	std::function<OnInvalidCommandSignature> onInvalidCommand;
+	
 private:
 	///	Vector of all commands.
 	std::vector<UniquePtr<Command>> _commandPool;
