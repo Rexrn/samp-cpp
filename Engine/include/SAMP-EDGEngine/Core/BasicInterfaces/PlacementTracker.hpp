@@ -6,7 +6,7 @@
 #include <SAMP-EDGEngine/Core/Placement.hpp>
 #include <SAMP-EDGEngine/World/Streamer/StreamerSettings.hpp>
 
-namespace samp_edgengine
+namespace samp_cpp
 {
 
 /// <summary>

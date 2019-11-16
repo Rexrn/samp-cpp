@@ -10,7 +10,7 @@
 // Wrapped class:
 #include <SAMP-EDGEngine/World/Vehicle.hpp>
 
-namespace samp_edgengine
+namespace samp_cpp
 {
 namespace default_streamer
 {

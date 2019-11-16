@@ -6,7 +6,7 @@
 
 
 
-namespace samp_edgengine
+namespace samp_cpp
 {
 namespace chrono		= std::chrono;
 using seconds_f			= chrono::duration<float>;

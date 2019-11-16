@@ -10,7 +10,7 @@
 // Wrapped class:
 #include <SAMP-EDGEngine/World/Streamer/CheckpointWrapper.hpp>
 
-namespace samp_edgengine::default_streamer
+namespace samp_cpp::default_streamer
 {
 
 class RaceCheckpointWrapper

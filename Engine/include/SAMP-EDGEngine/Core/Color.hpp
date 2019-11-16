@@ -1,5 +1,5 @@
 // File description:
-// Implements Color class and provides over 600 named colors (within samp_edgengine::colors) namespace.
+// Implements Color class and provides over 600 named colors (within samp_cpp::colors) namespace.
 #pragma once
 #include SAMPEDGENGINE_PCH
 
@@ -9,7 +9,7 @@
 
 #include <SAMP-EDGEngine/Core/TypesAndDefinitions.hpp>
 
-namespace samp_edgengine
+namespace samp_cpp
 {	
 	/// <summary>
 	/// Represents color with 8-bit channels red, green, blue and alpha channels.

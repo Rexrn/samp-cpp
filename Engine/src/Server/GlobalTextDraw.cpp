@@ -5,7 +5,7 @@
 #include <SAMP-EDGEngine/Server/Player.hpp>
 #include <SAMP-EDGEngine/Server/GameMode.hpp>
 
-namespace samp_edgengine
+namespace samp_cpp
 {
 
 ////////////////////////////////////////////////////////////////////////////////////

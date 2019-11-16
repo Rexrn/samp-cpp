@@ -7,7 +7,7 @@
 
 #include <iostream>
 
-namespace samp_edgengine::ext::resource_io
+namespace samp_cpp::ext::resource_io
 {
 
 ///////////////////////////////////////////////////////////////////////////

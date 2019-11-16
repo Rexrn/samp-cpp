@@ -8,7 +8,7 @@
 #include <typeinfo>
 #include <typeindex>
 
-namespace samp_edgengine
+namespace samp_cpp
 {
 
 class IEventReceiver;

@@ -7,7 +7,7 @@
 #include <SAMP-EDGEngine/Dependencies/QuickMaffs.hpp>
 
 
-namespace samp_edgengine
+namespace samp_cpp
 {
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 	Color::Color(const std::string &strColor_)

@@ -5,7 +5,7 @@
 
 #include <istream>
 
-namespace samp_edgengine
+namespace samp_cpp
 {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 CommandInput::CommandInput(Player & target_, std::string const & input_, std::string const & params_)

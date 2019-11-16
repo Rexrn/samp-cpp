@@ -5,7 +5,7 @@
 
 #include <SAMP-EDGEngine/World/Checkpoint.hpp>
 
-namespace samp_edgengine
+namespace samp_cpp
 {
 
 class Player;

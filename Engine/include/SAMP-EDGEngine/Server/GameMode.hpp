@@ -25,7 +25,7 @@
 #include <SAMP-EDGEngine/Server/ServerDebugLogOutput.hpp>
 
 
-namespace samp_edgengine
+namespace samp_cpp
 {	
 
 class ServerClass;
@@ -118,7 +118,7 @@ private:
 using GameModeSetupResult = UniquePtr<IGameMode>;
 
 }
-extern samp_edgengine::IGameMode* GameMode;
+extern samp_cpp::IGameMode* GameMode;
 
 
 

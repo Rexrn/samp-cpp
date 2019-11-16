@@ -10,7 +10,7 @@
 #include <SAMP-EDGEngine/Dependencies/SampGDK.hpp>
 #include <SAMP-EDGEngine/Dependencies/QuickMaffs.hpp>
 
-namespace samp_edgengine
+namespace samp_cpp
 {	
 /// <summary>
 /// This class is used to define weapon type and ammunition.

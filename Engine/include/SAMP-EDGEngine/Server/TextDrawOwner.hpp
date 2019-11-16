@@ -7,7 +7,7 @@
 #include <SAMP-EDGEngine/Server/PlayerTextDraw.hpp>
 #include <SAMP-EDGEngine/Server/GlobalTextDraw.hpp>
 
-namespace samp_edgengine
+namespace samp_cpp
 {
 
 template <typename TTextDraw>

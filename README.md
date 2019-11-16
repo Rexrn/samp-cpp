@@ -40,7 +40,7 @@ One thing I want to make significantly easier is the base server setup.
 
 // In most cases, no other code base will use `samp` namespace.
 // Shorten it to `samp` for our convenciency: 
-namespace samp = samp_edgengine;
+namespace samp = samp_cpp;
 
 // The main function:
 // It is called when plugin launches.

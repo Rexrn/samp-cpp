@@ -4,7 +4,7 @@
 #include <SAMP-EDGEngine/Server/GameMode.hpp>
 #include <SAMP-EDGEngine/Core/TypesAndDefinitions.hpp>
 
-namespace samp_edgengine
+namespace samp_cpp
 {
 ///////////////////////////////////////////////////////////////////////////////////////
 Scene::Scene()

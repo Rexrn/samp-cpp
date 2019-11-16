@@ -22,7 +22,7 @@
 #include <SAMP-EDGEngine/World/GangZone.hpp>
 
 
-namespace samp_edgengine
+namespace samp_cpp
 {
 
 namespace default_streamer

@@ -7,9 +7,9 @@
 #include <thread>
 #include <chrono>
 
-namespace rcio	= samp_edgengine::ext::resource_io;
+namespace rcio	= samp_cpp::ext::resource_io;
 namespace fs	= std::filesystem;
-namespace samp	= samp_edgengine;
+namespace samp	= samp_cpp;
 
 bool serializeSceneToXML(std::ostream& outputStream_, samp::Scene const& scene_)
 {

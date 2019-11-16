@@ -6,7 +6,7 @@
 
 
 
-namespace samp_edgengine
+namespace samp_cpp
 {
 // TODO: implement exception classes.
 

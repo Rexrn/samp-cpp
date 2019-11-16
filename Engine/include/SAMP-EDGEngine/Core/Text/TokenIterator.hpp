@@ -5,7 +5,7 @@
 
 #include <SAMP-EDGEngine/Core/Pointers.hpp>
 
-namespace samp_edgengine::text
+namespace samp_cpp::text
 {
 
 /// <summary>

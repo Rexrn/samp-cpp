@@ -2,7 +2,7 @@
 
 #include <SAMP-EDGEngine/Server/PlayerTextDrawPanel.hpp>
 
-namespace samp_edgengine
+namespace samp_cpp
 {
 
 ////////////////////////////////////////////////////////////////////////

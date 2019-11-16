@@ -2,7 +2,7 @@
 
 #include <SAMP-EDGEngine/Core/BasicInterfaces/PlacementTracker.hpp>
 
-namespace samp_edgengine
+namespace samp_cpp
 {
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 I3DNodePlacementTracker::I3DNodePlacementTracker(ActorPlacement const & initialPlacement_)

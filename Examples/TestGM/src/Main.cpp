@@ -7,8 +7,8 @@
 #include <filesystem>
 namespace fs = std::filesystem;
 
-namespace samp = samp_edgengine;
-namespace rcio = samp_edgengine::ext::resource_io;
+namespace samp = samp_cpp;
+namespace rcio = samp_cpp::ext::resource_io;
 
 void cmd_TeleportToLocation(samp::CommandInput input_)
 {

@@ -1,7 +1,7 @@
 #pragma once
 #include SAMPEDGENGINE_EXT_RESOURCEIO_PCH
 
-namespace samp_edgengine::ext::resource_io
+namespace samp_cpp::ext::resource_io
 {
 
 /// <summary>

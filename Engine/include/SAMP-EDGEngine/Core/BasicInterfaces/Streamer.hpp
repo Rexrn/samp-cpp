@@ -4,7 +4,7 @@
 
 #include <SAMP-EDGEngine/Core/BasicInterfaces/PlacementTracker.hpp>
 
-namespace samp_edgengine
+namespace samp_cpp
 {
 class Player;
 class Vehicle;

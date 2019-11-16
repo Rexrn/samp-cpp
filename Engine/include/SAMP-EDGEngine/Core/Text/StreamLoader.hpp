@@ -3,7 +3,7 @@
 
 
 
-namespace samp_edgengine
+namespace samp_cpp
 {
 /// <summary>
 /// Base class for every stream-loading algorithms.

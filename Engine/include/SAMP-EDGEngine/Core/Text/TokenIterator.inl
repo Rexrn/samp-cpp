@@ -1,7 +1,7 @@
 // Note: this file is not meant to be included on its own.
 // Include "TokenIterator.hpp" instead.
 
-namespace samp_edgengine::text
+namespace samp_cpp::text
 {
 
 /////////////////////////////////////////////////////////////////////////////////////////////

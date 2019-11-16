@@ -11,7 +11,7 @@
 #include <SAMP-EDGEngine/Server/Player.hpp>
 #include <SAMP-EDGEngine/World/PerPlayerObject.hpp>
 
-namespace samp_edgengine::default_streamer
+namespace samp_cpp::default_streamer
 {
 
 class PlayerWrapper

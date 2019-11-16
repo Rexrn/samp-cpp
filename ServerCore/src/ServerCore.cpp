@@ -1,6 +1,6 @@
 #include <SAMP-EDGEngine/Everything.hpp>
 
-extern samp_edgengine::GameModeSetupResult SAMPGameModeSetup();
+extern samp_cpp::GameModeSetupResult SAMPGameModeSetup();
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 PLUGIN_EXPORT unsigned int PLUGIN_CALL Supports()
@@ -36,7 +36,7 @@ PLUGIN_EXPORT void PLUGIN_CALL ProcessTick()
 /////////////////////////////////////////////////////////////////////////////////////////
 PLUGIN_EXPORT bool PLUGIN_CALL OnGameModeInit()
 {
-	Server = std::make_unique<samp_edgengine::ServerClass>();
+	Server = std::make_unique<samp_cpp::ServerClass>();
 
 	// call user defined startup method
 	if (auto pGameMode = SAMPGameModeSetup())
@@ -65,7 +65,7 @@ PLUGIN_EXPORT bool PLUGIN_CALL OnPlayerConnect(int playerid)
 /////////////////////////////////////////////////////////////////////////////////////////
 PLUGIN_EXPORT bool PLUGIN_CALL OnPlayerDisconnect(int playerid, int reason)
 {
-	return Server->sampEvent_OnPlayerDisconnect( playerid, static_cast<samp_edgengine::Player::DisconnectReason>(reason) );
+	return Server->sampEvent_OnPlayerDisconnect( playerid, static_cast<samp_cpp::Player::DisconnectReason>(reason) );
 }
 /////////////////////////////////////////////////////////////////////////////////////////
 
@@ -79,7 +79,7 @@ PLUGIN_EXPORT bool PLUGIN_CALL OnPlayerSpawn(int playerid)
 /////////////////////////////////////////////////////////////////////////////////////////
 PLUGIN_EXPORT bool PLUGIN_CALL OnPlayerDeath(int playerid, int killerid, int reason)
 {
-	return Server->sampEvent_OnPlayerDeath( playerid, killerid, static_cast<samp_edgengine::Weapon::Type>(reason) );
+	return Server->sampEvent_OnPlayerDeath( playerid, killerid, static_cast<samp_cpp::Weapon::Type>(reason) );
 }
 /////////////////////////////////////////////////////////////////////////////////////////
 
@@ -273,9 +273,9 @@ PLUGIN_EXPORT bool PLUGIN_CALL OnPlayerInteriorChange(int playerid, int newinter
 /////////////////////////////////////////////////////////////////////////////////////////
 PLUGIN_EXPORT bool PLUGIN_CALL OnPlayerKeyStateChange(int playerid, int newkeys, int oldkeys)
 {
-	samp_edgengine::Int32 upDown;
-	samp_edgengine::Int32 leftRight;
-	samp_edgengine::Int32 unusedKeys;
+	samp_cpp::Int32 upDown;
+	samp_cpp::Int32 leftRight;
+	samp_cpp::Int32 unusedKeys;
 	sampgdk_GetPlayerKeys(playerid, &unusedKeys, &upDown, &leftRight);
 
 	// Note:
@@ -283,8 +283,8 @@ PLUGIN_EXPORT bool PLUGIN_CALL OnPlayerKeyStateChange(int playerid, int newkeys,
 	// TODO: fix this if possible.
 	return Server->sampEvent_OnPlayerKeyboardStateChange(
 		playerid,
-		samp_edgengine::Keyboard{ newkeys, upDown, leftRight },
-		samp_edgengine::Keyboard{ oldkeys }
+		samp_cpp::Keyboard{ newkeys, upDown, leftRight },
+		samp_cpp::Keyboard{ oldkeys }
 	);
 }
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -348,28 +348,28 @@ PLUGIN_EXPORT bool PLUGIN_CALL OnActorStreamOut(int actorid, int forplayerid )
 /////////////////////////////////////////////////////////////////////////////////////////
 PLUGIN_EXPORT bool PLUGIN_CALL OnDialogResponse(int playerid, int dialogid, int response, int listitem, const char * inputtext)
 {
-	return Server->sampEvent_OnDialogResponse( playerid, dialogid, static_cast<samp_edgengine::DialogButton>(response), listitem, inputtext );
+	return Server->sampEvent_OnDialogResponse( playerid, dialogid, static_cast<samp_cpp::DialogButton>(response), listitem, inputtext );
 }
 /////////////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////////////////
 PLUGIN_EXPORT bool PLUGIN_CALL OnPlayerTakeDamage(int playerid, int issuerid, float amount, int weaponid, int bodypart)
 {
-	return Server->sampEvent_OnPlayerTakeDamage( playerid, issuerid, amount, static_cast<samp_edgengine::Weapon::Type>(weaponid), static_cast<samp_edgengine::Player::BodyPart>(bodypart) );
+	return Server->sampEvent_OnPlayerTakeDamage( playerid, issuerid, amount, static_cast<samp_cpp::Weapon::Type>(weaponid), static_cast<samp_cpp::Player::BodyPart>(bodypart) );
 }
 /////////////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////////////////
 PLUGIN_EXPORT bool PLUGIN_CALL OnPlayerGiveDamage(int playerid, int damagedid, float amount, int weaponid, int bodypart)
 {
-	return Server->sampEvent_OnPlayerGiveDamage( playerid, damagedid, amount, static_cast<samp_edgengine::Weapon::Type>(weaponid), static_cast<samp_edgengine::Player::BodyPart>(bodypart) );
+	return Server->sampEvent_OnPlayerGiveDamage( playerid, damagedid, amount, static_cast<samp_cpp::Weapon::Type>(weaponid), static_cast<samp_cpp::Player::BodyPart>(bodypart) );
 }
 /////////////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////////////////
 PLUGIN_EXPORT bool PLUGIN_CALL OnPlayerGiveDamageActor(int playerid, int damaged_actorid, float amount, int weaponid, int bodypart)
 {
-	return Server->sampEvent_OnPlayerGiveDamageActor( playerid, damaged_actorid, amount, static_cast<samp_edgengine::Weapon::Type>(weaponid), static_cast<samp_edgengine::Player::BodyPart>(bodypart) );
+	return Server->sampEvent_OnPlayerGiveDamageActor( playerid, damaged_actorid, amount, static_cast<samp_cpp::Weapon::Type>(weaponid), static_cast<samp_cpp::Player::BodyPart>(bodypart) );
 }
 /////////////////////////////////////////////////////////////////////////////////////////
 
@@ -426,9 +426,9 @@ PLUGIN_EXPORT bool PLUGIN_CALL OnPlayerClickPlayer(int playerid, int clickedplay
 PLUGIN_EXPORT bool PLUGIN_CALL OnPlayerEditObject(int playerid, bool playerobject, int objectid, int response, float fX, float fY, float fZ, float fRotX, float fRotY, float fRotZ)
 {
 	if (playerobject == 1)
-		return Server->sampEvent_OnPlayerEditPlayerObject(playerid, objectid, static_cast<samp_edgengine::IMapObject::EditResponse>(response), { fX, fY, fZ }, { fRotX, fRotY, fRotZ });
+		return Server->sampEvent_OnPlayerEditPlayerObject(playerid, objectid, static_cast<samp_cpp::IMapObject::EditResponse>(response), { fX, fY, fZ }, { fRotX, fRotY, fRotZ });
 	else
-		return Server->sampEvent_OnPlayerEditObject(playerid, objectid, static_cast<samp_edgengine::IMapObject::EditResponse>(response), { fX, fY, fZ }, { fRotX, fRotY, fRotZ });
+		return Server->sampEvent_OnPlayerEditObject(playerid, objectid, static_cast<samp_cpp::IMapObject::EditResponse>(response), { fX, fY, fZ }, { fRotX, fRotY, fRotZ });
 }
 /////////////////////////////////////////////////////////////////////////////////////////
 
@@ -454,9 +454,9 @@ PLUGIN_EXPORT bool PLUGIN_CALL OnPlayerWeaponShot(int playerid, int weaponid, in
 {
 	return Server->sampEvent_OnPlayerWeaponShot(
 		playerid,
-		static_cast<samp_edgengine::Weapon::Type>(weaponid),
-		samp_edgengine::Weapon::HitResult{
-			static_cast<samp_edgengine::Weapon::HitResult::Target>(hittype),
+		static_cast<samp_cpp::Weapon::Type>(weaponid),
+		samp_cpp::Weapon::HitResult{
+			static_cast<samp_cpp::Weapon::HitResult::Target>(hittype),
 			hitid,
 			{ fX, fY, fZ }
 		}

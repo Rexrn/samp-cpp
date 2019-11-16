@@ -2,7 +2,7 @@
 #include SAMPEDGENGINE_EXT_RESOURCEIO_PCH
 
 
-namespace samp_edgengine::ext::resource_io::xml_helper
+namespace samp_cpp::ext::resource_io::xml_helper
 {
 
 enum CopyAllocMode

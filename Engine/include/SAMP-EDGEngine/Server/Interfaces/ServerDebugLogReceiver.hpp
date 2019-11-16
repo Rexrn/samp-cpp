@@ -2,7 +2,7 @@
 
 #include SAMPEDGENGINE_PCH
 
-namespace samp_edgengine
+namespace samp_cpp
 {
 
 #ifdef DEBUG

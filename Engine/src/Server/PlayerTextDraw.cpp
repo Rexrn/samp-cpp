@@ -7,7 +7,7 @@
 #include <SAMP-EDGEngine/Server/ServerDebugLog.hpp>
 #include <SAMP-EDGEngine/Server/GameMode.hpp>
 
-namespace samp_edgengine
+namespace samp_cpp
 {
 
 ////////////////////////////////////////////////////////////////////////////////////

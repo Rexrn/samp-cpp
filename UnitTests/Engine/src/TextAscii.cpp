@@ -5,7 +5,7 @@
 #include <string>
 #include <string_view>
 
-namespace samp = samp_edgengine;
+namespace samp = samp_cpp;
 namespace text = samp::text;
 
 TEST(TextAscii, Format)

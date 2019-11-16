@@ -1,7 +1,7 @@
 // Note: this file is not meant to be included on its own.
 // Include "StreamAlgorithm.hpp" instead.
 
-namespace samp_edgengine::text
+namespace samp_cpp::text
 {
 
 template <auto _char, typename TCharType>

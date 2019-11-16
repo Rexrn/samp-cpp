@@ -3,7 +3,7 @@
 
 
 
-namespace samp_edgengine::text
+namespace samp_cpp::text
 {
 
 

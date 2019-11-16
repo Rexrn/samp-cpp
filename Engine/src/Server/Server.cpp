@@ -6,10 +6,10 @@
 #include <SAMP-EDGEngine/Server/PlayerPool.hpp>
 #include <SAMP-EDGEngine/Core/Text/ASCII.hpp>
 
-samp_edgengine::UniquePtr<samp_edgengine::ServerClass>			Server;				// Initialize Server instance.
-samp_edgengine::IGameMode*										GameMode = nullptr;	// Initialize GameMode instance.
+samp_cpp::UniquePtr<samp_cpp::ServerClass>			Server;				// Initialize Server instance.
+samp_cpp::IGameMode*										GameMode = nullptr;	// Initialize GameMode instance.
 
-namespace samp_edgengine
+namespace samp_cpp
 {
 /////////////////////////////////////////////////////////////////////////////////////////
 ServerClass::ServerClass()

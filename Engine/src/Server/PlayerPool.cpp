@@ -6,7 +6,7 @@
 #include <SAMP-EDGEngine/Core/Pointers.hpp>
 
 
-namespace samp_edgengine
+namespace samp_cpp
 {
 
 //////////////////////////////////////////////////////////////////////////////

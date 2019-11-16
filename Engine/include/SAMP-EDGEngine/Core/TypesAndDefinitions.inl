@@ -1,7 +1,7 @@
 #include <cinttypes>
 
 #ifndef SAMP_EDGENGINE_SKIP_NAMESPACE
-namespace samp_edgengine
+namespace samp_cpp
 {
 #endif
 using Int8		= std::int8_t;

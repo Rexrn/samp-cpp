@@ -24,7 +24,7 @@
 #include <SAMP-EDGEngine/Core/Clock.hpp>
 #include <SAMP-EDGEngine/Core/BasicInterfaces/Updatable.hpp>
 
-namespace samp_edgengine
+namespace samp_cpp
 {
 // Forward declarations
 class IGameMode;
@@ -202,4 +202,4 @@ private:
 
 } // namespace agdk
 
-extern samp_edgengine::UniquePtr<samp_edgengine::ServerClass>	Server; /// Global pointer to ServerClass
+extern samp_cpp::UniquePtr<samp_cpp::ServerClass>	Server; /// Global pointer to ServerClass

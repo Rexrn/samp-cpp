@@ -5,7 +5,7 @@
 #include <SAMP-EDGEngine/Core/TypesAndDefinitions.hpp>
 #include <SAMP-EDGEngine/Server/Server.hpp>
 
-namespace samp_edgengine
+namespace samp_cpp
 {
 
 ///////////////////////////////////////////////////////////////////////////////////////

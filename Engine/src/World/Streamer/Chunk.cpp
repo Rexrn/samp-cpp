@@ -5,7 +5,7 @@
 
 constexpr bool DebugConfig_VisualizeStreamerWithGangZones = false;
 
-namespace samp_edgengine::default_streamer
+namespace samp_cpp::default_streamer
 {
 
 //////////////////////////////////////////////////////////////////////////////
@@ -326,7 +326,7 @@ void Chunk::GZThingIntercepted()
 {
 	if (!this->isEmpty() && !m_gangZone)
 	{
-		auto gangZone = GameMode->map.beginConstruction<samp_edgengine::GangZone>();
+		auto gangZone = GameMode->map.beginConstruction<samp_cpp::GangZone>();
 
 		auto start = m_debugInfo.center - m_debugInfo.halfExtent;
 		auto end = start + (m_debugInfo.halfExtent * 2.f);

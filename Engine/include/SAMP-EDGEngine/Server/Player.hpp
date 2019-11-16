@@ -26,7 +26,7 @@
 
 #include <SAMP-EDGEngine/Server/Interfaces/ServerDebugLogReceiver.hpp>
 
-namespace samp_edgengine
+namespace samp_cpp
 {
 class RaceCheckpoint;
 class Checkpoint;

@@ -4,7 +4,7 @@
 
 
 
-namespace samp_edgengine::type_traits
+namespace samp_cpp::type_traits
 {
 
 template <typename TType>

@@ -6,7 +6,7 @@
 #include <SAMP-EDGEngine/Core/Log.hpp>
 #include <SAMP-EDGEngine/Server/GameModeChild.hpp>
 
-namespace samp_edgengine
+namespace samp_cpp
 {
 
 #ifdef DEBUG

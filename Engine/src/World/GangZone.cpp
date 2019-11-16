@@ -3,7 +3,7 @@
 #include <SAMP-EDGEngine/World/GangZone.hpp>
 #include <SAMP-EDGEngine/Server/Player.hpp>
 
-namespace samp_edgengine
+namespace samp_cpp
 {
 
 ////////////////////////////////////////////////////////////////////////////////////

@@ -8,7 +8,7 @@
 
 #include <SAMP-EDGEngine/Server/GameMode.hpp>
 
-namespace samp_edgengine
+namespace samp_cpp
 {
 //////////////////////////////////////////////////////////////////////////////
 bool DefaultCommandHandler::exists(std::string_view const input_) const

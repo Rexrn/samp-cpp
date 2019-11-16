@@ -4,7 +4,7 @@
 
 #include <SAMP-EDGEngine/Core/BasicInterfaces/LogOutput.hpp>
 
-namespace samp_edgengine
+namespace samp_cpp
 {
 
 ///////////////////////////////////////////////////

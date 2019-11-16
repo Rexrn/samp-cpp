@@ -5,7 +5,7 @@
 
 #include <SAMP-EDGEngine/World/WI3DNode.hpp>
 
-namespace samp_edgengine
+namespace samp_cpp
 {
 class Player;
 

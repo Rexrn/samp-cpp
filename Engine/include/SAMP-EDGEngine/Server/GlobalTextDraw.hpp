@@ -5,7 +5,7 @@
 
 #include <SAMP-EDGEngine/Server/TextDraw.hpp>
 
-namespace samp_edgengine
+namespace samp_cpp
 {
 
 /// <summary>

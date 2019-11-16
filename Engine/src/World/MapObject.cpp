@@ -4,7 +4,7 @@
 #include <SAMP-EDGEngine/Server/Player.hpp>
 
 
-namespace samp_edgengine
+namespace samp_cpp
 {
 
 //////////////////////////////////////////////////////////////////////////

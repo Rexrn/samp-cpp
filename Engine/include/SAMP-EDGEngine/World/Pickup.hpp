@@ -3,7 +3,7 @@
 
 
 
-namespace samp_edgengine
+namespace samp_cpp
 {
 
 class Pickup

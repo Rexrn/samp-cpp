@@ -10,7 +10,7 @@
 #include <SAMP-EDGEngine/Server/Player.hpp>
 #include <SAMP-EDGEngine/Core/Exceptions.hpp>
 
-namespace samp_edgengine
+namespace samp_cpp
 {
 
 namespace default_streamer

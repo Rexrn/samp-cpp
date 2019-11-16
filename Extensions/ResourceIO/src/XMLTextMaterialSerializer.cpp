@@ -4,7 +4,7 @@
 #include <SAMP-EDGEngine/Ext/ResourceIO/XMLHelperFunctions.hpp>
 #include <SAMP-EDGEngine/Ext/ResourceIO/XMLNames.hpp>
 
-namespace samp_edgengine::ext::resource_io
+namespace samp_cpp::ext::resource_io
 {
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////

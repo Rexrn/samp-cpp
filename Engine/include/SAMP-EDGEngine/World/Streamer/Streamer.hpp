@@ -11,7 +11,7 @@
 #include <SAMP-EDGEngine/Core/Events.hpp>
 
 
-namespace samp_edgengine::default_streamer
+namespace samp_cpp::default_streamer
 {
 class Streamer
 	:

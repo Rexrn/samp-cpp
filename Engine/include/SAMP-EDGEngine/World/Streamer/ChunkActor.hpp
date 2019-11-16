@@ -5,7 +5,7 @@
 
 #include <SAMP-EDGEngine/World/3DNode.hpp>
 
-namespace samp_edgengine::default_streamer
+namespace samp_cpp::default_streamer
 {
 class Chunk;
 

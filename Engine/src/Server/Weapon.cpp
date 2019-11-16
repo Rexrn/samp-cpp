@@ -5,7 +5,7 @@
 #include <SAMP-EDGEngine/Core/Text/ASCII.hpp>
 
 
-namespace samp_edgengine
+namespace samp_cpp
 {
 	// Initialize default Weapon variables
 	Weapon::GetNameFnPtr Weapon::getNameFn = &Weapon::Default::getName;

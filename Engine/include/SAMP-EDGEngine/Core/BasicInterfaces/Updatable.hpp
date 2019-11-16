@@ -5,7 +5,7 @@
 
 #include <SAMP-EDGEngine/Core/Clock.hpp>
 
-namespace samp_edgengine
+namespace samp_cpp
 {
 
 /// <summary>

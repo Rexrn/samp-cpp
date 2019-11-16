@@ -9,7 +9,7 @@
 #include <SAMP-EDGEngine/Dependencies/QuickMaffs.hpp>
 #include <SAMP-EDGEngine/Dependencies/SampGDK.hpp>
 
-namespace samp_edgengine
+namespace samp_cpp
 {
 class Player;
 

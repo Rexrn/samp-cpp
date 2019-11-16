@@ -6,7 +6,7 @@
 #include <iostream>
 #include <iomanip>
 
-namespace samp_edgengine::ext::resource_io
+namespace samp_cpp::ext::resource_io
 {
 
 /////////////////////////////////////////////////////////////////////////////////
@@ -279,7 +279,7 @@ bool PAWNSceneDeserializer::deserialize() const
 
 			std::istringstream lineStream{ line };
 
-			samp_edgengine::RemovedBuilding building;
+			samp_cpp::RemovedBuilding building;
 			if (lineStream >>
 				text::skipIf<','> >> building.model >>
 				text::skipIf<','> >> building.origin.x >> text::skipIf<','> >> building.origin.y >> text::skipIf<','> >> building.origin.z >>

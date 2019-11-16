@@ -10,7 +10,7 @@
 // Other headers:
 #include <SAMP-EDGEngine/Core/BasicInterfaces/PlacementTracker.hpp>
 
-namespace samp_edgengine
+namespace samp_cpp
 {
 class MapStreamChunk;
 class Player;

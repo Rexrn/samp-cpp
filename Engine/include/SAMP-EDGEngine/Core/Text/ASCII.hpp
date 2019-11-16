@@ -5,7 +5,7 @@
 #include <SAMP-EDGEngine/Core/TypeTraits.hpp>
 #include <SAMP-EDGEngine/Core/Text/Essentials.hpp>
 
-namespace samp_edgengine::text
+namespace samp_cpp::text
 {
 
 /// <summary>

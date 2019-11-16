@@ -4,7 +4,7 @@
 #include "XMLDeserializer.hpp"
 #include "RemovedBuildingDeserializer.hpp"
 
-namespace samp_edgengine::ext::resource_io
+namespace samp_cpp::ext::resource_io
 {
 
 /// <summary>
