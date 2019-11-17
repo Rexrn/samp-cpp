@@ -1,4 +1,4 @@
-#include <SAMP-EDGEngine/Everything.hpp>
+#include <SAMPCpp/Everything.hpp>
 
 extern samp_cpp::GameModeSetupResult SAMPGameModeSetup();
 

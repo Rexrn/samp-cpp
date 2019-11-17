@@ -1,13 +1,13 @@
-#include SAMPEDGENGINE_PCH
+#include SAMPCPP_PCH
 
 // Custom includes:
-#include <SAMP-EDGEngine/Server/Player.hpp>
-#include <SAMP-EDGEngine/Server/Server.hpp>
-#include <SAMP-EDGEngine/Core/Text/ASCII.hpp>
-#include <SAMP-EDGEngine/Server/GameMode.hpp>
-#include <SAMP-EDGEngine/Server/ServerDebugLog.hpp>
+#include <SAMPCpp/Server/Player.hpp>
+#include <SAMPCpp/Server/Server.hpp>
+#include <SAMPCpp/Core/Text/ASCII.hpp>
+#include <SAMPCpp/Server/GameMode.hpp>
+#include <SAMPCpp/Server/ServerDebugLog.hpp>
 
-#include <SAMP-EDGEngine/World/Vehicle.hpp>
+#include <SAMPCpp/World/Vehicle.hpp>
 
 
 namespace samp_cpp

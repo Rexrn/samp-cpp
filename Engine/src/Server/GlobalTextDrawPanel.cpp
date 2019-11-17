@@ -1,9 +1,9 @@
-#include SAMPEDGENGINE_PCH
+#include SAMPCPP_PCH
 
-#include <SAMP-EDGEngine/Server/GlobalTextDrawPanel.hpp>
+#include <SAMPCpp/Server/GlobalTextDrawPanel.hpp>
 
-#include <SAMP-EDGEngine/Server/GameMode.hpp>
-#include <SAMP-EDGEngine/Server/Server.hpp>
+#include <SAMPCpp/Server/GameMode.hpp>
+#include <SAMPCpp/Server/Server.hpp>
 
 namespace samp_cpp
 {

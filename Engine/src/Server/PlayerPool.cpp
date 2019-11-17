@@ -1,9 +1,9 @@
-#include SAMPEDGENGINE_PCH
+#include SAMPCPP_PCH
 
 // Custom headers:
-#include <SAMP-EDGEngine/Server/PlayerPool.hpp>
-#include <SAMP-EDGEngine/Core/Text/ASCII.hpp>
-#include <SAMP-EDGEngine/Core/Pointers.hpp>
+#include <SAMPCpp/Server/PlayerPool.hpp>
+#include <SAMPCpp/Core/Text/ASCII.hpp>
+#include <SAMPCpp/Core/Pointers.hpp>
 
 
 namespace samp_cpp

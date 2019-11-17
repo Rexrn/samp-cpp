@@ -1,4 +1,4 @@
-#include <SAMP-EDGEngine/Ext/ResourceIO/Everything.hpp>
+#include <SAMPCpp/Ext/ResourceIO/Everything.hpp>
 
 #include <iostream>
 #include <string>

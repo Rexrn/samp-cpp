@@ -1,10 +1,10 @@
-#include SAMPEDGENGINE_PCH
+#include SAMPCPP_PCH
 
 // Custom includes:
-#include <SAMP-EDGEngine/Server/Server.hpp>
-#include <SAMP-EDGEngine/Server/GameMode.hpp>
-#include <SAMP-EDGEngine/Server/PlayerPool.hpp>
-#include <SAMP-EDGEngine/Core/Text/ASCII.hpp>
+#include <SAMPCpp/Server/Server.hpp>
+#include <SAMPCpp/Server/GameMode.hpp>
+#include <SAMPCpp/Server/PlayerPool.hpp>
+#include <SAMPCpp/Core/Text/ASCII.hpp>
 
 samp_cpp::UniquePtr<samp_cpp::ServerClass>			Server;				// Initialize Server instance.
 samp_cpp::IGameMode*										GameMode = nullptr;	// Initialize GameMode instance.

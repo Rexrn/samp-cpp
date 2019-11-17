@@ -1,7 +1,7 @@
-#include SAMPEDGENGINE_PCH
+#include SAMPCPP_PCH
 
 // The header of this class:
-#include <SAMP-EDGEngine/World/WI3DNode.hpp>
+#include <SAMPCpp/World/WI3DNode.hpp>
 
 namespace samp_cpp
 {

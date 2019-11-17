@@ -1,10 +1,10 @@
-#include SAMPEDGENGINE_PCH
+#include SAMPCPP_PCH
 
 // Custom includes:
-#include <SAMP-EDGEngine/Server/GameMode.hpp>
-#include <SAMP-EDGEngine/World/Streamer/Streamer.hpp>
+#include <SAMPCpp/Server/GameMode.hpp>
+#include <SAMPCpp/World/Streamer/Streamer.hpp>
 
-#include <SAMP-EDGEngine/Server/Server.hpp>
+#include <SAMPCpp/Server/Server.hpp>
 
 namespace samp_cpp
 {

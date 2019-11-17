@@ -1,10 +1,10 @@
-#include SAMPEDGENGINE_PCH
+#include SAMPCPP_PCH
 
 // Custom headers:
-#include <SAMP-EDGEngine/Core/Color.hpp>			// Color header
-#include <SAMP-EDGEngine/Core/Text/ASCII.hpp>		// for string manipulation
+#include <SAMPCpp/Core/Color.hpp>			// Color header
+#include <SAMPCpp/Core/Text/ASCII.hpp>		// for string manipulation
 
-#include <SAMP-EDGEngine/Dependencies/QuickMaffs.hpp>
+#include <SAMPCpp/Dependencies/QuickMaffs.hpp>
 
 
 namespace samp_cpp

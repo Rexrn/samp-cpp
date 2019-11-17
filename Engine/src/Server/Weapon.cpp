@@ -1,8 +1,8 @@
-#include SAMPEDGENGINE_PCH
+#include SAMPCPP_PCH
 
-#include <SAMP-EDGEngine/Server/Weapon.hpp>
+#include <SAMPCpp/Server/Weapon.hpp>
 
-#include <SAMP-EDGEngine/Core/Text/ASCII.hpp>
+#include <SAMPCpp/Core/Text/ASCII.hpp>
 
 
 namespace samp_cpp

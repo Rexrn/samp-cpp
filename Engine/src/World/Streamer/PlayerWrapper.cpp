@@ -1,7 +1,7 @@
-#include SAMPEDGENGINE_PCH
+#include SAMPCPP_PCH
 
-#include <SAMP-EDGEngine/World/Streamer/PlayerWrapper.hpp>
-#include <SAMP-EDGEngine/Server/GameMode.hpp>
+#include <SAMPCpp/World/Streamer/PlayerWrapper.hpp>
+#include <SAMPCpp/Server/GameMode.hpp>
 
 namespace samp_cpp::default_streamer
 {

@@ -1,8 +1,8 @@
-#include SAMPEDGENGINE_PCH
+#include SAMPCPP_PCH
 
-#include <SAMP-EDGEngine/Server/TextDraw.hpp>
+#include <SAMPCpp/Server/TextDraw.hpp>
 
-#include <SAMP-EDGEngine/Server/Player.hpp>
+#include <SAMPCpp/Server/Player.hpp>
 
 namespace samp_cpp
 {

@@ -1,9 +1,9 @@
-#include SAMPEDGENGINE_PCH
+#include SAMPCPP_PCH
 
-#include <SAMP-EDGEngine/Server/Dialog.hpp>
+#include <SAMPCpp/Server/Dialog.hpp>
 
-#include <SAMP-EDGEngine/Server/Player.hpp>
-#include <SAMP-EDGEngine/Core/TextInc.hpp>
+#include <SAMPCpp/Server/Player.hpp>
+#include <SAMPCpp/Core/TextInc.hpp>
 
 
 namespace samp_cpp

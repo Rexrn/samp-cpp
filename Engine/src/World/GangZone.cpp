@@ -1,7 +1,7 @@
-#include SAMPEDGENGINE_PCH
+#include SAMPCPP_PCH
 
-#include <SAMP-EDGEngine/World/GangZone.hpp>
-#include <SAMP-EDGEngine/Server/Player.hpp>
+#include <SAMPCpp/World/GangZone.hpp>
+#include <SAMPCpp/Server/Player.hpp>
 
 namespace samp_cpp
 {

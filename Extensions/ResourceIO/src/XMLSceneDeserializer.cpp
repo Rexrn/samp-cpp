@@ -1,13 +1,13 @@
-#include SAMPEDGENGINE_EXT_RESOURCEIO_PCH
+#include SAMPCPP_EXT_RESOURCEIO_PCH
 
-#include <SAMP-EDGEngine/Ext/ResourceIO/XMLSceneDeserializer.hpp>
-#include <SAMP-EDGEngine/Ext/ResourceIO/XMLNames.hpp>
-#include <SAMP-EDGEngine/Ext/ResourceIO/XMLPerPlayerObjectDeserializer.hpp>
-#include <SAMP-EDGEngine/Ext/ResourceIO/XMLGlobalObjectDeserializer.hpp>
-#include <SAMP-EDGEngine/Ext/ResourceIO/XMLRemovedBuildingDeserializer.hpp>
-#include <SAMP-EDGEngine/Ext/ResourceIO/XMLHelperFunctions.hpp>
-#include <SAMP-EDGEngine/Ext/ResourceIO/XMLNames.hpp>
-#include <SAMP-EDGEngine/Ext/ResourceIO/Logging.hpp>
+#include <SAMPCpp/Ext/ResourceIO/XMLSceneDeserializer.hpp>
+#include <SAMPCpp/Ext/ResourceIO/XMLNames.hpp>
+#include <SAMPCpp/Ext/ResourceIO/XMLPerPlayerObjectDeserializer.hpp>
+#include <SAMPCpp/Ext/ResourceIO/XMLGlobalObjectDeserializer.hpp>
+#include <SAMPCpp/Ext/ResourceIO/XMLRemovedBuildingDeserializer.hpp>
+#include <SAMPCpp/Ext/ResourceIO/XMLHelperFunctions.hpp>
+#include <SAMPCpp/Ext/ResourceIO/XMLNames.hpp>
+#include <SAMPCpp/Ext/ResourceIO/Logging.hpp>
 
 #include <iostream>
 

@@ -1,8 +1,8 @@
-#include SAMPEDGENGINE_PCH
+#include SAMPCPP_PCH
 
-#include <SAMP-EDGEngine/Core/Log.hpp>
+#include <SAMPCpp/Core/Log.hpp>
 
-#include <SAMP-EDGEngine/Core/BasicInterfaces/LogOutput.hpp>
+#include <SAMPCpp/Core/BasicInterfaces/LogOutput.hpp>
 
 namespace samp_cpp
 {

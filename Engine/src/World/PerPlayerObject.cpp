@@ -1,10 +1,10 @@
-#include SAMPEDGENGINE_PCH
+#include SAMPCPP_PCH
 
-#include <SAMP-EDGEngine/World/PerPlayerObject.hpp>
-#include <SAMP-EDGEngine/World/Streamer/Chunk.hpp>
+#include <SAMPCpp/World/PerPlayerObject.hpp>
+#include <SAMPCpp/World/Streamer/Chunk.hpp>
 
-#include <SAMP-EDGEngine/Server/Server.hpp>
-#include <SAMP-EDGEngine/Server/GameMode.hpp>
+#include <SAMPCpp/Server/Server.hpp>
+#include <SAMPCpp/Server/GameMode.hpp>
 
 namespace samp_cpp
 {

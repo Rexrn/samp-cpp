@@ -1,7 +1,7 @@
-#include SAMPEDGENGINE_PCH
+#include SAMPCPP_PCH
 
-#include <SAMP-EDGEngine/World/Streamer/UniversalObjectWrapper.hpp>
-#include <SAMP-EDGEngine/Server/GameMode.hpp>
+#include <SAMPCpp/World/Streamer/UniversalObjectWrapper.hpp>
+#include <SAMPCpp/Server/GameMode.hpp>
 
 namespace samp_cpp
 {

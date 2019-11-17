@@ -6,15 +6,15 @@ project "Ext_ResourceIO"
 	targetdir (path.join(repoRoot, "Bin/%{cfg.platform}/%{cfg.buildcfg}/Extensions"))
 
 	edge.configurePCH(
-			"include/SAMP-EDGEngine/Ext/ResourceIO/ResourceIOPCH.hpp",
+			"include/SAMPCpp/Ext/ResourceIO/ResourceIOPCH.hpp",
 			"src/ResourceIOPCH.cpp",
-			"SAMPEDGENGINE_EXT_RESOURCEIO_PCH"
+			"SAMPCPP_EXT_RESOURCEIO_PCH"
 		)
 
 	includedirs {
 		"include",
 		
-		-- SAMP-EDGEngine:
+		-- SAMPCpp:
 		path.join(repoRoot, "Engine/include"),
 
 		-- SAMPGDK:
@@ -32,6 +32,6 @@ project "Ext_ResourceIO"
 	}
 	
 	files {
-		"include/SAMP-EDGEngine/Ext/**.hpp",
+		"include/SAMPCpp/Ext/**.hpp",
 		"src/**.cpp"
 	}

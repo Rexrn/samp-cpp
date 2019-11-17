@@ -1,13 +1,13 @@
-#include SAMPEDGENGINE_EXT_RESOURCEIO_PCH
+#include SAMPCPP_EXT_RESOURCEIO_PCH
 
-#include <SAMP-EDGEngine/Ext/ResourceIO/XMLMapObjectSerializer.hpp>
-#include <SAMP-EDGEngine/Ext/ResourceIO/XMLHelperFunctions.hpp>
-#include <SAMP-EDGEngine/Ext/ResourceIO/XMLNames.hpp>
+#include <SAMPCpp/Ext/ResourceIO/XMLMapObjectSerializer.hpp>
+#include <SAMPCpp/Ext/ResourceIO/XMLHelperFunctions.hpp>
+#include <SAMPCpp/Ext/ResourceIO/XMLNames.hpp>
 
-#include <SAMP-EDGEngine/Ext/ResourceIO/XMLMapObjectMaterialSerializer.hpp>
-#include <SAMP-EDGEngine/Ext/ResourceIO/XMLTextureMaterialSerializer.hpp>
-#include <SAMP-EDGEngine/Ext/ResourceIO/XMLTextMaterialSerializer.hpp>
-#include <SAMP-EDGEngine/Ext/ResourceIO/Logging.hpp>
+#include <SAMPCpp/Ext/ResourceIO/XMLMapObjectMaterialSerializer.hpp>
+#include <SAMPCpp/Ext/ResourceIO/XMLTextureMaterialSerializer.hpp>
+#include <SAMPCpp/Ext/ResourceIO/XMLTextMaterialSerializer.hpp>
+#include <SAMPCpp/Ext/ResourceIO/Logging.hpp>
 
 #include <iostream>
 

@@ -1,7 +1,7 @@
-#include SAMPEDGENGINE_PCH
+#include SAMPCPP_PCH
 
-#include <SAMP-EDGEngine/Server/Command.hpp>
-#include <SAMP-EDGEngine/Server/Server.hpp>
+#include <SAMPCpp/Server/Command.hpp>
+#include <SAMPCpp/Server/Server.hpp>
 
 #include <istream>
 

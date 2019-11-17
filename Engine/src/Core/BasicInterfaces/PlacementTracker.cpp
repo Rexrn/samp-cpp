@@ -1,6 +1,6 @@
-#include SAMPEDGENGINE_PCH
+#include SAMPCPP_PCH
 
-#include <SAMP-EDGEngine/Core/BasicInterfaces/PlacementTracker.hpp>
+#include <SAMPCpp/Core/BasicInterfaces/PlacementTracker.hpp>
 
 namespace samp_cpp
 {

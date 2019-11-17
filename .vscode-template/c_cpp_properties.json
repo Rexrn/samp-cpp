@@ -16,7 +16,7 @@
             "defines": [
                 "DEBUG",
                 "_DEBUG",
-                "SAMPEDGENGINE_PCH=\"Engine/include/SAMP-EDGEngine/EnginePCH.hpp\""
+                "SAMPCPP_PCH=\"Engine/include/SAMPCpp/EnginePCH.hpp\""
             ]
         }
     ]

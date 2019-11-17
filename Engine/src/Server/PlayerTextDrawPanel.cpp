@@ -1,6 +1,6 @@
-#include SAMPEDGENGINE_PCH
+#include SAMPCPP_PCH
 
-#include <SAMP-EDGEngine/Server/PlayerTextDrawPanel.hpp>
+#include <SAMPCpp/Server/PlayerTextDrawPanel.hpp>
 
 namespace samp_cpp
 {

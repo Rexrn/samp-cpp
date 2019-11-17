@@ -1,11 +1,11 @@
-#include SAMPEDGENGINE_PCH
+#include SAMPCPP_PCH
 
-#include <SAMP-EDGEngine/World/Streamer/VehicleWrapper.hpp>
+#include <SAMPCpp/World/Streamer/VehicleWrapper.hpp>
 
 // Additional headers:
-#include <SAMP-EDGEngine/Server/Player.hpp>
-#include <SAMP-EDGEngine/World/Streamer/StreamerSettings.hpp>
-#include <SAMP-EDGEngine/Server/GameMode.hpp>
+#include <SAMPCpp/Server/Player.hpp>
+#include <SAMPCpp/World/Streamer/StreamerSettings.hpp>
+#include <SAMPCpp/Server/GameMode.hpp>
 
 namespace samp_cpp::default_streamer
 {

@@ -1,8 +1,8 @@
-#include SAMPEDGENGINE_PCH
+#include SAMPCPP_PCH
 
-#include <SAMP-EDGEngine/World/Scene.hpp>
-#include <SAMP-EDGEngine/Server/GameMode.hpp>
-#include <SAMP-EDGEngine/Core/TypesAndDefinitions.hpp>
+#include <SAMPCpp/World/Scene.hpp>
+#include <SAMPCpp/Server/GameMode.hpp>
+#include <SAMPCpp/Core/TypesAndDefinitions.hpp>
 
 namespace samp_cpp
 {

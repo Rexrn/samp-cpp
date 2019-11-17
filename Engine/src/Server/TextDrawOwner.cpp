@@ -1,6 +1,6 @@
-#include SAMPEDGENGINE_PCH
+#include SAMPCPP_PCH
 
-#include <SAMP-EDGEngine/Server/TextDrawOwner.hpp>
+#include <SAMPCpp/Server/TextDrawOwner.hpp>
 
 
 namespace samp_cpp

@@ -1,12 +1,12 @@
-#include SAMPEDGENGINE_PCH
+#include SAMPCPP_PCH
 
-#include <SAMP-EDGEngine/Server/CommandHandler.hpp>
-#include <SAMP-EDGEngine/Core/Text/ASCII.hpp>
+#include <SAMPCpp/Server/CommandHandler.hpp>
+#include <SAMPCpp/Core/Text/ASCII.hpp>
 
-#include <SAMP-EDGEngine/Server/Server.hpp>
-#include <SAMP-EDGEngine/Core/Text/StreamAlgorithm.hpp>
+#include <SAMPCpp/Server/Server.hpp>
+#include <SAMPCpp/Core/Text/StreamAlgorithm.hpp>
 
-#include <SAMP-EDGEngine/Server/GameMode.hpp>
+#include <SAMPCpp/Server/GameMode.hpp>
 
 namespace samp_cpp
 {

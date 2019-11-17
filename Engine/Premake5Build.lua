@@ -6,9 +6,9 @@ project "Engine"
 	targetdir (path.join(repoRoot, "Bin/%{cfg.platform}/%{cfg.buildcfg}"))
 
 	edge.configurePCH(
-			"include/SAMP-EDGEngine/EnginePCH.hpp",
+			"include/SAMPCpp/EnginePCH.hpp",
 			"src/EnginePCH.cpp",
-			"SAMPEDGENGINE_PCH"
+			"SAMPCPP_PCH"
 		)
 		
 	includedirs {
@@ -27,8 +27,8 @@ project "Engine"
 
 	files {
 		-- C++ files
-		"include/SAMP-EDGEngine/**.hpp",
-		"include/SAMP-EDGEngine/**.inl",
+		"include/SAMPCpp/**.hpp",
+		"include/SAMPCpp/**.inl",
 		"src/**.cpp"
 	}
 		

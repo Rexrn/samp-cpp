@@ -1,6 +1,6 @@
-#include SAMPEDGENGINE_PCH
+#include SAMPCPP_PCH
 
-#include <SAMP-EDGEngine/Core/Text/ASCII.hpp>
+#include <SAMPCpp/Core/Text/ASCII.hpp>
 
 
 namespace samp_cpp::text

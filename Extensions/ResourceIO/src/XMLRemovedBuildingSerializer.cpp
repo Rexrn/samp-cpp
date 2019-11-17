@@ -1,9 +1,9 @@
-#include SAMPEDGENGINE_EXT_RESOURCEIO_PCH
+#include SAMPCPP_EXT_RESOURCEIO_PCH
 
-#include <SAMP-EDGEngine/Ext/ResourceIO/XMLRemovedBuildingSerializer.hpp>
+#include <SAMPCpp/Ext/ResourceIO/XMLRemovedBuildingSerializer.hpp>
 
-#include <SAMP-EDGEngine/Ext/ResourceIO/XMLHelperFunctions.hpp>
-#include <SAMP-EDGEngine/Ext/ResourceIO/XMLNames.hpp>
+#include <SAMPCpp/Ext/ResourceIO/XMLHelperFunctions.hpp>
+#include <SAMPCpp/Ext/ResourceIO/XMLNames.hpp>
 
 namespace samp_cpp::ext::resource_io
 {

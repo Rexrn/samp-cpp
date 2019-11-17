@@ -6,7 +6,7 @@ project "ServerCore"
 	targetdir (path.join(repoRoot, "Bin/%{cfg.platform}/%{cfg.buildcfg}"))
 
 	includedirs {
-		-- SAMP-EDGEngine
+		-- SAMPCpp
 		path.join(repoRoot, "Engine/include"),
 
 		-- SAMPGDK

@@ -1,6 +1,6 @@
-#include SAMPEDGENGINE_PCH
+#include SAMPCPP_PCH
 
-#include <SAMP-EDGEngine/Core/TaskSystem.hpp>
+#include <SAMPCpp/Core/TaskSystem.hpp>
 
 
 namespace samp_cpp

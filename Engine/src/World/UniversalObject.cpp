@@ -1,10 +1,10 @@
-#include SAMPEDGENGINE_PCH
+#include SAMPCPP_PCH
 
 // The header of this class:
-#include <SAMP-EDGEngine/World/UniversalObject.hpp>
+#include <SAMPCpp/World/UniversalObject.hpp>
 
 // Other includes:
-#include <SAMP-EDGEngine/Server/Player.hpp>
+#include <SAMPCpp/Server/Player.hpp>
 
 namespace samp_cpp
 {

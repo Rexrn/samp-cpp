@@ -1,23 +1,23 @@
-#include SAMPEDGENGINE_PCH
+#include SAMPCPP_PCH
 
-#include <SAMP-EDGEngine/World/Streamer/Streamer.hpp>
+#include <SAMPCpp/World/Streamer/Streamer.hpp>
 
 // Object types:
-#include <SAMP-EDGEngine/World/GlobalObject.hpp>
-#include <SAMP-EDGEngine/World/PersonalObject.hpp>
-#include <SAMP-EDGEngine/World/UniversalObject.hpp>
+#include <SAMPCpp/World/GlobalObject.hpp>
+#include <SAMPCpp/World/PersonalObject.hpp>
+#include <SAMPCpp/World/UniversalObject.hpp>
 
 // Wrappers types:
-#include <SAMP-EDGEngine/World/Streamer/GlobalObjectWrapper.hpp>
-#include <SAMP-EDGEngine/Core/TypesAndDefinitions.hpp>
-#include <SAMP-EDGEngine/Server/Server.hpp>
-#include <SAMP-EDGEngine/Server/GameMode.hpp>
-#include <SAMP-EDGEngine/World/Streamer/PersonalObjectWrapper.hpp>
-#include <SAMP-EDGEngine/World/Streamer/UniversalObjectWrapper.hpp>
-#include <SAMP-EDGEngine/World/Streamer/CheckpointWrapper.hpp>
-#include <SAMP-EDGEngine/World/Streamer/RaceCheckpointWrapper.hpp>
+#include <SAMPCpp/World/Streamer/GlobalObjectWrapper.hpp>
+#include <SAMPCpp/Core/TypesAndDefinitions.hpp>
+#include <SAMPCpp/Server/Server.hpp>
+#include <SAMPCpp/Server/GameMode.hpp>
+#include <SAMPCpp/World/Streamer/PersonalObjectWrapper.hpp>
+#include <SAMPCpp/World/Streamer/UniversalObjectWrapper.hpp>
+#include <SAMPCpp/World/Streamer/CheckpointWrapper.hpp>
+#include <SAMPCpp/World/Streamer/RaceCheckpointWrapper.hpp>
 
-#include <SAMP-EDGEngine/Server/ServerDebugLog.hpp>
+#include <SAMPCpp/Server/ServerDebugLog.hpp>
 
 namespace samp_cpp::default_streamer
 {

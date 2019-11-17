@@ -1,6 +1,6 @@
-#include SAMPEDGENGINE_PCH
+#include SAMPCPP_PCH
 
-#include <SAMP-EDGEngine/Server/Server.hpp>
+#include <SAMPCpp/Server/Server.hpp>
 
 namespace samp_cpp
 {

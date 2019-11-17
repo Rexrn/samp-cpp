@@ -1,11 +1,11 @@
-#include SAMPEDGENGINE_EXT_RESOURCEIO_PCH
+#include SAMPCPP_EXT_RESOURCEIO_PCH
 
-#include <SAMP-EDGEngine/Ext/ResourceIO/XMLSceneSerializer.hpp>
-#include <SAMP-EDGEngine/Ext/ResourceIO/XMLNames.hpp>
+#include <SAMPCpp/Ext/ResourceIO/XMLSceneSerializer.hpp>
+#include <SAMPCpp/Ext/ResourceIO/XMLNames.hpp>
 
-#include <SAMP-EDGEngine/Ext/ResourceIO/XMLPerPlayerObjectSerializer.hpp>
-#include <SAMP-EDGEngine/Ext/ResourceIO/XMLGlobalObjectSerializer.hpp>
-#include <SAMP-EDGEngine/Ext/ResourceIO/XMLRemovedBuildingSerializer.hpp>
+#include <SAMPCpp/Ext/ResourceIO/XMLPerPlayerObjectSerializer.hpp>
+#include <SAMPCpp/Ext/ResourceIO/XMLGlobalObjectSerializer.hpp>
+#include <SAMPCpp/Ext/ResourceIO/XMLRemovedBuildingSerializer.hpp>
 
 
 namespace samp_cpp::ext::resource_io

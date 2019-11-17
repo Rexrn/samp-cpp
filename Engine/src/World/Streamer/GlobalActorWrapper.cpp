@@ -1,6 +1,6 @@
-#include SAMPEDGENGINE_PCH
+#include SAMPCPP_PCH
 
-#include <SAMP-EDGEngine/World/Streamer/GlobalActorWrapper.hpp>
+#include <SAMPCpp/World/Streamer/GlobalActorWrapper.hpp>
 
 namespace samp_cpp::default_streamer
 {

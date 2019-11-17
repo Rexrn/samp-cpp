@@ -17,7 +17,7 @@ else
 			-- Ext_ResourceIO:
 			path.join(repoRoot, "Extensions/ResourceIO/include"),
 
-			-- SAMP-EDGEngine:
+			-- SAMPCpp:
 			path.join(repoRoot, "Engine/include"),
 
 			-- SAMPGDK:

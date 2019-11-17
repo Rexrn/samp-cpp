@@ -1,12 +1,12 @@
-#include SAMPEDGENGINE_PCH
+#include SAMPCPP_PCH
 
-#include <SAMP-EDGEngine/World/Vehicle.hpp>
-#include <SAMP-EDGEngine/Server/Server.hpp>
-#include <SAMP-EDGEngine/Server/GameMode.hpp>
-#include <SAMP-EDGEngine/Core/Text/ASCII.hpp>
-#include <SAMP-EDGEngine/Core/Clock.hpp>
+#include <SAMPCpp/World/Vehicle.hpp>
+#include <SAMPCpp/Server/Server.hpp>
+#include <SAMPCpp/Server/GameMode.hpp>
+#include <SAMPCpp/Core/Text/ASCII.hpp>
+#include <SAMPCpp/Core/Clock.hpp>
 
-#include <SAMP-EDGEngine/Server/ServerDebugLog.hpp>
+#include <SAMPCpp/Server/ServerDebugLog.hpp>
 
 namespace samp_cpp
 {

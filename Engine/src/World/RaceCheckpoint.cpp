@@ -1,6 +1,6 @@
-#include SAMPEDGENGINE_PCH
+#include SAMPCPP_PCH
 
-#include <SAMP-EDGEngine/World/RaceCheckpoint.hpp>
+#include <SAMPCpp/World/RaceCheckpoint.hpp>
 
 namespace samp_cpp
 {

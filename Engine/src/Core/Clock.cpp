@@ -1,6 +1,6 @@
-#include SAMPEDGENGINE_PCH
+#include SAMPCPP_PCH
 
-#include <SAMP-EDGEngine/Core/Clock.hpp>
+#include <SAMPCpp/Core/Clock.hpp>
 
 namespace samp_cpp
 {

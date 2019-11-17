@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 
-#include <SAMP-EDGEngine/Everything.hpp>
+#include <SAMPCpp/Everything.hpp>
 
 #include <string>
 #include <string_view>

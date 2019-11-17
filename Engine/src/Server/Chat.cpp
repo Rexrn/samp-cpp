@@ -1,14 +1,14 @@
-#include SAMPEDGENGINE_PCH
+#include SAMPCPP_PCH
 
-#include <SAMP-EDGEngine/Server/Chat.hpp>
-#include <SAMP-EDGEngine/Server/PlayerPool.hpp>
-#include <SAMP-EDGEngine/Server/Player.hpp>
+#include <SAMPCpp/Server/Chat.hpp>
+#include <SAMPCpp/Server/PlayerPool.hpp>
+#include <SAMPCpp/Server/Player.hpp>
 
-#include <SAMP-EDGEngine/Core/Color.hpp>
-#include <SAMP-EDGEngine/Core/Text/ASCII.hpp>
+#include <SAMPCpp/Core/Color.hpp>
+#include <SAMPCpp/Core/Text/ASCII.hpp>
 
-#include <SAMP-EDGEngine/Server/GameMode.hpp>
-#include <SAMP-EDGEngine/Server/Server.hpp>
+#include <SAMPCpp/Server/GameMode.hpp>
+#include <SAMPCpp/Server/Server.hpp>
 
 
 namespace samp_cpp

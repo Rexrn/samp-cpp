@@ -36,7 +36,7 @@ Since the engine is not fully finished yet, this section is not 100 percent sure
 One thing I want to make significantly easier is the base server setup.
 ```cpp
 // All-in-one header:
-#include <SAMP-EDGEngine/Everything.hpp>	
+#include <SAMPCpp/Everything.hpp>	
 
 // In most cases, no other code base will use `samp` namespace.
 // Shorten it to `samp` for our convenciency: 

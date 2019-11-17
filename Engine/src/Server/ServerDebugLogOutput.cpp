@@ -1,10 +1,10 @@
-#include SAMPEDGENGINE_PCH
+#include SAMPCPP_PCH
 
-#include <SAMP-EDGEngine/Server/ServerDebugLogOutput.hpp>
+#include <SAMPCpp/Server/ServerDebugLogOutput.hpp>
 
-#include <SAMP-EDGEngine/Server/GameMode.hpp>
+#include <SAMPCpp/Server/GameMode.hpp>
 
-#include <SAMP-EDGEngine/Core/TextInc.hpp>
+#include <SAMPCpp/Core/TextInc.hpp>
 
 namespace samp_cpp
 {
