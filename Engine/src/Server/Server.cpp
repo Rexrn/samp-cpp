@@ -1193,7 +1193,8 @@ bool ServerClass::sampEvent_OnPlayerClickPlayerTextDraw(Int32 playerIndex_, Int3
 	auto& player = *GameMode->players[playerIndex_];
 	if (auto textDraw = player.getTextDraw(textDrawIndex_))
 	{
-		textDraw->whenPlayerClicks();
+		if (textDraw->onClicked)
+			textDraw->onClicked();
 	}
 	return true;
 }

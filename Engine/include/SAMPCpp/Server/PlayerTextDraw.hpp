@@ -187,14 +187,13 @@ public:
 	/// </summary>
 	/// <returns>Reference to owner.</returns>
 	Player& getOwner() const { return m_owner; }
-	
+
+	using OnClickedCallback = std::function<void()>;
+
 	/// <summary>
-	/// Event reaction designed to be called when player clicks textdraw.
+	/// Callback function called when player clicks this textdraw.
 	/// </summary>
-	virtual void whenPlayerClicks()
-	{
-		// Nothing by default.
-	}
+	OnClickedCallback onClicked;
 
 	friend class PlayerTextDrawPanel;
 private:
