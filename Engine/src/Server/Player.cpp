@@ -531,17 +531,20 @@ void Player::playSound(Int32 soundIndex_, math::Vector3f location_)
 }
 
 ///////////////////////////////////////////////////////////////////////////
-void Player::freeze(Clock::Duration freezeDuration_)
+void Player::freeze(Clock::Duration freezeDuration_, bool skipIfLower)
 {
-	m_unfreezeTime = Clock::now() + freezeDuration_;
-	
-	if (!m_unfreezeTask) {
-		m_unfreezeTask = this->getGameMode().tasks.schedule(m_unfreezeTime - Clock::now(),
-				[this]() { this->unfreeze(); }
-			);
-		sampgdk_TogglePlayerControllable(this->getIndex(), false);
-	}
-	
+	auto now = Clock::now();
+
+	if (skipIfLower && freezeDuration_ + now < m_unfreezeTime)
+		return;
+
+	m_unfreezeTime = now + freezeDuration_;
+
+	m_unfreezeTask = this->getGameMode().tasks.schedule(
+			m_unfreezeTime - now,
+			[this] { this->unfreeze(); }
+		);
+	sampgdk_TogglePlayerControllable(this->getIndex(), false);
 }
 
 ///////////////////////////////////////////////////////////////////////////

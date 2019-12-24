@@ -454,7 +454,7 @@ public:
 	/// Freezes the player for specified amount of time.
 	/// </summary>
 	/// <param name="freezeDuration_">The freeze duration.</param>
-	void freeze(Clock::Duration freezeDuration_);
+	void freeze(Clock::Duration freezeDuration_, bool skipIfLower = true);
 
 	/// <summary>
 	/// Unfreezes the player.
