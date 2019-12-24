@@ -126,6 +126,12 @@ public:
 	/// Rearranges textdraws so their order match their layer indices. You still need to hide and show them again.
 	/// </summary>
 	void rearrange();
+
+	/// <summary>
+	/// Returns the owner.
+	/// </summary>
+	/// <returns>Reference to owner.</returns>
+	Player& getOwner() const { return m_owner; }
 protected:
 
 	//	Reference to player that textdraw panel is bound to.
