@@ -74,7 +74,7 @@ public:
 	/// Sets the text.
 	/// </summary>
 	/// <param name="text_">The text.</param>
-	virtual void setText(std::string_view text_, bool update_ = true) override;
+	virtual void setText(std::string text_, bool update_ = true) override;
 	
 	/// <summary>
 	/// Sets the font.

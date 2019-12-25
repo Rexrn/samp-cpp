@@ -106,12 +106,12 @@ void PlayerTextDraw::hide()
 }
 
 ////////////////////////////////////////////////////////////////////////////////////
-void PlayerTextDraw::setText(std::string_view text_, bool update_)
+void PlayerTextDraw::setText(std::string text_, bool update_)
 {
-	ITextDraw::setText(text_, update_);
+	ITextDraw::setText(std::move(text_), update_);
 
 	if (update_ && this->isCreated()) {
-		sampgdk_PlayerTextDrawSetString(m_owner.getIndex(), this->getHandle(), std::string(text_).c_str()); // TODO: optimize?
+		sampgdk_PlayerTextDrawSetString(m_owner.getIndex(), this->getHandle(), m_text.c_str());
 	}
 }
 

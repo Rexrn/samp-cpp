@@ -138,12 +138,12 @@ void GlobalTextDraw::reapplyVisibility()
 }
 
 ////////////////////////////////////////////////////////////////////////////////////
-void GlobalTextDraw::setText(std::string_view text_, bool update_)
+void GlobalTextDraw::setText(std::string text_, bool update_)
 {
-	ITextDraw::setText(text_, update_);
+	ITextDraw::setText(std::move(text_), update_);
 
 	if (update_ && this->isCreated()) {
-		sampgdk_TextDrawSetString(this->getHandle(), std::string(text_).c_str()); // TODO: optimize?
+		sampgdk_TextDrawSetString(this->getHandle(), m_text.c_str());
 	}
 }
 
